@@ -26,7 +26,12 @@ language = 'zh-CN'
 external_links = [
     {
         "name": "瞎搞計劃",
-        "url": "https://qq1820582487.github.io/Xuxx_Blogs/src/static/web_01/",
+        "url": "https://qq1820582487.github.io/Xuxx_Blogs/",
+        "brief": "Xuxx的博客。"
+    },
+    {
+        "name": "Web_01",
+        "url": "https://qq1820582487.github.io/Xuxx_Blogs/src/static/web_01/index.html",
         "brief": "Xuxx的博客。"
     }
 ]

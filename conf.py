@@ -27,12 +27,12 @@ external_links = [
     {
         "name": "Maverick",
         "url": "https://github.com/QQ1820582487",
-        "brief": "🏄‍ Go My Own Way."
+        "brief":"自我放逐."
     },
     {
-        "name": "三無計劃",
-        "url": "https://www.imalan.cn",
-        "brief": "Xuxx的主页。"
+        "name": "瞎搞計劃",
+        "url": "https://qq1820582487.github.io/Blog-With-GitHub-Boilerplate/",
+        "brief": "Xuxx的博客。"
     }
 ]
 nav = [

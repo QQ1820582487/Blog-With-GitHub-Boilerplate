@@ -26,7 +26,7 @@ language = 'zh-CN'
 external_links = [
     {
         "name": "瞎搞計劃",
-        "url": "https://qq1820582487.github.io/Xuxx_Blogs/",
+        "url": "https://qq1820582487.github.io/Xuxx_Blogs/src/static/web_01/",
         "brief": "Xuxx的博客。"
     }
 ]

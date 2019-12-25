@@ -55,6 +55,11 @@ nav = [
 
 social_links = [
     {
+        "name": "QQ",
+        "url": "tencent://QQInterLive/?Cmd=2&Uin=1820502487",
+        "icon": "gi gi-qq"
+    },
+    {
         "name": "Twitter",
         "url": "https://twitter.com/xuxx3309",
         "icon": "gi gi-twitter"

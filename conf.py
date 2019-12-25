@@ -31,7 +31,7 @@ external_links = [
     },
     {
         "name": "瞎搞計劃",
-        "url": "https://qq1820582487.github.io/Blog-With-GitHub-Boilerplate/",
+        "url": "https://qq1820582487.github.io/Xuxx_Blogs/",
         "brief": "Xuxx的博客。"
     }
 ]

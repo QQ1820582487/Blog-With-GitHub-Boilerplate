@@ -21,6 +21,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     </url>
 
     <url>
+        <loc>/Xuxx_Blogs/archives/my-first-awesome-post/</loc>
+        <lastmod>2019-12-26</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
         <loc>/Xuxx_Blogs/archives/typography/</loc>
         <lastmod>2019-12-18</lastmod>
         <changefreq>always</changefreq>

@@ -16,7 +16,7 @@ enable_jsdelivr = {
 # 站点设置
 site_name = "我的个人博客"
 site_logo = "${static_prefix}logo.png"
-site_build_date = "2019-12-18T16:51+08:00"
+site_build_date = "2019-12-26T16:51+08:00"
 author = "Xuxx"
 email = "xuxx3319@gmail.com"
 author_homepage = "暂无"
@@ -26,7 +26,7 @@ language = 'zh-CN'
 external_links = [
     {
         "name": "Maverick",
-        "url": "https://github.com/AlanDecode/Maverick",
+        "url": "https://github.com/QQ1820582487",
         "brief": "🏄‍ Go My Own Way."
     },
     {
@@ -56,18 +56,13 @@ nav = [
 social_links = [
     {
         "name": "Twitter",
-        "url": "https://twitter.com/AlanDecode",
+        "url": "https://twitter.com/xuxx3309",
         "icon": "gi gi-twitter"
     },
     {
         "name": "GitHub",
-        "url": "https://github.com/AlanDecode",
+        "url": "https://github.com/QQ1820582487",
         "icon": "gi gi-github"
-    },
-    {
-        "name": "Weibo",
-        "url": "https://weibo.com/5245109677/",
-        "icon": "gi gi-weibo"
     }
 ]
 

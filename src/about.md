@@ -2,21 +2,18 @@
 layout: page
 title: 关于
 slug: about
-date: 2017/06/28 17:26:00
+date: 2019/12/26 02:26:00
 status: publish
-author: AlanDecode
+author: Xuxx
 categories: 
-  - Maverick
-  - Dev
+  - 
 tags: 
   - theme
 ---
 
-这里是我的个人博客，通过 GitHub 管理与构建。
+这里是我的个人博客，通过 GitHub 管理与构建。  ——Xuxx.
 
 
-## Contact
+## 联系我
 
-Email: hi#imalan.cn (replace # with @)
-
-Telegram：[AlanDecode](https://t.me/alandecode)
+Email: Xuxx3319@gmail.com

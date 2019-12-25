@@ -24,11 +24,6 @@ description = "只坚持一种正义——我的正义。"
 key_words = ['Maverick', 'Xuxx', 'Galileo', 'blog']
 language = 'zh-CN'
 external_links = [
-#     {
-#         "name": "Maverick",
-#         "url": "https://github.com/QQ1820582487",
-#         "brief":"自我放逐."
-#     },
     {
         "name": "瞎搞計劃",
         "url": "https://qq1820582487.github.io/Xuxx_Blogs/",

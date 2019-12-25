@@ -9,8 +9,8 @@ build_dir = "../dist/"
 index_page_size = 10
 archives_page_size = 20
 enable_jsdelivr = {
-    "enabled": true,
-    "repo": "qq1820502487/Blog-With-GitHub-Boilerplate@gh-pages"
+   "enabled": False,
+    "repo": ""
 }
 
 # 站点设置

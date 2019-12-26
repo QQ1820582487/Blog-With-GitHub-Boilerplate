@@ -55,13 +55,12 @@ social_links = [
         "name": "Twitter",
         "url": "https://twitter.com/xuxx3309",
         "icon": "gi gi-twitter"
+    },
+    {
+        "name": "GitHub",
+        "url": "https://github.com/QQ1820582487",
+       "icon": "gi gi-github"
     }
-#   ,
-#    {
-#        "name": "GitHub",
-#        "url": "https://github.com/QQ1820582487",
-#       "icon": "gi gi-github"
-#    }
 ]
 
 head_addon = r'''

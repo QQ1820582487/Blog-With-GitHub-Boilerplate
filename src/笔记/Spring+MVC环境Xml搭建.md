@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring+Spring MVC环境搭建
+title: Spring+Spring MVC环境（Xml）搭建
 slug: bj01
 date: 2019-12-29 02:33
 status: publish
@@ -19,10 +19,26 @@ excerpt: 笔记
 1.添加spring-webmvc依赖
 
 ```xml
-<dependency>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xuxx</groupId>
+    <artifactId>java_ssm</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.2.2.RELEASE</version></dependency>
+            <version>5.2.2.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+</project>
 ```
 
 2.打开项目结构，添加webapp目录和web.xml文件

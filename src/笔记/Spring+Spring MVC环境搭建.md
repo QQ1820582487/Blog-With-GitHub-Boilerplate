@@ -14,8 +14,6 @@ tags:
 excerpt: 笔记
 ---
 
-[TOC]
-
 # Spring+Spring MVC环境搭建
 
 ### 1.创建工程

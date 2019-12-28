@@ -1,9 +1,224 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>只坚持一种正义——我的正义。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Sat, 28 Dec 2019 16:17:16 +0806</lastBuildDate><pubDate>Sat, 28 Dec 2019 16:17:16 +0806</pubDate><item><title>我的第一篇文章</title><link>/Xuxx_Blogs/archives/my-first/</link><description>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>只坚持一种正义——我的正义。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Sat, 28 Dec 2019 18:36:53 +0806</lastBuildDate><pubDate>Sat, 28 Dec 2019 18:36:53 +0806</pubDate><item><title>我的第一篇文章</title><link>/Xuxx_Blogs/archives/my-first/</link><description>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/my-first/</guid><pubDate>Thu, 26 Dec 2019 01:55:00 +0806</pubDate></item><item><title>自我放逐</title><link>/Xuxx_Blogs/archives/Thoughts01/</link><description>&lt;p&gt;自我放逐的人一生都在越狱，此生即自己构筑的地狱&lt;/p&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/Thoughts01/</guid><pubDate>Thu, 26 Dec 2019 02:53:00 +0806</pubDate></item><item><title>認真</title><link>/Xuxx_Blogs/archives/Thoughts03/</link><description>&lt;p&gt;認真是我們參與這個社會的方式。&lt;/p&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/Thoughts03/</guid><pubDate>Thu, 26 Dec 2019 02:53:00 +0806</pubDate></item><item><title>一个人</title><link>/Xuxx_Blogs/archives/Thoughts02/</link><description>&lt;p&gt;我一个人，趟过浑水，越过四季，面无表情，你别怪我言语不动听。&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 3.9331318841992395" data-width="807" data-height="10259"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/334db09d56e79b54ee54f2edc32b2206.jpg" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/Thoughts02/</guid><pubDate>Thu, 26 Dec 2019 05:50:00 +0806</pubDate></item><item><title>愚蠢</title><link>/Xuxx_Blogs/archives/Thoughts04/</link><description>&lt;h5&gt;在现代世界里，愚蠢的人总是自信满满，而聪明的人却充满疑问。&lt;/h5&gt;
 &lt;p&gt;​                                                                                                               ——罗素&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/Thoughts04/</guid><pubDate>Sun, 29 Dec 2019 00:50:00 +0806</pubDate></item></channel></rss>
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/Thoughts04/</guid><pubDate>Sun, 29 Dec 2019 00:50:00 +0806</pubDate></item><item><title>Spring+Spring MVC环境搭建</title><link>/Xuxx_Blogs/archives/bj01/</link><description>&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;Spring+Spring MVC环境搭建&lt;/h1&gt;
+&lt;h3&gt;1.创建工程&lt;/h3&gt;
+&lt;p&gt;1.添加spring-webmvc依赖&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-webmvc&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.2.2.RELEASE&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2.打开项目结构，添加webapp目录和web.xml文件&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 203.2258064516129" data-width="378" data-height="93"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2455dcc11e9152855233387d809b5516.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;2.创建配置文件&lt;/h3&gt;
+&lt;h5&gt;1.spring&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;beans&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/beans&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xmlns:xsi=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xmlns:context=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/context&amp;quot;&lt;/span&gt;
+       &lt;span class="na"&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.springframework.org/schema/beans&lt;/span&gt;
+&lt;span class="s"&gt;       http://www.springframework.org/schema/beans/spring-beans.xsd&lt;/span&gt;
+&lt;span class="s"&gt;       http://www.springframework.org/schema/context&lt;/span&gt;
+&lt;span class="s"&gt;       https://www.springframework.org/schema/context/spring-context.xsd&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="c"&gt;&amp;lt;!--开启包扫描 排除加了@Controller的类--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;context:component-scan&lt;/span&gt; &lt;span class="na"&gt;base-package=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;use-default-filters=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt; &lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;context:exclude-filter&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;annotation&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;expression=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.springframework.stereotype.Controller&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/context:component-scan&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/beans&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2.spring-mvc&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;beans....&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;!--开启包扫描&lt;/span&gt; &lt;span class="err"&gt;只扫描带有@Controller的类--&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;context:component-scan&lt;/span&gt; &lt;span class="na"&gt;base-package=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;use-default-filters=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;context:include-filter&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;annotation&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;expression=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.springframework.stereotype.Controller&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/context:component-scan&amp;gt;&lt;/span&gt;
+
+    &lt;span class="c"&gt;&amp;lt;!--开启mvc driven--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;mvc:annotation-driven/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/beans&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.web.xml（简易版）&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;web-app&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://xmlns.jcp.org/xml/ns/javaee&amp;quot;&lt;/span&gt;
+         &lt;span class="na"&gt;xmlns:xsi=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;&lt;/span&gt;
+         &lt;span class="na"&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&amp;quot;&lt;/span&gt;
+         &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;4.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!--spring的配置--&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!--加载spring配置文件的路径--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;contextConfigLocation&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:applicationContext.xml&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!--启动Web容器时，自动装配ApplicationContext.xml的配置信息--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;listener&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;listener-class&amp;gt;&lt;/span&gt;org.springframework.web.context.ContextLoaderListener&lt;span class="nt"&gt;&amp;lt;/listener-class&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/listener&amp;gt;&lt;/span&gt;
+
+    &lt;span class="c"&gt;&amp;lt;!--spring Mvc的配置--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;servlet-name&amp;gt;&lt;/span&gt;springmvc&lt;span class="nt"&gt;&amp;lt;/servlet-name&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!--前端控制器，用于控制所有请求--&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;servlet-class&amp;gt;&lt;/span&gt;org.springframework.web.servlet.DispatcherServlet&lt;span class="nt"&gt;&amp;lt;/servlet-class&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;init-param&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;contextConfigLocation&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:spring-mvc.xml&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/init-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/servlet&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet-mapping&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;servlet-name&amp;gt;&lt;/span&gt;springmvc&lt;span class="nt"&gt;&amp;lt;/servlet-name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/&lt;span class="nt"&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!--关于 &amp;lt;url-pattern&amp;gt;&amp;lt;/url-pattern&amp;gt;有三种配置方式:&lt;/span&gt;
+&lt;span class="c"&gt;         (1)&amp;lt;url-pattern&amp;gt; / &amp;lt;/url-pattern&amp;gt; ，  /：配置/的话，url不会拦截诸如：jsp，html ， .action的请求，使用该模式的话，那么      spring-mvc.xml中配置name不能有扩展名 ，如下：&lt;/span&gt;
+&lt;span class="c"&gt;         &amp;lt;bean name=&amp;quot;/userController&amp;quot; class=&amp;quot;com.neusoft.springmvc.controller.UserController&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;（正确）                     &lt;/span&gt;
+&lt;span class="c"&gt;         &amp;lt;bean name=&amp;quot;/userController.action&amp;quot; class=&amp;quot;com.neusoft.springmvc.controller.UserController&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;（错误）&lt;/span&gt;
+
+&lt;span class="c"&gt;         (2)&amp;lt;url-pattern&amp;gt; / *&amp;lt;/url-pattern&amp;gt;  ， /*，因为这个url会拦截所有请求，包括：.jsp  .html  .action .do .css&lt;/span&gt;
+&lt;span class="c"&gt;             如果访问以上的资源会报404错误 ，所以配置时，不要用/*， 这个一般是过滤器，配置时候才用的。&lt;/span&gt;
+
+&lt;span class="c"&gt;         (3)&amp;lt;url-pattern&amp;gt; *.action&amp;lt;/url-pattern&amp;gt;   不会拦截诸如 .jsp .html 等资源请求，只会拦截.action请求，所有在spring-mvc.xml中配       置name的时候必须要有扩展名，如下：                           &amp;lt;bean name=&amp;quot;/userController&amp;quot; class=&amp;quot;com.neusoft.springmvc.controller.UserController&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;（错误）                          &lt;/span&gt;
+&lt;span class="c"&gt;          &amp;lt;bean name=&amp;quot;/userController.action&amp;quot; class=&amp;quot;com.neusoft.springmvc.controller.UserController&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;（正确）   --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/servlet-mapping&amp;gt;&lt;/span&gt;
+
+&lt;span class="nt"&gt;&amp;lt;/web-app&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.web.xml(详细版)&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE web-app PUBLIC&lt;/span&gt;
+&lt;span class="cp"&gt; &amp;quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt; &amp;quot;http://java.sun.com/dtd/web-app_2_3.dtd&amp;quot; &amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;lt;!--注意版本↑↑↑--&amp;gt;&lt;/span&gt;
+ 
+&lt;span class="nt"&gt;&amp;lt;web-app&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;display-name&amp;gt;&lt;/span&gt;Archetype Created Web Application&lt;span class="nt"&gt;&amp;lt;/display-name&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!--welcome pages--&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;welcome-file-list&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;welcome-file&amp;gt;&lt;/span&gt;index.jsp&lt;span class="nt"&gt;&amp;lt;/welcome-file&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/welcome-file-list&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!--applicationContext.xml是全局的，应用于多个serverlet，配合listener一起使用--&amp;gt;&lt;/span&gt;
+  &lt;span class="c"&gt;&amp;lt;!-- 如果是监听多个文件，可用‘，’隔开 --&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="nt"&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;配置Spring配置文件路径&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;contextConfigLocation&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+ 
+    &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:spring/applicationContext.xml&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- 定义SPRING监听器，加载spring --&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;listener&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;listener-class&amp;gt;&lt;/span&gt;
+      org.springframework.web.context.request.RequestContextListener
+    &lt;span class="nt"&gt;&amp;lt;/listener-class&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/listener&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="nt"&gt;&amp;lt;listener&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;listener-class&amp;gt;&lt;/span&gt;org.springframework.web.context.ContextLoaderListener&lt;span class="nt"&gt;&amp;lt;/listener-class&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/listener&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!--log4j配置文件加载--&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;log4jConfigLocation&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:log4j.properties&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+  &lt;span class="c"&gt;&amp;lt;!--启动一个watchdog线程每1800秒扫描一下log4j配置文件的变化--&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;log4jRefreshInterval&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;1800000&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-name/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;param-value/&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- 配置Spring字符编码过滤器 --&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;filter&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;encodingFilter&lt;span class="nt"&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;filter-class&amp;gt;&lt;/span&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;span class="nt"&gt;&amp;lt;/filter-class&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;init-param&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;encoding&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;UTF-8&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/init-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;init-param&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;forceEncoding&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;true&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/init-param&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/filter&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;filter-mapping&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;encodingFilter&lt;span class="nt"&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/*&lt;span class="nt"&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/filter-mapping&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- Spring MVC 核心控制器 DispatcherServlet 配置开始 --&amp;gt;&lt;/span&gt;
+  &lt;span class="c"&gt;&amp;lt;!--配置springmvc DispatcherServlet--&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;servlet&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet-name&amp;gt;&lt;/span&gt;springMVC&lt;span class="nt"&gt;&amp;lt;/servlet-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet-class&amp;gt;&lt;/span&gt;org.springframework.web.servlet.DispatcherServlet&lt;span class="nt"&gt;&amp;lt;/servlet-class&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;init-param&amp;gt;&lt;/span&gt;
+      &lt;span class="c"&gt;&amp;lt;!--Sources标注的文件夹下需要新建一个spring文件夹--&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;contextConfigLocation&lt;span class="nt"&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+      &lt;span class="c"&gt;&amp;lt;!-- 如果是监听多个文件，可用‘，’隔开 --&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:spring/spring-mvc.xml&lt;span class="nt"&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/init-param&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;load-on-startup&amp;gt;&lt;/span&gt;1&lt;span class="nt"&gt;&amp;lt;/load-on-startup&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;async-supported&amp;gt;&lt;/span&gt;true&lt;span class="nt"&gt;&amp;lt;/async-supported&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/servlet&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- 拦截设置 --&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;servlet-mapping&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet-name&amp;gt;&lt;/span&gt;springMVC&lt;span class="nt"&gt;&amp;lt;/servlet-name&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- 此处可以可以配置成*.do，对应struts的后缀习惯 --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/&lt;span class="nt"&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/servlet-mapping&amp;gt;&lt;/span&gt;
+  &lt;span class="c"&gt;&amp;lt;!-- Spring MVC 核心配置结束 --&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- 激活Tomcat的defaultServlet来处理静态文件 --&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;servlet-mapping&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;servlet-name&amp;gt;&lt;/span&gt;default&lt;span class="nt"&gt;&amp;lt;/servlet-name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/static/*&lt;span class="nt"&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/servlet-mapping&amp;gt;&lt;/span&gt;
+ 
+  &lt;span class="c"&gt;&amp;lt;!-- session 时间 --&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;session-config&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;session-timeout&amp;gt;&lt;/span&gt;30&lt;span class="nt"&gt;&amp;lt;/session-timeout&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/session-config&amp;gt;&lt;/span&gt;
+ 
+&lt;span class="nt"&gt;&amp;lt;/web-app&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.测试web-mvc环境&lt;/h3&gt;
+&lt;p&gt;1.添加本地Tomcat&lt;/p&gt;
+&lt;p&gt;注意：访问时的路径加没加项目名（都是泪&lt;figure class="pswp-item" style="flex: 50.0" data-width="28" data-height="28"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4c0b9f1e70add419ad41ef4644366e50.gif" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;）&lt;/p&gt;
+&lt;p&gt;2.新建controller和service&lt;/p&gt;
+&lt;p&gt;controller&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+    &lt;span class="n"&gt;HelloService&lt;/span&gt; &lt;span class="n"&gt;helloService&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@GetMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;//@GetMapping(value = &amp;quot;/hello&amp;quot;,produces = &amp;quot;text/html;charset=utf-8&amp;quot;) 可以简单解决中文乱码&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;helloService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sayHello&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;service&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Service&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloService&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;sayHello&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3.访问,成功&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 182.90322580645162" data-width="567" data-height="155"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/53f3f0408b34228ef3bf635f389906a1.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj01/</guid><pubDate>Sun, 29 Dec 2019 02:33:00 +0806</pubDate></item></channel></rss>

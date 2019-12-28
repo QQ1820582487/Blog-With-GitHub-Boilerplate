@@ -14,6 +14,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 
     <url>
+        <loc>/Xuxx_Blogs/archives/bj01/</loc>
+        <lastmod>2019-12-29</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
         <loc>/Xuxx_Blogs/archives/Thoughts04/</loc>
         <lastmod>2019-12-29</lastmod>
         <changefreq>always</changefreq>

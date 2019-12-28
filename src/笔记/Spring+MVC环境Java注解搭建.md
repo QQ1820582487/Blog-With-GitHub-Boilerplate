@@ -2,7 +2,7 @@
 layout: post
 title: Spring+Spring MVC环境（Java配置）搭建
 slug: bj02
-date: 2019-12-29 03:12
+date: 2019-12-29 05:58
 status: publish
 author: Xuxx
 categories: 

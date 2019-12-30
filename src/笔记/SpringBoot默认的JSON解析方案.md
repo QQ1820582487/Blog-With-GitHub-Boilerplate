@@ -79,14 +79,20 @@ public class UserController {
 #### 4.测试，查看结果
 
 ```xml
-
+[
+  {
+    "id": 0,
+    "username": "Xuxx>>0",
+    "address": "中国>>0"
+  },...
+]
 ```
 
 
 
-## 3. 修改Jackson配置
+## 3. 配置Jackson
 
-#### 1.问题 - 单独配置Jackson
+#### 1.问题 - 单独配置 Jackson
 
 修改bean
 

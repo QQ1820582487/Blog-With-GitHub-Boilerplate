@@ -224,7 +224,7 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
 
 #### 2.配置拦截器
 
-###### 2.1自定义拦截器，继承HandlerInterceptor，重新其方法
+###### 2.1自定义拦截器，继承`HandlerInterceptor`，重新其方法
 
 ```java
 package com.xuxx.interceptor;

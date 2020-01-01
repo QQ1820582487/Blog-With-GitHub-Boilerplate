@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-01-01T20:28:35.163992+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="http://lkiesow.github.io/python-feedgen" version="0.8.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/my-first/</id><title>我的第一篇文章</title><updated>2020-01-01T20:28:35.164256+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/my-first/" rel="alternate"/><published>2019-12-26T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts01/</id><title>自我放逐</title><updated>2020-01-01T20:28:35.164236+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;自我放逐的人一生都在越狱，此生即自己构筑的地狱&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/Thoughts01/" rel="alternate"/><published>2019-12-26T02:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts03/</id><title>認真</title><updated>2020-01-01T20:28:35.164217+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;認真是我們參與這個社會的方式。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/Thoughts03/" rel="alternate"/><published>2019-12-26T02:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts02/</id><title>一个人</title><updated>2020-01-01T20:28:35.164197+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;我一个人，趟过浑水，越过四季，面无表情，你别怪我言语不动听。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-01-01T20:43:19.539702+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="http://lkiesow.github.io/python-feedgen" version="0.8.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/my-first/</id><title>我的第一篇文章</title><updated>2020-01-01T20:43:19.540060+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/my-first/" rel="alternate"/><published>2019-12-26T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts01/</id><title>自我放逐</title><updated>2020-01-01T20:43:19.540038+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;自我放逐的人一生都在越狱，此生即自己构筑的地狱&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/Thoughts01/" rel="alternate"/><published>2019-12-26T02:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts03/</id><title>認真</title><updated>2020-01-01T20:43:19.540018+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;認真是我們參與這個社會的方式。&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/Thoughts03/" rel="alternate"/><published>2019-12-26T02:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts02/</id><title>一个人</title><updated>2020-01-01T20:43:19.539996+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;我一个人，趟过浑水，越过四季，面无表情，你别怪我言语不动听。&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 3.9331318841992395" data-width="807" data-height="10259"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/334db09d56e79b54ee54f2edc32b2206.jpg" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/Thoughts02/" rel="alternate"/><published>2019-12-26T05:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts04/</id><title>愚蠢</title><updated>2020-01-01T20:28:35.164177+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h5&gt;在现代世界里，愚蠢的人总是自信满满，而聪明的人却充满疑问。&lt;/h5&gt;
+</content><link href="/Xuxx_Blogs/archives/Thoughts02/" rel="alternate"/><published>2019-12-26T05:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/Thoughts04/</id><title>愚蠢</title><updated>2020-01-01T20:43:19.539974+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h5&gt;在现代世界里，愚蠢的人总是自信满满，而聪明的人却充满疑问。&lt;/h5&gt;
 &lt;p&gt;​                                                                                                               ——罗素&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/Thoughts04/" rel="alternate"/><published>2019-12-29T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj01/</id><title>Spring+Spring MVC环境（Xml）搭建</title><updated>2020-01-01T20:28:35.164156+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/Thoughts04/" rel="alternate"/><published>2019-12-29T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj01/</id><title>Spring+Spring MVC环境（Xml）搭建</title><updated>2020-01-01T20:43:19.539952+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
 &lt;p&gt;1.添加spring-webmvc依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;project&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot;&lt;/span&gt;
@@ -235,7 +235,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;3.访问,成功&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 182.90322580645162" data-width="567" data-height="155"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/53f3f0408b34228ef3bf635f389906a1.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj01/" rel="alternate"/><published>2019-12-29T02:33:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj02/</id><title>Spring+Spring MVC环境（Java配置）搭建</title><updated>2020-01-01T20:28:35.164136+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj01/" rel="alternate"/><published>2019-12-29T02:33:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj02/</id><title>Spring+Spring MVC环境（Java配置）搭建</title><updated>2020-01-01T20:43:19.539930+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
 &lt;p&gt;添加spring-webmvc依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;project&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot;&lt;/span&gt;
@@ -289,7 +289,7 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h5&gt;3.web.xml 配置类&lt;/h5&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mf"&gt;3.&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;com.xuxx.controller&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;com.xuxx.controller&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.web.WebApplicationInitializer&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.springframework.web.context.support.AnnotationConfigWebApplicationContext&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -484,8 +484,7 @@
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;3.4测试&lt;/h6&gt;
-&lt;p&gt;&lt;img src="..\images\笔记\6.png" style="zoom:80%;" /&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj02/" rel="alternate"/><published>2019-12-29T05:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj03/</id><title>SpringBoot基础配置/注解</title><updated>2020-01-01T20:28:35.164115+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. 属性注入&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj02/" rel="alternate"/><published>2019-12-29T05:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj03/</id><title>SpringBoot基础配置/注解</title><updated>2020-01-01T20:43:19.539907+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. 属性注入&lt;/h3&gt;
 &lt;h5&gt;1. &lt;code&gt;@Value&lt;/code&gt;&lt;/h5&gt;
 &lt;p&gt;实体类&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
@@ -770,7 +769,7 @@ ctx.refresh();&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;对于文本文件，Spring Boot 会将其直接输出。&lt;/li&gt;
 &lt;li&gt;对于图像文件（ &lt;code&gt;banner.gif&lt;/code&gt; 、&lt;code&gt;banner.jpg&lt;/code&gt; 或 &lt;code&gt;banner.png&lt;/code&gt; ），Spring Boot 会将图像转为 ASCII 字符，然后输出。&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj03/" rel="alternate"/><published>2019-12-30T00:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-01-01T20:28:35.164092+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;基本步骤&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj03/" rel="alternate"/><published>2019-12-30T00:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-01-01T20:43:19.539877+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;基本步骤&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/li&gt;
 &lt;li&gt;在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/li&gt;
@@ -833,7 +832,7 @@ spring:
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;5. 测试访问&lt;/h3&gt;
 &lt;p&gt;启动项目，输入&lt;a href="http://localhost:8080/freemarker/toDemo"&gt;http://localhost:8080/freemarker/toDemo&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2019-12-30T02:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj05/</id><title>SpringBoot中常用的JSON解析方案</title><updated>2020-01-01T20:28:35.164046+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;约定大于配置&lt;/strong&gt;        -- SpringBoot&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2019-12-30T02:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj05/</id><title>SpringBoot中常用的JSON解析方案</title><updated>2020-01-01T20:43:19.539748+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;约定大于配置&lt;/strong&gt;        -- SpringBoot&lt;/p&gt;
 &lt;p&gt;本文整理了一下SpringBoot中常用的JSON解析方案&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1&gt; &lt;/h1&gt;

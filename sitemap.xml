@@ -77,7 +77,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/bj05/</loc>
+        <loc>/Xuxx_Blogs/archives/bj06/</loc>
+        <lastmod>2019-12-02</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
+        <loc>/Xuxx_Blogs/archives/bj06/</loc>
         <lastmod>2019-12-02</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>

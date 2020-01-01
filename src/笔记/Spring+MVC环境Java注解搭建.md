@@ -81,7 +81,7 @@ public class SpringMvcConfig {
 ##### 3.web.xml 配置类
 
 ```java
-3.package com.xuxx.controller;
+package com.xuxx.controller;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -327,6 +327,4 @@ public class JsonController {
 ```
 
 ###### 3.4测试
-
-<img src="..\images\笔记\6.png" style="zoom:80%;" />
 

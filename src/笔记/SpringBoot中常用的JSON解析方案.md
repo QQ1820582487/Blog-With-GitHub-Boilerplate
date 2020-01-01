@@ -2,7 +2,7 @@
 layout: post
 title: SpringBoot中常用的JSON解析方案
 slug: bj05
-date: 2019-12-02 03:50
+date: 2020-01-02 03:50
 status: publish
 author: Xuxx
 categories: 
@@ -14,7 +14,7 @@ tags:
 excerpt: 笔记
 ---
 
-> **约定大于配置**   		~ SpringBoot
+> **约定大于配置**   		-- SpringBoot
 >
 > 本文整理了一下SpringBoot中常用的JSON解析方案
 
@@ -163,7 +163,7 @@ public class WebMvcConfig {
 ]
 ```
 
-上面可以看到此时我只需要配置 `ObjectMapper`，与`MappingJackson2HttpMessageConverter`没太大关系（当然，它有它的用处，例如这些：<img src="..\images\笔记\6.png" style="zoom:50%;" />）
+上面可以看到此时我只需要配置 `ObjectMapper`，与`MappingJackson2HttpMessageConverter`没太大关系（当然，它有它的用处，例如这些：![](..\images\笔记\6.png)）
 
 所以我可以采取另一种方式来配置Jackson——直接注入自己定义的`ObjectMapper`，替换掉springboot中自动配置的`ObjectMapper`。
 

@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e54e0f3d7ba34211139d2759307cbe8c.json"
+        }
+    </script>
+    
+<title>SpringBoot中常用的JSON解析方案 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="SpringBoot中常用的JSON解析方案 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj05/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2019-12-02T03:50:00-00.00" />
+<meta name="twitter:title" content="SpringBoot中常用的JSON解析方案 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>只坚持一种正义——我的正义。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">SpringBoot中常用的JSON解析方案</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2019-12-02
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <blockquote><p><strong>约定大于配置</strong>        ~ SpringBoot</p>
+<p>本文整理了一下SpringBoot中常用的JSON解析方案</p>
+</blockquote>
+<h1> </h1>
+<h1>1.HttpMessageConverter</h1>
+<p><code>HttpMessageConverter</code> ，这是一个消息转换工具，有两方面的功能：</p>
+<ol>
+<li>将服务端返回的对象序列化成 JSON 字符串</li>
+<li>将前端传来的 JSON 字符串反序列化成 Java 对象</li>
+</ol>
+<p>所有的 JSON 生成都离不开相关的 HttpMessageConverter</p>
+<p>SpringMVC 自动配置了 <code>Jackson</code> 和 <code>Gson</code> 的 <code>HttpMessageConverter</code>，Spring Boot 中又对此做了自动化配置：</p>
+<ul>
+<li><p>org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration</p>
+</li>
+<li><p>org.springframework.boot.autoconfigure.http.GsonHttpMessageConvertersConfiguration</p>
+</li>
+</ul>
+<p>所以，如果用户使用 <code>jackson</code> 和 <code>gson</code> 的话，==没有其他额外配置==，则只需要添加依赖即可。</p>
+<h1>2. Jackson</h1>
+<h2>1.1 引入web依赖</h2>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h2>1.2 编写bean</h2>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+    <span class="c1">//set/get/toString略</span>
+<span class="p">}</span>
+</pre></div>
+<h2>1.3 编写controller</h2>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span><span class="c1">// @Controller + @ResponseBody</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span> <span class="p">{</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUaer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">();</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">users</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>1.4 测试，查看结果</h2>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<h2>3. 配置Jackson</h2>
+<h3>1.问题 - 单独配置 Jackson</h3>
+<p>修改bean</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+    <span class="nd">@JsonFormat</span><span class="p">(</span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthday</span><span class="p">;</span>
+    <span class="c1">//set/get/toString略</span>
+<span class="p">}</span>
+</pre></div>
+<p>访问结果</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-12-30&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<h3>2.解决 - Jackson的全局配置</h3>
+<p>先注释上一步中的<code>@JsonFormat(pattern = "yyyy-MM-dd")</code></p>
+<h4>2.1 配置<code>MappingJackson2HttpMessageConverter</code></h4>
+<p>新建配置类<code>WebMvcConfig.java</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">MappingJackson2HttpMessageConverter</span> <span class="nf">jackson2HttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">MappingJackson2HttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MappingJackson2HttpMessageConverter</span><span class="p">();</span>
+        <span class="c1">//配置Jackson         此处可配置很多东西</span>
+        <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">();</span>
+        <span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">));</span>
+
+        <span class="c1">//将配置好的Jackson注入回MappingJackson2HttpMessageConverter</span>
+        <span class="n">converter</span><span class="p">.</span><span class="na">setObjectMapper</span><span class="p">(</span><span class="n">mapper</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>再次测试，结果为</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019年12月31日&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<p>上面可以看到此时我只需要配置 <code>ObjectMapper</code>，与<code>MappingJackson2HttpMessageConverter</code>没太大关系（当然，它有它的用处，例如这些：<img src="..\..\images\笔记\6.png" style="zoom:50%;" />）</p>
+<p>所以我可以采取另一种方式来配置Jackson——直接注入自己定义的<code>ObjectMapper</code>，替换掉springboot中自动配置的<code>ObjectMapper</code>。</p>
+<blockquote><p><em>这里我们可以发现，我们是可以注入自己配置的类来替换掉springboot中自动配置的类的，也就是springboot中的<strong>“约定大于配置 ”</strong>。</em></p>
+</blockquote>
+<h4>2.2 直接配置<code>ObjectMapper</code></h4>
+<p>注释上一步的配置，修改配置类为</p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+   <span class="nd">@Bean</span>
+    <span class="n">ObjectMapper</span> <span class="nf">objectMapper</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">();</span>
+        <span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">mapper</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>再次测试，结果为</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019/12/31&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<h1>3. Gson</h1>
+<h2>1. 基本使用</h2>
+<p>自动化配置类：</p>
+<blockquote><p><code>org.springframework.boot.autoconfigure.http.Gson Configuration</code></p>
+<p><code>org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration</code></p>
+</blockquote>
+<h3>1. 配置依赖</h3>
+<h4>1.1 排除默认的Jackson</h4>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="c">&lt;!--排除默认的Jackson--&gt;</span>
+        <span class="nt">&lt;exclusions&gt;</span>
+            <span class="nt">&lt;exclusion&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-json<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;/exclusion&gt;</span>
+        <span class="nt">&lt;/exclusions&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h4>1.2 引入Gson依赖</h4>
+<div class="highlight"><pre><span></span><span class="c">&lt;!--Gson--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>2. Bean</h3>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthday</span><span class="p">;</span>
+    <span class="c1">//set/get/toString略</span>
+<span class="p">}</span>
+</pre></div>
+<h3>3. Controller</h3>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span><span class="c1">// @Controller + @ResponseBody</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span> <span class="p">{</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUaer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">();</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">user</span><span class="p">.</span><span class="na">setBirthday</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+            <span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">users</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>4.测试结果</h3>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;Dec 31, 2019 3:37:48 AM&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<h2>2. Gson配置</h2>
+<h3>1.配置<code>GsonHttpMessageConverter</code></h3>
+<h4>1.1 创建配置类 WebMvcConfig</h4>
+<p>与配置Jackson类似</p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">GsonHttpMessageConverter</span> <span class="nf">gsonHttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">GsonHttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GsonHttpMessageConverter</span><span class="p">();</span>
+        <span class="n">converter</span><span class="p">.</span><span class="na">setGson</span><span class="p">(</span><span class="k">new</span> <span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+<h4>1.2 测试结果</h4>
+<div class="highlight"><pre><span></span>[
+  {
+    &quot;id&quot;: 0,
+    &quot;username&quot;: &quot;Xuxx&gt;&gt;0&quot;,
+    &quot;address&quot;: &quot;中国&gt;&gt;0&quot;,
+    &quot;birthday&quot;: &quot;2019-12-31&quot;
+  },...
+]
+</pre></div>
+<h3>2.直接配置Gson</h3>
+<h4>2.1 配置类</h4>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+    <span class="nd">@Bean</span>
+    <span class="n">Gson</span> <span class="nf">gson</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>2.2 测试</h4>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019年12月31日&quot;</span>
+  <span class="p">},</span><span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+<h1>4. Fastjson</h1>
+<h2>1. 依赖</h2>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.2.49<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>Bean和Controller都与上例相同</p>
+<h2>2.配置类</h2>
+<p><strong><code>Fastjson</code>必须自己手动提供HttpMessageConverter</strong></p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+    <span class="cm">/*Fastjson配置*/</span>
+    <span class="nd">@Bean</span>
+    <span class="c1">//Fastjson必须自己手动提供HttpMessageConverter</span>
+    <span class="n">FastJsonHttpMessageConverter</span> <span class="nf">fastJsonHttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">FastJsonHttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastJsonHttpMessageConverter</span><span class="p">();</span>
+        <span class="n">converter</span><span class="p">.</span><span class="na">setDefaultCharset</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">));</span><span class="c1">//默认编码时中文乱码</span>
+        <span class="n">FastJsonConfig</span> <span class="n">fastJsonConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastJsonConfig</span><span class="p">();</span>
+        <span class="n">fastJsonConfig</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">);</span><span class="c1">//设置日期格式</span>
+        <span class="n">converter</span><span class="p">.</span><span class="na">setFastJsonConfig</span><span class="p">(</span><span class="n">fastJsonConfig</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+<h2>3.测试结果</h2>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2020/01/02&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span>
+  <span class="p">},</span><span class="err">..</span>
+<span class="p">]</span>
+</pre></div>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/笔记/">#笔记</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj06/">SpringBoot中静态资源访问</a>
+        <p class="yue">笔记</p>
+    </div>
+
+
+    <div class="prev">
+        <h3>没有了</h3>
+        <p class="yue">这是最旧的文章</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

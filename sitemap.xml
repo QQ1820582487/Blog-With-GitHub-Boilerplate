@@ -49,34 +49,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/Thoughts04/</loc>
-        <lastmod>2019-12-29</lastmod>
-        <changefreq>always</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <url>
-        <loc>/Xuxx_Blogs/archives/Thoughts02/</loc>
-        <lastmod>2019-12-26</lastmod>
-        <changefreq>always</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <url>
-        <loc>/Xuxx_Blogs/archives/Thoughts03/</loc>
-        <lastmod>2019-12-26</lastmod>
-        <changefreq>always</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <url>
-        <loc>/Xuxx_Blogs/archives/Thoughts01/</loc>
-        <lastmod>2019-12-26</lastmod>
-        <changefreq>always</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <url>
         <loc>/Xuxx_Blogs/archives/my-first/</loc>
         <lastmod>2019-12-26</lastmod>
         <changefreq>always</changefreq>

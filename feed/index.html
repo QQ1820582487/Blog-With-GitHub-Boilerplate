@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>只坚持一种正义——我的正义。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 13 Apr 2020 15:29:42 +0806</lastBuildDate><pubDate>Mon, 13 Apr 2020 15:29:42 +0806</pubDate><item><title>SpringBoot中静态资源访问</title><link>/Xuxx_Blogs/archives/bj06/</link><description></description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj06/</guid><pubDate>Mon, 02 Dec 2019 03:50:00 +0806</pubDate></item><item><title>我的第一篇文章</title><link>/Xuxx_Blogs/archives/my-first/</link><description>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>只坚持一种正义——我的正义。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 15 Apr 2020 14:34:13 +0806</lastBuildDate><pubDate>Wed, 15 Apr 2020 14:34:13 +0806</pubDate><item><title>我的第一篇文章</title><link>/Xuxx_Blogs/archives/my-first/</link><description>&lt;p&gt;这是我的第一篇文章。文章使用 GitHub 管理，并通过 GitHub Actions 自动构建与发布！&lt;/p&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/my-first/</guid><pubDate>Thu, 26 Dec 2019 01:55:00 +0806</pubDate></item><item><title>Spring+Spring MVC环境（Xml）搭建</title><link>/Xuxx_Blogs/archives/bj01/</link><description>&lt;h3&gt;1.创建工程&lt;/h3&gt;
 &lt;p&gt;1.添加spring-webmvc依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
@@ -1111,4 +1111,57 @@ spring:
   &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;..&lt;/span&gt;
 &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj05/</guid><pubDate>Thu, 02 Jan 2020 03:50:00 +0806</pubDate></item></channel></rss>
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj05/</guid><pubDate>Thu, 02 Jan 2020 03:50:00 +0806</pubDate></item><item><title>实用SQL语句</title><link>/Xuxx_Blogs/archives/bj06/</link><description>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
+&lt;hr&gt;
+&lt;p&gt;在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。&lt;/p&gt;
+&lt;h3&gt;插入或替换&lt;/h3&gt;
+&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用&lt;code&gt;REPLACE&lt;/code&gt;语句，这样就不必先查询，再决定是否先删除再插入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;REPLACE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;REPLACE&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被删除，然后再插入新记录。&lt;/p&gt;
+&lt;h3&gt;插入或更新&lt;/h3&gt;
+&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用&lt;code&gt;INSERT INTO ... ON DUPLICATE KEY UPDATE ...&lt;/code&gt;语句：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99) ON DUPLICATE KEY UPDATE name='小明', gender='F', score=99;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被更新，更新的字段由&lt;code&gt;UPDATE&lt;/code&gt;指定。&lt;/p&gt;
+&lt;h3&gt;插入或忽略&lt;/h3&gt;
+&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用&lt;code&gt;INSERT IGNORE INTO ...&lt;/code&gt;语句：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，不执行任何操作。&lt;/p&gt;
+&lt;h3&gt;快照&lt;/h3&gt;
+&lt;p&gt;如果想要对一个表进行快照，即复制一份当前表的数据到一个新表，可以结合&lt;code&gt;CREATE TABLE&lt;/code&gt;和&lt;code&gt;SELECT&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-- 对class_id=1的记录进行快照，并存储为新表students_of_class1:
+CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;新创建的表结构和&lt;code&gt;SELECT&lt;/code&gt;使用的表结构完全一致。&lt;/p&gt;
+&lt;h3&gt;写入查询结果集&lt;/h3&gt;
+&lt;p&gt;如果查询结果集需要写入到表中，可以结合&lt;code&gt;INSERT&lt;/code&gt;和&lt;code&gt;SELECT&lt;/code&gt;，将&lt;code&gt;SELECT&lt;/code&gt;语句的结果集直接插入到指定表中。&lt;/p&gt;
+&lt;p&gt;例如，创建一个统计成绩的表&lt;code&gt;statistics&lt;/code&gt;，记录各班的平均成绩：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE TABLE statistics (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    class_id BIGINT NOT NULL,
+    average DOUBLE NOT NULL,
+    PRIMARY KEY (id)
+);&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后，我们就可以用一条语句写入各班的平均成绩：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;INSERT INTO statistics (class_id, average) SELECT class_id, AVG(score) FROM students GROUP BY class_id;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;确保&lt;code&gt;INSERT&lt;/code&gt;语句的列和&lt;code&gt;SELECT&lt;/code&gt;语句的列能一一对应，就可以在&lt;code&gt;statistics&lt;/code&gt;表中直接保存查询的结果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM statistics;
++----+----------+--------------+
+| id | class_id | average      |
++----+----------+--------------+
+|  1 |        1 |         86.5 |
+|  2 |        2 | 73.666666666 |
+|  3 |        3 | 88.333333333 |
++----+----------+--------------+
+3 rows in set (0.00 sec)&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;强制使用指定索引&lt;/h3&gt;
+&lt;p&gt;在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果我们知道如何选择索引，可以使用&lt;code&gt;FORCE INDEX&lt;/code&gt;强制查询使用指定的索引。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM students FORCE INDEX (idx_class_id) WHERE class_id = 1 ORDER BY id DESC;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;指定索引的前提是索引&lt;code&gt;idx_class_id&lt;/code&gt;必须存在。&lt;/p&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj06/</guid><pubDate>Wed, 15 Apr 2020 22:25:00 +0806</pubDate></item></channel></rss>

@@ -10,6 +10,7 @@ categories:
 tags: 
   - 笔记
   - mysql
+  - 数据库
 excerpt: 笔记
 ---
 #### 实用SQL语句

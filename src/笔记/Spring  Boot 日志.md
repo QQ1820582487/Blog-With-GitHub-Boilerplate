@@ -1,3 +1,17 @@
+---
+layout: post
+title: Spring  Boot 记录日志
+slug: bj08
+date: 2020-05-03 01:55
+status: publish
+author: Xuxx
+categories: 
+  - 笔记
+tags: 
+  - 笔记
+  - 日志
+excerpt: 笔记
+---
 ## Spring  Boot 记录日志
 
 ### 1.基本操作

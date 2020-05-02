@@ -40,7 +40,7 @@ public class SpringbootApplication {
 }
 ```
 
-![1588446986097](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\Spring  Boot 记录日志_1.png)
+![](https://github.com/QQ1820582487/Xuxx_Blogs/blob/source/src/static/Spring%20%20Boot%20%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97_1.png)
 
 ### 2.便捷操作
 
@@ -63,4 +63,4 @@ public class SpringbootApplication {
 }
 ```
 
-![1588446986097](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\Spring  Boot 记录日志_1.png)
+![](https://github.com/QQ1820582487/Xuxx_Blogs/blob/source/src/static/Spring%20%20Boot%20%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97_1.png)

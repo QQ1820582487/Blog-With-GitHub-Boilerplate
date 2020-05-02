@@ -26,7 +26,7 @@ public class SpringbootApplication {
 }
 ```
 
-![1588446986097](C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1588446986097.png)
+![1588446986097](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\Spring  Boot 记录日志_1.png)
 
 ### 2.便捷操作
 
@@ -49,4 +49,4 @@ public class SpringbootApplication {
 }
 ```
 
-![1588446986097](C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1588446986097.png)
+![1588446986097](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\Spring  Boot 记录日志_1.png)

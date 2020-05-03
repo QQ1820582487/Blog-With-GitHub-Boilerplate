@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/aada6977f899459faa68cdb66e6135f3.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/bb520529173cc939e669f48be4d03b8a.json"
         }
     </script>
     
@@ -30,7 +30,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/Xuxx_Blogs/archives/bj04/" />
 <meta property="og:image" content="" />
-<meta property="article:published_time" content="2019-12-30T02:58:00-00.00" />
+<meta property="article:published_time" content="2020-05-04T00:50:00-00.00" />
 <meta name="twitter:title" content="SpringBoot整合Freemarker - Xuxx的个人博客。" />
 <meta name="twitter:description" content="笔记" />
 <meta name="twitter:card" content="summary" />
@@ -76,7 +76,7 @@
             <span class="ga-post_meta ga-mono">
                 <span>Xuxx</span>
                 <time>
-                    2019-12-30
+                    2020-05-04
                 </time>
                 
                 in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
@@ -86,7 +86,7 @@
                 
             </span>
             <div class="ga-content_body">
-                <h3>基本步骤</h3>
+                <h3>一.基本步骤</h3>
 <ul>
 <li>添加<code>pom</code>依赖</li>
 <li>在<code>application.yml</code>中添加相关配置</li>
@@ -107,7 +107,7 @@
 spring:
   freemarker:
     # 设置模板后缀名 默认.ftl (现已改为ftlh)
-    #suffix: .ftl
+    #suffix: .ftlh
     # 设置文档类型  默认 text/html
     #content-type: text/html
     # 设置页面编码格式  默认 UTF-8
@@ -122,7 +122,7 @@ spring:
   mvc:
     static-path-pattern: /static/**</code></pre>
 <h3>3. 创建<code>freemarker</code>模板</h3>
-<p>目录：src/main/resources 创建templates文件夹，文件夹里新建<code>freemarker.ftl</code>文件</p>
+<p>目录：src/main/resources 创建templates文件夹，文件夹里新建<code>freemarker.ftlh</code>文件</p>
 <div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -149,6 +149,400 @@ spring:
 </pre></div>
 <h3>5. 测试访问</h3>
 <p>启动项目，输入<a href="http://localhost:8080/freemarker/toDemo">http://localhost:8080/freemarker/toDemo</a></p>
+<h3>二.FreeMarker常用指令</h3>
+<h4>1.if, else, elseif</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#if 条件&gt;...
+    <span class="err">&lt;</span>#elseif 条件&gt;...
+    <span class="err">&lt;</span>#elseif 条件&gt;...
+    <span class="err">&lt;</span>#else&gt;...
+<span class="err">&lt;</span>/#if&gt;
+</pre></div>
+<p>用例</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#if user.gender==1&gt;男
+    <span class="err">&lt;</span>#elseif user.gender==0&gt;女
+    <span class="err">&lt;</span>#else&gt;未知
+<span class="err">&lt;</span>/#if&gt;
+</pre></div>
+<h4>2.switch, case, default, break</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#switch value&gt;
+  <span class="err">&lt;</span>#case refValue1&gt;
+    ...
+    <span class="err">&lt;</span>#break&gt;
+  <span class="err">&lt;</span>#case refValue2&gt;
+    ...
+    <span class="err">&lt;</span>#break&gt;
+  <span class="err">&lt;</span>#case refValueN&gt;
+    ...
+    <span class="err">&lt;</span>#break&gt;
+  <span class="err">&lt;</span>#default&gt;
+    ...
+<span class="err">&lt;</span>/#switch&gt;
+</pre></div>
+<p>用例</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#switch user.gender&gt;
+    <span class="err">&lt;</span>#case 1&gt;男<span class="err">&lt;</span>#break&gt;
+    <span class="err">&lt;</span>#case 0&gt;女<span class="err">&lt;</span>#break&gt;
+    <span class="err">&lt;</span>#default&gt;未知
+<span class="err">&lt;</span>/#switch&gt;
+</pre></div>
+<h4>3.list, break</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#list sequence as item&gt;
+    ...
+    <span class="err">&lt;</span>#if item = &quot;spring&quot;&gt;<span class="err">&lt;</span>#break&gt;<span class="err">&lt;</span>/#if&gt;
+    ...
+<span class="err">&lt;</span>/#list&gt;
+</pre></div>
+<p>关键字</p>
+<ol>
+<li>item_index:是list当前值的下标</li>
+<li>item_has_next:判断list是否还有值</li>
+</ol>
+<p>用例</p>
+
+<pre><code>&lt;#assign seq = ["winter", "spring", "summer", "autumn"]&gt;
+&lt;#list seq as x&gt;
+  ${x_index + 1}. ${x}&lt;#if x_has_next&gt;,&lt;/#if&gt;
+&lt;/#list&gt;</code></pre>
+<p>输出</p>
+<ol>
+<li><p>winter,</p>
+</li>
+<li><p>spring,</p>
+</li>
+<li><p>summer,</p>
+<ol>
+<li>autumn  </li>
+</ol>
+</li>
+</ol>
+<h4>4.include</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#include filename&gt;
+or
+<span class="err">&lt;</span>#include filename options&gt;
+</pre></div>
+<p>options包含两个属性</p>
+<ol>
+<li>encoding=”GBK” 编码格式</li>
+<li>parse=true 是否作为ftl语法解析,默认是true，false就是以文本方式引入.注意在ftl文件里布尔值都是直接赋值的如parse=true,而不是parse=”true”</li>
+</ol>
+<p>用例</p>
+<p>/common/copyright.ftl包含内容</p>
+<div class="highlight"><pre><span></span>Copyright 2001-2002 ${me}<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+All rights reserved.
+</pre></div>
+<p>模板文件</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign me = &quot;Juila Smith&quot;&gt;
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Some test<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Yeah.
+<span class="p">&lt;</span><span class="nt">hr</span><span class="p">&gt;</span>
+<span class="err">&lt;</span>#include &quot;/common/copyright.ftl&quot; encoding=”GBK”&gt;
+</pre></div>
+<p>输出结果</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Some test<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Yeah.
+<span class="p">&lt;</span><span class="nt">hr</span><span class="p">&gt;</span>
+Copyright 2001-2002 Juila Smith
+All rights reserved.
+</pre></div>
+<h4>5.Import</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#import path as hash&gt;
+</pre></div>
+<p>类似于java里的import,它导入文件，然后就可以在当前文件里使用被导入文件里的宏组件</p>
+<p>用例</p>
+<p>假设mylib.ftl里定义了宏copyright那么我们在其他模板页面里可以这样使用</p>
+
+<pre><code>&lt;#import "/libs/mylib.ftl" as my&gt;
+&lt;@my.copyright date="1999-2002"/&gt;</code></pre>
+<p>"my"在freemarker里被称作namespace</p>
+<h4>6.compress</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#compress&gt;
+  ...
+<span class="err">&lt;</span>/#compress&gt;
+</pre></div>
+<p>用来压缩空白空间和空白的行</p>
+<p>用例</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign x = &quot;    moo  \n\n   &quot;&gt;
+(<span class="err">&lt;</span>#compress&gt;
+  1 2  3   4    5
+  ${moo}
+  test only
+  I said, test only
+<span class="err">&lt;</span>/#compress&gt;)
+</pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span>(1 2 3 4 5
+moo
+test only
+I said, test only)
+</pre></div>
+<h4>7.escape, noescape</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#escape identifier as expression&gt;
+  ...
+  <span class="err">&lt;</span>#noescape&gt;...<span class="err">&lt;</span>/#noescape&gt;
+  ...
+<span class="err">&lt;</span>/#escape&gt;
+</pre></div>
+<p>用例</p>
+<p>主要使用在相似的字符串变量输出，比如某一个模块的所有字符串输出都必须是html安全的，这个时候就可以使用该表达式</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#escape x as x?html&gt;
+  First name: ${firstName}
+  <span class="err">&lt;</span>#noescape&gt;Last name: ${lastName}<span class="err">&lt;</span>/#noescape&gt;
+  Maiden name: ${maidenName}
+<span class="err">&lt;</span>/#escape&gt;
+</pre></div>
+<p>相同表达式</p>
+<div class="highlight"><pre><span></span>First name: ${firstName?html}
+  Last name: ${lastName }
+  Maiden name: ${maidenName?html}
+</pre></div>
+<h4>8.assign</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign name=value&gt;
+or
+<span class="err">&lt;</span>#assign name1=value1 name2=value2 ... nameN=valueN&gt;
+or
+<span class="err">&lt;</span>#assign same as above... in namespacehash&gt;
+or
+<span class="err">&lt;</span>#assign name&gt;
+  capture this
+<span class="err">&lt;</span>/#assign&gt;
+or
+<span class="err">&lt;</span>#assign name in namespacehash&gt;
+  capture this
+<span class="err">&lt;</span>/#assign&gt;
+</pre></div>
+<p>用例</p>
+<p>生成变量,并且给变量赋值</p>
+<p>给seasons赋予序列值</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign seasons = [&quot;winter&quot;, &quot;spring&quot;, &quot;summer&quot;, &quot;autumn&quot;]&gt;
+</pre></div>
+<p>给变量test加1</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign test = test + 1&gt;
+</pre></div>
+<p>给my namespage 赋予一个变量bgColor,下面可以通过my.bgColor来访问这个变量</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#import &quot;/mylib.ftl&quot; as my&gt;
+<span class="err">&lt;</span>#assign bgColor=&quot;red&quot; in my&gt;
+</pre></div>
+<p>将一段输出的文本作为变量保存在x里</p>
+<p>下面的阴影部分输出的文本将被赋值给x</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign x&gt;
+<span class="err">&lt;</span>#list [&quot;星期一&quot;, &quot;星期二&quot;, &quot;星期三&quot;, &quot;星期四&quot;, &quot;星期五&quot;, &quot;星期六&quot;, &quot;星期天&quot;] as n&gt;
+${n}
+<span class="err">&lt;</span>/#list&gt;
+<span class="err">&lt;</span>/#assign&gt;
+${x}
+</pre></div>
+<p>上面的代码将产生如下输出:星期一 星期二 星期三 星期四 星期五 星期六 星期天</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign x&gt;Hello ${user}!<span class="err">&lt;</span>/#assign&gt;     error
+<span class="err">&lt;</span>#assign x=” Hello ${user}!”&gt;         true
+</pre></div>
+<p>同时也支持中文赋值，如：</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#assign 语法&gt;
+  java
+<span class="err">&lt;</span>/#assign&gt;
+${语法}
+</pre></div>
+<p>打印输出:</p>
+<p>java</p>
+<h4>9.global</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#global name=value&gt;
+or
+<span class="err">&lt;</span>#global name1=value1 name2=value2 ... nameN=valueN&gt;
+or
+<span class="err">&lt;</span>#global name&gt;
+  capture this
+<span class="err">&lt;</span>/#global&gt;
+</pre></div>
+<p>全局赋值语法，利用这个语法给变量赋值，那么这个变量在所有的namespace中是可见的,如果这个变量被当前的assign语法覆盖 如&lt;#global x=2&gt; &lt;#assign x=1&gt; 在当前页面里x=2将被隐藏，或者通过${.global.x}来访问</p>
+<h4>10.setting</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#setting name=value&gt;
+</pre></div>
+<p>用来设置整个系统的一个环境</p>
+<ol>
+<li>locale</li>
+<li>number_format</li>
+<li>boolean_format</li>
+<li>date_format, time_format, datetime_format</li>
+<li>time_zone</li>
+<li>classic_compatible</li>
+</ol>
+<p>用例</p>
+<p>假如当前是匈牙利的设置，然后修改成美国</p>
+<div class="highlight"><pre><span></span>${1.2}
+<span class="err">&lt;</span>#setting locale=&quot;en_US&quot;&gt;
+${1.2}
+</pre></div>
+<p>输出</p>
+<p>1,2</p>
+<p>1.2</p>
+<p>因为匈牙利是采用“,”作为十进制的分隔符，美国是用“.”</p>
+<h4>11.macro, nested, return</h4>
+<p>语法</p>
+<div class="highlight"><pre><span></span><span class="err">&lt;</span>#macro name param1 param2 ... paramN&gt;
+  ...
+  <span class="err">&lt;</span>#nested loopvar1, loopvar2, ..., loopvarN&gt;
+  ...
+  <span class="err">&lt;</span>#return&gt;
+  ...
+<span class="err">&lt;</span>/#macro&gt;
+</pre></div>
+<p>用例</p>
+
+<pre><code>&lt;#macro test foo bar="Bar" baaz=-1&gt;
+  Test text, and the params: ${foo}, ${bar}, ${baaz}
+&lt;/#macro&gt;
+&lt;@test foo="a" bar="b" baaz=5*5-2/&gt;
+&lt;@test foo="a" bar="b"/&gt;
+&lt;@test foo="a" baaz=5*5-2/&gt;
+&lt;@test foo="a"/&gt;</code></pre>
+<p>输出</p>
+
+<pre><code>  Test text, and the params: a, b, 23
+  Test text, and the params: a, b, -1
+  Test text, and the params: a, Bar, 23
+  Test text, and the params: a, Bar, -1</code></pre>
+<p>定义循环输出的宏</p>
+
+<pre><code>&lt;#macro list title items&gt;
+  &lt;p&gt;${title?cap_first}:
+  &lt;ul&gt;
+    &lt;#list items as x&gt;
+      &lt;li&gt;${x?cap_first}
+    &lt;/#list&gt;
+  &lt;/ul&gt;
+&lt;/#macro&gt;
+&lt;@list items=["mouse", "elephant", "python"] title="Animals"/&gt;</code></pre>
+<p>输出结果</p>
+
+<pre><code>&lt;p&gt;Animals:
+  &lt;ul&gt;
+      &lt;li&gt;Mouse
+      &lt;li&gt;Elephant
+      &lt;li&gt;Python
+  &lt;/ul&gt;</code></pre>
+<p>包含body的宏</p>
+
+<pre><code>&lt;#macro repeat count&gt;
+  &lt;#list 1..count as x&gt;
+    &lt;#nested x, x/2, x==count&gt;
+  &lt;/#list&gt;
+&lt;/#macro&gt;
+&lt;@repeat count=4 ; c halfc last&gt;
+  ${c}. ${halfc}&lt;#if last&gt; Last!&lt;/#if&gt;
+&lt;/@repeat &gt;</code></pre>
+<p>输出</p>
+<ol>
+<li><p>0.5</p>
+</li>
+<li><p>1</p>
+</li>
+<li><p>1.5</p>
+</li>
+<li><p>2 Last!</p>
+</li>
+</ol>
+<h4>12.t, lt, rt</h4>
+<p>语法</p>
+
+<pre><code>&lt;#t&gt; 去掉左右空白和回车换行
+&lt;#lt&gt;去掉左边空白和回车换行
+&lt;#rt&gt;去掉右边空白和回车换行
+&lt;#nt&gt;取消上面的效果</code></pre>
+<p>当然 (<a href="http://freemarker.foofun.cn/ref_directives.html">指令还有很多</a>)。</p>
+<h3>三、常用内建函数</h3>
+<p>内建函数很像子变量(如果了解Java术语的话，也可以说像方法)， 它们并不是数据模型中的东西，是 FreeMarker 在数值上添加的。 为了清晰子变量是哪部分，使用 ?(问号)代替 .(点)来访问它们。常用内建函数的示例：</p>
+<ul>
+<li>user?html 给出 user 的HTML转义版本， 比如 &amp; 会由 &amp; 来代替。</li>
+</ul>
+<ul>
+<li>user?upper_case 给出 user 值的大写版本 (比如 "JOHN DOE" 来替代 "John Doe")</li>
+</ul>
+<ul>
+<li>animal.name?cap_first 给出 animal.name 的首字母大写版本(比如 "Mouse" 来替代 "mouse")</li>
+</ul>
+<ul>
+<li>user?length 给出 user 值中 字符的数量(对于 "John Doe" 来说就是8)</li>
+</ul>
+<ul>
+<li>animals?size 给出 animals 序列中 项目 的个数(我们示例数据模型中是3个)</li>
+</ul>
+<p>如果在 &lt;#list animals as animal&gt; 和对应的 &lt;/#list&gt; 标签中：</p>
+<ul>
+<li>animal?index 给出了在 animals 中基于0开始的 animal的索引值</li>
+</ul>
+<ul>
+<li>animal?counter 也像 index， 但是给出的是基于1的索引值</li>
+</ul>
+<ul>
+<li>animal?item_parity 基于当前计数的奇偶性，给出字符串 "odd" 或 "even"。在给不同行着色时非常有用，比如在 <td class="${animal?item_parity}Row">中。</li>
+</ul>
+<p>一些内建函数需要参数来指定行为，比如：</p>
+<ul>
+<li>animal.protected?string("Y", "N") 基于 animal.protected 的布尔值来返回字符串 "Y" 或 "N"。</li>
+</ul>
+<ul>
+<li>animal?item_cycle('lightRow','darkRow') 是之前介绍的 item_parity 更为常用的变体形式。</li>
+</ul>
+<ul>
+<li>fruits?join(", ") 通过连接所有项，将列表转换为字符串， 在每个项之间插入参数分隔符(比如 "orange,banana")</li>
+</ul>
+<ul>
+<li>user?starts_with("J") 根据 user 的首字母是否是 "J" 返回布尔值true或false。</li>
+</ul>
+<p>内建函数应用可以链式操作，比如user?upper_case?html 会先转换用户名到大写形式，之后再进行HTML转义。(这就像可以链式使用 .(点)一样)</p>
+<p>可以阅读 <a href="http://freemarker.foofun.cn/ref_builtins.html">全部内建函数参考</a>。</p>
+<h3>四、快速浏览(备忘单)</h3>
+<p>这里给已经了解 FreeMarker 的人或有经验的程序员的提个醒：</p>
+<p>直接指定值</p>
+<ul>
+<li>字符串： "Foo" 或者 'Foo' 或者 "It's \"quoted\"" 或者 'It\'s "quoted"' 或者 r"C:\raw\string"</li>
+<li>数字： 123.45</li>
+<li>布尔值： true， false</li>
+<li>序列： ["foo", "bar", 123.45]； 值域： 0..9, 0..&lt;10 (或 0..!10), 0..</li>
+<li>哈希表： {"name":"green mouse", "price":150}</li>
+</ul>
+<p>检索变量</p>
+<ul>
+<li>顶层变量： user</li>
+<li>从哈希表中检索数据： user.name， user["name"]</li>
+<li>从序列中检索数据： products[5]</li>
+<li>特殊变量： .main</li>
+</ul>
+<p>字符串操作</p>
+<ul>
+<li>插值(或连接)： "Hello ${user}!" (或 "Hello " + user + "!")</li>
+<li>获取一个字符： name[0]</li>
+<li>字符串切分： 包含结尾： name[0..4]，不包含结尾： name[0..&lt;5]，基于长度(宽容处理)： name[0..*5]，去除开头： name[5..]</li>
+</ul>
+<p>序列操作</p>
+<ul>
+<li>连接： users + ["guest"]</li>
+<li>序列切分：包含结尾： products[20..29]， 不包含结尾： products[20..&lt;30]，基于长度(宽容处理)： products[20..*10]，去除开头： products[20..]</li>
+</ul>
+<p>哈希表操作</p>
+<ul>
+<li>连接： passwords + { "joe": "secret42" }</li>
+</ul>
+<p>算术运算： (x * 1.5 + 10) / 2 - y % 100</p>
+<p>比较运算： x == y， x != y， x &lt; y， x &gt; y， x &gt;= y， x &lt;= y， x lt y， x lte y， x gt y， x gte y， 等等。。。。。。</p>
+<p>逻辑操作： !registered &amp;&amp; (firstVisit || fromEurope)</p>
+<p>内建函数： name?upper_case, path?ensure_starts_with('/')</p>
+<p>方法调用： repeat("What", 3)</p>
+<p>处理不存在的值：</p>
+<ul>
+<li>默认值： name!"unknown" 或者 (user.name)!"unknown" 或者 name! 或者 (user.name)!</li>
+<li>检测不存在的值： name?? 或者 (user.name)??</li>
+</ul>
+<p>赋值操作： =, +=, -=, *=, /=, %=, ++, --</p>
 
             </div>
         </article>
@@ -173,13 +567,13 @@ spring:
 <section id="ga-content_pager">
 
     <div class="next">
-        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj05/">SpringBoot中常用的JSON解析方案</a>
-        <p class="yue">笔记</p>
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
     </div>
 
 
     <div class="prev">
-        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj03/">SpringBoot基础配置/注解</a>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj08/">Spring  Boot 记录日志</a>
         <p class="yue">笔记</p>
     </div>
 

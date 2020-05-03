@@ -39,17 +39,17 @@ excerpt: 笔记
 # 配置freemarker
 spring:
   freemarker:
-    # 设置模板后缀名 默认.ftl
-    suffix: .ftl
+    # 设置模板后缀名 默认.ftl (现已改为ftlh)
+    #suffix: .ftl
     # 设置文档类型  默认 text/html
-    content-type: text/html
+    #content-type: text/html
     # 设置页面编码格式  默认 UTF-8
-    charset: UTF-8
+    #charset: UTF-8
     # 设置页面缓存  默认false
-    cache: false
+    #cache: false
     # 设置ftl文件路径 默认classpath:/templates
-    template-loader-path:
-      - classpath:/templates
+    #template-loader-path:
+    # - classpath:/templates
       
   # 设置静态文件路径，js,css等
   mvc:

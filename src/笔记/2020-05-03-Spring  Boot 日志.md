@@ -8,8 +8,9 @@ author: Xuxx
 categories: 
   - 笔记
 tags: 
-  - 笔记
   - 日志
+  - java
+  - spring
 excerpt: 笔记
 ---
 ## Spring  Boot 记录日志

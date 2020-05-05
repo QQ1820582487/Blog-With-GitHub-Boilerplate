@@ -8,7 +8,6 @@ author: Xuxx
 categories: 
   - 笔记
 tags: 
-  - 笔记
   - java
   - spring
 excerpt: 笔记

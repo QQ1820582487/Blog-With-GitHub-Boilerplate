@@ -143,6 +143,20 @@ public class MyCustomException {
    ```java
    info : {name=xuxx, addr=四川}
    ```
+   
+   补充：
+   
+   @ModelAttribute注解
+   
+   作用：
+   
+   1. 出现在方法上:表示当前方法会在控制器方法执行前线执行。
+   2. 出现在参数上:获取指定的数据给参数赋值。
+   
+   应用场景：
+      当提交表单数据不是完整的实体数据时,保证没有提交的字段使用数据库原来的数据。
+   
+   
 
 ###    3.  @ControllerAdvice请求参数预处理
 

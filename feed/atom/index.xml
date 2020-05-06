@@ -1,290 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-06T17:00:08.976566+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj05/</id><title>SpringBoot中常用的JSON解析方案</title><updated>2020-05-06T17:00:08.976842+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;约定大于配置&lt;/strong&gt;        -- SpringBoot&lt;/p&gt;
-&lt;p&gt;本文整理了一下SpringBoot中常用的JSON解析方案&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt; &lt;/h1&gt;
-&lt;h1&gt;1.HttpMessageConverter&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;HttpMessageConverter&lt;/code&gt; ，这是一个消息转换工具，有两方面的功能：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;将服务端返回的对象序列化成 JSON 字符串&lt;/li&gt;
-&lt;li&gt;将前端传来的 JSON 字符串反序列化成 Java 对象&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;所有的 JSON 生成都离不开相关的 HttpMessageConverter&lt;/p&gt;
-&lt;p&gt;SpringMVC 自动配置了 &lt;code&gt;Jackson&lt;/code&gt; 和 &lt;code&gt;Gson&lt;/code&gt; 的 &lt;code&gt;HttpMessageConverter&lt;/code&gt;，Spring Boot 中又对此做了自动化配置：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;org.springframework.boot.autoconfigure.http.GsonHttpMessageConvertersConfiguration&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;所以，如果用户使用 &lt;code&gt;jackson&lt;/code&gt; 和 &lt;code&gt;gson&lt;/code&gt; 的话，==没有其他额外配置==，则只需要添加依赖即可。&lt;/p&gt;
-&lt;h1&gt;2. Jackson&lt;/h1&gt;
-&lt;h2&gt;1.1 引入web依赖&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;1.2 编写bean&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="c1"&gt;//set/get/toString略&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;1.3 编写controller&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;&lt;span class="c1"&gt;// @Controller + @ResponseBody&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UserController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@GetMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getAllUaer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setId&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setUsername&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAddress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;中国&amp;gt;&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;users&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;1.4 测试，查看结果&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;3. 配置Jackson&lt;/h2&gt;
-&lt;h3&gt;1.问题 - 单独配置 Jackson&lt;/h3&gt;
-&lt;p&gt;修改bean&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="nd"&gt;@JsonFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;yyyy-MM-dd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt; &lt;span class="n"&gt;birthday&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="c1"&gt;//set/get/toString略&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;访问结果&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2019-12-30&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;2.解决 - Jackson的全局配置&lt;/h3&gt;
-&lt;p&gt;先注释上一步中的&lt;code&gt;@JsonFormat(pattern = "yyyy-MM-dd")&lt;/code&gt;&lt;/p&gt;
-&lt;h4&gt;2.1 配置&lt;code&gt;MappingJackson2HttpMessageConverter&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;新建配置类&lt;code&gt;WebMvcConfig.java&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebMvcConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;MappingJackson2HttpMessageConverter&lt;/span&gt; &lt;span class="nf"&gt;jackson2HttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;MappingJackson2HttpMessageConverter&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MappingJackson2HttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="c1"&gt;//配置Jackson         此处可配置很多东西&lt;/span&gt;
-        &lt;span class="n"&gt;ObjectMapper&lt;/span&gt; &lt;span class="n"&gt;mapper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ObjectMapper&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SimpleDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yyyy年MM月dd日&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//将配置好的Jackson注入回MappingJackson2HttpMessageConverter&lt;/span&gt;
-        &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setObjectMapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;再次测试，结果为&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2019年12月31日&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上面可以看到此时我只需要配置 &lt;code&gt;ObjectMapper&lt;/code&gt;，与&lt;code&gt;MappingJackson2HttpMessageConverter&lt;/code&gt;没太大关系（当然，它有它的用处，例如这些：&lt;figure class="pswp-item" style="flex: 143.5344827586207" data-width="999" data-height="348"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7cd704ffd1adceed650825d13b2243c4.png" alt="" /&gt;&lt;/figure&gt;）&lt;/p&gt;
-&lt;p&gt;所以我可以采取另一种方式来配置Jackson——直接注入自己定义的&lt;code&gt;ObjectMapper&lt;/code&gt;，替换掉springboot中自动配置的&lt;code&gt;ObjectMapper&lt;/code&gt;。&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;&lt;em&gt;这里我们可以发现，我们是可以注入自己配置的类来替换掉springboot中自动配置的类的，也就是springboot中的&lt;strong&gt;“约定大于配置 ”&lt;/strong&gt;。&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4&gt;2.2 直接配置&lt;code&gt;ObjectMapper&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;注释上一步的配置，修改配置类为&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebMvcConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-   &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;ObjectMapper&lt;/span&gt; &lt;span class="nf"&gt;objectMapper&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;ObjectMapper&lt;/span&gt; &lt;span class="n"&gt;mapper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ObjectMapper&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SimpleDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yyyy/MM/dd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;再次测试，结果为&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2019/12/31&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;3. Gson&lt;/h1&gt;
-&lt;h2&gt;1. 基本使用&lt;/h2&gt;
-&lt;p&gt;自动化配置类：&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;org.springframework.boot.autoconfigure.http.Gson Configuration&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3&gt;1. 配置依赖&lt;/h3&gt;
-&lt;h4&gt;1.1 排除默认的Jackson&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-        &lt;span class="c"&gt;&amp;lt;!--排除默认的Jackson--&amp;gt;&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;lt;exclusions&amp;gt;&lt;/span&gt;
-            &lt;span class="nt"&gt;&amp;lt;exclusion&amp;gt;&lt;/span&gt;
-                &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-                &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-json&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-            &lt;span class="nt"&gt;&amp;lt;/exclusion&amp;gt;&lt;/span&gt;
-        &lt;span class="nt"&gt;&amp;lt;/exclusions&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;1.2 引入Gson依赖&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!--Gson--&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.google.code.gson&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;gson&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;2. Bean&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt; &lt;span class="n"&gt;birthday&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="c1"&gt;//set/get/toString略&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;3. Controller&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;&lt;span class="c1"&gt;// @Controller + @ResponseBody&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UserController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@GetMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getAllUaer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setId&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setUsername&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAddress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;中国&amp;gt;&amp;gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-            &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setBirthday&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-            &lt;span class="n"&gt;users&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;4.测试结果&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Dec 31, 2019 3:37:48 AM&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;2. Gson配置&lt;/h2&gt;
-&lt;h3&gt;1.配置&lt;code&gt;GsonHttpMessageConverter&lt;/code&gt;&lt;/h3&gt;
-&lt;h4&gt;1.1 创建配置类 WebMvcConfig&lt;/h4&gt;
-&lt;p&gt;与配置Jackson类似&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebMvcConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;GsonHttpMessageConverter&lt;/span&gt; &lt;span class="nf"&gt;gsonHttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;GsonHttpMessageConverter&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GsonHttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setGson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GsonBuilder&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;setDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yyyy-MM-dd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;1.2 测试结果&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[
-  {
-    &amp;quot;id&amp;quot;: 0,
-    &amp;quot;username&amp;quot;: &amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;,
-    &amp;quot;address&amp;quot;: &amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;,
-    &amp;quot;birthday&amp;quot;: &amp;quot;2019-12-31&amp;quot;
-  },...
-]
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;2.直接配置Gson&lt;/h3&gt;
-&lt;h4&gt;2.1 配置类&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebMvcConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;Gson&lt;/span&gt; &lt;span class="nf"&gt;gson&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GsonBuilder&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;setDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yyyy年MM月dd日&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;2.2 测试&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2019年12月31日&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;...&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;4. Fastjson&lt;/h1&gt;
-&lt;h2&gt;1. 依赖&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.alibaba&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;fastjson&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.2.49&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Bean和Controller都与上例相同&lt;/p&gt;
-&lt;h2&gt;2.配置类&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;&lt;code&gt;Fastjson&lt;/code&gt;必须自己手动提供HttpMessageConverter&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebMvcConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="cm"&gt;/*Fastjson配置*/&lt;/span&gt;
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="c1"&gt;//Fastjson必须自己手动提供HttpMessageConverter&lt;/span&gt;
-    &lt;span class="n"&gt;FastJsonHttpMessageConverter&lt;/span&gt; &lt;span class="nf"&gt;fastJsonHttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;FastJsonHttpMessageConverter&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FastJsonHttpMessageConverter&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCharset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Charset&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;utf8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="c1"&gt;//默认编码时中文乱码&lt;/span&gt;
-        &lt;span class="n"&gt;FastJsonConfig&lt;/span&gt; &lt;span class="n"&gt;fastJsonConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FastJsonConfig&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;fastJsonConfig&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDateFormat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yyyy/MM/dd&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//设置日期格式&lt;/span&gt;
-        &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFastJsonConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fastJsonConfig&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;converter&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;3.测试结果&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
-  &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;中国&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;birthday&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2020/01/02&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Xuxx&amp;gt;&amp;gt;0&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;..&lt;/span&gt;
-&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj05/" rel="alternate"/><published>2020-01-02T03:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj06/</id><title>实用SQL语句</title><updated>2020-05-06T17:00:08.976822+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-06T20:04:00.210701+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj06/</id><title>实用SQL语句</title><updated>2020-05-06T20:04:00.211012+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
 &lt;hr&gt;
 &lt;p&gt;在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。&lt;/p&gt;
 &lt;h3&gt;插入或替换&lt;/h3&gt;
@@ -337,7 +52,7 @@ CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;&lt;/cod
 
 &lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM students FORCE INDEX (idx_class_id) WHERE class_id = 1 ORDER BY id DESC;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;指定索引的前提是索引&lt;code&gt;idx_class_id&lt;/code&gt;必须存在。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj06/" rel="alternate"/><published>2020-04-15T22:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-06T17:00:08.976802+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj06/" rel="alternate"/><published>2020-04-15T22:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-06T20:04:00.210990+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
 &lt;hr&gt;
 &lt;p&gt;在执行SQL语句的时候，某些业务要求，一系列操作必须全部执行，而不能仅执行一部分。例如，一个转账操作：&lt;/p&gt;
 
@@ -609,7 +324,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;虽然Serializable隔离级别下的事务具有最高的安全性，但是，由于事务是串行执行，所以效率会大大下降，应用程序的性能会急剧降低。如果没有特别重要的情景，一般都不会使用Serializable隔离级别。&lt;/p&gt;
 &lt;h3&gt;默认隔离级别&lt;/h3&gt;
 &lt;p&gt;如果没有指定隔离级别，数据库就会使用默认的隔离级别。在MySQL中，如果使用InnoDB，默认的隔离级别是Repeatable Read。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-06T17:00:08.976781+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-06T20:04:00.210965+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
 &lt;h3&gt;1.基本操作&lt;/h3&gt;
 &lt;h4&gt;1.在类中添加Logger&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;Logger&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoggerFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SpringbootJpaApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -645,7 +360,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 252.30125523012552" data-width="1206" data-height="239"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c485c9133f55bca1a4b6870c7f03adbf.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-06T17:00:08.976761+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-06T20:04:00.210943+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/li&gt;
 &lt;li&gt;在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/li&gt;
@@ -1102,7 +817,7 @@ ${1.2}
 &lt;li&gt;检测不存在的值： name?? 或者 (user.name)??&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;赋值操作： =, +=, -=, *=, /=, %=, ++, --&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-06T17:00:08.976740+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-06T20:04:00.210922+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
 &lt;p&gt;在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;p&gt;在Spring Boot中,默认使用&lt;code&gt;StandardServletMultipartResolver(支持servlet3.0以后的版本)&lt;/code&gt;代替&lt;code&gt;CommonsMultipartResolver(兼容早期的servlet)&lt;/code&gt;解析Multipart请求，如果必须使用&lt;code&gt;CommonsMultipartResolver&lt;/code&gt;则需要自己添加commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;h3&gt;回顾&lt;/h3&gt;
@@ -1382,7 +1097,7 @@ ${1.2}
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-06T17:00:08.976719+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-06T20:04:00.210900+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
 &lt;p&gt;根据源码中的介绍：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@ControllerAdvice&lt;/code&gt;是一个特殊的&lt;code&gt;@Component&lt;/code&gt;，用于标识一个类，这个类中被以下三种注解标识的方法：&lt;code&gt;@ExceptionHandler&lt;/code&gt;，&lt;code&gt;@InitBinder&lt;/code&gt;，&lt;code&gt;@ModelAttribute&lt;/code&gt;，将作用于所有的&lt;code&gt;@Controller&lt;/code&gt;类的接口上。&lt;/p&gt;
 &lt;p&gt;@ControllerAdvice的功能:&lt;/p&gt;
@@ -1487,6 +1202,15 @@ ${1.2}
 &lt;p&gt;控制台输出&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;xuxx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;四川&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;补充：&lt;/p&gt;
+&lt;p&gt;@ModelAttribute注解&lt;/p&gt;
+&lt;p&gt;作用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;出现在方法上:表示当前方法会在控制器方法执行前线执行。&lt;/li&gt;
+&lt;li&gt;出现在参数上:获取指定的数据给参数赋值。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;应用场景：
+   当提交表单数据不是完整的实体数据时,保证没有提交的字段使用数据库原来的数据。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;3.  @ControllerAdvice请求参数预处理&lt;/h3&gt;
@@ -1559,7 +1283,7 @@ public class GlobalData {
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;书名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
    &lt;span class="n"&gt;Auther&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;作者名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-06T17:00:08.976696+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-06T20:04:00.210878+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
 &lt;h4&gt;1. Spring Boot实现自定义错误页&lt;/h4&gt;
 &lt;p&gt;演示&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
@@ -1856,7 +1580,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 &amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;访问结果：&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 88.46153846153847" data-width="529" data-height="299"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5d55e2ea3a1c2e081f5e3c4b096378fb.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-06T17:00:08.976670+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-06T20:04:00.210845+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
 &lt;h4&gt;CORS概述&lt;/h4&gt;
 &lt;p&gt;当一个资源从与该资源本身所在的服务器不同的&lt;code&gt;域、协议、端口&lt;/code&gt;请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考&lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy"&gt;浏览器的同源策略 | MDN&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求，XMLHttpRequest和Fetch API，只能从加载应用程序的同一个域请求HTTP资源，除非使用&lt;code&gt;CORS头文件&lt;/code&gt;&lt;/p&gt;
@@ -1982,7 +1706,7 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;此时cros1中所有的接口都开启了CORS，可以跨域访问了。&lt;/p&gt;
 &lt;h4&gt;4. 预检请求（探测请求）&lt;/h4&gt;
-</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-06T17:00:08.976622+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-06T20:04:00.210819+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
 &lt;h4&gt;1. 编写Controller&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -2036,4 +1760,146 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h4&gt;4. 测试&lt;/h4&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 284.72222222222223" data-width="1435" data-height="252"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/143bf6177ef7754eb97e87881c93515c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-06T20:04:00.210771+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;会话技术&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; 一次会话:浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;功能:在一次会话的范围内的多次请求间，共享数据&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;方式:
+1.客户端会话技术: Cookie
+2.服务器端会话技术: Session&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;1. Cookie&lt;/h4&gt;
+&lt;h6&gt;1. 概念:&lt;/h6&gt;
+&lt;p&gt;客户端会话技术，将数据保存到客户端&lt;/p&gt;
+&lt;h6&gt;2. 快速入门:&lt;/h6&gt;
+&lt;p&gt;使用步骤:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建cookie对象， 绑定数据
+new Cookie(String name, String value)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发送Cookie对象
+response. addCookie(Cookie cookie)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;获取Cookie, 到数据
+Cookie[] request. getColkies()&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h6&gt;3. 实现原理&lt;/h6&gt;
+&lt;p&gt;基于响应头set - cooki e和请求头cookie实现&lt;/p&gt;
+&lt;h6&gt;4. cookie的细节&lt;/h6&gt;
+&lt;ol&gt;
+&lt;li&gt;一次可不可以发送多个cookie?
+可以，创建多个Cookie对象，使用response调用多 次addCookie方法发送cookie即可。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cookie在浏览器中保存多长时间?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;默认情况下，当浏览器关闭后，Cookie数据被销毁&lt;/li&gt;
+&lt;li&gt;持久化存储:
+setMaxAge(int seconds )&lt;ol&gt;
+&lt;li&gt;正数:将Cooki e数据写到硬盘的文件中。持久化存储。并指定cookie存活时间，时间到后，cookie文件自动失效&lt;/li&gt;
+&lt;li&gt;负数:默认值&lt;/li&gt;
+&lt;li&gt;零:删除cookie信息&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cookie能不能存中文?
+在tomcat 8之前cooki e中不能直接存储中文数据。 ——需要将中文数据转码---- -般采用URL编码(%E3)
+在tomcat 8之后，cookie支持中文数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cookie共享问题 ?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;假设在一个tomcat服务器中，部署了多个web项目，那么在这些web项目中cookie能不能共享?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;      默认情况下cookie不能共享
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;setPath(String path) :设置cookie的获取范围。默认设置为当前的虚拟目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;     如果要共享给同一台服务器的上的其他项目，则可以将path设置为"/" &lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;不同的tomcat服务器间cookie共享问题?&lt;/p&gt;
+&lt;p&gt;​      setDomain(String path) :如果设置一级域名相同， 那么多个服务器之间cookie可以共享&lt;/p&gt;
+&lt;p&gt;​      例：setDomain(" .baidu. com") ,那么tieba. baidu. com和news . baidu. com中cookie可以共享&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Cookie的特点和作用&lt;/p&gt;
+&lt;p&gt;特点:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;cookie存储数据在客户端浏览器&lt;/li&gt;
+&lt;li&gt;浏览器对于单个cookie的大小有限制(4kb)以及对同一个域名下的总cookie数量也有限制(20个)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;作用:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;cookie- 般用于存 出少量的不太敏感的数据&lt;/li&gt;
+&lt;li&gt;在不登录的情况下，完成服务器对客户端的身份识别&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;2. Session&lt;/h4&gt;
+&lt;h6&gt;1. 概念:&lt;/h6&gt;
+&lt;p&gt;服务器端会话技术，在一-次会话的多 次请求间共享数据，将数据保存在服务器端的对象中。&lt;/p&gt;
+&lt;h6&gt;2.快速入门&lt;/h6&gt;
+&lt;ol&gt;
+&lt;li&gt;获取HttpSession对象:
+HttpSession session = request. getSession();&lt;/li&gt;
+&lt;li&gt;使用HttpSession对象:
+Object getAttribute( String name)
+void setAttribute(string name, object value)
+void removeAttribute(String name)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h6&gt;3. 原理&lt;/h6&gt;
+&lt;p&gt;Session的实现是依赖于cookie的。&lt;/p&gt;
+&lt;h6&gt;4. 细节&lt;/h6&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;当客户端关闭后,服务器不关闭，两次获取session是否为同- 个?
+默认情况下。不是。
+如果需要相同，则可以创建Cookie,键为JSESSIONID，设置最大存活时间，让cookie持久化保存。
+Cookie C = new Cookie("ISESSIONID" , session. getId());
+C. setMaxAge(60* 60) ;
+response. addcookie(c);&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;客户端不关闭，服务器关闭后，两次获取的session是同一个吗?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;         不是同一个，但是要确保数据不丢失
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;session的钝化(序列化):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; 在服务器正常关闭之前，将session对象序列化到硬盘上
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;session的活化(反序列化):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   在服务器启动后，将session文件转化为内存中的session对象即可。&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;session什么时候被销毁?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;服务器关闭&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;session对象调用invalidate()&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;session默认失效时间30分钟
+ 在web.xml中（可以是项目的web.xml,也可以是tomcat的conf下的web.xml）选择性配置修改&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;session-config&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;sess&lt;/span&gt; &lt;span class="err"&gt;ion-timeout&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;30&lt;span class="nt"&gt;&amp;lt;/session-timeout&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/session-config&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h6&gt;5. session的特点&lt;/h6&gt;
+&lt;ol&gt;
+&lt;li&gt;session用于存储一次会话的多次请求的数据， 存在服务器端&lt;/li&gt;
+&lt;li&gt;session可以存 储任意类型，任意大小的数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;session与cookie的区别:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;session存 储数据在服务器端，Cookie在客户端&lt;/li&gt;
+&lt;li&gt;session没有数据大小限制，Cookie有&lt;/li&gt;
+&lt;li&gt;session数据安全，Cookie相对于不安全&lt;/li&gt;
+&lt;/ol&gt;
+</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry></feed>

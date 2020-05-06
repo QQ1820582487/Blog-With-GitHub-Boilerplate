@@ -316,6 +316,7 @@ public class MyErrorViewResolver extends DefaultErrorViewResolver {
 
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+        //这里的model就是异常数据，但是它是一个不可修改的map，要在这修改可以new一个map，将model的数据复制进来再添加到mv返回
         ModelAndView mv = new ModelAndView();
         mv.setViewName("xuxx");
         mv.addAllObjects(model);

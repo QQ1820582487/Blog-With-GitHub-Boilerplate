@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/088409da39fec64bf5fa012fd22c62f6.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e15444d5c37a2f0f74ca3c7bed685bd5.json"
         }
     </script>
     
@@ -335,6 +335,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//这里的model就是异常数据，但是它是一个不可修改的map，要在这修改可以new一个map，将model的数据复制进来再添加到mv返回</span>
         <span class="n">ModelAndView</span> <span class="n">mv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">();</span>
         <span class="n">mv</span><span class="p">.</span><span class="na">setViewName</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
         <span class="n">mv</span><span class="p">.</span><span class="na">addAllObjects</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>

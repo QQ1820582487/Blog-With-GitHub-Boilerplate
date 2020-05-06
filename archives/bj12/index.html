@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/35636e07376add952f8aa68d959ea74a.json"
+        }
+    </script>
+    
+<title>Spring Boot通过CORS实现跨域 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot通过CORS实现跨域 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj12/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-07T00:50:00-00.00" />
+<meta name="twitter:title" content="Spring Boot通过CORS实现跨域 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>只坚持一种正义——我的正义。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot通过CORS实现跨域</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-07
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>Spring Boot通过CORS实现跨域</h2>
+<h4>CORS概述</h4>
+<p>当一个资源从与该资源本身所在的服务器不同的<code>域、协议、端口</code>请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy">浏览器的同源策略 | MDN</a></p>
+<p>出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求，XMLHttpRequest和Fetch API，只能从加载应用程序的同一个域请求HTTP资源，除非使用<code>CORS头文件</code></p>
+<p>对于<strong>浏览器限制</strong>这个词，要着重解释一下：不一定是浏览器限制了发起跨站请求，也可能是跨站请求可以正常发起，但是返回结果被浏览器拦截了。</p>
+<h6>简单请求</h6>
+<p>不会触发CORS预检的请求称为简单请求，满足以下<strong>所有条件</strong>的才会被视为简单请求，基本上我们日常开发只会关注<strong>前两点</strong></p>
+<ol>
+<li><p>使用<code>GET、POST、HEAD</code>其中一种方法</p>
+</li>
+<li><p>只使用了如下的安全首部字段，不得人为设置其他首部字段</p>
+<ul>
+<li><p><code>Accept</code></p>
+</li>
+<li><p><code>Accept-Language</code></p>
+</li>
+<li><p><code>Content-Language</code></p>
+</li>
+<li><p><code>Content-Type</code></p>
+<p>仅限以下三种</p>
+<ul>
+<li><code>text/plain</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p><code>multipart/form-data</code></p>
+<ul>
+<li><p><code>application/x-www-form-urlencoded</code></p>
+<ul>
+<li>HTML头部header field字段：<code>DPR、Download、Save-Data、Viewport-Width、WIdth</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>请求中的任意<code>XMLHttpRequestUpload</code> 对象均没有注册任何事件监听器；XMLHttpRequestUpload 对象可以使用 XMLHttpRequest.upload 属性访问</p>
+</li>
+<li><p>请求中没有使用 ReadableStream 对象</p>
+</li>
+</ol>
+<h6>预检请求</h6>
+<p>需预检的请求要求必须首先使用 <code>OPTIONS</code> 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。"预检请求“的使用，可以避免跨域请求对服务器的用户数据产生未预期的影响</p>
+<p>下面的请求会触发预检请求，其实非简单请求之外的就会触发预检，就不用记那么多了</p>
+<ol>
+<li><p>使用了<code>PUT、DELETE、CONNECT、OPTIONS、TRACE、PATCH</code>方法</p>
+</li>
+<li><p>人为设置了非规定内的其他首部字段，参考上面简单请求的安全字段集合，还要特别注意<code>Content-Type</code>的类型</p>
+</li>
+<li><p><code>XMLHttpRequestUpload</code> 对象注册了任何事件监听器</p>
+</li>
+<li><p>#### 请求中使用了<code>ReadableStream</code>对象</p>
+</li>
+</ol>
+<h4>1. 问题演示</h4>
+<p>创建两个Spring Boot项目，一个提供接口，另一个来访问。</p>
+<p>cors1(端口为8080)提供的接口 访问URL:<code>http://localhost:8080/hello</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello cors1&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>cors2(端口为8081)编写一个HTML来访问<code>http://localhost:8080/hello</code></p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jquery-3.3.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;GET&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;getData()&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="kd">function</span> <span class="nx">getData</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;http://localhost:8080/hello&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#app&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>访问结果：</p>
+<p><figure class="pswp-item" style="flex: 325.4237288135593" data-width="1920" data-height="295"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/306104eaf0a56de98e4de7e7d0372ea9.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
+<p>点击get按钮时报错 （从源地址<code>http://localhost:8080/hello</code>访问XMLHttpRequest已被CORS策略阻塞:在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头。）</p>
+<h4>2. 解决问题</h4>
+<p>上面的报错是因为在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头，在Spring Boot中，可以简单的通过<code>@CrossOrigin</code>注解为接口配置。</p>
+<p>改写cros1的Controller，添加<code>@CrossOrigin</code>注解</p>
+<p>其中@CrossOrigin中的2个常用参数：</p>
+<p><strong>origins</strong>  ： 允许可访问的域列表</p>
+<p><strong>maxAge</strong>：准备响应前的缓存持续的最大时间（以秒为单位）。</p>
+<p><code>@CrossOrigin</code>注解不仅能在方法上使用，也可以在类上使用。</p>
+
+<pre><code>@RestController
+public class HelloController {
+    @GetMapping("/hello")
+    @CrossOrigin(origins = {"http://localhost:8081"})
+    public String hello() {
+        return "Hello cors1";
+    }
+}</code></pre>
+<p>访问结果：响应头中多了<strong>Access-Control-Allow-Origin: <a href="http://localhost:8081">http://localhost:8081</a></strong></p>
+<p><figure class="pswp-item" style="flex: 149.76599063962558" data-width="1920" data-height="641"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/118d1c850aa365ec40f5edf1ac01c93b.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
+<h4>3. 全局CORS配置</h4>
+<p>编写配置类</p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addCorsMappings</span><span class="p">(</span><span class="n">CorsRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">registry</span><span class="p">.</span><span class="na">addMapping</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">)</span><span class="c1">//允许跨域的接口</span>
+                <span class="p">.</span><span class="na">allowedOrigins</span><span class="p">(</span><span class="s">&quot;http://localhost:8081&quot;</span><span class="p">)</span><span class="c1">//允许的来源</span>
+                <span class="p">.</span><span class="na">allowedHeaders</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="c1">//允许的Headers,默认允许所有</span>
+                <span class="p">.</span><span class="na">allowedMethods</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span><span class="c1">//允许的Methods，默认允许GET、HEAD、POST</span>
+                <span class="p">.</span><span class="na">maxAge</span><span class="p">(</span><span class="mi">1800</span><span class="p">);</span><span class="c1">//最大有效时间，默认为1800秒(30分钟)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>此时cros1中所有的接口都开启了CORS，可以跨域访问了。</p>
+<h4>4. 预检请求（探测请求）</h4>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj13/">Spring Boot注册拦截器</a>
+        <p class="yue">笔记</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj11/">Spring Boot中的自定义异常处理</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

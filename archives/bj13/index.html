@@ -21,19 +21,20 @@
         }
     </script>
     
-<title></title>
+<title>Spring Boot注册拦截器 - Xuxx的个人博客。</title>
 <meta name="author" content="Xuxx" />
-<meta name="description" content="只坚持一种正义——我的正义。" />
-<meta property="og:title" content="" />
-<meta property="og:description" content="只坚持一种正义——我的正义。" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot注册拦截器 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
 <meta property="og:site_name" content="Xuxx的个人博客。" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="" />
-<meta property="og:image" content="Xuxx的个人博客。" />
-<meta name="twitter:title" content="" />
-<meta name="twitter:description" content="只坚持一种正义——我的正义。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj13/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-07T01:50:00-00.00" />
+<meta name="twitter:title" content="Spring Boot注册拦截器 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -69,97 +70,110 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot注册拦截器</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-07
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>Spring Boot注册拦截器</h2>
+<h4>1. 编写Controller</h4>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>2.  编写拦截器</h4>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 定义自定义拦截器</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyInterceptor</span> <span class="kd">implements</span> <span class="n">HandlerInterceptor</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;preHandle方法&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<section id="ga-archive_list" class="ga-section" data-title="#spring">
-    <ul>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj13/">Spring Boot注册拦截器</a></h1>
-            <time class="ga-mono" datetime="2020-05-07T01:50:00-00.00">
-                2020-05-07
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj12/">Spring Boot通过CORS实现跨域</a></h1>
-            <time class="ga-mono" datetime="2020-05-07T00:50:00-00.00">
-                2020-05-07
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj11/">Spring Boot中的自定义异常处理</a></h1>
-            <time class="ga-mono" datetime="2020-05-06T02:50:00-00.00">
-                2020-05-06
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj10/">Spring注解-@ControllerAdvice的使用</a></h1>
-            <time class="ga-mono" datetime="2020-05-05T02:20:00-00.00">
-                2020-05-05
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj09/">Spring Boot文件上传</a></h1>
-            <time class="ga-mono" datetime="2020-05-05T00:20:00-00.00">
-                2020-05-05
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj04/">SpringBoot整合Freemarker</a></h1>
-            <time class="ga-mono" datetime="2020-05-04T00:50:00-00.00">
-                2020-05-04
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj08/">Spring  Boot 记录日志</a></h1>
-            <time class="ga-mono" datetime="2020-05-03T01:55:00-00.00">
-                2020-05-03
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj05/">SpringBoot中常用的JSON解析方案</a></h1>
-            <time class="ga-mono" datetime="2020-01-02T03:50:00-00.00">
-                2020-01-02
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj03/">SpringBoot基础配置/注解</a></h1>
-            <time class="ga-mono" datetime="2019-12-30T00:58:00-00.00">
-                2019-12-30
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj02/">Spring+Spring MVC环境（Java配置）搭建</a></h1>
-            <time class="ga-mono" datetime="2019-12-29T05:58:00-00.00">
-                2019-12-29
-            </time>
-        </li>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj01/">Spring+Spring MVC环境（Xml）搭建</a></h1>
-            <time class="ga-mono" datetime="2019-12-29T02:33:00-00.00">
-                2019-12-29
-            </time>
-        </li>
-        
-    </ul>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">,</span> <span class="n">ModelAndView</span> <span class="n">modelAndView</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;postHandle方法&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">,</span> <span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;afterCompletion方法&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>3.配置拦截器</h4>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 配置自定义拦截器</span>
+<span class="cm"> */</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="p">{</span>
+
+    <span class="c1">//注入自定义拦截器</span>
+    <span class="nd">@Bean</span>
+    <span class="n">MyInterceptor</span> <span class="nf">myInterceptor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">MyInterceptor</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//拦截所有路径 存在多个拦截器时要配置优先级</span>
+        <span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="n">myInterceptor</span><span class="p">()).</span><span class="na">addPathPatterns</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>4. 测试</h4>
+<p><figure class="pswp-item" style="flex: 284.72222222222223" data-width="1435" data-height="252"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/143bf6177ef7754eb97e87881c93515c.png" alt="" /></figure></p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj12/">Spring Boot通过CORS实现跨域</a>
+        <p class="yue">笔记</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
+    
 
 </main>
 

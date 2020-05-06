@@ -1,4 +1,4 @@
-```
+---
 layout: post
 title: Spring Boot中的自定义异常处理
 slug: bj11
@@ -11,7 +11,8 @@ tags:
   - java
   - spring
 excerpt: 笔记
-```
+---
+
 
 ## Spring Boot中的自定义异常处理
 

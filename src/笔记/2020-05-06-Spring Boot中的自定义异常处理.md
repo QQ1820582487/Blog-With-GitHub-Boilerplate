@@ -67,7 +67,7 @@ public class HelloController {
 
 再次访问便会看到`500.HTML`中的内容（Controller中有int i = 1 / 0）;如果访问`http://localhost:8080/hello2`等会出现404错误的路径便会看到`404.HTML`的内容。
 
-即==Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。==
+即**Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。**
 
 **错误页面查找顺序：精确>模糊，动态>静态**
 
@@ -202,3 +202,170 @@ private ModelAndView resolve(String viewName, Map<String, Object> model) {
 ```
 
 #### 3. Spring Boot自定义异常数据
+
+经过查看Spring Boot异常处理的自动配置类`org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration`可知`DefaultErrorAttributes`类中定义了默认的异常数据处理逻辑。
+
+包含了以下异常数据:
+
+```
+timestamp - The time that the errors were extracted(出现错误的时间)
+status - The status code（状态码）
+error - The error reason（错误原因）
+exception - The class name of the root exception (if configured)（根异常的类名（如果已配置））
+message - The exception message（异常消息）
+errors - Any ObjectErrors from a BindingResult exception（BindingResult异常中的任何ObjectError）
+trace - The exception stack trace（异常堆栈跟踪）
+path - The URL path when the exception was raised（引发异常时的URL路径）
+```
+
+编写自定义错误页`5xx.HTML`来查看
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>5xx</title>
+</head>
+<body>
+<h2>thymeleaf: 5xx页面</h2>
+<table>
+    <tr>
+        <td>path</td>
+        <td th:text="${path}"></td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td th:text="${timestamp}"></td>
+    </tr>
+    <tr>
+        <td>message</td>
+        <td th:text="${message}"></td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td th:text="${error}"></td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td th:text="${status}"></td>
+    </tr>
+    <tr>
+        <td>exception</td>
+        <td th:text="${exception}"></td>
+    </tr>
+</table>
+</body>
+</html>
+```
+
+访问结果:(访问的Controller中有by zero错误)
+
+![访问结果](..\static\笔记图片\2020-05-06-Spring Boot中的自定义异常处理_02.png)
+
+为了自定义异常数据，可以直接继承`DefaultErrorAttributes`类，然后新增或重写其方法。
+
+```java
+/* 注册到spring以替换DefaultErrorAttributes
+ErrorMvcAutoConfiguration中有条件判断:当存在ErrorAttributes.class(DefaultErrorAttributes实现的接口)时，DefaultErrorAttributes不生效.
+...
+@ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
+	public DefaultErrorAttributes errorAttributes() {
+		return new DefaultErrorAttributes(this.serverProperties.getError().isIncludeException());
+	}
+*/
+@Component
+public class MyErrorAttribute extends DefaultErrorAttributes {
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+        //拿到DefaultErrorAttributes类中收集好的异常信息
+        Map<String, Object> map = super.getErrorAttributes(webRequest, includeStackTrace);
+        //添加自定义异常信息
+        map.put("myerror", "自定义异常信息");
+        return map;
+}
+```
+
+在`5xx.HTML`中添加一列
+
+```html
+...
+<h2>thymeleaf: 500页面</h2>
+...
+    <tr>
+        <td>myerror</td>
+        <td th:text="${myerror}"></td>
+    </tr>
+...
+```
+
+访问结果:(访问的Controller中有by zero错误)
+
+![访问结果](..\static\笔记图片\2020-05-06-Spring Boot中的自定义异常处理_03.png)
+
+#### 4. Spring Boot自定义异常视图
+
+与自定义异常数据类似，Spring Boot异常处理的自动配置类`org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration`中定义了`DefaultErrorViewResolver`类中用于异常视图处理。要自定义异常视图处理，继承`DefaultErrorViewResolver`类，然后新增或重写其方法就行了。
+
+```java
+@Component
+public class MyErrorViewResolver extends DefaultErrorViewResolver {
+    public MyErrorViewResolver(ApplicationContext applicationContext, ResourceProperties resourceProperties) {
+        super(applicationContext, resourceProperties);
+    }
+
+    @Override
+    public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("xuxx");
+        mv.addAllObjects(model);
+        return mv;
+    }
+}
+```
+
+新建`xuxx.HTML`直接放在`src\main\resources\templates`目录下即可（因为自定义的MyErrorViewResolver中设置的ViewName不带路径了，又因为是用thymeleaf）
+
+```
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>xuxx页面</title>
+</head>
+<body>
+<h2>xuxx: 5xx</h2>
+<table>
+    <tr>
+        <td>path</td>
+        <td th:text="${path}"></td>
+    </tr>
+    <tr>
+        <td>timestamp</td>
+        <td th:text="${timestamp}"></td>
+    </tr>
+    <tr>
+        <td>message</td>
+        <td th:text="${message}"></td>
+    </tr>
+    <tr>
+        <td>error</td>
+        <td th:text="${error}"></td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td th:text="${status}"></td>
+    </tr>
+    <tr>
+        <td>myerror</td>
+        <td th:text="${myerror}"></td>
+    </tr>
+</table>
+</body>
+</html>
+```
+
+访问结果：
+
+![访问结果](..\static\笔记图片\2020-05-06-Spring Boot中的自定义异常处理_04.png)
+

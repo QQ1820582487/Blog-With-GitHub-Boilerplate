@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/3652e5a0a34343a621c5793d29642e67.json"
+        }
+    </script>
+    
+<title>Spring Boot中的自定义异常处理 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot中的自定义异常处理 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj11/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-06T02:50:00-00.00" />
+<meta name="twitter:title" content="Spring Boot中的自定义异常处理 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>只坚持一种正义——我的正义。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot中的自定义异常处理</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-06
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>Spring Boot中的自定义异常处理</h2>
+<h4>1. Spring Boot实现自定义错误页</h4>
+<p>演示</p>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s">&quot;hello&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>访问结果</p>
+<p><figure class="pswp-item" style="flex: 196.84873949579833" data-width="937" data-height="238"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0d82116e769746378b29241927a0b42d.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
+<p><strong>配置默认的error页面</strong></p>
+<p>在<code>src\main\resources\static</code>目录下创建<code>error</code>目录,创建如：404.HTML,500.HTML</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>404<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>404错误页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+--------------------------------
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>500<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>500错误页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>再次访问便会看到<code>500.HTML</code>中的内容（Controller中有int i = 1 / 0）;如果访问<code>http://localhost:8080/hello2</code>等会出现404错误的路径便会看到<code>404.HTML</code>的内容。</p>
+<p>即==Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。==</p>
+<p><strong>错误页面查找顺序：精确&gt;模糊，动态&gt;静态</strong></p>
+<p>Spring Boot还支持模糊的错误页匹配，例如只定义了<code>4xx.HTML</code>，出现4XX错误时，都会展示<code>4xx.HTML</code>的内容。</p>
+<p>当然，如果定义了<code>404.HTML</code>和<code>4xx.HTML</code>页面，出现<code>404</code>错误时，Spring Boot会优先展示<code>404.HTML</code>的内容。</p>
+<p>以上都是使用<strong>静态页面(static目录下)</strong>展示错误信息，但是Spring Boot还支持<strong>动态页面(templates目录下)</strong>,如：thymeleaf、freemarker。</p>
+<p>测试一下，使用thymeleaf来自定义错误页面</p>
+<ol>
+<li><p>导入thymeleaf依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+ <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+ <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</li>
+<li><p>在<code>src\main\resources\templates</code>目录下创建<code>error</code>目录,并创建自定义错误页</p>
+<p>创建如下3个页面</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!--4xx.HTML--&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>4xx<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>thymeleaf:4xx页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+-------------------------------------
+<span class="c">&lt;!--404.HTML--&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>404<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>thymeleaf:404页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+-------------------------------------
+<span class="c">&lt;!--5xx.HTML--&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>5xx<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>thymeleaf: 5xx页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>与静态错误页一样，动态错误页也是优先展示更为精确的状态码所对应的错误页内容。</p>
+<p>例：在存在以上3个动态错误页时，如果出现<code>404</code>错误，优先展示的也是<code>404.HTML</code>的内容。</p>
+<p>此时已经创建了静态错误页和动态错误页，那么此时会优先展示动态错误页。</p>
+</li>
+</ol>
+<h4>2. Spring Boot异常处理源码分析</h4>
+<p>打开Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code></p>
+<p>其中配置了<code>DefaultErrorAttributes(默认错误属性)</code>、<code>DefaultErrorViewResolver(默认错误视图解析器)</code>等等</p>
+<p>为什么在<code>error</code>目录下创建自定义错误页会被解析呢？</p>
+<p>为什么<strong>错误页面查找顺序：精确&gt;模糊，动态&gt;静态</strong> 呢？</p>
+<p>答案在<code>DefaultErrorViewResolver</code>类中。</p>
+<div class="highlight"><pre><span></span><span class="c1">//DefaultErrorViewResolver类</span>
+
+<span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//status.value()返回的是int类型的状态码，model是异常数据</span>
+        <span class="n">ModelAndView</span> <span class="n">modelAndView</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">value</span><span class="p">()),</span> <span class="n">model</span><span class="p">);</span>
+        <span class="c1">//在静态资源路径下没有找到精确对应的错误页面时再判断是否存在模糊对应的错误页面</span>
+        <span class="c1">//SERIES_VIEWS中只有&quot;4xx&quot;和&quot;5xx&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">modelAndView</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()))</span> <span class="p">{</span>
+            <span class="c1">//存在模糊对应的错误页面时，再次使用模糊的状态码进行处理</span>
+            <span class="n">modelAndView</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()),</span> <span class="n">model</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//如果精确的和模糊的错误页都不存在，便使用自身默认的错误页面</span>
+        <span class="k">return</span> <span class="n">modelAndView</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+
+<span class="kd">private</span> <span class="n">ModelAndView</span> <span class="nf">resolve</span><span class="p">(</span><span class="n">String</span> <span class="n">viewName</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">errorViewName</span> <span class="o">=</span> <span class="s">&quot;error/&quot;</span> <span class="o">+</span> <span class="n">viewName</span><span class="p">;</span>
+        <span class="c1">//判断是否存在动态页面</span>
+        <span class="n">TemplateAvailabilityProvider</span> <span class="n">provider</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="na">templateAvailabilityProviders</span><span class="p">.</span><span class="na">getProvider</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span>
+                <span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">);</span>
+        <span class="c1">//存在动态页面就优先使用动态页面</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">provider</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">resolveResource</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+        <span class="kd">private</span> <span class="n">ModelAndView</span> <span class="nf">resolveResource</span><span class="p">(</span><span class="n">String</span> <span class="n">viewName</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">location</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="na">resourceProperties</span><span class="p">.</span><span class="na">getStaticLocations</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="c1">//查找静态资源路径 4个 </span>
+                <span class="cm">/*{ &quot;classpath:/META-INF/resources/&quot;,</span>
+<span class="cm">                &quot;classpath:/resources/&quot;, &quot;classpath:/static/&quot;, &quot;classpath:/public/&quot; }*/</span>
+                <span class="n">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">.</span><span class="na">getResource</span><span class="p">(</span><span class="n">location</span><span class="p">);</span>
+                <span class="n">resource</span> <span class="o">=</span> <span class="n">resource</span><span class="p">.</span><span class="na">createRelative</span><span class="p">(</span><span class="n">viewName</span> <span class="o">+</span> <span class="s">&quot;.html&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">resource</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">(</span><span class="k">new</span> <span class="n">HtmlResourceView</span><span class="p">(</span><span class="n">resource</span><span class="p">),</span> <span class="n">model</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">//在静态资源路径下没有找到对应的错误页面就返回null</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+<h4>3. Spring Boot自定义异常数据</h4>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj10/">Spring注解-@ControllerAdvice的使用</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

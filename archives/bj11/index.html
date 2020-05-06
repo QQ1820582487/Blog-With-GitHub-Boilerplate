@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/3652e5a0a34343a621c5793d29642e67.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/088409da39fec64bf5fa012fd22c62f6.json"
         }
     </script>
     
@@ -127,7 +127,7 @@
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 <p>再次访问便会看到<code>500.HTML</code>中的内容（Controller中有int i = 1 / 0）;如果访问<code>http://localhost:8080/hello2</code>等会出现404错误的路径便会看到<code>404.HTML</code>的内容。</p>
-<p>即==Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。==</p>
+<p>即<strong>Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。</strong></p>
 <p><strong>错误页面查找顺序：精确&gt;模糊，动态&gt;静态</strong></p>
 <p>Spring Boot还支持模糊的错误页匹配，例如只定义了<code>4xx.HTML</code>，出现4XX错误时，都会展示<code>4xx.HTML</code>的内容。</p>
 <p>当然，如果定义了<code>404.HTML</code>和<code>4xx.HTML</code>页面，出现<code>404</code>错误时，Spring Boot会优先展示<code>404.HTML</code>的内容。</p>
@@ -242,6 +242,146 @@
     <span class="p">}</span>
 </pre></div>
 <h4>3. Spring Boot自定义异常数据</h4>
+<p>经过查看Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>可知<code>DefaultErrorAttributes</code>类中定义了默认的异常数据处理逻辑。</p>
+<p>包含了以下异常数据:</p>
+
+<pre><code>timestamp - The time that the errors were extracted(出现错误的时间)
+status - The status code（状态码）
+error - The error reason（错误原因）
+exception - The class name of the root exception (if configured)（根异常的类名（如果已配置））
+message - The exception message（异常消息）
+errors - Any ObjectErrors from a BindingResult exception（BindingResult异常中的任何ObjectError）
+trace - The exception stack trace（异常堆栈跟踪）
+path - The URL path when the exception was raised（引发异常时的URL路径）</code></pre>
+<p>编写自定义错误页<code>5xx.HTML</code>来查看</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>5xx<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>thymeleaf: 5xx页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>path<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${path}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>timestamp<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${timestamp}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>message<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${message}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>error<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${error}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>status<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${status}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>exception<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${exception}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>访问结果:(访问的Controller中有by zero错误)</p>
+<p><figure class="pswp-item" style="flex: 95.51724137931035" data-width="554" data-height="290"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5fc3f9a00ab774b21100ba009da34464.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
+<p>为了自定义异常数据，可以直接继承<code>DefaultErrorAttributes</code>类，然后新增或重写其方法。</p>
+<div class="highlight"><pre><span></span><span class="cm">/* 注册到spring以替换DefaultErrorAttributes</span>
+<span class="cm">ErrorMvcAutoConfiguration中有条件判断:当存在ErrorAttributes.class(DefaultErrorAttributes实现的接口)时，DefaultErrorAttributes不生效.</span>
+<span class="cm">...</span>
+<span class="cm">@ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)</span>
+<span class="cm">    public DefaultErrorAttributes errorAttributes() {</span>
+<span class="cm">        return new DefaultErrorAttributes(this.serverProperties.getError().isIncludeException());</span>
+<span class="cm">    }</span>
+<span class="cm">*/</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyErrorAttribute</span> <span class="kd">extends</span> <span class="n">DefaultErrorAttributes</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">getErrorAttributes</span><span class="p">(</span><span class="n">WebRequest</span> <span class="n">webRequest</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">includeStackTrace</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//拿到DefaultErrorAttributes类中收集好的异常信息</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="kd">super</span><span class="p">.</span><span class="na">getErrorAttributes</span><span class="p">(</span><span class="n">webRequest</span><span class="p">,</span> <span class="n">includeStackTrace</span><span class="p">);</span>
+        <span class="c1">//添加自定义异常信息</span>
+        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;myerror&quot;</span><span class="p">,</span> <span class="s">&quot;自定义异常信息&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>在<code>5xx.HTML</code>中添加一列</p>
+<div class="highlight"><pre><span></span>...
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>thymeleaf: 500页面<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+...
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>myerror<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${myerror}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+...
+</pre></div>
+<p>访问结果:(访问的Controller中有by zero错误)</p>
+<p><figure class="pswp-item" style="flex: 94.10774410774411" data-width="559" data-height="297"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/dea45db15477c8040cd50f0669b5cb94.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
+<h4>4. Spring Boot自定义异常视图</h4>
+<p>与自定义异常数据类似，Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>中定义了<code>DefaultErrorViewResolver</code>类中用于异常视图处理。要自定义异常视图处理，继承<code>DefaultErrorViewResolver</code>类，然后新增或重写其方法就行了。</p>
+<div class="highlight"><pre><span></span><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyErrorViewResolver</span> <span class="kd">extends</span> <span class="n">DefaultErrorViewResolver</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">MyErrorViewResolver</span><span class="p">(</span><span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="p">,</span> <span class="n">ResourceProperties</span> <span class="n">resourceProperties</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">super</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="n">resourceProperties</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ModelAndView</span> <span class="n">mv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">();</span>
+        <span class="n">mv</span><span class="p">.</span><span class="na">setViewName</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
+        <span class="n">mv</span><span class="p">.</span><span class="na">addAllObjects</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">mv</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>新建<code>xuxx.HTML</code>直接放在<code>src\main\resources\templates</code>目录下即可（因为自定义的MyErrorViewResolver中设置的ViewName不带路径了，又因为是用thymeleaf）</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;xuxx页面&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;xuxx: 5xx&lt;/h2&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;path&lt;/td&gt;
+        &lt;td th:text="${path}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;timestamp&lt;/td&gt;
+        &lt;td th:text="${timestamp}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;message&lt;/td&gt;
+        &lt;td th:text="${message}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;error&lt;/td&gt;
+        &lt;td th:text="${error}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;status&lt;/td&gt;
+        &lt;td th:text="${status}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;myerror&lt;/td&gt;
+        &lt;td th:text="${myerror}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>访问结果：</p>
+<p><figure class="pswp-item" style="flex: 88.46153846153847" data-width="529" data-height="299"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5d55e2ea3a1c2e081f5e3c4b096378fb.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
 
             </div>
         </article>

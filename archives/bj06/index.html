@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/3652e5a0a34343a621c5793d29642e67.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/088409da39fec64bf5fa012fd22c62f6.json"
         }
     </script>
     
@@ -90,17 +90,17 @@
 <hr>
 <p>在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。</p>
 <h3>插入或替换</h3>
-<p>如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用<code>REPLACE</code>语句，这样就不必先查询，再决定是否先删除再插入：</p>
+<p>如果希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用<code>REPLACE</code>语句，这样就不必先查询，再决定是否先删除再插入：</p>
 
 <pre><code>REPLACE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);</code></pre>
 <p>若<code>id=1</code>的记录不存在，<code>REPLACE</code>语句将插入新记录，否则，当前<code>id=1</code>的记录将被删除，然后再插入新记录。</p>
 <h3>插入或更新</h3>
-<p>如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用<code>INSERT INTO ... ON DUPLICATE KEY UPDATE ...</code>语句：</p>
+<p>如果希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用<code>INSERT INTO ... ON DUPLICATE KEY UPDATE ...</code>语句：</p>
 
 <pre><code>INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99) ON DUPLICATE KEY UPDATE name='小明', gender='F', score=99;</code></pre>
 <p>若<code>id=1</code>的记录不存在，<code>INSERT</code>语句将插入新记录，否则，当前<code>id=1</code>的记录将被更新，更新的字段由<code>UPDATE</code>指定。</p>
 <h3>插入或忽略</h3>
-<p>如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用<code>INSERT IGNORE INTO ...</code>语句：</p>
+<p>如果希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用<code>INSERT IGNORE INTO ...</code>语句：</p>
 
 <pre><code>INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);</code></pre>
 <p>若<code>id=1</code>的记录不存在，<code>INSERT</code>语句将插入新记录，否则，不执行任何操作。</p>
@@ -120,7 +120,7 @@ CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;</code><
     average DOUBLE NOT NULL,
     PRIMARY KEY (id)
 );</code></pre>
-<p>然后，我们就可以用一条语句写入各班的平均成绩：</p>
+<p>然后，就可以用一条语句写入各班的平均成绩：</p>
 
 <pre><code>INSERT INTO statistics (class_id, average) SELECT class_id, AVG(score) FROM students GROUP BY class_id;</code></pre>
 <p>确保<code>INSERT</code>语句的列和<code>SELECT</code>语句的列能一一对应，就可以在<code>statistics</code>表中直接保存查询的结果：</p>
@@ -135,7 +135,7 @@ CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;</code><
 +----+----------+--------------+
 3 rows in set (0.00 sec)</code></pre>
 <h3>强制使用指定索引</h3>
-<p>在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果我们知道如何选择索引，可以使用<code>FORCE INDEX</code>强制查询使用指定的索引。例如：</p>
+<p>在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果知道如何选择索引，可以使用<code>FORCE INDEX</code>强制查询使用指定的索引。例如：</p>
 
 <pre><code>&gt; SELECT * FROM students FORCE INDEX (idx_class_id) WHERE class_id = 1 ORDER BY id DESC;</code></pre>
 <p>指定索引的前提是索引<code>idx_class_id</code>必须存在。</p>

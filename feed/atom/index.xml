@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-06T07:03:31.711827+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj02/</id><title>Spring+Spring MVC环境（Java配置）搭建</title><updated>2020-05-06T07:03:31.712108+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-06T11:16:55.504274+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj02/</id><title>Spring+Spring MVC环境（Java配置）搭建</title><updated>2020-05-06T11:16:55.504650+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.创建工程&lt;/h3&gt;
 &lt;p&gt;添加spring-webmvc依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
 &lt;span class="nt"&gt;&amp;lt;project&lt;/span&gt; &lt;span class="na"&gt;xmlns=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot;&lt;/span&gt;
@@ -248,7 +248,7 @@
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h6&gt;3.4测试&lt;/h6&gt;
-</content><link href="/Xuxx_Blogs/archives/bj02/" rel="alternate"/><published>2019-12-29T05:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj03/</id><title>SpringBoot基础配置/注解</title><updated>2020-05-06T07:03:31.712087+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. 属性注入&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj02/" rel="alternate"/><published>2019-12-29T05:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj03/</id><title>SpringBoot基础配置/注解</title><updated>2020-05-06T11:16:55.504627+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. 属性注入&lt;/h3&gt;
 &lt;h5&gt;1. &lt;code&gt;@Value&lt;/code&gt;&lt;/h5&gt;
 &lt;p&gt;实体类&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
@@ -533,7 +533,7 @@ ctx.refresh();&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;对于文本文件，Spring Boot 会将其直接输出。&lt;/li&gt;
 &lt;li&gt;对于图像文件（ &lt;code&gt;banner.gif&lt;/code&gt; 、&lt;code&gt;banner.jpg&lt;/code&gt; 或 &lt;code&gt;banner.png&lt;/code&gt; ），Spring Boot 会将图像转为 ASCII 字符，然后输出。&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj03/" rel="alternate"/><published>2019-12-30T00:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj05/</id><title>SpringBoot中常用的JSON解析方案</title><updated>2020-05-06T07:03:31.712066+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;约定大于配置&lt;/strong&gt;        -- SpringBoot&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj03/" rel="alternate"/><published>2019-12-30T00:58:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj05/</id><title>SpringBoot中常用的JSON解析方案</title><updated>2020-05-06T11:16:55.504605+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;约定大于配置&lt;/strong&gt;        -- SpringBoot&lt;/p&gt;
 &lt;p&gt;本文整理了一下SpringBoot中常用的JSON解析方案&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1&gt; &lt;/h1&gt;
@@ -818,21 +818,21 @@ ctx.refresh();&lt;/code&gt;&lt;/pre&gt;
   &lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="err"&gt;..&lt;/span&gt;
 &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj05/" rel="alternate"/><published>2020-01-02T03:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj06/</id><title>实用SQL语句</title><updated>2020-05-06T07:03:31.712046+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
+</content><link href="/Xuxx_Blogs/archives/bj05/" rel="alternate"/><published>2020-01-02T03:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj06/</id><title>实用SQL语句</title><updated>2020-05-06T11:16:55.504582+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
 &lt;hr&gt;
 &lt;p&gt;在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。&lt;/p&gt;
 &lt;h3&gt;插入或替换&lt;/h3&gt;
-&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用&lt;code&gt;REPLACE&lt;/code&gt;语句，这样就不必先查询，再决定是否先删除再插入：&lt;/p&gt;
+&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用&lt;code&gt;REPLACE&lt;/code&gt;语句，这样就不必先查询，再决定是否先删除再插入：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;REPLACE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;REPLACE&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被删除，然后再插入新记录。&lt;/p&gt;
 &lt;h3&gt;插入或更新&lt;/h3&gt;
-&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用&lt;code&gt;INSERT INTO ... ON DUPLICATE KEY UPDATE ...&lt;/code&gt;语句：&lt;/p&gt;
+&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用&lt;code&gt;INSERT INTO ... ON DUPLICATE KEY UPDATE ...&lt;/code&gt;语句：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99) ON DUPLICATE KEY UPDATE name='小明', gender='F', score=99;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被更新，更新的字段由&lt;code&gt;UPDATE&lt;/code&gt;指定。&lt;/p&gt;
 &lt;h3&gt;插入或忽略&lt;/h3&gt;
-&lt;p&gt;如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用&lt;code&gt;INSERT IGNORE INTO ...&lt;/code&gt;语句：&lt;/p&gt;
+&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用&lt;code&gt;INSERT IGNORE INTO ...&lt;/code&gt;语句：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，不执行任何操作。&lt;/p&gt;
@@ -852,7 +852,7 @@ CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;&lt;/cod
     average DOUBLE NOT NULL,
     PRIMARY KEY (id)
 );&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后，我们就可以用一条语句写入各班的平均成绩：&lt;/p&gt;
+&lt;p&gt;然后，就可以用一条语句写入各班的平均成绩：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;INSERT INTO statistics (class_id, average) SELECT class_id, AVG(score) FROM students GROUP BY class_id;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;确保&lt;code&gt;INSERT&lt;/code&gt;语句的列和&lt;code&gt;SELECT&lt;/code&gt;语句的列能一一对应，就可以在&lt;code&gt;statistics&lt;/code&gt;表中直接保存查询的结果：&lt;/p&gt;
@@ -867,11 +867,11 @@ CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;&lt;/cod
 +----+----------+--------------+
 3 rows in set (0.00 sec)&lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;强制使用指定索引&lt;/h3&gt;
-&lt;p&gt;在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果我们知道如何选择索引，可以使用&lt;code&gt;FORCE INDEX&lt;/code&gt;强制查询使用指定的索引。例如：&lt;/p&gt;
+&lt;p&gt;在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果知道如何选择索引，可以使用&lt;code&gt;FORCE INDEX&lt;/code&gt;强制查询使用指定的索引。例如：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM students FORCE INDEX (idx_class_id) WHERE class_id = 1 ORDER BY id DESC;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;指定索引的前提是索引&lt;code&gt;idx_class_id&lt;/code&gt;必须存在。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj06/" rel="alternate"/><published>2020-04-15T22:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-06T07:03:31.712025+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj06/" rel="alternate"/><published>2020-04-15T22:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-06T11:16:55.504559+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
 &lt;hr&gt;
 &lt;p&gt;在执行SQL语句的时候，某些业务要求，一系列操作必须全部执行，而不能仅执行一部分。例如，一个转账操作：&lt;/p&gt;
 
@@ -1143,7 +1143,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;虽然Serializable隔离级别下的事务具有最高的安全性，但是，由于事务是串行执行，所以效率会大大下降，应用程序的性能会急剧降低。如果没有特别重要的情景，一般都不会使用Serializable隔离级别。&lt;/p&gt;
 &lt;h3&gt;默认隔离级别&lt;/h3&gt;
 &lt;p&gt;如果没有指定隔离级别，数据库就会使用默认的隔离级别。在MySQL中，如果使用InnoDB，默认的隔离级别是Repeatable Read。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-06T07:03:31.712003+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-06T11:16:55.504534+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
 &lt;h3&gt;1.基本操作&lt;/h3&gt;
 &lt;h4&gt;1.在类中添加Logger&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;Logger&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoggerFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SpringbootJpaApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -1179,7 +1179,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 252.30125523012552" data-width="1206" data-height="239"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c485c9133f55bca1a4b6870c7f03adbf.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-06T07:03:31.711982+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-06T11:16:55.504511+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/li&gt;
 &lt;li&gt;在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/li&gt;
@@ -1636,7 +1636,7 @@ ${1.2}
 &lt;li&gt;检测不存在的值： name?? 或者 (user.name)??&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;赋值操作： =, +=, -=, *=, /=, %=, ++, --&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-06T07:03:31.711958+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-06T11:16:55.504470+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
 &lt;p&gt;在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;p&gt;在Spring Boot中,默认使用&lt;code&gt;StandardServletMultipartResolver(支持servlet3.0以后的版本)&lt;/code&gt;代替&lt;code&gt;CommonsMultipartResolver(兼容早期的servlet)&lt;/code&gt;解析Multipart请求，如果必须使用&lt;code&gt;CommonsMultipartResolver&lt;/code&gt;则需要自己添加commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;h3&gt;回顾&lt;/h3&gt;
@@ -1916,14 +1916,14 @@ ${1.2}
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-06T07:03:31.711931+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-06T11:16:55.504443+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
 &lt;p&gt;根据源码中的介绍：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@ControllerAdvice&lt;/code&gt;是一个特殊的&lt;code&gt;@Component&lt;/code&gt;，用于标识一个类，这个类中被以下三种注解标识的方法：&lt;code&gt;@ExceptionHandler&lt;/code&gt;，&lt;code&gt;@InitBinder&lt;/code&gt;，&lt;code&gt;@ModelAttribute&lt;/code&gt;，将作用于所有的&lt;code&gt;@Controller&lt;/code&gt;类的接口上。&lt;/p&gt;
 &lt;p&gt;@ControllerAdvice的功能:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;==处理全局异常==&lt;/li&gt;
-&lt;li&gt;==预设全局数据==&lt;/li&gt;
-&lt;li&gt;==请求参数预处理==&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;处理全局异&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预设全局数据&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;请求参数预处理&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;1. @ControllerAdvice处理全局异常&lt;/h3&gt;
 &lt;p&gt;使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，当时对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常&lt;/p&gt;
@@ -2093,7 +2093,7 @@ public class GlobalData {
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;书名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
    &lt;span class="n"&gt;Auther&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;作者名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-06T07:03:31.711883+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-06T11:16:55.504374+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
 &lt;h4&gt;1. Spring Boot实现自定义错误页&lt;/h4&gt;
 &lt;p&gt;演示&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
@@ -2134,7 +2134,7 @@ public class GlobalData {
 &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;再次访问便会看到&lt;code&gt;500.HTML&lt;/code&gt;中的内容（Controller中有int i = 1 / 0）;如果访问&lt;code&gt;http://localhost:8080/hello2&lt;/code&gt;等会出现404错误的路径便会看到&lt;code&gt;404.HTML&lt;/code&gt;的内容。&lt;/p&gt;
-&lt;p&gt;即==Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。==&lt;/p&gt;
+&lt;p&gt;即&lt;strong&gt;Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;错误页面查找顺序：精确&amp;gt;模糊，动态&amp;gt;静态&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Spring Boot还支持模糊的错误页匹配，例如只定义了&lt;code&gt;4xx.HTML&lt;/code&gt;，出现4XX错误时，都会展示&lt;code&gt;4xx.HTML&lt;/code&gt;的内容。&lt;/p&gt;
 &lt;p&gt;当然，如果定义了&lt;code&gt;404.HTML&lt;/code&gt;和&lt;code&gt;4xx.HTML&lt;/code&gt;页面，出现&lt;code&gt;404&lt;/code&gt;错误时，Spring Boot会优先展示&lt;code&gt;404.HTML&lt;/code&gt;的内容。&lt;/p&gt;
@@ -2249,4 +2249,144 @@ public class GlobalData {
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h4&gt;3. Spring Boot自定义异常数据&lt;/h4&gt;
+&lt;p&gt;经过查看Spring Boot异常处理的自动配置类&lt;code&gt;org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration&lt;/code&gt;可知&lt;code&gt;DefaultErrorAttributes&lt;/code&gt;类中定义了默认的异常数据处理逻辑。&lt;/p&gt;
+&lt;p&gt;包含了以下异常数据:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;timestamp - The time that the errors were extracted(出现错误的时间)
+status - The status code（状态码）
+error - The error reason（错误原因）
+exception - The class name of the root exception (if configured)（根异常的类名（如果已配置））
+message - The exception message（异常消息）
+errors - Any ObjectErrors from a BindingResult exception（BindingResult异常中的任何ObjectError）
+trace - The exception stack trace（异常堆栈跟踪）
+path - The URL path when the exception was raised（引发异常时的URL路径）&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编写自定义错误页&lt;code&gt;5xx.HTML&lt;/code&gt;来查看&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;en&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:th&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.thymeleaf.org&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;5xx&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;thymeleaf: 5xx页面&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;path&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${path}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;timestamp&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${timestamp}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;message&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${message}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;error&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${error}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;status&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${status}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;exception&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${exception}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;访问结果:(访问的Controller中有by zero错误)&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 95.51724137931035" data-width="554" data-height="290"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5fc3f9a00ab774b21100ba009da34464.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;为了自定义异常数据，可以直接继承&lt;code&gt;DefaultErrorAttributes&lt;/code&gt;类，然后新增或重写其方法。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/* 注册到spring以替换DefaultErrorAttributes&lt;/span&gt;
+&lt;span class="cm"&gt;ErrorMvcAutoConfiguration中有条件判断:当存在ErrorAttributes.class(DefaultErrorAttributes实现的接口)时，DefaultErrorAttributes不生效.&lt;/span&gt;
+&lt;span class="cm"&gt;...&lt;/span&gt;
+&lt;span class="cm"&gt;@ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)&lt;/span&gt;
+&lt;span class="cm"&gt;    public DefaultErrorAttributes errorAttributes() {&lt;/span&gt;
+&lt;span class="cm"&gt;        return new DefaultErrorAttributes(this.serverProperties.getError().isIncludeException());&lt;/span&gt;
+&lt;span class="cm"&gt;    }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyErrorAttribute&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;DefaultErrorAttributes&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getErrorAttributes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebRequest&lt;/span&gt; &lt;span class="n"&gt;webRequest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;includeStackTrace&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;//拿到DefaultErrorAttributes类中收集好的异常信息&lt;/span&gt;
+        &lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getErrorAttributes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;webRequest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;includeStackTrace&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="c1"&gt;//添加自定义异常信息&lt;/span&gt;
+        &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;put&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;myerror&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;自定义异常信息&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在&lt;code&gt;5xx.HTML&lt;/code&gt;中添加一列&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;...
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;thymeleaf: 500页面&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+...
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;myerror&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${myerror}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;访问结果:(访问的Controller中有by zero错误)&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 94.10774410774411" data-width="559" data-height="297"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/dea45db15477c8040cd50f0669b5cb94.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4&gt;4. Spring Boot自定义异常视图&lt;/h4&gt;
+&lt;p&gt;与自定义异常数据类似，Spring Boot异常处理的自动配置类&lt;code&gt;org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration&lt;/code&gt;中定义了&lt;code&gt;DefaultErrorViewResolver&lt;/code&gt;类中用于异常视图处理。要自定义异常视图处理，继承&lt;code&gt;DefaultErrorViewResolver&lt;/code&gt;类，然后新增或重写其方法就行了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyErrorViewResolver&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;DefaultErrorViewResolver&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;MyErrorViewResolver&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ApplicationContext&lt;/span&gt; &lt;span class="n"&gt;applicationContext&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ResourceProperties&lt;/span&gt; &lt;span class="n"&gt;resourceProperties&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;applicationContext&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;resourceProperties&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ModelAndView&lt;/span&gt; &lt;span class="nf"&gt;resolveErrorView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;HttpStatus&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;ModelAndView&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ModelAndView&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;mv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setViewName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;xuxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;mv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addAllObjects&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;新建&lt;code&gt;xuxx.HTML&lt;/code&gt;直接放在&lt;code&gt;src\main\resources\templates&lt;/code&gt;目录下即可（因为自定义的MyErrorViewResolver中设置的ViewName不带路径了，又因为是用thymeleaf）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang="en" xmlns:th="http://www.thymeleaf.org"&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset="UTF-8"&amp;gt;
+    &amp;lt;title&amp;gt;xuxx页面&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;h2&amp;gt;xuxx: 5xx&amp;lt;/h2&amp;gt;
+&amp;lt;table&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;path&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${path}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;timestamp&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${timestamp}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;message&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${message}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;error&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${error}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;status&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${status}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+    &amp;lt;tr&amp;gt;
+        &amp;lt;td&amp;gt;myerror&amp;lt;/td&amp;gt;
+        &amp;lt;td th:text="${myerror}"&amp;gt;&amp;lt;/td&amp;gt;
+    &amp;lt;/tr&amp;gt;
+&amp;lt;/table&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;访问结果：&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 88.46153846153847" data-width="529" data-height="299"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5d55e2ea3a1c2e081f5e3c4b096378fb.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 </content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry></feed>

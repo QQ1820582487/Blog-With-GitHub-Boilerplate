@@ -1,58 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-06T20:19:14.714123+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj06/</id><title>实用SQL语句</title><updated>2020-05-06T20:19:14.714426+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h4&gt;实用SQL语句&lt;/h4&gt;
-&lt;hr&gt;
-&lt;p&gt;在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。&lt;/p&gt;
-&lt;h3&gt;插入或替换&lt;/h3&gt;
-&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用&lt;code&gt;REPLACE&lt;/code&gt;语句，这样就不必先查询，再决定是否先删除再插入：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;REPLACE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;REPLACE&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被删除，然后再插入新记录。&lt;/p&gt;
-&lt;h3&gt;插入或更新&lt;/h3&gt;
-&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用&lt;code&gt;INSERT INTO ... ON DUPLICATE KEY UPDATE ...&lt;/code&gt;语句：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99) ON DUPLICATE KEY UPDATE name='小明', gender='F', score=99;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，当前&lt;code&gt;id=1&lt;/code&gt;的记录将被更新，更新的字段由&lt;code&gt;UPDATE&lt;/code&gt;指定。&lt;/p&gt;
-&lt;h3&gt;插入或忽略&lt;/h3&gt;
-&lt;p&gt;如果希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用&lt;code&gt;INSERT IGNORE INTO ...&lt;/code&gt;语句：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, '小明', 'F', 99);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;若&lt;code&gt;id=1&lt;/code&gt;的记录不存在，&lt;code&gt;INSERT&lt;/code&gt;语句将插入新记录，否则，不执行任何操作。&lt;/p&gt;
-&lt;h3&gt;快照&lt;/h3&gt;
-&lt;p&gt;如果想要对一个表进行快照，即复制一份当前表的数据到一个新表，可以结合&lt;code&gt;CREATE TABLE&lt;/code&gt;和&lt;code&gt;SELECT&lt;/code&gt;：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;-- 对class_id=1的记录进行快照，并存储为新表students_of_class1:
-CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;新创建的表结构和&lt;code&gt;SELECT&lt;/code&gt;使用的表结构完全一致。&lt;/p&gt;
-&lt;h3&gt;写入查询结果集&lt;/h3&gt;
-&lt;p&gt;如果查询结果集需要写入到表中，可以结合&lt;code&gt;INSERT&lt;/code&gt;和&lt;code&gt;SELECT&lt;/code&gt;，将&lt;code&gt;SELECT&lt;/code&gt;语句的结果集直接插入到指定表中。&lt;/p&gt;
-&lt;p&gt;例如，创建一个统计成绩的表&lt;code&gt;statistics&lt;/code&gt;，记录各班的平均成绩：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CREATE TABLE statistics (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    class_id BIGINT NOT NULL,
-    average DOUBLE NOT NULL,
-    PRIMARY KEY (id)
-);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后，就可以用一条语句写入各班的平均成绩：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;INSERT INTO statistics (class_id, average) SELECT class_id, AVG(score) FROM students GROUP BY class_id;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;确保&lt;code&gt;INSERT&lt;/code&gt;语句的列和&lt;code&gt;SELECT&lt;/code&gt;语句的列能一一对应，就可以在&lt;code&gt;statistics&lt;/code&gt;表中直接保存查询的结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM statistics;
-+----+----------+--------------+
-| id | class_id | average      |
-+----+----------+--------------+
-|  1 |        1 |         86.5 |
-|  2 |        2 | 73.666666666 |
-|  3 |        3 | 88.333333333 |
-+----+----------+--------------+
-3 rows in set (0.00 sec)&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;强制使用指定索引&lt;/h3&gt;
-&lt;p&gt;在查询的时候，数据库系统会自动分析查询语句，并选择一个最合适的索引。但是很多时候，数据库系统的查询优化器并不一定总是能使用最优索引。如果知道如何选择索引，可以使用&lt;code&gt;FORCE INDEX&lt;/code&gt;强制查询使用指定的索引。例如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;gt; SELECT * FROM students FORCE INDEX (idx_class_id) WHERE class_id = 1 ORDER BY id DESC;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;指定索引的前提是索引&lt;code&gt;idx_class_id&lt;/code&gt;必须存在。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj06/" rel="alternate"/><published>2020-04-15T22:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-06T20:19:14.714405+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-10T17:42:48.972676+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>只坚持一种正义——我的正义。</subtitle><entry><id>/Xuxx_Blogs/archives/bj07/</id><title>数据库-事务</title><updated>2020-05-10T17:42:48.972942+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;事务&lt;/h3&gt;
 &lt;hr&gt;
 &lt;p&gt;在执行SQL语句的时候，某些业务要求，一系列操作必须全部执行，而不能仅执行一部分。例如，一个转账操作：&lt;/p&gt;
 
@@ -324,7 +271,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;虽然Serializable隔离级别下的事务具有最高的安全性，但是，由于事务是串行执行，所以效率会大大下降，应用程序的性能会急剧降低。如果没有特别重要的情景，一般都不会使用Serializable隔离级别。&lt;/p&gt;
 &lt;h3&gt;默认隔离级别&lt;/h3&gt;
 &lt;p&gt;如果没有指定隔离级别，数据库就会使用默认的隔离级别。在MySQL中，如果使用InnoDB，默认的隔离级别是Repeatable Read。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-06T20:19:14.714384+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj07/" rel="alternate"/><published>2020-04-15T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj08/</id><title>Spring  Boot 记录日志</title><updated>2020-05-10T17:42:48.972922+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring  Boot 记录日志&lt;/h2&gt;
 &lt;h3&gt;1.基本操作&lt;/h3&gt;
 &lt;h4&gt;1.在类中添加Logger&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;Logger&lt;/span&gt; &lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoggerFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SpringbootJpaApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -360,7 +307,7 @@ ROLLBACK;&lt;/code&gt;&lt;/pre&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 252.30125523012552" data-width="1206" data-height="239"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c485c9133f55bca1a4b6870c7f03adbf.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-06T20:19:14.714363+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj08/" rel="alternate"/><published>2020-05-03T01:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-10T17:42:48.972903+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/li&gt;
 &lt;li&gt;在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/li&gt;
@@ -817,7 +764,7 @@ ${1.2}
 &lt;li&gt;检测不存在的值： name?? 或者 (user.name)??&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;赋值操作： =, +=, -=, *=, /=, %=, ++, --&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-06T20:19:14.714323+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-10T17:42:48.972884+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
 &lt;p&gt;在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;p&gt;在Spring Boot中,默认使用&lt;code&gt;StandardServletMultipartResolver(支持servlet3.0以后的版本)&lt;/code&gt;代替&lt;code&gt;CommonsMultipartResolver(兼容早期的servlet)&lt;/code&gt;解析Multipart请求，如果必须使用&lt;code&gt;CommonsMultipartResolver&lt;/code&gt;则需要自己添加commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;h3&gt;回顾&lt;/h3&gt;
@@ -1097,7 +1044,7 @@ ${1.2}
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-06T20:19:14.714302+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-10T17:42:48.972863+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
 &lt;p&gt;根据源码中的介绍：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@ControllerAdvice&lt;/code&gt;是一个特殊的&lt;code&gt;@Component&lt;/code&gt;，用于标识一个类，这个类中被以下三种注解标识的方法：&lt;code&gt;@ExceptionHandler&lt;/code&gt;，&lt;code&gt;@InitBinder&lt;/code&gt;，&lt;code&gt;@ModelAttribute&lt;/code&gt;，将作用于所有的&lt;code&gt;@Controller&lt;/code&gt;类的接口上。&lt;/p&gt;
 &lt;p&gt;@ControllerAdvice的功能:&lt;/p&gt;
@@ -1283,7 +1230,7 @@ public class GlobalData {
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;书名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
    &lt;span class="n"&gt;Auther&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;作者名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-06T20:19:14.714279+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-10T17:42:48.972843+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
 &lt;h4&gt;1. Spring Boot实现自定义错误页&lt;/h4&gt;
 &lt;p&gt;演示&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
@@ -1580,7 +1527,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 &amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;访问结果：&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 88.46153846153847" data-width="529" data-height="299"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5d55e2ea3a1c2e081f5e3c4b096378fb.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-06T20:19:14.714256+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-10T17:42:48.972823+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
 &lt;h4&gt;CORS概述&lt;/h4&gt;
 &lt;p&gt;当一个资源从与该资源本身所在的服务器不同的&lt;code&gt;域、协议、端口&lt;/code&gt;请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考&lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy"&gt;浏览器的同源策略 | MDN&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求，XMLHttpRequest和Fetch API，只能从加载应用程序的同一个域请求HTTP资源，除非使用&lt;code&gt;CORS头文件&lt;/code&gt;&lt;/p&gt;
@@ -1706,7 +1653,7 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;此时cros1中所有的接口都开启了CORS，可以跨域访问了。&lt;/p&gt;
 &lt;h4&gt;4. 预检请求（探测请求）&lt;/h4&gt;
-</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-06T20:19:14.714230+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-10T17:42:48.972802+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
 &lt;h4&gt;1. 编写Controller&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -1760,7 +1707,7 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h4&gt;4. 测试&lt;/h4&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 284.72222222222223" data-width="1435" data-height="252"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/143bf6177ef7754eb97e87881c93515c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-06T20:19:14.714180+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;会话技术&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-10T17:42:48.972778+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;会话技术&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
 
@@ -1902,4 +1849,214 @@ response. addcookie(c);&lt;/p&gt;
 &lt;li&gt;session没有数据大小限制，Cookie有&lt;/li&gt;
 &lt;li&gt;session数据安全，Cookie相对于不安全&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj15/</id><title>JSP和MVC开发模式</title><updated>2020-05-10T17:42:48.972731+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;JSP和MVC开发模式&lt;/h2&gt;
+&lt;h3&gt;1.JSP&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 指令
+    * 作用：用于配置JSP页面，导入资源文件
+    * 格式：
+        &amp;lt;%@ 指令名称 属性名1=属性值1 属性名2=属性值2 ... %&amp;gt;
+    * 分类：
+        1. page     ： 配置JSP页面的
+            * contentType：等同于response.setContentType()
+                1. 设置响应体的mime类型以及字符集
+                2. 设置当前jsp页面的编码（只能是高级的IDE才能生效，如果使用低级工具，则需要设置pageEncoding属性设置当前页面的字符集）
+            * import：导包
+            * errorPage：当前页面发生异常后，会自动跳转到指定的错误页面
+            * isErrorPage：标识当前也是是否是错误页面。
+                * true：是，可以使用内置对象exception
+                * false：否。默认值。不可以使用内置对象exception
+        2. include  ： 页面包含的。导入页面的资源文件
+            * &amp;lt;%@include file="top.jsp"%&amp;gt;
+        3. taglib   ： 导入资源
+            * &amp;lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&amp;gt;
+                * prefix：前缀，自定义的
+2. 注释:
+    1. html注释：
+        &amp;lt;!-- --&amp;gt;:只能注释html代码片段
+    2. jsp注释：推荐使用
+        &amp;lt;%-- --%&amp;gt;：可以注释所有
+3. 内置对象
+    * 在jsp页面中不需要创建，直接使用的对象
+    * 一共有9个：
+            变量名                 真实类型                        作用
+        * pageContext               PageContext                 当前页面共享数据，还可以获取其他八个内置对象
+        * request                   HttpServletRequest          一次请求访问的多个资源(转发)
+        * session                   HttpSession                 一次会话的多个请求间
+        * application               ServletContext              所有用户间共享数据
+        * response                  HttpServletResponse         响应对象
+        * page                      Object                      当前页面(Servlet)的对象  this
+        * out                       JspWriter                   输出对象，数据输出到页面上
+        * config                    ServletConfig               Servlet的配置对象
+        * exception                 Throwable                   异常对象
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;h3&gt;2.MVC：开发模式&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. jsp演变历史
+    1. 早期只有servlet，只能使用response输出标签数据，非常麻烦
+    2. 后来又jsp，简化了Servlet的开发，如果过度使用jsp，在jsp中即写大量的java代码，有写html表，造成难于维护，难于分工协作
+    3. 再后来，java的web开发，借鉴mvc开发模式，使得程序的设计更加合理性
+
+2. MVC：
+    1. M：Model，模型。JavaBean
+        * 完成具体的业务操作，如：查询数据库，封装对象
+    2. V：View，视图。JSP
+        * 展示数据
+    3. C：Controller，控制器。Servlet
+        * 获取用户的输入
+        * 调用模型
+        * 将数据交给视图进行展示
+    * 优缺点：
+        1. 优点：
+            1. 耦合性低，方便维护，可以利于分工协作
+            2. 重用性高
+
+        2. 缺点：
+            1. 使得项目架构变得复杂，对开发人员要求高
+
+
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;3.EL表达式&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 概念：Expression Language 表达式语言
+2. 作用：替换和简化jsp页面中java代码的编写
+3. 语法：${表达式}
+4. 注意：
+    * jsp默认支持el表达式的。如果要忽略el表达式
+        1. 设置jsp中page指令中：isELIgnored="true" 忽略当前jsp页面中所有的el表达式
+        2. \${表达式} ：忽略当前这个el表达式
+5. 使用：
+    1. 运算：
+        * 运算符：
+            1. 算数运算符： + - * /(div) %(mod)
+            2. 比较运算符： &amp;gt; &amp;lt; &amp;gt;= &amp;lt;= == !=
+            3. 逻辑运算符： &amp;amp;&amp;amp;(and) ||(or) !(not)
+            4. 空运算符： empty
+                * 功能：用于判断字符串、集合、数组对象是否为null或者长度是否为0
+                * ${empty list}:判断字符串、集合、数组对象是否为null或者长度为0
+                * ${not empty str}:表示判断字符串、集合、数组对象是否不为null 并且 长度&amp;gt;0
+    2. 获取值
+        1. el表达式只能从域对象中获取值
+        2. 语法：
+            1. ${域名称.键名}：从指定域中获取指定键的值
+                * 域名称：
+                    1. pageScope        --&amp;gt; pageContext
+                    2. requestScope     --&amp;gt; request
+                    3. sessionScope     --&amp;gt; session
+                    4. applicationScope --&amp;gt; application（ServletContext）
+                * 举例：在request域中存储了name=张三
+                * 获取：${requestScope.name}
+
+            2. ${键名}：表示依次从最小的域中查找是否有该键对应的值，直到找到为止。
+        3. 获取对象、List集合、Map集合的值
+            1. 对象：${域名称.键名.属性名}
+                    * 本质上会去调用对象的getter方法
+
+            2. List集合：${域名称.键名[索引]}
+
+            3. Map集合：
+                    * ${域名称.键名.key名称}
+                    * ${域名称.键名["key名称"]}
+    3. 隐式对象：
+        * el表达式中有11个隐式对象
+        * pageContext：
+            * 获取jsp其他八个内置对象
+                * ${pageContext.request.contextPath}：动态获取虚拟目录
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;h3&gt;4.JSTL&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 概念：JavaServer Pages Tag Library  JSP标准标签库
+    * 是由Apache组织提供的开源的免费的jsp标签      &amp;lt;标签&amp;gt;
+
+2. 作用：用于简化和替换jsp页面上的java代码      
+
+3. 使用步骤：
+    1. 导入jstl相关jar包
+    2. 引入标签库：taglib指令：  &amp;lt;%@ taglib %&amp;gt;
+    3. 使用标签
+
+4. 常用的JSTL标签
+    1. if:相当于java代码的if语句
+        1. 属性：
+            * test 必须属性，接受boolean表达式
+                * 如果表达式为true，则显示if标签体内容，如果为false，则不显示标签体内容
+                * 一般情况下，test属性值会结合el表达式一起使用
+         2. 注意：
+             * c:if标签没有else情况，想要else情况，则可以在定义一个c:if标签
+    2. choose:相当于java代码的switch语句
+        1. 使用choose标签声明                     相当于switch声明
+        2. 使用when标签做判断                  相当于case
+        3. 使用otherwise标签做其他情况的声明        相当于default
+
+    3. foreach:相当于java代码的for语句
+        1.完成重复的操作
+            for(inti=0;i&amp;lt;10;i++){...}
+            *属性:
+                begin:开始值
+                end:结束值
+                var:临时变量
+                step:步长
+                varStatus :循环状态对象
+                    index:容器中元素的索引，从e开始
+                    count :循环次数，从1开始
+        2. 便历容器
+            List&amp;lt;User&amp;gt; list;
+            for(User user : list){...}
+            *属性:
+                items :容器对象
+                var :容器中元素的临时变量
+                varStatus :循环状态对象
+                index:容器中元素的索引，从o开始
+                count :循环次数，从1开始
+
+5. 练习：
+    * 需求：在request域中有一个存有User对象的List集合。需要使用jstl+el将list集合数据展示到jsp页面的表格table中
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.三层架构：软件设计架构&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 界面层(表示层)：用户看的得界面。用户可以通过界面上的组件和服务器进行交互
+2. 业务逻辑层：处理业务逻辑的。
+3. 数据访问层：操作数据存储文件。
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;6.案例：用户信息列表展示&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 需求：用户信息的增删改查操作
+2. 设计：
+    1. 技术选型：Servlet+JSP+MySQL+JDBCTempleat+Duird+BeanUtilS+tomcat
+    2. 数据库设计：
+        create database day17; -- 创建数据库
+        use day17;             -- 使用数据库
+        create table user(   -- 创建表
+            id int primary key auto_increment,
+            name varchar(20) not null,
+            gender varchar(5),
+            age int,
+            address varchar(32),
+            qq  varchar(20),
+            email varchar(50)
+        );
+
+3. 开发：
+    1. 环境搭建
+        1. 创建数据库环境
+        2. 创建项目，导入需要的jar包
+
+    2. 编码
+4. 测试
+5. 部署运维&lt;/code&gt;&lt;/pre&gt;
+</content><link href="/Xuxx_Blogs/archives/bj15/" rel="alternate"/><published>2020-05-08T22:10:00+08:06</published></entry></feed>

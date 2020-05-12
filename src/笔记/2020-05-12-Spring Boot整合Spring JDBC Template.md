@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring Boot整合Soring JDBC Template
+title: Spring Boot整合Spring JDBC Template
 slug: bj16
 date: 2020-05-12 16:20
 status: publish

@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ac8b03287b2a9fa09259c436dc303bd5.json"
+        }
+    </script>
+    
+<title>Spring Boot整合Mybatis - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot整合Mybatis - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj17/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-12T22:20:00-00.00" />
+<meta name="twitter:title" content="Spring Boot整合Mybatis - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot整合Mybatis</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-12
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h1>Spring Boot整合Mybatis</h1>
+<h2>1.基本使用</h2>
+<h3>1.依赖</h3>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.1.20&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;version&gt;5.1.27&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<h3>2.配置数据源</h3>
+<div class="highlight"><pre><span></span><span class="na">spring.datasource.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
+<span class="na">spring.datasource.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test</span>
+<span class="na">spring.datasource.username</span><span class="o">=</span><span class="s">root</span>
+<span class="na">spring.datasource.password</span><span class="o">=</span><span class="s">root</span>
+</pre></div>
+<h3>3.写代码</h3>
+<p><code>User</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>UserMapper</code></p>
+<div class="highlight"><pre><span></span><span class="c1">//单个Mapper可以直接加@Mapper，也可以在启动类上加//@MapperScan(basePackages = &quot;com.xuxx.mybatis.mapper&quot;)</span>
+<span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="p">{</span>
+<span class="c1">//    @Select(&quot;select * from user &quot;)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>Mapper.xml</code></p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper</span>
+<span class="cp">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span>
+<span class="cp">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">&quot;com.xuxx.mybatis.mapper.UserMapper&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">&quot;getAllUsers&quot;</span> <span class="na">resultType=</span><span class="s">&quot;com.xuxx.mybatis.bean.User&quot;</span><span class="nt">&gt;</span>
+        select * from user
+    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</pre></div>
+<p>补充：</p>
+<p>此时Mapper.xml会被Maven忽略，运行会报错<code>org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.xuxx.mybatis.mapper.UserMapper.getAllUsers</code></p>
+<p>解决方法：（三种方式任选其一即可）</p>
+<ol>
+<li><p>在<code>resources</code>目录下创建与Mapper位置对应的多级目录<code>com/xuxx/mybatis/mapper</code>,并将<code>Mapper.xml</code>放到创建的目录下</p>
+</li>
+<li><p>在<code>pom.xml</code>文件中配置不忽略需要的xml文件</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
+    ....
+<span class="c">&lt;!--让maven不忽略Mapper.xml--&gt;</span>
+        <span class="nt">&lt;resources&gt;</span>
+            <span class="nt">&lt;resource&gt;</span>
+                <span class="nt">&lt;directory&gt;</span>src/main/java<span class="nt">&lt;/directory&gt;</span>
+                <span class="nt">&lt;includes&gt;</span>
+                    <span class="nt">&lt;include&gt;</span>**/*.xml<span class="nt">&lt;/include&gt;</span>
+                <span class="nt">&lt;/includes&gt;</span>
+            <span class="nt">&lt;/resource&gt;</span>
+            <span class="nt">&lt;resource&gt;</span>
+                <span class="nt">&lt;directory&gt;</span>src/main/resources<span class="nt">&lt;/directory&gt;</span>
+            <span class="nt">&lt;/resource&gt;</span>
+        <span class="nt">&lt;/resources&gt;</span>
+</pre></div>
+</li>
+<li><p>在<code>resources</code>目录下创建自定义目录，并在<code>application.properties</code>中配置</p>
+<div class="highlight"><pre><span></span><span class="c">#将Mapper.xml文件放在resources目录的mapper下，再指定mapper.xml位置</span>
+<span class="na">mybatis.mapper-locations</span><span class="o">=</span><span class="s">classpath:mapper/*.xml</span>
+</pre></div>
+</li>
+</ol>
+<p><code>测试</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">MybatisApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>结果</p>
+
+<pre><code>[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]</code></pre>
+<h2>2.配置多数据源</h2>
+<h3>1.依赖</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>druid-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.1.20<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h3>2.配置多数据源</h3>
+<div class="highlight"><pre><span></span><span class="c">#配置多数据源</span>
+<span class="na">spring.datasource.one.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
+<span class="na">spring.datasource.one.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test</span>
+<span class="na">spring.datasource.one.username</span><span class="o">=</span><span class="s">root</span>
+<span class="na">spring.datasource.one.password</span><span class="o">=</span><span class="s">root</span>
+
+<span class="na">spring.datasource.two.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
+<span class="na">spring.datasource.two.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test2</span>
+<span class="na">spring.datasource.two.username</span><span class="o">=</span><span class="s">root</span>
+<span class="na">spring.datasource.two.password</span><span class="o">=</span><span class="s">root</span>
+</pre></div>
+<h3>3.写代码</h3>
+<p><code>DataSourceConfig</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSourceConfig</span> <span class="p">{</span>
+    <span class="nd">@Bean</span>
+    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.one&quot;</span><span class="p">)</span>
+    <span class="n">DataSource</span> <span class="nf">dsOne</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.two&quot;</span><span class="p">)</span>
+    <span class="n">DataSource</span> <span class="nf">dsTwo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>MybatisConfigOne</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.mybatis2.mapper1&quot;</span><span class="p">,</span> <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactoryOne&quot;</span>
+        <span class="p">,</span> <span class="n">sqlSessionTemplateRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionTemplateOne&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MybatisConfigOne</span> <span class="p">{</span>
+    <span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
+    <span class="n">DataSource</span> <span class="n">dsOne</span><span class="p">;</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactoryOne</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">SqlSessionFactoryBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">SqlSessionTemplate</span> <span class="nf">sqlSessionTemplateOne</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryOne</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>MybatisConfigTwo</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.mybatis2.mapper2&quot;</span><span class="p">,</span> <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactoryTwo&quot;</span>
+        <span class="p">,</span> <span class="n">sqlSessionTemplateRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionTemplateTwo&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MybatisConfigTwo</span> <span class="p">{</span>
+    <span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;dsTwo&quot;</span><span class="p">)</span>
+    <span class="n">DataSource</span> <span class="n">dsTwo</span><span class="p">;</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactoryTwo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">SqlSessionFactoryBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsTwo</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">SqlSessionTemplate</span> <span class="nf">sqlSessionTemplateTwo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryTwo</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>到此，多数据源就配置好了，使用数据源1就在包mapper1下，使用数据源2就在包mapper2下。</p>
+<p>测试一下</p>
+<p><code>User</code></p>
+<div class="highlight"><pre><span></span><span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>com\xuxx\mybatis2\mapper1\UserMapper1.java</code></p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper1</span> <span class="p">{</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p><code>com\xuxx\mybatis2\mapper2\UserMapper2.java</code></p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper2</span> <span class="p">{</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p>测试类</p>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">Mybatis2ApplicationTests</span> <span class="p">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">UserMapper1</span> <span class="n">userMapper1</span><span class="p">;</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">UserMapper2</span> <span class="n">userMapper2</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users1</span> <span class="o">=</span> <span class="n">userMapper1</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user1：&quot;</span><span class="o">+</span><span class="n">users1</span><span class="p">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users2</span> <span class="o">=</span> <span class="n">userMapper2</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user2：&quot;</span><span class="o">+</span><span class="n">users2</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+<p>控制台</p>
+
+<pre><code>user1：[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
+user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lisi, address=北京2), User(id=3, username=xuxx, address=四川2)]</code></pre>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj16/">Spring Boot整合Spring JDBC Template</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

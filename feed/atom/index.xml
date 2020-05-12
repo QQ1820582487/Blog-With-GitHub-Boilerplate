@@ -1,462 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-12T12:05:30.748595+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj04/</id><title>SpringBoot整合Freemarker</title><updated>2020-05-12T12:05:30.748823+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一.基本步骤&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/li&gt;
-&lt;li&gt;在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/li&gt;
-&lt;li&gt;创建&lt;code&gt;freemarker&lt;/code&gt;模板&lt;/li&gt;
-&lt;li&gt;创建控制层&lt;/li&gt;
-&lt;li&gt;测试访问&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;1. 添加&lt;code&gt;pom&lt;/code&gt;依赖&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!-- springboot整合freemarker --&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-freemarker&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;2. 在&lt;code&gt;application.yml&lt;/code&gt;中添加相关配置&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;# 配置freemarker
-spring:
-  freemarker:
-    # 设置模板后缀名 默认.ftl (现已改为ftlh)
-    #suffix: .ftlh
-    # 设置文档类型  默认 text/html
-    #content-type: text/html
-    # 设置页面编码格式  默认 UTF-8
-    #charset: UTF-8
-    # 设置页面缓存  默认false
-    #cache: false
-    # 设置ftl文件路径 默认classpath:/templates
-    #template-loader-path:
-    # - classpath:/templates
-
-  # 设置静态文件路径，js,css等
-  mvc:
-    static-path-pattern: /static/**&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;3. 创建&lt;code&gt;freemarker&lt;/code&gt;模板&lt;/h3&gt;
-&lt;p&gt;目录：src/main/resources 创建templates文件夹，文件夹里新建&lt;code&gt;freemarker.ftlh&lt;/code&gt;文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;freemark&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello ${name} from resource freemark!&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;4. 创建控制层&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Controller&lt;/span&gt;
-&lt;span class="nd"&gt;@RequestMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/freemarker&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FreemarkerAction&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt;     * 跳转freemarker页面&lt;/span&gt;
-&lt;span class="cm"&gt;     */&lt;/span&gt;
-    &lt;span class="nd"&gt;@RequestMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/toDemo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;toDemo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Xuxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;freemarker&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;5. 测试访问&lt;/h3&gt;
-&lt;p&gt;启动项目，输入&lt;a href="http://localhost:8080/freemarker/toDemo"&gt;http://localhost:8080/freemarker/toDemo&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;二.FreeMarker常用指令&lt;/h3&gt;
-&lt;h4&gt;1.if, else, elseif&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#if 条件&amp;gt;...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#elseif 条件&amp;gt;...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#elseif 条件&amp;gt;...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#else&amp;gt;...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#if&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#if user.gender==1&amp;gt;男
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#elseif user.gender==0&amp;gt;女
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#else&amp;gt;未知
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#if&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;2.switch, case, default, break&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#switch value&amp;gt;
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#case refValue1&amp;gt;
-    ...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#case refValue2&amp;gt;
-    ...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#case refValueN&amp;gt;
-    ...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#default&amp;gt;
-    ...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#switch&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#switch user.gender&amp;gt;
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#case 1&amp;gt;男&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#case 0&amp;gt;女&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#default&amp;gt;未知
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#switch&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;3.list, break&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#list sequence as item&amp;gt;
-    ...
-    &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#if item = &amp;quot;spring&amp;quot;&amp;gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#break&amp;gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#if&amp;gt;
-    ...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#list&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;关键字&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;item_index:是list当前值的下标&lt;/li&gt;
-&lt;li&gt;item_has_next:判断list是否还有值&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;用例&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#assign seq = ["winter", "spring", "summer", "autumn"]&amp;gt;
-&amp;lt;#list seq as x&amp;gt;
-  ${x_index + 1}. ${x}&amp;lt;#if x_has_next&amp;gt;,&amp;lt;/#if&amp;gt;
-&amp;lt;/#list&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;winter,&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;spring,&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;summer,&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;autumn  &lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4&gt;4.include&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#include filename&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#include filename options&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;options包含两个属性&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;encoding=”GBK” 编码格式&lt;/li&gt;
-&lt;li&gt;parse=true 是否作为ftl语法解析,默认是true，false就是以文本方式引入.注意在ftl文件里布尔值都是直接赋值的如parse=true,而不是parse=”true”&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;p&gt;/common/copyright.ftl包含内容&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Copyright 2001-2002 ${me}&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;br&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-All rights reserved.
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;模板文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign me = &amp;quot;Juila Smith&amp;quot;&amp;gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Some test&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Yeah.
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;hr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#include &amp;quot;/common/copyright.ftl&amp;quot; encoding=”GBK”&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出结果&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Some test&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Yeah.
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;hr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-Copyright 2001-2002 Juila Smith
-All rights reserved.
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;5.Import&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#import path as hash&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;类似于java里的import,它导入文件，然后就可以在当前文件里使用被导入文件里的宏组件&lt;/p&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;p&gt;假设mylib.ftl里定义了宏copyright那么我们在其他模板页面里可以这样使用&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#import "/libs/mylib.ftl" as my&amp;gt;
-&amp;lt;@my.copyright date="1999-2002"/&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;"my"在freemarker里被称作namespace&lt;/p&gt;
-&lt;h4&gt;6.compress&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#compress&amp;gt;
-  ...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#compress&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用来压缩空白空间和空白的行&lt;/p&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign x = &amp;quot;    moo  \n\n   &amp;quot;&amp;gt;
-(&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#compress&amp;gt;
-  1 2  3   4    5
-  ${moo}
-  test only
-  I said, test only
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#compress&amp;gt;)
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;(1 2 3 4 5
-moo
-test only
-I said, test only)
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;7.escape, noescape&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#escape identifier as expression&amp;gt;
-  ...
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#noescape&amp;gt;...&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#noescape&amp;gt;
-  ...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#escape&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;p&gt;主要使用在相似的字符串变量输出，比如某一个模块的所有字符串输出都必须是html安全的，这个时候就可以使用该表达式&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#escape x as x?html&amp;gt;
-  First name: ${firstName}
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#noescape&amp;gt;Last name: ${lastName}&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#noescape&amp;gt;
-  Maiden name: ${maidenName}
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#escape&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;相同表达式&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;First name: ${firstName?html}
-  Last name: ${lastName }
-  Maiden name: ${maidenName?html}
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;8.assign&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign name=value&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign name1=value1 name2=value2 ... nameN=valueN&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign same as above... in namespacehash&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign name&amp;gt;
-  capture this
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#assign&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign name in namespacehash&amp;gt;
-  capture this
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#assign&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;p&gt;生成变量,并且给变量赋值&lt;/p&gt;
-&lt;p&gt;给seasons赋予序列值&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign seasons = [&amp;quot;winter&amp;quot;, &amp;quot;spring&amp;quot;, &amp;quot;summer&amp;quot;, &amp;quot;autumn&amp;quot;]&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;给变量test加1&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign test = test + 1&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;给my namespage 赋予一个变量bgColor,下面可以通过my.bgColor来访问这个变量&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#import &amp;quot;/mylib.ftl&amp;quot; as my&amp;gt;
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign bgColor=&amp;quot;red&amp;quot; in my&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;将一段输出的文本作为变量保存在x里&lt;/p&gt;
-&lt;p&gt;下面的阴影部分输出的文本将被赋值给x&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign x&amp;gt;
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#list [&amp;quot;星期一&amp;quot;, &amp;quot;星期二&amp;quot;, &amp;quot;星期三&amp;quot;, &amp;quot;星期四&amp;quot;, &amp;quot;星期五&amp;quot;, &amp;quot;星期六&amp;quot;, &amp;quot;星期天&amp;quot;] as n&amp;gt;
-${n}
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#list&amp;gt;
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#assign&amp;gt;
-${x}
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上面的代码将产生如下输出:星期一 星期二 星期三 星期四 星期五 星期六 星期天&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign x&amp;gt;Hello ${user}!&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#assign&amp;gt;     error
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign x=” Hello ${user}!”&amp;gt;         true
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;同时也支持中文赋值，如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#assign 语法&amp;gt;
-  java
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#assign&amp;gt;
-${语法}
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;打印输出:&lt;/p&gt;
-&lt;p&gt;java&lt;/p&gt;
-&lt;h4&gt;9.global&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#global name=value&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#global name1=value1 name2=value2 ... nameN=valueN&amp;gt;
-or
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#global name&amp;gt;
-  capture this
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#global&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;全局赋值语法，利用这个语法给变量赋值，那么这个变量在所有的namespace中是可见的,如果这个变量被当前的assign语法覆盖 如&amp;lt;#global x=2&amp;gt; &amp;lt;#assign x=1&amp;gt; 在当前页面里x=2将被隐藏，或者通过${.global.x}来访问&lt;/p&gt;
-&lt;h4&gt;10.setting&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#setting name=value&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用来设置整个系统的一个环境&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;locale&lt;/li&gt;
-&lt;li&gt;number_format&lt;/li&gt;
-&lt;li&gt;boolean_format&lt;/li&gt;
-&lt;li&gt;date_format, time_format, datetime_format&lt;/li&gt;
-&lt;li&gt;time_zone&lt;/li&gt;
-&lt;li&gt;classic_compatible&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;用例&lt;/p&gt;
-&lt;p&gt;假如当前是匈牙利的设置，然后修改成美国&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;${1.2}
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#setting locale=&amp;quot;en_US&amp;quot;&amp;gt;
-${1.2}
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出&lt;/p&gt;
-&lt;p&gt;1,2&lt;/p&gt;
-&lt;p&gt;1.2&lt;/p&gt;
-&lt;p&gt;因为匈牙利是采用“,”作为十进制的分隔符，美国是用“.”&lt;/p&gt;
-&lt;h4&gt;11.macro, nested, return&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#macro name param1 param2 ... paramN&amp;gt;
-  ...
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#nested loopvar1, loopvar2, ..., loopvarN&amp;gt;
-  ...
-  &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;#return&amp;gt;
-  ...
-&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;/#macro&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;用例&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#macro test foo bar="Bar" baaz=-1&amp;gt;
-  Test text, and the params: ${foo}, ${bar}, ${baaz}
-&amp;lt;/#macro&amp;gt;
-&amp;lt;@test foo="a" bar="b" baaz=5*5-2/&amp;gt;
-&amp;lt;@test foo="a" bar="b"/&amp;gt;
-&amp;lt;@test foo="a" baaz=5*5-2/&amp;gt;
-&amp;lt;@test foo="a"/&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  Test text, and the params: a, b, 23
-  Test text, and the params: a, b, -1
-  Test text, and the params: a, Bar, 23
-  Test text, and the params: a, Bar, -1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;定义循环输出的宏&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#macro list title items&amp;gt;
-  &amp;lt;p&amp;gt;${title?cap_first}:
-  &amp;lt;ul&amp;gt;
-    &amp;lt;#list items as x&amp;gt;
-      &amp;lt;li&amp;gt;${x?cap_first}
-    &amp;lt;/#list&amp;gt;
-  &amp;lt;/ul&amp;gt;
-&amp;lt;/#macro&amp;gt;
-&amp;lt;@list items=["mouse", "elephant", "python"] title="Animals"/&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出结果&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Animals:
-  &amp;lt;ul&amp;gt;
-      &amp;lt;li&amp;gt;Mouse
-      &amp;lt;li&amp;gt;Elephant
-      &amp;lt;li&amp;gt;Python
-  &amp;lt;/ul&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;包含body的宏&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#macro repeat count&amp;gt;
-  &amp;lt;#list 1..count as x&amp;gt;
-    &amp;lt;#nested x, x/2, x==count&amp;gt;
-  &amp;lt;/#list&amp;gt;
-&amp;lt;/#macro&amp;gt;
-&amp;lt;@repeat count=4 ; c halfc last&amp;gt;
-  ${c}. ${halfc}&amp;lt;#if last&amp;gt; Last!&amp;lt;/#if&amp;gt;
-&amp;lt;/@repeat &amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;0.5&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;1&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;1.5&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;2 Last!&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4&gt;12.t, lt, rt&lt;/h4&gt;
-&lt;p&gt;语法&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;#t&amp;gt; 去掉左右空白和回车换行
-&amp;lt;#lt&amp;gt;去掉左边空白和回车换行
-&amp;lt;#rt&amp;gt;去掉右边空白和回车换行
-&amp;lt;#nt&amp;gt;取消上面的效果&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;当然 (&lt;a href="http://freemarker.foofun.cn/ref_directives.html"&gt;指令还有很多&lt;/a&gt;)。&lt;/p&gt;
-&lt;h3&gt;三、常用内建函数&lt;/h3&gt;
-&lt;p&gt;内建函数很像子变量(如果了解Java术语的话，也可以说像方法)， 它们并不是数据模型中的东西，是 FreeMarker 在数值上添加的。 为了清晰子变量是哪部分，使用 ?(问号)代替 .(点)来访问它们。常用内建函数的示例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;user?html 给出 user 的HTML转义版本， 比如 &amp;amp; 会由 &amp;amp; 来代替。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;user?upper_case 给出 user 值的大写版本 (比如 "JOHN DOE" 来替代 "John Doe")&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;animal.name?cap_first 给出 animal.name 的首字母大写版本(比如 "Mouse" 来替代 "mouse")&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;user?length 给出 user 值中 字符的数量(对于 "John Doe" 来说就是8)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;animals?size 给出 animals 序列中 项目 的个数(我们示例数据模型中是3个)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果在 &amp;lt;#list animals as animal&amp;gt; 和对应的 &amp;lt;/#list&amp;gt; 标签中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;animal?index 给出了在 animals 中基于0开始的 animal的索引值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;animal?counter 也像 index， 但是给出的是基于1的索引值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;animal?item_parity 基于当前计数的奇偶性，给出字符串 "odd" 或 "even"。在给不同行着色时非常有用，比如在 &lt;td class="${animal?item_parity}Row"&gt;中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一些内建函数需要参数来指定行为，比如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;animal.protected?string("Y", "N") 基于 animal.protected 的布尔值来返回字符串 "Y" 或 "N"。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;animal?item_cycle('lightRow','darkRow') 是之前介绍的 item_parity 更为常用的变体形式。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;fruits?join(", ") 通过连接所有项，将列表转换为字符串， 在每个项之间插入参数分隔符(比如 "orange,banana")&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;user?starts_with("J") 根据 user 的首字母是否是 "J" 返回布尔值true或false。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;内建函数应用可以链式操作，比如user?upper_case?html 会先转换用户名到大写形式，之后再进行HTML转义。(这就像可以链式使用 .(点)一样)&lt;/p&gt;
-&lt;p&gt;可以阅读 &lt;a href="http://freemarker.foofun.cn/ref_builtins.html"&gt;全部内建函数参考&lt;/a&gt;。&lt;/p&gt;
-&lt;h3&gt;四、快速浏览(备忘单)&lt;/h3&gt;
-&lt;p&gt;这里给已经了解 FreeMarker 的人或有经验的程序员的提个醒：&lt;/p&gt;
-&lt;p&gt;直接指定值&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;字符串： "Foo" 或者 'Foo' 或者 "It's \"quoted\"" 或者 'It\'s "quoted"' 或者 r"C:\raw\string"&lt;/li&gt;
-&lt;li&gt;数字： 123.45&lt;/li&gt;
-&lt;li&gt;布尔值： true， false&lt;/li&gt;
-&lt;li&gt;序列： ["foo", "bar", 123.45]； 值域： 0..9, 0..&amp;lt;10 (或 0..!10), 0..&lt;/li&gt;
-&lt;li&gt;哈希表： {"name":"green mouse", "price":150}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;检索变量&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;顶层变量： user&lt;/li&gt;
-&lt;li&gt;从哈希表中检索数据： user.name， user["name"]&lt;/li&gt;
-&lt;li&gt;从序列中检索数据： products[5]&lt;/li&gt;
-&lt;li&gt;特殊变量： .main&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;字符串操作&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;插值(或连接)： "Hello ${user}!" (或 "Hello " + user + "!")&lt;/li&gt;
-&lt;li&gt;获取一个字符： name[0]&lt;/li&gt;
-&lt;li&gt;字符串切分： 包含结尾： name[0..4]，不包含结尾： name[0..&amp;lt;5]，基于长度(宽容处理)： name[0..*5]，去除开头： name[5..]&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;序列操作&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;连接： users + ["guest"]&lt;/li&gt;
-&lt;li&gt;序列切分：包含结尾： products[20..29]， 不包含结尾： products[20..&amp;lt;30]，基于长度(宽容处理)： products[20..*10]，去除开头： products[20..]&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;哈希表操作&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;连接： passwords + { "joe": "secret42" }&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;算术运算： (x * 1.5 + 10) / 2 - y % 100&lt;/p&gt;
-&lt;p&gt;比较运算： x == y， x != y， x &amp;lt; y， x &amp;gt; y， x &amp;gt;= y， x &amp;lt;= y， x lt y， x lte y， x gt y， x gte y， 等等。。。。。。&lt;/p&gt;
-&lt;p&gt;逻辑操作： !registered &amp;amp;&amp;amp; (firstVisit || fromEurope)&lt;/p&gt;
-&lt;p&gt;内建函数： name?upper_case, path?ensure_starts_with('/')&lt;/p&gt;
-&lt;p&gt;方法调用： repeat("What", 3)&lt;/p&gt;
-&lt;p&gt;处理不存在的值：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;默认值： name!"unknown" 或者 (user.name)!"unknown" 或者 name! 或者 (user.name)!&lt;/li&gt;
-&lt;li&gt;检测不存在的值： name?? 或者 (user.name)??&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;赋值操作： =, +=, -=, *=, /=, %=, ++, --&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj04/" rel="alternate"/><published>2020-05-04T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-12T12:05:30.748806+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-12T17:52:09.241005+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj09/</id><title>Spring Boot文件上传</title><updated>2020-05-12T17:52:09.241227+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot文件上传&lt;/h2&gt;
 &lt;p&gt;在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;p&gt;在Spring Boot中,默认使用&lt;code&gt;StandardServletMultipartResolver(支持servlet3.0以后的版本)&lt;/code&gt;代替&lt;code&gt;CommonsMultipartResolver(兼容早期的servlet)&lt;/code&gt;解析Multipart请求，如果必须使用&lt;code&gt;CommonsMultipartResolver&lt;/code&gt;则需要自己添加commons-fileupload和commons-io依赖。&lt;/p&gt;
 &lt;h3&gt;回顾&lt;/h3&gt;
@@ -736,7 +279,7 @@ ${1.2}
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-12T12:05:30.748789+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj09/" rel="alternate"/><published>2020-05-05T00:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj10/</id><title>Spring注解-@ControllerAdvice的使用</title><updated>2020-05-12T17:52:09.241210+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
 &lt;p&gt;根据源码中的介绍：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@ControllerAdvice&lt;/code&gt;是一个特殊的&lt;code&gt;@Component&lt;/code&gt;，用于标识一个类，这个类中被以下三种注解标识的方法：&lt;code&gt;@ExceptionHandler&lt;/code&gt;，&lt;code&gt;@InitBinder&lt;/code&gt;，&lt;code&gt;@ModelAttribute&lt;/code&gt;，将作用于所有的&lt;code&gt;@Controller&lt;/code&gt;类的接口上。&lt;/p&gt;
 &lt;p&gt;@ControllerAdvice的功能:&lt;/p&gt;
@@ -922,7 +465,7 @@ public class GlobalData {
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;书名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
    &lt;span class="n"&gt;Auther&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;作者名&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-12T12:05:30.748772+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj10/" rel="alternate"/><published>2020-05-05T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj11/</id><title>Spring Boot中的自定义异常处理</title><updated>2020-05-12T17:52:09.241193+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot中的自定义异常处理&lt;/h2&gt;
 &lt;h4&gt;1. Spring Boot实现自定义错误页&lt;/h4&gt;
 &lt;p&gt;演示&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
@@ -1219,7 +762,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 &amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;访问结果：&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 88.46153846153847" data-width="529" data-height="299"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5d55e2ea3a1c2e081f5e3c4b096378fb.png" alt="访问结果" /&gt;&lt;figcaption&gt;访问结果&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-12T12:05:30.748756+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj11/" rel="alternate"/><published>2020-05-06T02:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj12/</id><title>Spring Boot通过CORS实现跨域</title><updated>2020-05-12T17:52:09.241177+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot通过CORS实现跨域&lt;/h2&gt;
 &lt;h4&gt;CORS概述&lt;/h4&gt;
 &lt;p&gt;当一个资源从与该资源本身所在的服务器不同的&lt;code&gt;域、协议、端口&lt;/code&gt;请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考&lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy"&gt;浏览器的同源策略 | MDN&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求，XMLHttpRequest和Fetch API，只能从加载应用程序的同一个域请求HTTP资源，除非使用&lt;code&gt;CORS头文件&lt;/code&gt;&lt;/p&gt;
@@ -1345,7 +888,7 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;此时cros1中所有的接口都开启了CORS，可以跨域访问了。&lt;/p&gt;
 &lt;h4&gt;4. 预检请求（探测请求）&lt;/h4&gt;
-</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-12T12:05:30.748739+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj12/" rel="alternate"/><published>2020-05-07T00:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj13/</id><title>Spring Boot注册拦截器</title><updated>2020-05-12T17:52:09.241161+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
 &lt;h4&gt;1. 编写Controller&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -1399,7 +942,7 @@ public class HelloController {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h4&gt;4. 测试&lt;/h4&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 284.72222222222223" data-width="1435" data-height="252"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/143bf6177ef7754eb97e87881c93515c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-12T12:05:30.748723+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;会话技术&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj13/" rel="alternate"/><published>2020-05-07T01:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-12T17:52:09.241144+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;会话技术&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
 
@@ -1541,7 +1084,7 @@ response. addcookie(c);&lt;/p&gt;
 &lt;li&gt;session没有数据大小限制，Cookie有&lt;/li&gt;
 &lt;li&gt;session数据安全，Cookie相对于不安全&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj15/</id><title>JSP和MVC开发模式</title><updated>2020-05-12T12:05:30.748705+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;JSP和MVC开发模式&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj15/</id><title>JSP和MVC开发模式</title><updated>2020-05-12T17:52:09.241128+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;JSP和MVC开发模式&lt;/h2&gt;
 &lt;h3&gt;1.JSP&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;1. 指令
@@ -1751,7 +1294,7 @@ response. addcookie(c);&lt;/p&gt;
     2. 编码
 4. 测试
 5. 部署运维&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj15/" rel="alternate"/><published>2020-05-08T22:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合AOP</title><updated>2020-05-12T12:05:30.748684+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot整合AOP&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj15/" rel="alternate"/><published>2020-05-08T22:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合AOP</title><updated>2020-05-12T17:52:09.241111+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Spring Boot整合AOP&lt;/h2&gt;
 &lt;h3&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;众所周知，spring最核心的两个功能是aop和ioc，即面向切面和控制反转。本文会讲一讲SpringBoot如何使用AOP实现面向切面的过程原理。&lt;/p&gt;
 &lt;h3&gt;二、何为aop&lt;/h3&gt;
@@ -1912,7 +1455,8 @@ response. addcookie(c);&lt;/p&gt;
 &lt;p&gt;3.退出环绕通知(Around)&lt;/p&gt;
 &lt;p&gt;4.后置通知(After)&lt;/p&gt;
 &lt;p&gt;5.返回通知(AfterRunning)/异常通知(AfterThrowing)&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-11T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-05-12T12:05:30.748644+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.简单使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-11T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-05-12T17:52:09.241091+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Spring Boot整合Spring JDBC Template&lt;/h1&gt;
+&lt;h2&gt;1.简单使用&lt;/h2&gt;
 &lt;h4&gt;1.添加依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
             &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
@@ -2162,4 +1706,252 @@ response. addcookie(c);&lt;/p&gt;
 &lt;span class="nd"&gt;@Resource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;jdbcTemplate2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JdbcTemplate&lt;/span&gt; &lt;span class="n"&gt;jdbcTemplate2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-05-12T17:52:09.241052+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Spring Boot整合Mybatis&lt;/h1&gt;
+&lt;h2&gt;1.基本使用&lt;/h2&gt;
+&lt;h3&gt;1.依赖&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.mybatis.spring.boot&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;mybatis-spring-boot-starter&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;2.1.1&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;druid-spring-boot-starter&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;1.1.20&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;mysql&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;mysql-connector-java&amp;lt;/artifactId&amp;gt;
+    &amp;lt;scope&amp;gt;runtime&amp;lt;/scope&amp;gt;
+    &amp;lt;version&amp;gt;5.1.27&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2.配置数据源&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;spring.datasource.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.alibaba.druid.pool.DruidDataSource&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.url&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql:///test&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.写代码&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;User&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Data&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;UserMapper&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//单个Mapper可以直接加@Mapper，也可以在启动类上加//@MapperScan(basePackages = &amp;quot;com.xuxx.mybatis.mapper&amp;quot;)&lt;/span&gt;
+&lt;span class="nd"&gt;@Mapper&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;UserMapper&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="c1"&gt;//    @Select(&amp;quot;select * from user &amp;quot;)&lt;/span&gt;
+    &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;Mapper.xml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE mapper&lt;/span&gt;
+&lt;span class="cp"&gt;        PUBLIC &amp;quot;-//mybatis.org//DTD Mapper 3.0//EN&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;        &amp;quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;mapper&lt;/span&gt; &lt;span class="na"&gt;namespace=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx.mybatis.mapper.UserMapper&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;select&lt;/span&gt; &lt;span class="na"&gt;id=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;getAllUsers&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;resultType=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx.mybatis.bean.User&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        select * from user
+    &lt;span class="nt"&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/mapper&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;补充：&lt;/p&gt;
+&lt;p&gt;此时Mapper.xml会被Maven忽略，运行会报错&lt;code&gt;org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.xuxx.mybatis.mapper.UserMapper.getAllUsers&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;解决方法：（三种方式任选其一即可）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;在&lt;code&gt;resources&lt;/code&gt;目录下创建与Mapper位置对应的多级目录&lt;code&gt;com/xuxx/mybatis/mapper&lt;/code&gt;,并将&lt;code&gt;Mapper.xml&lt;/code&gt;放到创建的目录下&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在&lt;code&gt;pom.xml&lt;/code&gt;文件中配置不忽略需要的xml文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+    ....
+&lt;span class="c"&gt;&amp;lt;!--让maven不忽略Mapper.xml--&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;resources&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;resource&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;directory&amp;gt;&lt;/span&gt;src/main/java&lt;span class="nt"&gt;&amp;lt;/directory&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;includes&amp;gt;&lt;/span&gt;
+                    &lt;span class="nt"&gt;&amp;lt;include&amp;gt;&lt;/span&gt;**/*.xml&lt;span class="nt"&gt;&amp;lt;/include&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;/includes&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;/resource&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;resource&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;directory&amp;gt;&lt;/span&gt;src/main/resources&lt;span class="nt"&gt;&amp;lt;/directory&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;/resource&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/resources&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在&lt;code&gt;resources&lt;/code&gt;目录下创建自定义目录，并在&lt;code&gt;application.properties&lt;/code&gt;中配置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;#将Mapper.xml文件放在resources目录的mapper下，再指定mapper.xml位置&lt;/span&gt;
+&lt;span class="na"&gt;mybatis.mapper-locations&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;classpath:mapper/*.xml&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;测试&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
+&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MybatisApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+    &lt;span class="n"&gt;UserMapper&lt;/span&gt; &lt;span class="n"&gt;userMapper&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Test&lt;/span&gt;
+    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;contextLoads&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;userMapper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;users&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;结果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;2.配置多数据源&lt;/h2&gt;
+&lt;h3&gt;1.依赖&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.mybatis.spring.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mybatis-spring-boot-starter&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.1.1&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.alibaba&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;druid-spring-boot-starter&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.1.20&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;mysql&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mysql-connector-java&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;scope&amp;gt;&lt;/span&gt;runtime&lt;span class="nt"&gt;&amp;lt;/scope&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.1.27&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.配置多数据源&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;#配置多数据源&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.one.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.alibaba.druid.pool.DruidDataSource&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.one.url&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql:///test&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.one.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.one.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+
+&lt;span class="na"&gt;spring.datasource.two.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.alibaba.druid.pool.DruidDataSource&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.two.url&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql:///test2&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.two.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+&lt;span class="na"&gt;spring.datasource.two.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.写代码&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;DataSourceConfig&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DataSourceConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="nd"&gt;@ConfigurationProperties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spring.datasource.one&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="nf"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;DruidDataSourceBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="nd"&gt;@ConfigurationProperties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spring.datasource.two&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="nf"&gt;dsTwo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;DruidDataSourceBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;MybatisConfigOne&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="nd"&gt;@MapperScan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;basePackages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;com.xuxx.mybatis2.mapper1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sqlSessionFactoryRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlSessionFactoryOne&amp;quot;&lt;/span&gt;
+        &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sqlSessionTemplateRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlSessionTemplateOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MybatisConfigOne&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Resource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;dsOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="n"&gt;SqlSessionFactory&lt;/span&gt; &lt;span class="nf"&gt;sqlSessionFactoryOne&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;SqlSessionFactoryBean&lt;/span&gt; &lt;span class="n"&gt;bean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SqlSessionFactoryBean&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;bean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDataSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;bean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="n"&gt;SqlSessionTemplate&lt;/span&gt; &lt;span class="nf"&gt;sqlSessionTemplateOne&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SqlSessionTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqlSessionFactoryOne&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;MybatisConfigTwo&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
+&lt;span class="nd"&gt;@MapperScan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;basePackages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;com.xuxx.mybatis2.mapper2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sqlSessionFactoryRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlSessionFactoryTwo&amp;quot;&lt;/span&gt;
+        &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sqlSessionTemplateRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sqlSessionTemplateTwo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MybatisConfigTwo&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Resource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;dsTwo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;dsTwo&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="n"&gt;SqlSessionFactory&lt;/span&gt; &lt;span class="nf"&gt;sqlSessionFactoryTwo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;SqlSessionFactoryBean&lt;/span&gt; &lt;span class="n"&gt;bean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SqlSessionFactoryBean&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;bean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDataSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dsTwo&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;bean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
+    &lt;span class="n"&gt;SqlSessionTemplate&lt;/span&gt; &lt;span class="nf"&gt;sqlSessionTemplateTwo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SqlSessionTemplate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqlSessionFactoryTwo&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;到此，多数据源就配置好了，使用数据源1就在包mapper1下，使用数据源2就在包mapper2下。&lt;/p&gt;
+&lt;p&gt;测试一下&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;User&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Data&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;com\xuxx\mybatis2\mapper1\UserMapper1.java&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;UserMapper1&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;select * from user &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;com\xuxx\mybatis2\mapper2\UserMapper2.java&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;UserMapper2&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;select * from user &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;测试类&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
+&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Mybatis2ApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+    &lt;span class="n"&gt;UserMapper1&lt;/span&gt; &lt;span class="n"&gt;userMapper1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+    &lt;span class="n"&gt;UserMapper2&lt;/span&gt; &lt;span class="n"&gt;userMapper2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Test&lt;/span&gt;
+    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;contextLoads&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;users1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;userMapper1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user1：&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;users1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;users2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;userMapper2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAllUsers&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user2：&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;users2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;控制台&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;user1：[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
+user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lisi, address=北京2), User(id=3, username=xuxx, address=四川2)]&lt;/code&gt;&lt;/pre&gt;
+</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry></feed>

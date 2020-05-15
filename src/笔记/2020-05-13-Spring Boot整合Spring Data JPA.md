@@ -127,10 +127,6 @@ Query query = entityManager.createQuery( "select o from Order o"); List orders =
 	<artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 <dependency>
-	<groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-<dependency>
 	<groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
     <scope>runtime</scope>
@@ -441,9 +437,200 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);
 2. 对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 `@Transactional 注解`。
 3. 进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。
 
+### 3. Spring Boot整合JPA多数据源
+
+```xml
+<!--依赖-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+<dependency>
+	<groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <scope>runtime</scope>
+    <version>5.1.27</version>
+</dependency>
+<dependency>
+	<groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+```properties
+# 配置数据库连接池及数据库驱动
+spring.datasource.one.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.one.username=root
+spring.datasource.one.password=root
+#使用Hikari的话要讲url换成jdbcurl，Druid直接使用url
+spring.datasource.one.jdbcurl=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+spring.datasource.two.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.two.username=root
+spring.datasource.two.password=root
+spring.datasource.two.jdbcurl=jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+#与单数据源不同的是 在jpa后都要加上properties
+spring.jpa.properties.database=mysql
+spring.jpa.properties.database-platform=mysql
+spring.jpa.properties.hibernate.ddl-auto=update
+spring.jpa.properties.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+```
 
 
-### Repository接口
+
+```java
+/**
+ * @author Xuxx3309
+ * @Description 配置数据源
+ * @create 2020-05-16 0:30
+ */
+@Configuration
+public class DataSourceConfig {
+
+    @Bean
+    @Primary//优先考虑被注解的对象注入
+    @ConfigurationProperties(prefix = "spring.datasource.one")
+    DataSource dsOne() {
+        //此处使用Hikari
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        //使用Druid DataSource
+//        return DruidDataSourceBuilder.create().build();
+    }
+    
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.two")
+    DataSource dsTwo() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+    }
+}
+```
+
+```java
+/**
+ * @author Xuxx3309
+ * @Description 配置jpa1
+ * @create 2020-05-16 0:39
+ */
+@Configuration
+@EnableJpaRepositories(basePackages = "com.xuxx.jpa2.dao1",
+        entityManagerFactoryRef = "localContainerEntityManagerFactoryBeanOne",
+        transactionManagerRef = "platformTransactionManagerOne")
+public class JpaConfigOne {
+    @Autowired
+    @Qualifier("dsOne")
+    DataSource dsOne;
+
+    @Autowired
+    JpaProperties jpaProperties;
+
+    @Bean
+    @Primary
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanOne(EntityManagerFactoryBuilder builder) {
+        return builder.dataSource(dsOne)
+                .properties(jpaProperties.getProperties())
+                .persistenceUnit("pu1")
+                .packages("com.xuxx.jpa2.bean")
+                .build();
+    }
+
+    /**
+     * PlatformTransactionManager是JpaTransactionManager的顶层父类
+     *
+     * @param builder
+     * @return
+     */
+    @Bean
+    PlatformTransactionManager platformTransactionManagerOne(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(localContainerEntityManagerFactoryBeanOne((builder)).getObject());
+    }
+}
+```
+
+```java
+/**
+ * @author Xuxx3309
+ * @Description 配置jpa2
+ * @create 2020-05-16 0:39
+ */
+@Configuration
+@EnableJpaRepositories(basePackages = "com.xuxx.jpa2.dao2",
+        entityManagerFactoryRef = "localContainerEntityManagerFactoryBeanTwo",
+        transactionManagerRef = "platformTransactionManagerTwo")
+public class JpaConfigTwo {
+    @Autowired
+    @Qualifier("dsOne")
+    DataSource dsOne;
+
+    @Autowired
+    JpaProperties jpaProperties;
+
+    @Bean
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBeanTwo(EntityManagerFactoryBuilder builder) {
+        return builder.dataSource(dsOne)
+                .properties(jpaProperties.getProperties())
+                .persistenceUnit("pu1")
+                .packages("com.xuxx.jpa2.bean")
+                .build();
+    }
+
+    @Bean
+    PlatformTransactionManager platformTransactionManagerTwo(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(localContainerEntityManagerFactoryBeanTwo((builder)).getObject());
+    }
+}
+```
+
+```java
+/**
+ * @author Xuxx3309
+ * @Description
+ * @create 2020-05-16 1:46
+ */
+public interface BookDao1 extends JpaRepository<Book, Integer> {
+}
+```
+
+```java
+/**
+ * @author Xuxx3309
+ * @Description
+ * @create 2020-05-16 1:47
+ */
+public interface BookDao2 extends JpaRepository<Book, Integer> {
+}
+```
+
+```java
+@SpringBootTest
+class Jpa2ApplicationTests {
+    @Autowired
+    BookDao1 bookDao1;
+    @Autowired
+    BookDao2 bookDao2;
+
+    @Test
+    public void test() {
+        List<Book> dao1All = bookDao1.findAll();
+        System.out.println(dao1All);
+        System.out.println("-------------");
+        List<Book> dao2All = bookDao2.findAll();
+        System.out.println(dao2All);
+    }
+}
+```
+
+测试：
+
+```
+[Book(id=1, name=11, author=11), Book(id=2, name=22, author=22), Book(id=6, name=33, author=33), Book(id=7, name=44, author=44), Book(id=8, name=1, author=1), Book(id=9, name=JAVA, author=Xuxx), Book(id=10, name=JAVA1, author=Xuxx), Book(id=11, name=JAVA2, author=Xuxx)]
+-------------
+[Book(id=1, name=11, author=11), Book(id=2, name=22, author=22), Book(id=6, name=33, author=33), Book(id=7, name=44, author=44), Book(id=8, name=1, author=1), Book(id=9, name=JAVA, author=Xuxx), Book(id=10, name=JAVA1, author=Xuxx), Book(id=11, name=JAVA2, author=Xuxx)]
+```
+
+### 4.Repository接口
 
 来看 Repository 的一个继承关系图：
    ![img](..\static\笔记图片\2020-05-13-Spring Boot整合Spring Data JPA_03.png)

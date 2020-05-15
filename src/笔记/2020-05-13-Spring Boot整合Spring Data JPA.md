@@ -384,7 +384,7 @@ List<User> findByNameLike(String name);
 Page<UserModel> findByName(String name, Pageable pageable);  List<UserModel> findByName(String name, Sort sort);
 ```
 
-##### @Query注解
+###### @Query注解
 
 有的时候，这里提供的查询关键字并不能满足我们的查询需求，这个时候就可以使用 @Query 关键字，来自定义查询 SQL，例如查询Id最大的User：
 
@@ -416,12 +416,13 @@ List<User> selectUserByParam2(@Param("name") String name, @Param("id") Long id);
 List<User> selectAll();
 ```
 
-##### @Modifying注解
+###### @Modifying注解
 
 涉及到数据修改操作，可以使用 @Modifying 注解，@Query 与 @Modifying 这两个 annotation一起声明，可定义个性化更新操作，例如涉及某些字段更新时最为常用，示例如下：
 
 ```
-@Modifying@Query("update t_user set age=:age where id>:id")
+@Modifying
+@Query("update t_user set age=:age where id>:id")
 int updateUserById(@Param("age") Long age, @Param("id") Long id);
 ```
 
@@ -432,10 +433,12 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);
 3. 在调用的地方必须加事务，没有事务不能正常执行
 4. 默认情况下, Spring Data 的每个方法上有事务, 但都是一个只读事务. 他们不能完成修改操作
 
-说到这里，再来顺便说说Spring Data 中的事务问题：
+###### @Transactional 注解
+
+说到这里，再来顺便说说**Spring Data 中的事务问题**：
 
 1. Spring Data 提供了默认的事务处理方式，即所有的查询均声明为只读事务。
-2. 对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 @Transactional 注解。
+2. 对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 `@Transactional 注解`。
 3. 进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。
 
 

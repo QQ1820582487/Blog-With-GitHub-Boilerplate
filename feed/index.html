@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Thu, 14 May 2020 20:46:30 +0806</lastBuildDate><pubDate>Thu, 14 May 2020 20:46:30 +0806</pubDate><item><title>Spring注解-@ControllerAdvice的使用</title><link>/Xuxx_Blogs/archives/bj10/</link><description>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Fri, 15 May 2020 15:58:33 +0806</lastBuildDate><pubDate>Fri, 15 May 2020 15:58:33 +0806</pubDate><item><title>Spring注解-@ControllerAdvice的使用</title><link>/Xuxx_Blogs/archives/bj10/</link><description>&lt;h2&gt;Spring注解-@ControllerAdvice的使用&lt;/h2&gt;
 &lt;p&gt;根据源码中的介绍：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@ControllerAdvice&lt;/code&gt;是一个特殊的&lt;code&gt;@Component&lt;/code&gt;，用于标识一个类，这个类中被以下三种注解标识的方法：&lt;code&gt;@ExceptionHandler&lt;/code&gt;，&lt;code&gt;@InitBinder&lt;/code&gt;，&lt;code&gt;@ModelAttribute&lt;/code&gt;，将作用于所有的&lt;code&gt;@Controller&lt;/code&gt;类的接口上。&lt;/p&gt;
 &lt;p&gt;@ControllerAdvice的功能:&lt;/p&gt;
@@ -1986,7 +1986,7 @@ List&amp;lt;User&amp;gt; findByNameLike(String name);&lt;/code&gt;&lt;/pre&gt;
 &lt;/ol&gt;
 
 &lt;pre&gt;&lt;code&gt;Page&amp;lt;UserModel&amp;gt; findByName(String name, Pageable pageable);  List&amp;lt;UserModel&amp;gt; findByName(String name, Sort sort);&lt;/code&gt;&lt;/pre&gt;
-&lt;h5&gt;@Query注解&lt;/h5&gt;
+&lt;h6&gt;@Query注解&lt;/h6&gt;
 &lt;p&gt;有的时候，这里提供的查询关键字并不能满足我们的查询需求，这个时候就可以使用 @Query 关键字，来自定义查询 SQL，例如查询Id最大的User：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;@Query("select u from t_user u where id=(select max(id) from t_user)")
@@ -2004,10 +2004,11 @@ List&amp;lt;User&amp;gt; selectUserByParam2(@Param("name") String name, @Param("
 
 &lt;pre&gt;&lt;code&gt;@Query(value = "select * from t_user",nativeQuery = true)
 List&amp;lt;User&amp;gt; selectAll();&lt;/code&gt;&lt;/pre&gt;
-&lt;h5&gt;@Modifying注解&lt;/h5&gt;
+&lt;h6&gt;@Modifying注解&lt;/h6&gt;
 &lt;p&gt;涉及到数据修改操作，可以使用 @Modifying 注解，@Query 与 @Modifying 这两个 annotation一起声明，可定义个性化更新操作，例如涉及某些字段更新时最为常用，示例如下：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;@Modifying@Query("update t_user set age=:age where id&amp;gt;:id")
+&lt;pre&gt;&lt;code&gt;@Modifying
+@Query("update t_user set age=:age where id&amp;gt;:id")
 int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;注意：&lt;/p&gt;
 &lt;ol&gt;
@@ -2016,10 +2017,11 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;在调用的地方必须加事务，没有事务不能正常执行&lt;/li&gt;
 &lt;li&gt;默认情况下, Spring Data 的每个方法上有事务, 但都是一个只读事务. 他们不能完成修改操作&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;说到这里，再来顺便说说Spring Data 中的事务问题：&lt;/p&gt;
+&lt;h6&gt;@Transactional 注解&lt;/h6&gt;
+&lt;p&gt;说到这里，再来顺便说说&lt;strong&gt;Spring Data 中的事务问题&lt;/strong&gt;：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Spring Data 提供了默认的事务处理方式，即所有的查询均声明为只读事务。&lt;/li&gt;
-&lt;li&gt;对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 @Transactional 注解。&lt;/li&gt;
+&lt;li&gt;对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 &lt;code&gt;@Transactional 注解&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;Repository接口&lt;/h3&gt;

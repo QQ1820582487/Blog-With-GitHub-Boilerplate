@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/911aa5762521edb648baf686664f4b46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ea0f1e77549f421853bd5399ae7f962c.json"
         }
     </script>
     
@@ -398,7 +398,7 @@ List&lt;User&gt; findByNameLike(String name);</code></pre>
 </ol>
 
 <pre><code>Page&lt;UserModel&gt; findByName(String name, Pageable pageable);  List&lt;UserModel&gt; findByName(String name, Sort sort);</code></pre>
-<h5>@Query注解</h5>
+<h6>@Query注解</h6>
 <p>有的时候，这里提供的查询关键字并不能满足我们的查询需求，这个时候就可以使用 @Query 关键字，来自定义查询 SQL，例如查询Id最大的User：</p>
 
 <pre><code>@Query("select u from t_user u where id=(select max(id) from t_user)")
@@ -416,10 +416,11 @@ List&lt;User&gt; selectUserByParam2(@Param("name") String name, @Param("id") Lon
 
 <pre><code>@Query(value = "select * from t_user",nativeQuery = true)
 List&lt;User&gt; selectAll();</code></pre>
-<h5>@Modifying注解</h5>
+<h6>@Modifying注解</h6>
 <p>涉及到数据修改操作，可以使用 @Modifying 注解，@Query 与 @Modifying 这两个 annotation一起声明，可定义个性化更新操作，例如涉及某些字段更新时最为常用，示例如下：</p>
 
-<pre><code>@Modifying@Query("update t_user set age=:age where id&gt;:id")
+<pre><code>@Modifying
+@Query("update t_user set age=:age where id&gt;:id")
 int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <p>注意：</p>
 <ol>
@@ -428,10 +429,11 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <li>在调用的地方必须加事务，没有事务不能正常执行</li>
 <li>默认情况下, Spring Data 的每个方法上有事务, 但都是一个只读事务. 他们不能完成修改操作</li>
 </ol>
-<p>说到这里，再来顺便说说Spring Data 中的事务问题：</p>
+<h6>@Transactional 注解</h6>
+<p>说到这里，再来顺便说说<strong>Spring Data 中的事务问题</strong>：</p>
 <ol>
 <li>Spring Data 提供了默认的事务处理方式，即所有的查询均声明为只读事务。</li>
-<li>对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 @Transactional 注解。</li>
+<li>对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 <code>@Transactional 注解</code>。</li>
 <li>进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。</li>
 </ol>
 <h3>Repository接口</h3>

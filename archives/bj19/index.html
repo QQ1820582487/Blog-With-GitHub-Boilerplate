@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/a45fccb833dc377ca71ee3a84af21ccf.json"
+        }
+    </script>
+    
+<title>Spring Boot构建REST服务 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot构建REST服务 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj19/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-16T02:20:00-00.00" />
+<meta name="twitter:title" content="Spring Boot构建REST服务 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot构建REST服务</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-16
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h1>Spring Boot构建REST服务</h1>
+<h2>1.基础版</h2>
+<ol>
+<li><p>依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+ <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-rest<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</li>
+<li><p>配置</p>
+<div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
+  <span class="nt">datasource</span><span class="p">:</span>
+    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+
+  <span class="nt">jpa</span><span class="p">:</span>
+    <span class="nt">database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span> <span class="c1">#连接数据库类型</span>
+    <span class="nt">database-platform</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">org.hibernate.dialect.MySQL57Dialect</span> <span class="c1">#配置默认引擎</span>
+    <span class="nt">hibernate</span><span class="p">:</span>
+      <span class="nt">ddl-auto</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">update</span>
+    <span class="nt">show-sql</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</li>
+</ol>
+<ol>
+<li><p>实体类</p>
+<div class="highlight"><pre><span></span><span class="nd">@Data</span>
+<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;user_jpa&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">age</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>dao</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>测试</p>
+<ol>
+<li><p>查询（GET请求）</p>
+<p>批量查询 <figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5c6e22c198c99c504311e785b4f41cbc.png" alt="批量查询" /><figcaption>批量查询</figcaption></figure></p>
+<p>分页查询</p>
+<p><figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e5cd51d5825430b1aa075bece2038df9.png" alt="分页查询" /><figcaption>分页查询</figcaption></figure></p>
+<p>分页+排序</p>
+<p><figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cfb11185710191a9b3e5e0f5297532ad.png" alt="分页+排序" /><figcaption>分页+排序</figcaption></figure></p>
+<p>单个查询</p>
+<p><figure class="pswp-item" style="flex: 129.23976608187135" data-width="1326" data-height="513"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7d2a793267a80e8edde41e3d8ca4f81e.png" alt="单个查询" /><figcaption>单个查询</figcaption></figure></p>
+</li>
+<li><p>保存（POST请求）</p>
+<p><figure class="pswp-item" style="flex: 135.3734439834025" data-width="1305" data-height="482"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/33a7a36168db9b3ae17f72a19615f7b5.png" alt="保存" /><figcaption>保存</figcaption></figure></p>
+</li>
+<li><p>更新（PUT请求）</p>
+<p><figure class="pswp-item" style="flex: 134.24242424242425" data-width="1329" data-height="495"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/bd597374091c4020766f0b24167ccbcb.png" alt="更新" /><figcaption>更新</figcaption></figure></p>
+</li>
+<li><p>删除（DELETE请求）</p>
+<p><figure class="pswp-item" style="flex: 222.29965156794424" data-width="1276" data-height="287"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/edb3267018887be93e0cf6850c87789e.png" alt="删除" /><figcaption>删除</figcaption></figure></p>
+</li>
+</ol>
+</li>
+</ol>
+<p>到此就是一个基础版的REST服务了。</p>
+<h2>2.进阶版</h2>
+<h3>1.自定义查询方法</h3>
+<p>修改dao</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>重启项目，访问<code>http://localhost:8080/users/search</code></p>
+<p><figure class="pswp-item" style="flex: 152.1341463414634" data-width="1497" data-height="492"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/20aa23b7679f44b6e88f592d6783fff3.png" alt="" /></figure></p>
+<p>此时便可以看到所有的自定义查询方法(默认路径就是方法名)。</p>
+<p>访问自定义查询方法<code>findByNameContaining</code></p>
+<p><figure class="pswp-item" style="flex: 118.53312302839117" data-width="1503" data-height="634"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c65b81072e1be7704440c61590671f39.png" alt="" /></figure></p>
+<p>由于JPA的关键字命名一般较长，为了更加便捷，可以在自定义查询方法上使用<code>@RestResource</code>注解</p>
+<p><strong><code>@RestResource</code>参数</strong>:</p>
+<ul>
+<li><p>exported:是否暴露，默认为true</p>
+</li>
+<li><p>path:访问自定义查询方法的路径</p>
+</li>
+<li>rel:在生成到此资源的链接时要使用的rel值。</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 162.92906178489702" data-width="1424" data-height="437"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/da930afbf97b7a86fb1537bab0b0eac5.png" alt="" /></figure></p>
+<h3>2.自定义请求路径、结果 key 值</h3>
+<p>（1）默认情况下请求路径都是实体类名小写加 <code>@RepositoryRestResource</code></p>
+<p><strong><code>@RepositoryRestResource</code>参数：</strong></p>
+<ul>
+<li>path：表示将所有请求路径中的 <code>(例:)uesrs</code>，如 <code>http://localhost:8080/us</code></li>
+<li>collectionResourceRel：表示将返回的 JSON 集合中的<code>(例:)uesrs</code> 集合的 <strong>key</strong>。</li>
+<li>itemResourceRel ：表示将返回的 JSON 集合中的单个<code>(例:)uesr</code> 的 <strong>key</strong>。</li>
+<li>exported:是否暴露，默认为true</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nd">@RepositoryRestResource</span><span class="p">(</span><span class="n">collectionResourceRel</span> <span class="o">=</span> <span class="s">&quot;userlist&quot;</span><span class="p">,</span> <span class="n">itemResourceRel</span> <span class="o">=</span> <span class="s">&quot;u&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 140.81632653061226" data-width="1380" data-height="490"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4ae6ff01a78415d6db817eb004c4b20.png" alt="" /></figure></p>
+<h3>3.配置REST</h3>
+<ol>
+<li><strong>配置文件</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
+  <span class="nt">data</span><span class="p">:</span>
+    <span class="nt">rest</span><span class="p">:</span>
+      <span class="c1">#添加统一前缀</span>
+      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
+</pre></div>
+<p>配置后<code>http://localhost:8080/users</code>--&gt;<code>http://localhost:8080/api/users</code></p>
+<div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
+  <span class="nt">data</span><span class="p">:</span>
+    <span class="nt">rest</span><span class="p">:</span>
+      <span class="c1">#添加统一前缀</span>
+      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
+      <span class="c1">#是否在创建实体后返回记录，默认为true</span>
+      <span class="nt">return-body-on-create</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="c1">#是否在更新实体后返回记录，默认为true</span>
+      <span class="nt">return-body-on-update</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="c1">#每页的默认大小，默认20</span>
+      <span class="nt">default-page-size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+      <span class="l l-Scalar l-Scalar-Plain">......</span>
+</pre></div>
+<ol>
+<li><strong>编写配置类</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * rest的配置类</span>
+<span class="cm"> */</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestConfig</span> <span class="kd">implements</span> <span class="n">RepositoryRestConfigurer</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureRepositoryRestConfiguration</span><span class="p">(</span><span class="n">RepositoryRestConfiguration</span> <span class="n">config</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">config</span><span class="p">.</span><span class="na">setBasePath</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">).</span><span class="na">setDefaultPageSize</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="c1">//链式编程，可以配置多个</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>4.配置 CORS（解决跨域请求问题）</h3>
+<p>具体参考<a href="https://qq1820582487.github.io/Xuxx_Blogs/archives/bj12/">Spring Boot通过CROS实现跨域）</a></p>
+<ol>
+<li><p>单独配置：添加<code>@CrossOrigin</code>注解</p>
+</li>
+<li><p>全局配置：编写配置类，重写<code>addCorsMappings</code>方法</p>
+</li>
+</ol>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj18/">Spring Boot整合Spring Data JPA</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

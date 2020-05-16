@@ -207,7 +207,7 @@ public interface UserDao extends JpaRepository<User, Integer> {
       ......
 ```
 
-2. **编写配置类**
+2. **编写配置类**（优先级更高）
 
 ```java
 /**

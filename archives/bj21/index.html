@@ -1,0 +1,761 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/2902052a702a1c32dfe56aa3e72c38f4.json"
+        }
+    </script>
+    
+<title>Spring Boot整合Security - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot整合Security - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj21/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-18T15:10:00-00.00" />
+<meta name="twitter:title" content="Spring Boot整合Security - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot整合Security</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-18
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h1>Spring Boot整合Security</h1>
+<h2>1.Spring Security入门</h2>
+<h3>1.Spring Security初体验</h3>
+<h4>1.引入依赖</h4>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h4>2.Controller</h4>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello Security!&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>3.测试</h4>
+<p>此时启动项目，访问<code>http://localhost:8080/hello</code>，此时会发现，会自动重定向到<code>http://localhost:8080/login</code>,也就是说<code>hello</code>接口被<strong>Security</strong>保护起来了，不能直接访问了。</p>
+<p><figure class="pswp-item" style="flex: 84.96993987975952" data-width="848" data-height="499"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5877e03f11eb9a6176b7ea969491bd21.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 155.64334085778782" data-width="1379" data-height="443"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/97a95c9aaf8623d9a33514ae9803b5ed.png" alt="" /></figure></p>
+<p>输入用户名（user）和密码（每次生成的密码都不一样），登录后便能访问接口了。</p>
+<h3>2.手动配置Security用户和密码</h3>
+<h4>1.第一种：在配置文件中配置</h4>
+<div class="highlight"><pre><span></span><span class="na">spring.security.user.name</span><span class="o">=</span><span class="s">xuxx</span>
+<span class="na">spring.security.user.password</span><span class="o">=</span><span class="s">123</span>
+<span class="na">spring.security.user.roles</span><span class="o">=</span><span class="s">admin</span>
+</pre></div>
+<p>配置后，Security便不会再生成密码了，当然也不会在控制台打印了，所以此时再登录便只能使用配置的用户（xuxx）和密码(123)了。</p>
+<h4>2.第二种：编写配置类</h4>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+    <span class="cm">/*</span>
+<span class="cm">    Spring5之后密码必须要加密，所以要配置PasswordEncoder</span>
+<span class="cm">    */</span>
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder以过期</span>
+        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="c1">//基于内存的认证</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>2.Spring Security进阶</h2>
+<p>以上的拦截规则是除了Security的方法，会拦截其他所有的请求，为了实现多种权限配置方案，所以需要了解<code>HttpSecurity</code>的配置。</p>
+<h3>1.HttpSecurity的配置</h3>
+<p>还是在之前的配置类中进行配置</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.NoOpPasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+
+    <span class="cm">/*</span>
+<span class="cm">    Spring5之后密码必须要加密，所以必须配置PasswordEncoder</span>
+<span class="cm">    */</span>
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder以过期.</span>
+        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="c1">//基于内存的认证</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span><span class="c1">//开启授权请求配置</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">)</span><span class="c1">//要拦截的请求路径</span>
+                <span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(一个)</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/users/**&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">hasAnyRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;users&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(其中一个)</span>
+               <span class="c1">//.antMatchers().access(&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;)//和上面效果一样</span>
+                <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span><span class="c1">//剩下的其他的请求</span>
+                <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span><span class="c1">//认证后访问</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span><span class="c1">//表单登录</span>
+                <span class="p">.</span><span class="na">loginProcessingUrl</span><span class="p">(</span><span class="s">&quot;/doLogin&quot;</span><span class="p">)</span><span class="c1">//进行登录处理的Url</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span><span class="c1">//允许登录相关的所有请求</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">disable</span><span class="p">();</span><span class="c1">//方便测试，关闭csrf(跨域)保护</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>在Controller中添加两个接口</p>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello Security!&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;admin/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">admin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello admin用户&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;user/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">users</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello user用户&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+<p>测试结果:</p>
+<p>使用<code>xuxx</code>登录时，可以访问定义的三个接口</p>
+<p>使用<code>test</code>登录时，只可以访问<code>hello</code>和<code>user/hello</code>,访问<code>admin/hello</code>时报错403(权限不足)</p>
+<p><figure class="pswp-item" style="flex: 143.27731092436974" data-width="1023" data-height="357"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/00a4573ecc8db9f540cd8db60ded102e.png" alt="" /></figure>
+此时发现配置的<code>loginProcessingUrl("/doLogin")</code>还没用上，那么就用一用，打开<strong>Insomnia</strong></p>
+<p>使用<strong>POST</strong>方式访问<code>http://localhost:8080/doLogin?username=xuxx&amp;password=123</code></p>
+<p><figure class="pswp-item" style="flex: 171.39423076923077" data-width="1426" data-height="416"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ceed167930d7eaa6af59a87583b65528.png" alt="" /></figure></p>
+<p>虽然报了<code>404</code>,当时其实已经登录成功了，404只是因为Security登录成功后往<code>http://localhost:8080/</code>跳转，但是这个路径下没有东西，所以404了，不信的话再访问一下配置的接口，成功了。</p>
+<p><figure class="pswp-item" style="flex: 168.59756097560975" data-width="1106" data-height="328"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/37bb3f52d1ff6928719118c69c88d7fa.png" alt="" /></figure></p>
+<h3>2.登录表单的详细配置</h3>
+<p>属于HttpSecurity中的配置</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.authentication.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.Authentication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.AuthenticationException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.NoOpPasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationFailureHandler</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationSuccessHandler</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.logout.LogoutSuccessHandler</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+
+    <span class="cm">/*</span>
+<span class="cm">    Spring5之后密码必须要加密，所以必须配置PasswordEncoder</span>
+<span class="cm">    */</span>
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder以过期.</span>
+        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="c1">//基于内存的认证</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span><span class="c1">//开启授权请求配置</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">)</span><span class="c1">//要拦截的请求路径</span>
+                <span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(一个)</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/users/**&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">hasAnyRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;users&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(其中一个)</span>
+<span class="c1">//                .antMatchers().access(&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;)//和上面效果一样</span>
+                <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span><span class="c1">//剩下的其他请求</span>
+                <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span><span class="c1">//认证后访问</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span><span class="c1">//表单登录</span>
+                <span class="p">.</span><span class="na">loginProcessingUrl</span><span class="p">(</span><span class="s">&quot;/doLogin&quot;</span><span class="p">)</span><span class="c1">//进行登录处理的Url</span>
+                <span class="p">.</span><span class="na">loginPage</span><span class="p">(</span><span class="s">&quot;/login&quot;</span><span class="p">)</span><span class="c1">//登录页面的Url，可以配置自己的登录页面</span>
+                <span class="p">.</span><span class="na">usernameParameter</span><span class="p">(</span><span class="s">&quot;uname&quot;</span><span class="p">)</span><span class="c1">//用户名的key，默认username</span>
+                <span class="p">.</span><span class="na">passwordParameter</span><span class="p">(</span><span class="s">&quot;pass&quot;</span><span class="p">)</span><span class="c1">//密码的key，默认password</span>
+<span class="c1">//                .successForwardUrl(&quot;/index&quot;)//登录成功自动跳转，一般用于前后端不分</span>
+                <span class="p">.</span><span class="na">successHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationSuccessHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录成功的处理，一般用于前后端分离</span>
+                    <span class="c1">//authentication中保存了登录成功的用户信息</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationSuccess</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span>
+                                                        <span class="n">Authentication</span> <span class="n">authentication</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="n">authentication</span><span class="p">.</span><span class="na">getPrincipal</span><span class="p">());</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+<span class="c1">//                .failureForwardUrl(&quot;/login_error&quot;)//登录失败自动跳转</span>
+                <span class="p">.</span><span class="na">failureHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationFailureHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录失败的处理</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationFailure</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">AuthenticationException</span> <span class="n">exception</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">401</span><span class="p">);</span>
+                        <span class="c1">//根据异常类型返回错误信息，相关异常可以查看AuthenticationException的子类</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">LockedException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户被锁定，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="c1">//Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">BadCredentialsException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;用户名或密码输入错误，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">DisabledException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户被禁用，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">AccountExpiredException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户以过期，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">CredentialsExpiredException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;密码以过期，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;因未知原因登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span><span class="c1">//允许登录相关的所有请求</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">disable</span><span class="p">();</span><span class="c1">//为了方便测试，先关闭csrf(跨域)保护</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>测试：</p>
+<p><figure class="pswp-item" style="flex: 113.07448494453249" data-width="1427" data-height="631"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/a937e5cdcff349785d05700089ec0759.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 176.41752577319588" data-width="1369" data-height="388"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/54befa4ddbae1f6f2821eb3d02984f81.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 151.43805309734512" data-width="1369" data-height="452"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3017b9e7b9284154162dae6316bc4f61.png" alt="" /></figure></p>
+<h3>3.注销登录配置</h3>
+<p>与登录表单配置一样，还是属于HttpSecurity中的配置</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.authentication.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.Authentication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.AuthenticationException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.NoOpPasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationFailureHandler</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationSuccessHandler</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.logout.LogoutSuccessHandler</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+
+    <span class="cm">/*</span>
+<span class="cm">    Spring5之后密码必须要加密，所以必须配置PasswordEncoder</span>
+<span class="cm">    */</span>
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder以过期.</span>
+        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="c1">//基于内存的认证</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span><span class="c1">//开启授权请求配置</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">)</span><span class="c1">//要拦截的请求路径</span>
+                <span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(一个)</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/user/**&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">hasAnyRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(其中一个)</span>
+<span class="c1">//                .antMatchers().access(&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;)//和上面效果一样</span>
+                <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span><span class="c1">//剩下的其他请求</span>
+                <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span><span class="c1">//认证后访问</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span><span class="c1">//表单登录</span>
+                <span class="p">.</span><span class="na">loginProcessingUrl</span><span class="p">(</span><span class="s">&quot;/doLogin&quot;</span><span class="p">)</span><span class="c1">//进行登录处理的Url</span>
+<span class="c1">//                .loginPage(&quot;/login&quot;)//登录页面的Url，可以配置自己的登录页面</span>
+<span class="c1">//                .usernameParameter(&quot;uname&quot;)//用户名的key，默认username</span>
+<span class="c1">//                .passwordParameter(&quot;pass&quot;)//密码的key，默认password</span>
+<span class="c1">//                .successForwardUrl(&quot;/index&quot;)//登录成功自动跳转，一般用于前后端不分</span>
+                <span class="p">.</span><span class="na">successHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationSuccessHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录成功的处理，一般用于前后端分离</span>
+                    <span class="c1">//authentication中保存了登录成功的用户信息</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationSuccess</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span>
+                                                        <span class="n">Authentication</span> <span class="n">authentication</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="n">authentication</span><span class="p">.</span><span class="na">getPrincipal</span><span class="p">());</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+<span class="c1">//                .failureForwardUrl(&quot;/login_error&quot;)//登录失败自动跳转</span>
+                <span class="p">.</span><span class="na">failureHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationFailureHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录失败的处理</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationFailure</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">AuthenticationException</span> <span class="n">exception</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">401</span><span class="p">);</span>
+                        <span class="c1">//根据异常类型返回错误信息，相关异常可以查看AuthenticationException的子类</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">LockedException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户被锁定，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="c1">//Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">BadCredentialsException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;用户名或密码输入错误，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">DisabledException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户被禁用，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">AccountExpiredException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户以过期，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">CredentialsExpiredException</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;密码以过期，登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;因未知原因登录失败！&quot;</span><span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span><span class="c1">//允许登录相关的所有请求</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">logout</span><span class="p">()</span><span class="c1">//注销登录</span>
+                <span class="p">.</span><span class="na">logoutUrl</span><span class="p">(</span><span class="s">&quot;/logout&quot;</span><span class="p">)</span>
+                <span class="c1">//.logoutSuccessUrl(&quot;/login&quot;)//注销成功后自动跳转</span>
+                <span class="p">.</span><span class="na">logoutSuccessHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">LogoutSuccessHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//注销成功的回调</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onLogoutSuccess</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Authentication</span> <span class="n">authentication</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;注销成功&quot;</span><span class="p">);</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">disable</span><span class="p">();</span><span class="c1">//为了方便测试，先关闭csrf(跨域)保护</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>测试：先登录，再访问<code>http://localhost:8080/logout</code>(GET，POST都行)</p>
+<p><figure class="pswp-item" style="flex: 173.35164835164835" data-width="1262" data-height="364"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/bbf064a6437ce54c8ebd71d23c376a90.png" alt="" /></figure></p>
+<h3>4.多个HttpSecurity</h3>
+<p><strong>要先去除上面配置的单个的HttpSecurity</strong></p>
+
+<pre><code>package com.xuxx.security.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * 多个Http Security的配置
+ */
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+public class MultiHttpSecurity {
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    //多个Http Security可以共享
+    @Autowired
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("xuxx").password("123").roles("admin")
+                .and()
+                .withUser("test").password("123").roles("users");
+    }
+
+    @Configuration
+    @Order(1)//存在多个相同的bean时就存在优先级的问题
+    public static class AdminSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            //只会拦截符合/admin/**的所有请求
+            http.antMatcher("/admin/**").authorizeRequests().anyRequest().hasRole("admin");
+        }
+    }
+
+    @Configuration
+    //@Order//不配置order时是优先级最低的,2的31次方-1
+    public static class OtherSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests().anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginProcessingUrl("/doLogin")
+                    .permitAll()
+                    .and()
+                    .csrf()
+                    .disable();
+        }
+    }
+}</code></pre>
+<p>测试</p>
+<p><figure class="pswp-item" style="flex: 144.4560669456067" data-width="1381" data-height="478"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/07db653d0c46ec7c1165c0462c054e8b.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 206.1889250814332" data-width="1266" data-height="307"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/949b1e2322ca9ed0d0934f611210ba69.png" alt="" /></figure></p>
+<p>因为使用<code>xuxx</code>登录了，访问其他接口也是可以的。</p>
+<p>再使用<code>test</code>登录试试</p>
+<p><figure class="pswp-item" style="flex: 177.44845360824743" data-width="1377" data-height="388"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6210caa94b4e07df1a2f81d07cdd00e4.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 211.75496688741723" data-width="1279" data-height="302"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9fa75eb00fa6d1186b864a45784f11e3.png" alt="" /></figure></p>
+<h3>5.密码加密</h3>
+<p>上面的例子都是使用的明文密码，这是非常不安全的，所以还是加密下吧。</p>
+<p>由Spring Security提供的BCryptPasswordEncoder采用SHA-256+随机盐+密钥对明文密码进行加密。SHA系列是哈希算法，不是加密算法，使用加密算法意味着可以解密（这个与编码/解码一样），但是采用哈希处理，其过程是不可逆的。</p>
+<ol>
+<li><p>加密(encode)：注册用户时，使用SHA-256+随机盐+密钥把用户输入的密码进行哈希处理，得到密码的哈希值，然后将其存入数据库中。</p>
+</li>
+<li><p>密码匹配(matches)：用户登录时，密码匹配阶段并没有进行密码解密（因为密码经过Hash处理，是不可逆的），而是使用相同的算法把用户输入的密码进行哈希处理，得到密码的hash值，然后将其与从数据库中查询到的密码哈希值进行比较。如果两者相同，说明用户输入的密码正确。</p>
+</li>
+</ol>
+<p>这正是为什么处理密码时要用哈希算法，而不用加密算法。因为这样处理后，即使数据库泄漏，黑客也很难破解密码（只能用彩虹表）。</p>
+<p>先看看效果</p>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">SecurityApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//构造方法可以传入强度(密钥迭代次数)默认为10次</span>
+            <span class="n">BCryptPasswordEncoder</span> <span class="n">passwordEncoder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BCryptPasswordEncoder</span><span class="p">();</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">passwordEncoder</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>虽然只是加密<strong>123</strong>,但是每次的结果都不同。</p>
+
+<pre><code>$2a$10$cGdG1DACEh2t4AekoCiZ1OyJWHbT4N3kFtSGDg85XNjn6SFb2cDYG
+$2a$10$nFCK0tHN3lDXCi8ptZd64usYbxU8gKTRiOSTZ8o1uvfEqWB5C9fwu
+$2a$10$1uP74goNp/gwHZehn3Lqfeyz51BnLGCG5xg63zRnIDTZoMa7lJeje
+$2a$10$N4CdezU05HFf05cK.eTh3uSuzS6NV1gODD9h3nNdmK71Fp81mYMwy
+$2a$10$/tdqqGfDrHh3Jx6IbGOLeu7hJ86IVYljImUDfrzQP5EsVbx70Sy/q
+$2a$10$bK6ItziD2vcMdvgiUZ5PkudaMxkswnz7RhEKnCsmhl/bGFWGnA0XG
+$2a$10$MIBXmxMyQFtrQ4awOtELXOBAvE8d1B54gCsv0kG6mPM9EooY35MPq
+$2a$10$0zCKSIqQVMhJM8OGs/35tOne2EZK/oj.v6LXjkH1FlYPNRdipjdhu
+$2a$10$9x/3T.nAUM1YOWhhR1xORuZEbRad5mc3.Rh6MBE2pPkNGUIUG9mYa
+$2a$10$xprjfwyAndoCSO3uFjS5ce7lLslmnKo7fNo/jOuEifN4PEZjy8ZTu</code></pre>
+<p>简单使用一下，改造上面的<strong>MultiHttpSecurity</strong>，将明文密码换成使用<strong>BCryptPasswordEncoder</strong>生成的加密后的密码，当然，要注入的<strong>PasswordEncoder</strong>也要换成<strong>BCryptPasswordEncoder</strong>。</p>
+
+<pre><code>/**
+ * 多个Http Security的配置
+ */
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+public class MultiHttpSecurity {
+    @Bean
+    PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
+    }
+
+    //多个Http Security可以共享
+    @Autowired
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+//                .withUser("xuxx").password("123").roles("admin")
+                .withUser("xuxx").password("$2a$10$gqUyIaadTdNQYVq7M1iRFO4Wl/sdvCPBvrBUwlX7u8qjbRFU7EoRK").roles("admin")
+                .and()
+//                .withUser("test").password("123").roles("users");
+                .withUser("test").password("$2a$10$tKe91qK4VcLRfS0rQ2THaeF/beXZKq283HaYJdogaOIVbiB7HaQ0u").roles("users");
+    }
+
+    @Configuration
+    @Order(1)//存在多个相同的bean时就存在优先级的问题
+    public static class AdminSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            //只会拦截符合/admin/**的所有请求
+            http.antMatcher("/admin/**").authorizeRequests().anyRequest().hasRole("admin");
+        }
+    }
+
+    @Configuration
+    //@Order//不配置order时是优先级最低的,2的31次方-1
+    public static class OtherSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests().anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginProcessingUrl("/doLogin")
+                    .permitAll()
+                    .and()
+                    .csrf()
+                    .disable();
+        }
+    }
+}</code></pre>
+<p>测试：此时密码还是使用<code>123</code>依旧可以登录，但是如果此时要存储的密码的话，那么要存储的密码已经加密了。</p>
+<p><figure class="pswp-item" style="flex: 165.70048309178745" data-width="1372" data-height="414"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0b1ed5cb1dace2f1282680faa7bfaaf1.png" alt="" /></figure></p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/java/">#java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/spring/">#spring</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj20/">Spring Boot整合WebSocket</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

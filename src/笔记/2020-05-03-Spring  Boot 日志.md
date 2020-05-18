@@ -9,8 +9,8 @@ categories:
   - 笔记
 tags: 
   - 日志
-  - java
-  - spring
+  - Java
+  - Spring
 excerpt: 笔记
 ---
 ## Spring  Boot 记录日志

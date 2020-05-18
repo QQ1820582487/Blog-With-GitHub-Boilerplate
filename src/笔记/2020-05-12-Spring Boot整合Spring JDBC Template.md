@@ -8,8 +8,9 @@ author: Xuxx
 categories: 
   - 笔记
 tags: 
-  - java
-  - spring
+  - Java
+  - Spring
+  - Jdbc Template
 excerpt: 笔记
 ---
 

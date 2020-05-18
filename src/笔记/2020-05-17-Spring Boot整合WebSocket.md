@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-# Spring Boot整合WebSocket
-
 ## 1.什么是WebSocket?
 
 WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。

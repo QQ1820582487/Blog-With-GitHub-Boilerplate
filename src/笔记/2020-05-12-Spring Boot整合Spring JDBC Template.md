@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-#  Spring Boot整合Spring JDBC Template
-
 ## 1.简单使用
 
 #### 1.添加依赖

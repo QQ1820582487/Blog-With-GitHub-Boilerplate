@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-# Spring Boot整合Security
-
 ## 1.Spring Security入门
 
 ### 1.Spring Security初体验
@@ -639,4 +637,3 @@ public class MultiHttpSecurity {
 测试：此时密码还是使用`123`依旧可以登录，但是如果此时要存储的密码的话，那么要存储的密码已经加密了。
 
 ![](..\static\笔记图片\2020-05-18-Spring Boot整合Security_14.png)
-

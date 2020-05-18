@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-# Spring Boot整合Spring Data JPA
-
 ## 1.了解JPA
 
 ### 1. JPA是什么

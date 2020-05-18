@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-# Spring Boot构建REST服务
-
 ## 1.基础版
 
 1. 依赖

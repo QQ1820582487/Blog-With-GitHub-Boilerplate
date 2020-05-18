@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-# Spring Boot整合Mybatis
-
 ## 1.基本使用
 
 ### 1.依赖

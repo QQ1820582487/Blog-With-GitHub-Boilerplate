@@ -13,8 +13,6 @@ tags:
   - Spring
 excerpt: 笔记
 ---
-## Spring  Boot 记录日志
-
 ### 1.基本操作
 
 #### 1.在类中添加Logger

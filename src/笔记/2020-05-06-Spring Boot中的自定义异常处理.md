@@ -13,9 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-
-## Spring Boot中的自定义异常处理
-
 #### 1. Spring Boot实现自定义错误页
 
 演示

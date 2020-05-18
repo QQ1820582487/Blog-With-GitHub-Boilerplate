@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-## Spring Boot通过CORS实现跨域
-
 #### CORS概述
 
 当一个资源从与该资源本身所在的服务器不同的`域、协议、端口`请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考[浏览器的同源策略 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)

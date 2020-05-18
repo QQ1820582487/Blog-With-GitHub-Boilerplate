@@ -17,10 +17,6 @@ excerpt: 笔记
 >
 > 本文整理了一下SpringBoot中常用的JSON解析方案
 
-# 
-
-# 1.HttpMessageConverter
-
 `HttpMessageConverter` ，这是一个消息转换工具，有两方面的功能：
 
 1. 将服务端返回的对象序列化成 JSON 字符串

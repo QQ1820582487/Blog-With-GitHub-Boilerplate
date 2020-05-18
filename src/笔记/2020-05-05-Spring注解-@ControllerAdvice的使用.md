@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-## Spring注解-@ControllerAdvice的使用
-
 根据源码中的介绍：
 
 `@ControllerAdvice`是一个特殊的`@Component`，用于标识一个类，这个类中被以下三种注解标识的方法：`@ExceptionHandler`，`@InitBinder`，`@ModelAttribute`，将作用于所有的`@Controller`类的接口上。

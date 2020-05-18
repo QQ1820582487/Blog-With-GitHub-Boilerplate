@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-## Spring Boot整合AOP
-
 ### 一、前言
 
 众所周知，spring最核心的两个功能是aop和ioc，即面向切面和控制反转。本文会讲一讲SpringBoot如何使用AOP实现面向切面的过程原理。

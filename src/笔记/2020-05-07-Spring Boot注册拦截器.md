@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-## Spring Boot注册拦截器
-
 #### 1. 编写Controller
 
 ```java

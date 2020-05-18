@@ -13,8 +13,6 @@ tags:
 excerpt: 笔记
 ---
 
-## Spring Boot文件上传
-
 在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。
 
 在Spring Boot中,默认使用`StandardServletMultipartResolver(支持servlet3.0以后的版本)`代替`CommonsMultipartResolver(兼容早期的servlet)`解析Multipart请求，如果必须使用`CommonsMultipartResolver`则需要自己添加commons-fileupload和commons-io依赖。

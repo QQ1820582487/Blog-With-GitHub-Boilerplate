@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 18 May 2020 20:51:43 +0806</lastBuildDate><pubDate>Mon, 18 May 2020 20:51:43 +0806</pubDate><item><title>Spring Boot注册拦截器</title><link>/Xuxx_Blogs/archives/bj13/</link><description>&lt;h2&gt;Spring Boot注册拦截器&lt;/h2&gt;
-&lt;h4&gt;1. 编写Controller&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 18 May 2020 20:54:26 +0806</lastBuildDate><pubDate>Mon, 18 May 2020 20:54:26 +0806</pubDate><item><title>Spring Boot注册拦截器</title><link>/Xuxx_Blogs/archives/bj13/</link><description>&lt;h4&gt;1. 编写Controller&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RestController&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloController&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="nd"&gt;@GetMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -53,8 +52,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h4&gt;4. 测试&lt;/h4&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 284.72222222222223" data-width="1435" data-height="252"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/143bf6177ef7754eb97e87881c93515c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj13/</guid><pubDate>Thu, 07 May 2020 01:50:00 +0806</pubDate></item><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;h2&gt;会话技术&lt;/h2&gt;
-&lt;ol&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj13/</guid><pubDate>Thu, 07 May 2020 01:50:00 +0806</pubDate></item><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt; 一次会话:浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止&lt;/code&gt;&lt;/pre&gt;
@@ -195,8 +193,7 @@ response. addcookie(c);&lt;/p&gt;
 &lt;li&gt;session没有数据大小限制，Cookie有&lt;/li&gt;
 &lt;li&gt;session数据安全，Cookie相对于不安全&lt;/li&gt;
 &lt;/ol&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj14/</guid><pubDate>Thu, 07 May 2020 02:10:00 +0806</pubDate></item><item><title>JSP和MVC开发模式</title><link>/Xuxx_Blogs/archives/bj15/</link><description>&lt;h2&gt;JSP和MVC开发模式&lt;/h2&gt;
-&lt;h3&gt;1.JSP&lt;/h3&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj14/</guid><pubDate>Thu, 07 May 2020 02:10:00 +0806</pubDate></item><item><title>JSP和MVC开发模式</title><link>/Xuxx_Blogs/archives/bj15/</link><description>&lt;h3&gt;1.JSP&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;1. 指令
     * 作用：用于配置JSP页面，导入资源文件
@@ -405,8 +402,7 @@ response. addcookie(c);&lt;/p&gt;
     2. 编码
 4. 测试
 5. 部署运维&lt;/code&gt;&lt;/pre&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj15/</guid><pubDate>Fri, 08 May 2020 22:10:00 +0806</pubDate></item><item><title>Spring Boot整合AOP</title><link>/Xuxx_Blogs/archives/bj16/</link><description>&lt;h2&gt;Spring Boot整合AOP&lt;/h2&gt;
-&lt;h3&gt;一、前言&lt;/h3&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj15/</guid><pubDate>Fri, 08 May 2020 22:10:00 +0806</pubDate></item><item><title>Spring Boot整合AOP</title><link>/Xuxx_Blogs/archives/bj16/</link><description>&lt;h3&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;众所周知，spring最核心的两个功能是aop和ioc，即面向切面和控制反转。本文会讲一讲SpringBoot如何使用AOP实现面向切面的过程原理。&lt;/p&gt;
 &lt;h3&gt;二、何为aop&lt;/h3&gt;
 &lt;p&gt;aop全称&lt;code&gt;Aspect Oriented Programming&lt;/code&gt;，面向切面，AOP主要实现的目的是针对业务处理过程中的切面进行提取，它所面对的是处理过程中的某个步骤或阶段，以获得逻辑过程中各部分之间低耦合性的隔离效果。其与设计模式完成的任务差不多，是提供另一种角度来思考程序的结构，来弥补面向对象编程的不足。&lt;/p&gt;

@@ -41,7 +41,7 @@ public class SpringbootApplication {
 }
 ```
 
-![](..\static\笔记图片\Spring  Boot 记录日志_1.png)
+![](..\static\笔记图片\2020-05-03-Spring  Boot 日志_01.png)
 
 ### 2.便捷操作
 

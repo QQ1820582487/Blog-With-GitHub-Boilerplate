@@ -479,7 +479,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 多个Http Security的配置
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class MultiHttpSecurity {
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -492,7 +491,7 @@ public class MultiHttpSecurity {
         auth.inMemoryAuthentication()
                 .withUser("xuxx").password("123").roles("admin")
                 .and()
-                .withUser("test").password("123").roles("users");
+                .withUser("test").password("123").roles("user");
     }
 
     @Configuration
@@ -600,11 +599,9 @@ public class MultiHttpSecurity {
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-//                .withUser("xuxx").password("123").roles("admin")
-                .withUser("xuxx").password("$2a$10$gqUyIaadTdNQYVq7M1iRFO4Wl/sdvCPBvrBUwlX7u8qjbRFU7EoRK").roles("admin")
+//                .withUser("xuxx").password("123").roles("admin")              .withUser("xuxx").password("$2a$10$gqUyIaadTdNQYVq7M1iRFO4Wl/sdvCPBvrBUwlX7u8qjbRFU7EoRK").roles("admin")
                 .and()
-//                .withUser("test").password("123").roles("users");
-                .withUser("test").password("$2a$10$tKe91qK4VcLRfS0rQ2THaeF/beXZKq283HaYJdogaOIVbiB7HaQ0u").roles("users");
+//                .withUser("test").password("123").roles("user");             .withUser("test").password("$2a$10$tKe91qK4VcLRfS0rQ2THaeF/beXZKq283HaYJdogaOIVbiB7HaQ0u").roles("user");
     }
 
     @Configuration
@@ -638,3 +635,691 @@ public class MultiHttpSecurity {
 测试：此时密码还是使用`123`依旧可以登录，但是如果此时要存储的密码的话，那么要存储的密码已经加密了。
 
 ![](..\static\笔记图片\2020-05-18-Spring Boot整合Security_14.png)
+
+### 6.方法安全
+
+默认情况下, Spring Security 并不启用方法级的安全管控. 启用方法级的管控后, 可以针对不同的方法通过注解设置不同的访问条件.
+
+启用方法级的管控代码是, 在一个Security配置类, 加上@EnableGlobalMethodSecurity() 注解, 通过@EnableGlobalMethodSecurity的参数开启相应的方法级的管控.
+
+```java
+/**
+ * 多个Http Security的配置
+ */
+@Configuration
+@EnableGlobalMethodSecurity(jsr250Enabled = true, securedEnabled = true, prePostEnabled = true)
+public class MultiHttpSecurity {}
+```
+
+
+Spring Security 支持三种方法级注解, 分别是 JSR-250 注解/@Secured 注解/prePostEnabled注解. 这些注解不仅可以直接加 **controller 方法**上, 也可以注解 **Service 或 DAO 类中的方法**. 
+
+#### JSR-250 注解
+通过 @EnableGlobalMethodSecurity(jsr250Enabled = true), 开启 JSR-250 注解.
+
+- @DenyAll 注解：拒绝所有的访问
+- @PermitAll 注解：运行所有访问
+- @RolesAllowed({"USER","ADMIN"})：该方法只允许有 ROLE_USER 或 ROLE_ADMIN 角色的用户访问.
+
+#### @Secured 注解
+通过 @EnableGlobalMethodSecurity(securedEnabled = true), 开启 @Secured 注解.
+只有满足角色的用户才能访问被注解的方法, 否则将会抛出 AccessDenied (禁止访问)异常.
+例:
+
+```java
+@Secured("ROLE_TELLER","ROLE_ADMIN")//该方法只允许 ROLE_TELLER 或 ROLE_ADMIN 角色的用户访问.
+@Secured("IS_AUTHENTICATED_ANONYMOUSLY")//该方法允许匿名用户访问.
+```
+
+#### @PreAuthorize 类型的注解(支持 Spring 表达式)
+@EnableGlobalMethodSecurity(prePostEnabled = true), 开启 prePostEnabled 相关的注解.
+**JSR-250 和 @Secured 注解功能较弱, 不支持 Spring EL 表达式. **
+
+**推荐使用 @PreAuthorize 类型的注解.**
+ 具体有4个注解.
+
+- @PreAuthorize 注解：在方法调用之前, 基于表达式结果来限制方法的使用.
+- @PostAuthorize 注解： 允许方法调用, 但是如果表达式结果为 false, 将抛出一个安全性异常.
+- @PostFilter 注解：允许方法调用, 但必要按照表达式来过滤方法的结果.
+- @PreFilter 注解,：允许方法调用, 但必须在进入方法之前过来输入值.
+
+例:
+
+```java
+@PreAuthorize("hasRole('ADMIN')") //必须具有ROLE_ADMIN 角色
+public void addBook(Book book);
+
+//必须同时具备 ROLE_ADMIN 和 ROLE_DBA 角色
+@PreAuthorize("hasRole('ADMIN') AND hasRole('DBA')")
+public void addBook(Book book);
+
+@PreAuthorize ("#book.owner == authentication.name")
+public void deleteBook(Book book);
+
+@PostAuthorize ("returnObject.owner == authentication.name")
+public Book getBook();
+```
+#### @PreAuthorize 表达式
+1. returnObject 保留名
+   对于 @PostAuthorize 和 @PostFilter 注解, 可以在表达式中使用 returnObject 保留名, returnObject 代表着被注解方法的返回值, 我们可以使用 returnObject 保留名对注解方法的结果进行验证.
+
+   ```java
+   @PostAuthorize ("returnObject.owner == authentication.name")
+   public Book getBook();
+   ```
+
+2. 表达式中的 **#** 号
+   在表达式中, 可以使用 **#argument123** 的形式来代表注解方法中的参数 argument123.
+
+   ```java
+   @PreAuthorize ("#book.owner == authentication.name")
+   public void deleteBook(Book book);
+   
+   /*还有一种 #argument123 的写法, 即使用 Spring Security @P注解来为方法参数起别名, 然后在 @PreAuthorize 等注解表达式中使用该别名. 不推荐这种写法, 代码可读性较差.*/
+   
+   @PreAuthorize("#c.name == authentication.name")
+   public void doSomething(@P("c") Contact contact);
+   ```
+
+3. 内置表达式有:  
+	
+	| 表达式                                                       | 备注                                                         |
+	| ------------------------------------------------------------ | :----------------------------------------------------------- |
+	| hasRole([role])                                              | 如果有当前角色, 则返回 true(会自动加上 ROLE_ 前缀)           |
+	| hasAnyRole([role1, role2])                                   | 如果有任一角色即可通过校验, 返回true,(会自动加上 ROLE_ 前缀) |
+	| hasAuthority([authority])                                    | 如果有指定权限, 则返回 true                                  |
+	| hasAnyAuthority([authority1, authority2])                    | 如果有任一指定权限, 则返回true                               |
+	| principal                                                    | 获取当前用户的 principal 主体对象                            |
+	| authentication                                               | 获取当前用户的 authentication 对象,                          |
+	| permitAll                                                    | 总是返回 true, 表示全部允许                                  |
+	| denyAll                                                      | 总是返回 false, 代表全部拒绝                                 |
+	| isAnonymous()                                                | 如果是匿名访问, 返回true                                     |
+	| isRememberMe()                                               | 如果是remember-me 自动认证, 则返回 true                      |
+	| isAuthenticated()                                            | 如果不是匿名访问, 则返回true                                 |
+	| isFullAuthenticated()                                        | 如果不是匿名访问或remember-me认证登陆, 则返回true            |
+	| hasPermission(Object target, Object permission)              |                                                              |
+	| hasPermission(Object target, String targetType, Object permission) |                                                              |
+
+完整演示：
+
+```java
+/**
+ * 多个Http Security的配置
+ * 此时@EnableGlobalMethodSecurity开启了2种方法安全的注解，@Secured注解、@PreAuthorize 类型的注解
+ */
+@Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+public class MultiHttpSecurity {
+	...//内容同上
+}
+```
+
+```java
+@Service
+public class MethodService {
+
+    @PreAuthorize("hasAnyRole('admin','user')")
+    public String hello() {
+        return "Hello";
+    }
+
+    @PreAuthorize("hasRole('admin')")
+    public String admin() {
+        return "Hello Admin";
+    }
+
+    @Secured("ROLE_user")
+    public String user() {
+        return "Hello User";
+    }
+}
+```
+
+```java
+@RestController
+public class HelloController {
+    @Autowired
+    private MethodService methodService;
+
+    @GetMapping("hello_both")
+    public String hello_both() {
+        return methodService.hello();
+    }
+
+    @GetMapping("hello_user")
+    public String hello_users() {
+        return methodService.user();
+    }
+
+    @GetMapping("hello_admin")
+    public String hello_admin() {
+        return methodService.admin();
+    }
+}
+```
+
+测试：
+
+使用`test`登录时，可以调用`hello_both`、`hello_user`，调用`hello_admin`时403。
+
+![](..\static\笔记图片\2020-05-18-Spring Boot整合Security_15.png)
+
+使用`xuxx`登录时，三个接口都可以访问。
+
+### 7.角色继承
+
+在Security配置类中添加以下代码
+
+```java
+/**
+ * 角色继承
+ * @return
+ */
+@Bean
+RoleHierarchy roleHierarchy() {
+	RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+    String hierarchy = "ROLE_dba > ROLE_admin \n ROLE_admin > ROLE_user";
+    roleHierarchy.setHierarchy(hierarchy);
+    return roleHierarchy;
+}
+```
+
+SpringSecurity 在角色继承上有两种不同的写法，在 Spring Boot2.0.8（对应 Spring Security5.0.11）上面是一种写法，从 Spring Boot2.1.0（对应 Spring Security5.1.1）又是另外一种写法。
+
+#### 1.以前的写法
+
+这里说的以前写法，就是指 SpringBoot2.0.8（含）之前的写法，在之前的写法中，角色继承只需要开发者提供一个 RoleHierarchy 接口的实例即可，例如下面这样：
+
+```java
+@BeanRoleHierarchy roleHierarchy() {    
+	RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();    
+	String hierarchy = "ROLE_dba > ROLE_admin ROLE_admin > ROLE_user";
+    roleHierarchy.setHierarchy(hierarchy);    
+	return roleHierarchy;
+}
+```
+
+在这里提供了一个 RoleHierarchy 接口的实例，使用字符串来描述了角色之间的继承关系， `ROLE_dba` 具备 `ROLE_admin` 的所有权限，而 `ROLE_admin` 则具备 `ROLE_user` 的所有权限，继承与继承之间用一个空格隔开。提供了这个 Bean 之后，以后所有具备 `ROLE_user` 角色才能访问的资源， `ROLE_dba` 和 `ROLE_admin` 也都能访问，具备 `ROLE_amdin` 角色才能访问的资源， `ROLE_dba` 也能访问。
+
+#### 2.现在的写法
+
+但是上面这种写法仅限于 Spring Boot2.0.8（含）之前的版本，在之后的版本中，这种写法则不被支持，新版的写法是下面这样：
+
+```
+@BeanRoleHierarchy roleHierarchy() {    
+	RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();    
+	String hierarchy = "ROLE_dba > ROLE_admin \n ROLE_admin > ROLE_user";
+	roleHierarchy.setHierarchy(hierarchy);    
+	return roleHierarchy;
+}
+```
+
+变化主要就是分隔符，将原来用空格隔开的地方，现在用换行符了。这里表达式的含义依然和上面一样，不再赘述。
+
+上面两种不同写法都是配置角色的继承关系，配置完成后，接下来指定角色和资源的对应关系即可，如下：
+
+```
+@Overrideprotected void configure(HttpSecurity http) throws Exception {
+	http.authorizeRequests()
+	.antMatchers("/admin/**").hasRole("admin")
+	.antMatchers("/db/**").hasRole("dba")
+	.antMatchers("/user/**").hasRole("user")
+	.and().formLogin()
+	.loginProcessingUrl("/doLogin")
+	.permitAll()
+	.and().csrf().disable();
+}
+```
+
+这个表示 `/db/**` 格式的路径需要具备 dba 角色才能访问， `/admin/**` 格式的路径则需要具备 admin 角色才能访问， `/user/**` 格式的路径，则需要具备 user 角色才能访问，此时提供相关接口，会发现dba 除了访问 `/db/**` ，也能访问 `/admin/**` 和 `/user/**` ，admin 角色除了访问 `/admin/**` ，也能访问 `/user/**` ，user 角色则只能访问 `/user/**` 。
+
+### 8.基于数据库的认证
+
+之前的用户和密码都是在代码或者配置文件中写死的，一般不满足开发的需要。
+
+没啥说的，上代码！！
+
+
+
+首先准备好数据库
+
+```mysql
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `nameZh` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', 'dba', '数据库管理员');
+INSERT INTO `role` VALUES ('2', 'admin', '系统管理员');
+INSERT INTO `role` VALUES ('3', 'user', '用户');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL,
+  `locked` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', 'root', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+INSERT INTO `user` VALUES ('2', 'admin', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+INSERT INTO `user` VALUES ('3', 'xuxx', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('1', '1', '1');
+INSERT INTO `user_role` VALUES ('2', '1', '2');
+INSERT INTO `user_role` VALUES ('3', '2', '2');
+INSERT INTO `user_role` VALUES ('4', '3', '3');
+SET FOREIGN_KEY_CHECKS=1;
+```
+
+依赖
+
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>5.1.27</version>
+        </dependency>
+```
+
+bean
+
+```java
+package com.xuxx.security_demo.bean;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * 继承UserDetails是为了向Spring Security提供核心用户信息
+ * 同时，UserDetails也是一个规范
+ */
+public class User implements Serializable, UserDetails {
+    private Integer id;
+    private String username;
+    private String password;
+    private Boolean enabled;
+    private Boolean locked;
+
+    private List<Role> roleList;
+
+    /***
+     * 判断帐户是否未过期
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        //我的数据库没写这个字段
+        return true;
+    }
+
+    /***
+     * 判断帐户是否未锁定
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    /**
+     * 判断凭证是否未过期
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * 判断是否已启用
+     */
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * 获取已授予用户的权限(角色)，不能返回nulL。
+     * SimpleGrantedAuthority：GrantedAuthority的简单实现。以字符串形式存储已授予的权限(角色)，要以‘ROLE_’开头。
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roleList) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        }
+        return authorities;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", locked=" + locked +
+                ", roleList=" + roleList +
+                '}';
+    }
+}
+```
+
+```java
+package com.xuxx.security_demo.bean;
+
+import java.io.Serializable;
+
+public class Role implements Serializable {
+    private Integer id;
+    private String name;
+    private String nameZh;
+
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameZh() {
+        return nameZh;
+    }
+
+    public void setNameZh(String nameZh) {
+        this.nameZh = nameZh;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameZh='" + nameZh + '\'' +
+                ", user=" + user +
+                '}';
+    }
+}
+```
+
+Mapper
+
+```java
+package com.xuxx.security_demo.mapper;
+
+import com.xuxx.security_demo.bean.Role;
+import com.xuxx.security_demo.bean.User;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface UserMapper {
+    /**
+     * 根据username查询User
+     * @param username 用户名
+     * @return
+     */
+    @Select("select * from user where username = #{username}")
+    User loadUserByUsername(String username);
+
+    /**
+     * 根据userID查询User的角色
+     * @param id 用户ID
+     * @return
+     */
+    @Select("select * from role r where r.id in (select rid from user_role where uid = #{id})")
+    List<Role> getUserRolesById(Integer id);
+}
+```
+
+Service
+
+```java
+package com.xuxx.security_demo.service;
+
+import com.xuxx.security_demo.bean.User;
+import com.xuxx.security_demo.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService implements UserDetailsService {
+    @Autowired
+    private UserMapper userMapper;
+
+    /**
+     * 不用自己判断登录成功与否，只需要去数据库查询。
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userMapper.loadUserByUsername(username);
+        if (user == null) {
+            //UsernameNotFoundException会自动转换为BadCredentialsException的
+            throw new UsernameNotFoundException("用户不存在！");
+        }
+        user.setRoleList(userMapper.getUserRolesById(user.getId()));
+        return user;
+    }
+}
+```
+
+Controller
+
+```java
+package com.xuxx.security_demo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+    @GetMapping("hello")
+    public String hello() {
+        return "hello security";
+    }
+
+    @GetMapping("dba/hello")
+    public String dba() {
+        return "hello dba";
+    }
+
+    @GetMapping("admin/hello")
+    public String admin() {
+        return "hello admin";
+    }
+
+    @GetMapping("user/hello")
+    public String user() {
+        return "hello user";
+    }
+}
+```
+
+配置类
+
+```java
+package com.xuxx.security_demo.config;
+
+import com.xuxx.security_demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserService userService;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 角色继承
+     *
+     * @return
+     */
+    @Bean
+    RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "ROLE_dba > ROLE_admin \n ROLE_admin > ROLE_user";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/dba/**").hasRole("dba")
+                .antMatchers("/admin/**").hasRole("admin")
+                .antMatchers("/user/**").hasRole("user")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/doLogin")
+                .permitAll()
+                .and()
+                .csrf()
+                .disable();
+    }
+}
+```
+
+大功告成。
+
+## 3.动态权限配置
+

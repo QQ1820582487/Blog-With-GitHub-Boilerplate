@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/a3b15ab5676c1eb4c0bee608ca2c8337.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/9a9a5805d6e7d974cb774d951c2c49b2.json"
         }
     </script>
     
@@ -496,7 +496,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 多个Http Security的配置
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class MultiHttpSecurity {
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -509,7 +508,7 @@ public class MultiHttpSecurity {
         auth.inMemoryAuthentication()
                 .withUser("xuxx").password("123").roles("admin")
                 .and()
-                .withUser("test").password("123").roles("users");
+                .withUser("test").password("123").roles("user");
     }
 
     @Configuration
@@ -599,11 +598,9 @@ public class MultiHttpSecurity {
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-//                .withUser("xuxx").password("123").roles("admin")
-                .withUser("xuxx").password("$2a$10$gqUyIaadTdNQYVq7M1iRFO4Wl/sdvCPBvrBUwlX7u8qjbRFU7EoRK").roles("admin")
+//                .withUser("xuxx").password("123").roles("admin")              .withUser("xuxx").password("$2a$10$gqUyIaadTdNQYVq7M1iRFO4Wl/sdvCPBvrBUwlX7u8qjbRFU7EoRK").roles("admin")
                 .and()
-//                .withUser("test").password("123").roles("users");
-                .withUser("test").password("$2a$10$tKe91qK4VcLRfS0rQ2THaeF/beXZKq283HaYJdogaOIVbiB7HaQ0u").roles("users");
+//                .withUser("test").password("123").roles("user");             .withUser("test").password("$2a$10$tKe91qK4VcLRfS0rQ2THaeF/beXZKq283HaYJdogaOIVbiB7HaQ0u").roles("user");
     }
 
     @Configuration
@@ -634,6 +631,617 @@ public class MultiHttpSecurity {
 }</code></pre>
 <p>测试：此时密码还是使用<code>123</code>依旧可以登录，但是如果此时要存储的密码的话，那么要存储的密码已经加密了。</p>
 <p><figure class="pswp-item" style="flex: 165.70048309178745" data-width="1372" data-height="414"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0b1ed5cb1dace2f1282680faa7bfaaf1.png" alt="" /></figure></p>
+<h3>6.方法安全</h3>
+<p>默认情况下, Spring Security 并不启用方法级的安全管控. 启用方法级的管控后, 可以针对不同的方法通过注解设置不同的访问条件.</p>
+<p>启用方法级的管控代码是, 在一个Security配置类, 加上@EnableGlobalMethodSecurity() 注解, 通过@EnableGlobalMethodSecurity的参数开启相应的方法级的管控.</p>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 多个Http Security的配置</span>
+<span class="cm"> */</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@EnableGlobalMethodSecurity</span><span class="p">(</span><span class="n">jsr250Enabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">securedEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">prePostEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultiHttpSecurity</span> <span class="p">{}</span>
+</pre></div>
+<p>Spring Security 支持三种方法级注解, 分别是 JSR-250 注解/@Secured 注解/prePostEnabled注解. 这些注解不仅可以直接加 <strong>controller 方法</strong>上, 也可以注解 <strong>Service 或 DAO 类中的方法</strong>.</p>
+<h4>JSR-250 注解</h4>
+<p>通过 @EnableGlobalMethodSecurity(jsr250Enabled = true), 开启 JSR-250 注解.</p>
+<ul>
+<li>@DenyAll 注解：拒绝所有的访问</li>
+<li>@PermitAll 注解：运行所有访问</li>
+<li>@RolesAllowed({"USER","ADMIN"})：该方法只允许有 ROLE_USER 或 ROLE_ADMIN 角色的用户访问.</li>
+</ul>
+<h4>@Secured 注解</h4>
+<p>通过 @EnableGlobalMethodSecurity(securedEnabled = true), 开启 @Secured 注解.
+只有满足角色的用户才能访问被注解的方法, 否则将会抛出 AccessDenied (禁止访问)异常.
+例:</p>
+<div class="highlight"><pre><span></span><span class="nd">@Secured</span><span class="p">(</span><span class="s">&quot;ROLE_TELLER&quot;</span><span class="p">,</span><span class="s">&quot;ROLE_ADMIN&quot;</span><span class="p">)</span><span class="c1">//该方法只允许 ROLE_TELLER 或 ROLE_ADMIN 角色的用户访问.</span>
+<span class="nd">@Secured</span><span class="p">(</span><span class="s">&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot;</span><span class="p">)</span><span class="c1">//该方法允许匿名用户访问.</span>
+</pre></div>
+<h4>@PreAuthorize 类型的注解(支持 Spring 表达式)</h4>
+<p>@EnableGlobalMethodSecurity(prePostEnabled = true), 开启 prePostEnabled 相关的注解.
+<strong>JSR-250 和 @Secured 注解功能较弱, 不支持 Spring EL 表达式. </strong></p>
+<p><strong>推荐使用 @PreAuthorize 类型的注解.</strong>
+ 具体有4个注解.</p>
+<ul>
+<li>@PreAuthorize 注解：在方法调用之前, 基于表达式结果来限制方法的使用.</li>
+<li>@PostAuthorize 注解： 允许方法调用, 但是如果表达式结果为 false, 将抛出一个安全性异常.</li>
+<li>@PostFilter 注解：允许方法调用, 但必要按照表达式来过滤方法的结果.</li>
+<li>@PreFilter 注解,：允许方法调用, 但必须在进入方法之前过来输入值.</li>
+</ul>
+<p>例:</p>
+<div class="highlight"><pre><span></span><span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasRole(&#39;ADMIN&#39;)&quot;</span><span class="p">)</span> <span class="c1">//必须具有ROLE_ADMIN 角色</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBook</span><span class="p">(</span><span class="n">Book</span> <span class="n">book</span><span class="p">);</span>
+
+<span class="c1">//必须同时具备 ROLE_ADMIN 和 ROLE_DBA 角色</span>
+<span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasRole(&#39;ADMIN&#39;) AND hasRole(&#39;DBA&#39;)&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBook</span><span class="p">(</span><span class="n">Book</span> <span class="n">book</span><span class="p">);</span>
+
+<span class="nd">@PreAuthorize</span> <span class="p">(</span><span class="s">&quot;#book.owner == authentication.name&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteBook</span><span class="p">(</span><span class="n">Book</span> <span class="n">book</span><span class="p">);</span>
+
+<span class="nd">@PostAuthorize</span> <span class="p">(</span><span class="s">&quot;returnObject.owner == authentication.name&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">Book</span> <span class="nf">getBook</span><span class="p">();</span>
+</pre></div>
+<h4>@PreAuthorize 表达式</h4>
+<ol>
+<li><p>returnObject 保留名
+对于 @PostAuthorize 和 @PostFilter 注解, 可以在表达式中使用 returnObject 保留名, returnObject 代表着被注解方法的返回值, 我们可以使用 returnObject 保留名对注解方法的结果进行验证.</p>
+<div class="highlight"><pre><span></span><span class="nd">@PostAuthorize</span> <span class="p">(</span><span class="s">&quot;returnObject.owner == authentication.name&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">Book</span> <span class="nf">getBook</span><span class="p">();</span>
+</pre></div>
+</li>
+<li><p>表达式中的 <strong>#</strong> 号
+在表达式中, 可以使用 <strong>#argument123</strong> 的形式来代表注解方法中的参数 argument123.</p>
+<div class="highlight"><pre><span></span><span class="nd">@PreAuthorize</span> <span class="p">(</span><span class="s">&quot;#book.owner == authentication.name&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteBook</span><span class="p">(</span><span class="n">Book</span> <span class="n">book</span><span class="p">);</span>
+
+<span class="cm">/*还有一种 #argument123 的写法, 即使用 Spring Security @P注解来为方法参数起别名, 然后在 @PreAuthorize 等注解表达式中使用该别名. 不推荐这种写法, 代码可读性较差.*/</span>
+
+<span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;#c.name == authentication.name&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nd">@P</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">)</span> <span class="n">Contact</span> <span class="n">contact</span><span class="p">);</span>
+</pre></div>
+</li>
+<li><p>内置表达式有:</p>
+<p>| 表达式                                                       | 备注                                                         |
+ | ------------------------------------------------------------ | :----------------------------------------------------------- |
+ | hasRole([role])                                              | 如果有当前角色, 则返回 true(会自动加上 ROLE<em> 前缀)           |
+ | hasAnyRole([role1, role2])                                   | 如果有任一角色即可通过校验, 返回true,(会自动加上 ROLE</em> 前缀) |
+ | hasAuthority([authority])                                    | 如果有指定权限, 则返回 true                                  |
+ | hasAnyAuthority([authority1, authority2])                    | 如果有任一指定权限, 则返回true                               |
+ | principal                                                    | 获取当前用户的 principal 主体对象                            |
+ | authentication                                               | 获取当前用户的 authentication 对象,                          |
+ | permitAll                                                    | 总是返回 true, 表示全部允许                                  |
+ | denyAll                                                      | 总是返回 false, 代表全部拒绝                                 |
+ | isAnonymous()                                                | 如果是匿名访问, 返回true                                     |
+ | isRememberMe()                                               | 如果是remember-me 自动认证, 则返回 true                      |
+ | isAuthenticated()                                            | 如果不是匿名访问, 则返回true                                 |
+ | isFullAuthenticated()                                        | 如果不是匿名访问或remember-me认证登陆, 则返回true            |
+ | hasPermission(Object target, Object permission)              |                                                              |
+ | hasPermission(Object target, String targetType, Object permission) |                                                              |</p>
+</li>
+</ol>
+<p>完整演示：</p>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 多个Http Security的配置</span>
+<span class="cm"> * 此时@EnableGlobalMethodSecurity开启了2种方法安全的注解，@Secured注解、@PreAuthorize 类型的注解</span>
+<span class="cm"> */</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@EnableGlobalMethodSecurity</span><span class="p">(</span><span class="n">securedEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">prePostEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultiHttpSecurity</span> <span class="p">{</span>
+    <span class="p">...</span><span class="c1">//内容同上</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MethodService</span> <span class="p">{</span>
+
+    <span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasRole(&#39;admin&#39;)&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">admin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello Admin&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Secured</span><span class="p">(</span><span class="s">&quot;ROLE_user&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">user</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello User&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">MethodService</span> <span class="n">methodService</span><span class="p">;</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello_both&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello_both</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">methodService</span><span class="p">.</span><span class="na">hello</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello_user&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello_users</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">methodService</span><span class="p">.</span><span class="na">user</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello_admin&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello_admin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">methodService</span><span class="p">.</span><span class="na">admin</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>测试：</p>
+<p>使用<code>test</code>登录时，可以调用<code>hello_both</code>、<code>hello_user</code>，调用<code>hello_admin</code>时403。</p>
+<p><figure class="pswp-item" style="flex: 199.10979228486647" data-width="1342" data-height="337"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9d889adb2aaf911e2d0fc4594271c454.png" alt="" /></figure></p>
+<p>使用<code>xuxx</code>登录时，三个接口都可以访问。</p>
+<h3>7.角色继承</h3>
+<p>在Security配置类中添加以下代码</p>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 角色继承</span>
+<span class="cm"> * @return</span>
+<span class="cm"> */</span>
+<span class="nd">@Bean</span>
+<span class="n">RoleHierarchy</span> <span class="nf">roleHierarchy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">RoleHierarchyImpl</span> <span class="n">roleHierarchy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RoleHierarchyImpl</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="s">&quot;ROLE_dba &gt; ROLE_admin \n ROLE_admin &gt; ROLE_user&quot;</span><span class="p">;</span>
+    <span class="n">roleHierarchy</span><span class="p">.</span><span class="na">setHierarchy</span><span class="p">(</span><span class="n">hierarchy</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">roleHierarchy</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>SpringSecurity 在角色继承上有两种不同的写法，在 Spring Boot2.0.8（对应 Spring Security5.0.11）上面是一种写法，从 Spring Boot2.1.0（对应 Spring Security5.1.1）又是另外一种写法。</p>
+<h4>1.以前的写法</h4>
+<p>这里说的以前写法，就是指 SpringBoot2.0.8（含）之前的写法，在之前的写法中，角色继承只需要开发者提供一个 RoleHierarchy 接口的实例即可，例如下面这样：</p>
+<div class="highlight"><pre><span></span><span class="nd">@BeanRoleHierarchy</span> <span class="n">roleHierarchy</span><span class="p">()</span> <span class="p">{</span>    
+    <span class="n">RoleHierarchyImpl</span> <span class="n">roleHierarchy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RoleHierarchyImpl</span><span class="p">();</span>    
+    <span class="n">String</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="s">&quot;ROLE_dba &gt; ROLE_admin ROLE_admin &gt; ROLE_user&quot;</span><span class="p">;</span>
+    <span class="n">roleHierarchy</span><span class="p">.</span><span class="na">setHierarchy</span><span class="p">(</span><span class="n">hierarchy</span><span class="p">);</span>    
+    <span class="k">return</span> <span class="n">roleHierarchy</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>在这里提供了一个 RoleHierarchy 接口的实例，使用字符串来描述了角色之间的继承关系， <code>ROLE_dba</code> 具备 <code>ROLE_admin</code> 的所有权限，而 <code>ROLE_admin</code> 则具备 <code>ROLE_user</code> 的所有权限，继承与继承之间用一个空格隔开。提供了这个 Bean 之后，以后所有具备 <code>ROLE_user</code> 角色才能访问的资源， <code>ROLE_dba</code> 和 <code>ROLE_admin</code> 也都能访问，具备 <code>ROLE_amdin</code> 角色才能访问的资源， <code>ROLE_dba</code> 也能访问。</p>
+<h4>2.现在的写法</h4>
+<p>但是上面这种写法仅限于 Spring Boot2.0.8（含）之前的版本，在之后的版本中，这种写法则不被支持，新版的写法是下面这样：</p>
+
+<pre><code>@BeanRoleHierarchy roleHierarchy() {    
+    RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();    
+    String hierarchy = "ROLE_dba &gt; ROLE_admin \n ROLE_admin &gt; ROLE_user";
+    roleHierarchy.setHierarchy(hierarchy);    
+    return roleHierarchy;
+}</code></pre>
+<p>变化主要就是分隔符，将原来用空格隔开的地方，现在用换行符了。这里表达式的含义依然和上面一样，不再赘述。</p>
+<p>上面两种不同写法都是配置角色的继承关系，配置完成后，接下来指定角色和资源的对应关系即可，如下：</p>
+
+<pre><code>@Overrideprotected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+    .antMatchers("/admin/**").hasRole("admin")
+    .antMatchers("/db/**").hasRole("dba")
+    .antMatchers("/user/**").hasRole("user")
+    .and().formLogin()
+    .loginProcessingUrl("/doLogin")
+    .permitAll()
+    .and().csrf().disable();
+}</code></pre>
+<p>这个表示 <code>/db/**</code> 格式的路径需要具备 dba 角色才能访问， <code>/admin/**</code> 格式的路径则需要具备 admin 角色才能访问， <code>/user/**</code> 格式的路径，则需要具备 user 角色才能访问，此时提供相关接口，会发现dba 除了访问 <code>/db/**</code> ，也能访问 <code>/admin/**</code> 和 <code>/user/**</code> ，admin 角色除了访问 <code>/admin/**</code> ，也能访问 <code>/user/**</code> ，user 角色则只能访问 <code>/user/**</code> 。</p>
+<h3>8.基于数据库的认证</h3>
+<p>之前的用户和密码都是在代码或者配置文件中写死的，一般不满足开发的需要。</p>
+<p>没啥说的，上代码！！</p>
+<p>首先准备好数据库</p>
+<div class="highlight"><pre><span></span><span class="kt">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`role`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`role`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`name`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`nameZh`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;dba&#39;</span><span class="p">,</span> <span class="s1">&#39;数据库管理员&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;系统管理员&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;用户&#39;</span><span class="p">);</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for user</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`user`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`user`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`username`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`password`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`enabled`</span> <span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`locked`</span> <span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of user</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;xuxx&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for user_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`user_role`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`user_role`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`uid`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`rid`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">5</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of user_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user_role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user_role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user_role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user_role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">);</span>
+<span class="kt">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<p>依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>bean</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.bean</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.GrantedAuthority</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.authority.SimpleGrantedAuthority</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetails</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 继承UserDetails是为了向Spring Security提供核心用户信息</span>
+<span class="cm"> * 同时，UserDetails也是一个规范</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">Serializable</span><span class="p">,</span> <span class="n">UserDetails</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">password</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">Boolean</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">Boolean</span> <span class="n">locked</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roleList</span><span class="p">;</span>
+
+    <span class="cm">/***</span>
+<span class="cm">     * 判断帐户是否未过期</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonExpired</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//我的数据库没写这个字段</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/***</span>
+<span class="cm">     * 判断帐户是否未锁定</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonLocked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="n">locked</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 判断凭证是否未过期</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isCredentialsNonExpired</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 判断是否已启用</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEnabled</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取已授予用户的权限(角色)，不能返回nulL。</span>
+<span class="cm">     * SimpleGrantedAuthority：GrantedAuthority的简单实现。以字符串形式存储已授予的权限(角色)，要以‘ROLE_’开头。</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">GrantedAuthority</span><span class="o">&gt;</span> <span class="nf">getAuthorities</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">SimpleGrantedAuthority</span><span class="o">&gt;</span> <span class="n">authorities</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Role</span> <span class="n">role</span> <span class="p">:</span> <span class="n">roleList</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">authorities</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleGrantedAuthority</span><span class="p">(</span><span class="s">&quot;ROLE_&quot;</span> <span class="o">+</span> <span class="n">role</span><span class="p">.</span><span class="na">getName</span><span class="p">()));</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">authorities</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="nf">getRoleList</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">roleList</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRoleList</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roleList</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">roleList</span> <span class="o">=</span> <span class="n">roleList</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUsername</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">username</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">username</span> <span class="o">=</span> <span class="n">username</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPassword</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">password</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPassword</span><span class="p">(</span><span class="n">String</span> <span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setEnabled</span><span class="p">(</span><span class="n">Boolean</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">enabled</span> <span class="o">=</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLocked</span><span class="p">(</span><span class="n">Boolean</span> <span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">locked</span> <span class="o">=</span> <span class="n">locked</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;User{&quot;</span> <span class="o">+</span>
+                <span class="s">&quot;id=&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="s">&quot;, username=&#39;&quot;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, password=&#39;&quot;</span> <span class="o">+</span> <span class="n">password</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, enabled=&quot;</span> <span class="o">+</span> <span class="n">enabled</span> <span class="o">+</span>
+                <span class="s">&quot;, locked=&quot;</span> <span class="o">+</span> <span class="n">locked</span> <span class="o">+</span>
+                <span class="s">&quot;, roleList=&quot;</span> <span class="o">+</span> <span class="n">roleList</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.bean</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Role</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">nameZh</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="n">User</span> <span class="n">user</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">getUser</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">user</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUser</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNameZh</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">nameZh</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNameZh</span><span class="p">(</span><span class="n">String</span> <span class="n">nameZh</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">nameZh</span> <span class="o">=</span> <span class="n">nameZh</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;Role{&quot;</span> <span class="o">+</span>
+                <span class="s">&quot;id=&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="s">&quot;, name=&#39;&quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, nameZh=&#39;&quot;</span> <span class="o">+</span> <span class="n">nameZh</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, user=&quot;</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Mapper</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.mapper</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_demo.bean.Role</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_demo.bean.User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.annotations.Mapper</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 根据username查询User</span>
+<span class="cm">     * @param username 用户名</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user where username = #{username}&quot;</span><span class="p">)</span>
+    <span class="n">User</span> <span class="nf">loadUserByUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">);</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 根据userID查询User的角色</span>
+<span class="cm">     * @param id 用户ID</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from role r where r.id in (select rid from user_role where uid = #{id})&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="nf">getUserRolesById</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Service</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.service</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_demo.bean.User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_demo.mapper.UserMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetails</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetailsService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UsernameNotFoundException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserService</span> <span class="kd">implements</span> <span class="n">UserDetailsService</span> <span class="p">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 不用自己判断登录成功与否，只需要去数据库查询。</span>
+<span class="cm">     * @param username</span>
+<span class="cm">     * @return</span>
+<span class="cm">     * @throws UsernameNotFoundException</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">UserDetails</span> <span class="nf">loadUserByUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">UsernameNotFoundException</span> <span class="p">{</span>
+        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">loadUserByUsername</span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//UsernameNotFoundException会自动转换为BadCredentialsException的</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">UsernameNotFoundException</span><span class="p">(</span><span class="s">&quot;用户不存在！&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">user</span><span class="p">.</span><span class="na">setRoleList</span><span class="p">(</span><span class="n">userMapper</span><span class="p">.</span><span class="na">getUserRolesById</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getId</span><span class="p">()));</span>
+        <span class="k">return</span> <span class="n">user</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Controller</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.controller</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;hello security&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;dba/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">dba</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;hello dba&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;admin/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">admin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;hello admin&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;user/hello&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">user</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;hello user&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>配置类</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_demo.service.UserService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.hierarchicalroles.RoleHierarchy</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">UserService</span> <span class="n">userService</span><span class="p">;</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">BCryptPasswordEncoder</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 角色继承</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="nd">@Bean</span>
+    <span class="n">RoleHierarchy</span> <span class="nf">roleHierarchy</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">RoleHierarchyImpl</span> <span class="n">roleHierarchy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RoleHierarchyImpl</span><span class="p">();</span>
+        <span class="n">String</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="s">&quot;ROLE_dba &gt; ROLE_admin \n ROLE_admin &gt; ROLE_user&quot;</span><span class="p">;</span>
+        <span class="n">roleHierarchy</span><span class="p">.</span><span class="na">setHierarchy</span><span class="p">(</span><span class="n">hierarchy</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">roleHierarchy</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">userDetailsService</span><span class="p">(</span><span class="n">userService</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/dba/**&quot;</span><span class="p">).</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;dba&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">).</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/user/**&quot;</span><span class="p">).</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">anyRequest</span><span class="p">().</span><span class="na">authenticated</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">loginProcessingUrl</span><span class="p">(</span><span class="s">&quot;/doLogin&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">disable</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>大功告成。</p>
+<h2>3.动态权限配置</h2>
 
             </div>
         </article>

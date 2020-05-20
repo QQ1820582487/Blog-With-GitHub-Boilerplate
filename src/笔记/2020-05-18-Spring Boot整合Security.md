@@ -1342,7 +1342,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 目的是实现Spring Security从DB中加载URL的相关权限，且当DB中配置发生更改时，可以让运行中的项目无需重启，动态更改访问权限。
 
-数据库(在之前的基础上添加了两张表，menu和menu_role)
+### 1.数据库
+
+在之前的基础上添加了两张表，menu和menu_role
 
 ```sql
 --取消外键约束:
@@ -1362,7 +1364,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', 'dba', '数据库管理员');
 INSERT INTO `role` VALUES ('2', 'admin', '系统管理员');
-INSERT INTO `role` VALUES ('3', 'user', '用户');
+INSERT INTO `role` VALUES ('3', 'user', '普通用户');
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
@@ -1411,7 +1413,7 @@ CREATE TABLE `menu` (
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu`(`id`, `pattern`) VALUES (1, '/db/**');
+INSERT INTO `menu`(`id`, `pattern`) VALUES (1, '/dba/**');
 INSERT INTO `menu`(`id`, `pattern`) VALUES (2, '/admin/**');
 INSERT INTO `menu`(`id`, `pattern`) VALUES (3, '/user/**');
 -- ----------------------------
@@ -1432,7 +1434,7 @@ INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (2, 2, 2);
 INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (3, 3, 3);
 ```
 
-依赖
+### 2.依赖
 
 ```xml
         <dependency>
@@ -1460,7 +1462,7 @@ INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (3, 3, 3);
         </dependency>
 ```
 
-application.yml
+### 3.application.yml
 
 ```yaml
 spring:
@@ -1482,7 +1484,7 @@ logging:
     com.xuxx.security_db_dynamic.mapper: debug
 ```
 
-bean
+### 4.bean
 
 ```java
 package com.xuxx.security_db_dynamic.bean;
@@ -1639,7 +1641,7 @@ public class Menu {
 }
 ```
 
-Mapper
+### 5.Mapper
 
 ```java
 package com.xuxx.security_db_dynamic.mapper;
@@ -1697,7 +1699,7 @@ public interface MenuMapper {
 }
 ```
 
-Service
+### 6.Service
 
 ```java
 package com.xuxx.security_db_dynamic.service;
@@ -1750,7 +1752,7 @@ public class MenuService {
 }
 ```
 
-Controller
+### 7.Controller
 
 ```java
 package com.xuxx.security_db_dynamic.controller;
@@ -1783,7 +1785,7 @@ public class HelloController {
 }
 ```
 
-配置类
+### 8.配置类
 
 ```java
 package com.xuxx.security_db_dynamic.config;
@@ -1972,5 +1974,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
+
+此时便可以进行动态的权限控制了，修改数据库便可以改变各用户权限等。
 
 大功告成！！累死了...

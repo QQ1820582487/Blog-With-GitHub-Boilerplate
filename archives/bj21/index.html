@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/9a9a5805d6e7d974cb774d951c2c49b2.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/6efdbf86fb5ad94be53b27722152e51c.json"
         }
     </script>
     
@@ -111,7 +111,7 @@
 <p>此时启动项目，访问<code>http://localhost:8080/hello</code>，此时会发现，会自动重定向到<code>http://localhost:8080/login</code>,也就是说<code>hello</code>接口被<strong>Security</strong>保护起来了，不能直接访问了。</p>
 <p><figure class="pswp-item" style="flex: 84.96993987975952" data-width="848" data-height="499"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5877e03f11eb9a6176b7ea969491bd21.png" alt="" /></figure></p>
 <p><figure class="pswp-item" style="flex: 155.64334085778782" data-width="1379" data-height="443"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/97a95c9aaf8623d9a33514ae9803b5ed.png" alt="" /></figure></p>
-<p>输入用户名（user）和密码（每次生成的密码都不一样），登录后便能访问接口了。</p>
+<p>输入用户名（user）和密码（每次生成的密码都不一样）（实际上就是UUID），登录后便能访问接口了。</p>
 <h3>2.手动配置Security用户和密码</h3>
 <h4>1.第一种：在配置文件中配置</h4>
 <div class="highlight"><pre><span></span><span class="na">spring.security.user.name</span><span class="o">=</span><span class="s">xuxx</span>
@@ -826,8 +826,8 @@ public class MultiHttpSecurity {
 <p>之前的用户和密码都是在代码或者配置文件中写死的，一般不满足开发的需要。</p>
 <p>没啥说的，上代码！！</p>
 <p>首先准备好数据库</p>
-<div class="highlight"><pre><span></span><span class="kt">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-
+<div class="highlight"><pre><span></span><span class="o">--</span><span class="err">取消外键约束</span><span class="p">:</span>
+<span class="kt">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Table structure for role</span>
 <span class="c1">-- ----------------------------</span>
@@ -838,14 +838,12 @@ public class MultiHttpSecurity {
   <span class="ss">`nameZh`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
 <span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of role</span>
 <span class="c1">-- ----------------------------</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;dba&#39;</span><span class="p">,</span> <span class="s1">&#39;数据库管理员&#39;</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;系统管理员&#39;</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`role`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;用户&#39;</span><span class="p">);</span>
-
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Table structure for user</span>
 <span class="c1">-- ----------------------------</span>
@@ -858,14 +856,12 @@ public class MultiHttpSecurity {
   <span class="ss">`locked`</span> <span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
 <span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of user</span>
 <span class="c1">-- ----------------------------</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`user`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;xuxx&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
-
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Table structure for user_role</span>
 <span class="c1">-- ----------------------------</span>
@@ -876,7 +872,6 @@ public class MultiHttpSecurity {
   <span class="ss">`rid`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">)</span>
 <span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">5</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of user_role</span>
 <span class="c1">-- ----------------------------</span>
@@ -910,6 +905,25 @@ public class MultiHttpSecurity {
             <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
             <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>配置文件application.yml</p>
+<div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
+  <span class="nt">datasource</span><span class="p">:</span>
+    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+    <span class="nt">driver-class-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.mysql.jdbc.Driver</span>
+<span class="nt">mybatis</span><span class="p">:</span>
+  <span class="c1">#mapper.xml路径</span>
+  <span class="nt">mapper-locations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">classpath:mapper/*.xml</span>
+  <span class="c1">#别名包扫描</span>
+  <span class="nt">type-aliases-package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.xuxx.security_demo.bean</span>
+
+<span class="nt">logging</span><span class="p">:</span>
+  <span class="nt">level</span><span class="p">:</span>
+    <span class="c1">#打印mapper包的SQL语句</span>
+    <span class="nt">com.xuxx.security_demo.mapper</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug</span>
 </pre></div>
 <p>bean</p>
 <div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_demo.bean</span><span class="p">;</span>
@@ -1242,6 +1256,573 @@ public class MultiHttpSecurity {
 </pre></div>
 <p>大功告成。</p>
 <h2>3.动态权限配置</h2>
+<p>目的是实现Spring Security从DB中加载URL的相关权限，且当DB中配置发生更改时，可以让运行中的项目无需重启，动态更改访问权限。</p>
+<p>数据库(在之前的基础上添加了两张表，menu和menu_role)</p>
+<div class="highlight"><pre><span></span><span class="c1">--取消外键约束:</span>
+<span class="k">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="k">role</span><span class="o">`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="k">role</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">name</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">nameZh</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;dba&#39;</span><span class="p">,</span> <span class="s1">&#39;数据库管理员&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;系统管理员&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;用户&#39;</span><span class="p">);</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for user</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="k">user</span><span class="o">`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="k">user</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">username</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">password</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">enabled</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">locked</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of user</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">user</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">user</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="k">user</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;xuxx&#39;</span><span class="p">,</span> <span class="s1">&#39;$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">);</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for user_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">rid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">5</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of user_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">user_role</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">);</span>
+<span class="k">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for menu</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">menu</span><span class="o">`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">menu</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">pattern</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of menu</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">pattern</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;/db/**&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">pattern</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;/admin/**&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">pattern</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;/user/**&#39;</span><span class="p">);</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Table structure for menu_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">menu_role</span><span class="o">`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">menu_role</span><span class="o">`</span> <span class="p">(</span>
+  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">mid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="o">`</span><span class="n">rid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">4</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="c1">-- ----------------------------</span>
+<span class="c1">-- Records of menu_role</span>
+<span class="c1">-- ----------------------------</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu_role</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">mid</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">rid</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu_role</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">mid</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">rid</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">menu_role</span><span class="o">`</span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">mid</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">rid</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+<p>依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+            <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>application.yml</p>
+<div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
+  <span class="nt">datasource</span><span class="p">:</span>
+    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+    <span class="nt">driver-class-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.mysql.jdbc.Driver</span>
+<span class="nt">mybatis</span><span class="p">:</span>
+  <span class="c1">#mapper.xml路径</span>
+  <span class="c1">#mapper-locations: classpath:mapper/*.xml</span>
+  <span class="c1">#别名包扫描</span>
+  <span class="nt">type-aliases-package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.xuxx.security_db_dynamic.bean</span>
+
+<span class="nt">logging</span><span class="p">:</span>
+  <span class="nt">level</span><span class="p">:</span>
+    <span class="c1">#打印mapper包的SQL语句</span>
+    <span class="nt">com.xuxx.security_db_dynamic.mapper</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug</span>
+</pre></div>
+<p>bean</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.bean</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.GrantedAuthority</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.authority.SimpleGrantedAuthority</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetails</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 继承UserDetails是为了向Spring Security提供核心用户信息</span>
+<span class="cm"> * 同时，UserDetails也是一个规范</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">Serializable</span><span class="p">,</span> <span class="n">UserDetails</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">password</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">Boolean</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">Boolean</span> <span class="n">locked</span><span class="p">;</span>
+
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roleList</span><span class="p">;</span>
+
+    <span class="cm">/***</span>
+<span class="cm">     * 判断帐户是否未过期</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonExpired</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//此时数据库没定义这个字段</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/***</span>
+<span class="cm">     * 判断帐户是否未锁定</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonLocked</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="n">locked</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 判断凭证是否未过期</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isCredentialsNonExpired</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 判断是否已启用</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEnabled</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取已授予用户的权限(角色)，不能返回nulL。</span>
+<span class="cm">     * SimpleGrantedAuthority：GrantedAuthority的简单实现。以字符串形式存储已授予的权限(角色)，要以‘ROLE_’开头。</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">GrantedAuthority</span><span class="o">&gt;</span> <span class="nf">getAuthorities</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">SimpleGrantedAuthority</span><span class="o">&gt;</span> <span class="n">authorities</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Role</span> <span class="n">role</span> <span class="p">:</span> <span class="n">roleList</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">authorities</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleGrantedAuthority</span><span class="p">(</span><span class="s">&quot;ROLE_&quot;</span> <span class="o">+</span> <span class="n">role</span><span class="p">.</span><span class="na">getName</span><span class="p">()));</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">authorities</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="nf">getRoleList</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">roleList</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRoleList</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roleList</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">roleList</span> <span class="o">=</span> <span class="n">roleList</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getId</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUsername</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">username</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">username</span> <span class="o">=</span> <span class="n">username</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPassword</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">password</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPassword</span><span class="p">(</span><span class="n">String</span> <span class="n">password</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setEnabled</span><span class="p">(</span><span class="n">Boolean</span> <span class="n">enabled</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">enabled</span> <span class="o">=</span> <span class="n">enabled</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLocked</span><span class="p">(</span><span class="n">Boolean</span> <span class="n">locked</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">locked</span> <span class="o">=</span> <span class="n">locked</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s">&quot;User{&quot;</span> <span class="o">+</span>
+                <span class="s">&quot;id=&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="s">&quot;, username=&#39;&quot;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, password=&#39;&quot;</span> <span class="o">+</span> <span class="n">password</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&quot;, enabled=&quot;</span> <span class="o">+</span> <span class="n">enabled</span> <span class="o">+</span>
+                <span class="s">&quot;, locked=&quot;</span> <span class="o">+</span> <span class="n">locked</span> <span class="o">+</span>
+                <span class="s">&quot;, roleList=&quot;</span> <span class="o">+</span> <span class="n">roleList</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.bean</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Data</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="p">;</span>
+
+<span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Role</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">nameZh</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.bean</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">lombok.Data</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Menu</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">pattern</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roles</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Mapper</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.mapper</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Role</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.annotations.Select</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="p">{</span>
+
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user where username =#{username} &quot;</span><span class="p">)</span>
+    <span class="n">User</span> <span class="nf">loadUserByUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">);</span>
+
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from role r where r.id in (select rid from user_role where uid = #{id}) &quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="nf">getRolesById</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.mapper</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Menu</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Role</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.annotations.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.mapping.FetchType</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MenuMapper</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 查询所有的menu</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select m.*,r.id as rid,r.name as rname, r.nameZh as rnameZh from menu m left join menu_role mr on m.id = mr.id left join role r on mr.rid = r.id &quot;</span><span class="p">)</span>
+    <span class="nd">@Results</span><span class="p">(</span><span class="n">id</span> <span class="o">=</span> <span class="s">&quot;menuResultMap&quot;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nd">@Result</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">property</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">id</span> <span class="o">=</span> <span class="kc">true</span><span class="p">),</span>
+            <span class="nd">@Result</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s">&quot;pattern&quot;</span><span class="p">,</span> <span class="n">property</span> <span class="o">=</span> <span class="s">&quot;pattern&quot;</span><span class="p">),</span>
+            <span class="nd">@Result</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s">&quot;rid&quot;</span><span class="p">,</span> <span class="n">property</span> <span class="o">=</span> <span class="s">&quot;roles&quot;</span><span class="p">,</span>
+                    <span class="n">many</span> <span class="o">=</span> <span class="nd">@Many</span><span class="p">(</span><span class="n">select</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.security_db_dynamic.mapper.MenuMapper.findRolesByMenuId&quot;</span><span class="p">,</span> <span class="n">fetchType</span> <span class="o">=</span> <span class="n">FetchType</span><span class="p">.</span><span class="na">EAGER</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Menu</span><span class="o">&gt;</span> <span class="nf">getAllMenus</span><span class="p">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 根据menuID查询roles</span>
+<span class="cm">     * @param id</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from role where id = #{id}&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="nf">findRolesByMenuId</span><span class="p">(</span><span class="n">Integer</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Service</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.service</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.User</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.mapper.UserMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetails</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UserDetailsService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.userdetails.UsernameNotFoundException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserService</span> <span class="kd">implements</span> <span class="n">UserDetailsService</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">UserDetails</span> <span class="nf">loadUserByUsername</span><span class="p">(</span><span class="n">String</span> <span class="n">username</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">UsernameNotFoundException</span> <span class="p">{</span>
+        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">loadUserByUsername</span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">UsernameNotFoundException</span><span class="p">(</span><span class="s">&quot;用户不存在&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">user</span><span class="p">.</span><span class="na">setRoleList</span><span class="p">(</span><span class="n">userMapper</span><span class="p">.</span><span class="na">getRolesById</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getId</span><span class="p">()));</span>
+        <span class="k">return</span> <span class="n">user</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.service</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Menu</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.mapper.MenuMapper</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuService</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">MenuMapper</span> <span class="n">menuMapper</span><span class="p">;</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Menu</span><span class="o">&gt;</span> <span class="nf">getAllMenus</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">menuMapper</span><span class="p">.</span><span class="na">getAllMenus</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>配置类</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Menu</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.bean.Role</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.service.MenuService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.ConfigAttribute</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.SecurityConfig</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.FilterInvocation</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.util.AntPathMatcher</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 根据传来的请求地址，分析出该请求所需要的权限(角色)</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFilter</span> <span class="kd">implements</span> <span class="n">FilterInvocationSecurityMetadataSource</span> <span class="p">{</span>
+
+    <span class="c1">//路径匹配器</span>
+    <span class="n">AntPathMatcher</span> <span class="n">pathMatcher</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AntPathMatcher</span><span class="p">();</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">MenuService</span> <span class="n">menuService</span><span class="p">;</span>
+
+    <span class="c1">//根据请求地址分析所需要的权限(角色)</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">ConfigAttribute</span><span class="o">&gt;</span> <span class="nf">getAttributes</span><span class="p">(</span><span class="n">Object</span> <span class="n">object</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IllegalArgumentException</span> <span class="p">{</span>
+        <span class="c1">//拿到请求的URl</span>
+        <span class="n">String</span> <span class="n">requestUrl</span> <span class="o">=</span> <span class="p">((</span><span class="n">FilterInvocation</span><span class="p">)</span> <span class="n">object</span><span class="p">).</span><span class="na">getRequestUrl</span><span class="p">();</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Menu</span><span class="o">&gt;</span> <span class="n">allMenus</span> <span class="o">=</span> <span class="n">menuService</span><span class="p">.</span><span class="na">getAllMenus</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Menu</span> <span class="n">menu</span> <span class="p">:</span> <span class="n">allMenus</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//如果请求的URL和定义的规则匹配上了</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pathMatcher</span><span class="p">.</span><span class="na">match</span><span class="p">(</span><span class="n">menu</span><span class="p">.</span><span class="na">getPattern</span><span class="p">(),</span> <span class="n">requestUrl</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">Role</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="n">menu</span><span class="p">.</span><span class="na">getRoles</span><span class="p">();</span>
+                <span class="n">String</span><span class="o">[]</span> <span class="n">rolesStr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">roles</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+                <span class="c1">//将请求的URL所需要的所有role转成字符串数组</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">roles</span><span class="p">.</span><span class="na">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">rolesStr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="s">&quot;ROLE_&quot;</span> <span class="o">+</span> <span class="n">roles</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="na">getName</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="n">SecurityConfig</span><span class="p">.</span><span class="na">createList</span><span class="p">(</span><span class="n">rolesStr</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">//如果路径匹配不上，返回ROLE_login(相当于自定义的一个标记)，则登录后可以访问（自定义的）</span>
+        <span class="k">return</span> <span class="n">SecurityConfig</span><span class="p">.</span><span class="na">createList</span><span class="p">(</span><span class="s">&quot;ROLE_LOGIN&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">ConfigAttribute</span><span class="o">&gt;</span> <span class="nf">getAllConfigAttributes</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span><span class="c1">//是否支持</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.AccessDecisionManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.AccessDeniedException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.access.ConfigAttribute</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.authentication.AnonymousAuthenticationToken</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.authentication.InsufficientAuthenticationException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.Authentication</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.core.GrantedAuthority</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 判断当前用户是否具备其访问路径的权限(角色)</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAccessDecisionManager</span> <span class="kd">implements</span> <span class="n">AccessDecisionManager</span> <span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * @param authentication   保存了当前登录用户信息(已经有哪些角色)</span>
+<span class="cm">     * @param object           (FilterInvocation对象，是Myfilter类的getAttributes方法中的object参数)用来获取当前请求对象</span>
+<span class="cm">     * @param configAttributes 是Myfilter类的getAttributes方法的返回值，请求需要哪些角色</span>
+<span class="cm">     * @throws AccessDeniedException</span>
+<span class="cm">     * @throws InsufficientAuthenticationException</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">decide</span><span class="p">(</span><span class="n">Authentication</span> <span class="n">authentication</span><span class="p">,</span> <span class="n">Object</span> <span class="n">object</span><span class="p">,</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">ConfigAttribute</span><span class="o">&gt;</span> <span class="n">configAttributes</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">AccessDeniedException</span><span class="p">,</span> <span class="n">InsufficientAuthenticationException</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">ConfigAttribute</span> <span class="n">attribute</span> <span class="p">:</span> <span class="n">configAttributes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s">&quot;ROLE_LOGIN&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">attribute</span><span class="p">.</span><span class="na">getAttribute</span><span class="p">()))</span> <span class="p">{</span>
+                <span class="c1">//AnonymousAuthenticationToken匿名身份验证令牌(未登录)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">authentication</span> <span class="k">instanceof</span> <span class="n">AnonymousAuthenticationToken</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="n">AccessDeniedException</span><span class="p">(</span><span class="s">&quot;非法请求！&quot;</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="c1">//已登录</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="c1">//如果具备所需的角色</span>
+            <span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">GrantedAuthority</span><span class="o">&gt;</span> <span class="n">authorities</span> <span class="o">=</span> <span class="n">authentication</span><span class="p">.</span><span class="na">getAuthorities</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">GrantedAuthority</span> <span class="n">authority</span> <span class="p">:</span> <span class="n">authorities</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">//如果已具备角色存在一个所需角色就通过(也可以配置其他验证方式，例如：所需多个角色时，必须与已具备角色一一匹配)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">authority</span><span class="p">.</span><span class="na">getAuthority</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">attribute</span><span class="p">.</span><span class="na">getAttribute</span><span class="p">()))</span> <span class="p">{</span>
+                    <span class="c1">//return就会验证通过</span>
+                    <span class="k">return</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="c1">//此时登录的root,访问的/admin/hello</span>
+            <span class="c1">//authorities:[ROLE_dba, ROLE_admin]</span>
+            <span class="c1">//System.out.println(&quot;authorities:&quot; + authorities.toString());</span>
+            <span class="c1">//object:FilterInvocation: URL: /admin/hello</span>
+            <span class="c1">//System.out.println(&quot;object:&quot; + object.toString());</span>
+            <span class="c1">//configAttributes:[ROLE_admin]</span>
+            <span class="c1">//System.out.println(&quot;configAttributes:&quot; + configAttributes.toString());</span>
+        <span class="p">}</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">AccessDeniedException</span><span class="p">(</span><span class="s">&quot;非法请求！&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span><span class="c1">//是否支持</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="p">(</span><span class="n">ConfigAttribute</span> <span class="n">attribute</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span><span class="c1">//是否支持</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security_db_dynamic.config</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.xuxx.security_db_dynamic.service.UserService</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.ObjectPostProcessor</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.access.intercept.FilterSecurityInterceptor</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">UserService</span> <span class="n">userService</span><span class="p">;</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">MyFilter</span> <span class="n">myFilter</span><span class="p">;</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">MyAccessDecisionManager</span> <span class="n">myAccessDecisionManager</span><span class="p">;</span>
+
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">BCryptPasswordEncoder</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">auth</span><span class="p">.</span><span class="na">userDetailsService</span><span class="p">(</span><span class="n">userService</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">withObjectPostProcessor</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectPostProcessor</span><span class="o">&lt;</span><span class="n">FilterSecurityInterceptor</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">O</span> <span class="kd">extends</span> <span class="n">FilterSecurityInterceptor</span><span class="o">&gt;</span> <span class="n">O</span> <span class="nf">postProcess</span><span class="p">(</span><span class="n">O</span> <span class="n">object</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">object</span><span class="p">.</span><span class="na">setAccessDecisionManager</span><span class="p">(</span><span class="n">myAccessDecisionManager</span><span class="p">);</span>
+                        <span class="n">object</span><span class="p">.</span><span class="na">setSecurityMetadataSource</span><span class="p">(</span><span class="n">myFilter</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="n">object</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">().</span><span class="na">disable</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>大功告成！！累死了...</p>
 
             </div>
         </article>

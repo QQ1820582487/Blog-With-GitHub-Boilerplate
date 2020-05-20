@@ -51,7 +51,7 @@ public class HelloController {
 
 ![](..\static\笔记图片\2020-05-18-Spring Boot整合Security_02.png)
 
-输入用户名（user）和密码（每次生成的密码都不一样），登录后便能访问接口了。
+输入用户名（user）和密码（每次生成的密码都不一样）（实际上就是UUID），登录后便能访问接口了。
 
 ### 2.手动配置Security用户和密码
 
@@ -884,8 +884,8 @@ SpringSecurity 在角色继承上有两种不同的写法，在 Spring Boot2.0.8
 首先准备好数据库
 
 ```mysql
+--取消外键约束:
 SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for role
 -- ----------------------------
@@ -896,14 +896,12 @@ CREATE TABLE `role` (
   `nameZh` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', 'dba', '数据库管理员');
 INSERT INTO `role` VALUES ('2', 'admin', '系统管理员');
 INSERT INTO `role` VALUES ('3', 'user', '用户');
-
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
@@ -916,14 +914,12 @@ CREATE TABLE `user` (
   `locked` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'root', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
 INSERT INTO `user` VALUES ('2', 'admin', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
 INSERT INTO `user` VALUES ('3', 'xuxx', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
-
 -- ----------------------------
 -- Table structure for user_role
 -- ----------------------------
@@ -934,7 +930,6 @@ CREATE TABLE `user_role` (
   `rid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
@@ -971,6 +966,28 @@ SET FOREIGN_KEY_CHECKS=1;
             <scope>runtime</scope>
             <version>5.1.27</version>
         </dependency>
+```
+
+配置文件application.yml
+
+```yaml
+spring:
+  datasource:
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  #mapper.xml路径
+  mapper-locations: classpath:mapper/*.xml
+  #别名包扫描
+  type-aliases-package: com.xuxx.security_demo.bean
+
+logging:
+  level:
+    #打印mapper包的SQL语句
+    com.xuxx.security_demo.mapper: debug
 ```
 
 bean
@@ -1323,3 +1340,604 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ## 3.动态权限配置
 
+目的是实现Spring Security从DB中加载URL的相关权限，且当DB中配置发生更改时，可以让运行中的项目无需重启，动态更改访问权限。
+
+数据库(在之前的基础上添加了两张表，menu和menu_role)
+
+```sql
+--取消外键约束:
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL,
+  `nameZh` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', 'dba', '数据库管理员');
+INSERT INTO `role` VALUES ('2', 'admin', '系统管理员');
+INSERT INTO `role` VALUES ('3', 'user', '用户');
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL,
+  `locked` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', 'root', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+INSERT INTO `user` VALUES ('2', 'admin', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+INSERT INTO `user` VALUES ('3', 'xuxx', '$2a$10$RMuFXGQ5AtH4wOvkUqyvuecpqUSeoxZYqilXzbz50dceRsga.WYiq', '1', '0');
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('1', '1', '1');
+INSERT INTO `user_role` VALUES ('2', '1', '2');
+INSERT INTO `user_role` VALUES ('3', '2', '2');
+INSERT INTO `user_role` VALUES ('4', '3', '3');
+SET FOREIGN_KEY_CHECKS=1;
+-- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pattern` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of menu
+-- ----------------------------
+INSERT INTO `menu`(`id`, `pattern`) VALUES (1, '/db/**');
+INSERT INTO `menu`(`id`, `pattern`) VALUES (2, '/admin/**');
+INSERT INTO `menu`(`id`, `pattern`) VALUES (3, '/user/**');
+-- ----------------------------
+-- Table structure for menu_role
+-- ----------------------------
+DROP TABLE IF EXISTS `menu_role`;
+CREATE TABLE `menu_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int(11) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of menu_role
+-- ----------------------------
+INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (1, 1, 1);
+INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (2, 2, 2);
+INSERT INTO `menu_role`(`id`, `mid`, `rid`) VALUES (3, 3, 3);
+```
+
+依赖
+
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>5.1.27</version>
+        </dependency>
+	    <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+```
+
+application.yml
+
+```yaml
+spring:
+  datasource:
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  #mapper.xml路径
+  #mapper-locations: classpath:mapper/*.xml
+  #别名包扫描
+  type-aliases-package: com.xuxx.security_db_dynamic.bean
+
+logging:
+  level:
+    #打印mapper包的SQL语句
+    com.xuxx.security_db_dynamic.mapper: debug
+```
+
+bean
+
+```java
+package com.xuxx.security_db_dynamic.bean;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * 继承UserDetails是为了向Spring Security提供核心用户信息
+ * 同时，UserDetails也是一个规范
+ */
+public class User implements Serializable, UserDetails {
+    private Integer id;
+    private String username;
+    private String password;
+    private Boolean enabled;
+    private Boolean locked;
+
+    private List<Role> roleList;
+
+    /***
+     * 判断帐户是否未过期
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        //此时数据库没定义这个字段
+        return true;
+    }
+
+    /***
+     * 判断帐户是否未锁定
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    /**
+     * 判断凭证是否未过期
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * 判断是否已启用
+     */
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * 获取已授予用户的权限(角色)，不能返回nulL。
+     * SimpleGrantedAuthority：GrantedAuthority的简单实现。以字符串形式存储已授予的权限(角色)，要以‘ROLE_’开头。
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roleList) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        }
+        return authorities;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", locked=" + locked +
+                ", roleList=" + roleList +
+                '}';
+    }
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.bean;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class Role implements Serializable {
+    private Integer id;
+    private String name;
+    private String nameZh;
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.bean;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class Menu {
+    private Integer id;
+    private String pattern;
+    private List<Role> roles;
+}
+```
+
+Mapper
+
+```java
+package com.xuxx.security_db_dynamic.mapper;
+
+import com.xuxx.security_db_dynamic.bean.Role;
+import com.xuxx.security_db_dynamic.bean.User;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
+@Mapper
+public interface UserMapper {
+
+    @Select("select * from user where username =#{username} ")
+    User loadUserByUsername(String username);
+
+    @Select("select * from role r where r.id in (select rid from user_role where uid = #{id}) ")
+    List<Role> getRolesById(Integer id);
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.mapper;
+
+import com.xuxx.security_db_dynamic.bean.Menu;
+import com.xuxx.security_db_dynamic.bean.Role;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
+
+import java.util.List;
+
+@Mapper
+public interface MenuMapper {
+
+    /**
+     * 查询所有的menu
+     * @return
+     */
+    @Select("select m.*,r.id as rid,r.name as rname, r.nameZh as rnameZh from menu m left join menu_role mr on m.id = mr.id left join role r on mr.rid = r.id ")
+    @Results(id = "menuResultMap", value = {
+            @Result(column = "id", property = "id", id = true),
+            @Result(column = "pattern", property = "pattern"),
+            @Result(column = "rid", property = "roles",
+                    many = @Many(select = "com.xuxx.security_db_dynamic.mapper.MenuMapper.findRolesByMenuId", fetchType = FetchType.EAGER))
+    })
+    List<Menu> getAllMenus();
+
+    /**
+     * 根据menuID查询roles
+     * @param id
+     * @return
+     */
+    @Select("select * from role where id = #{id}")
+    List<Role> findRolesByMenuId(Integer id);
+}
+```
+
+Service
+
+```java
+package com.xuxx.security_db_dynamic.service;
+
+import com.xuxx.security_db_dynamic.bean.User;
+import com.xuxx.security_db_dynamic.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService implements UserDetailsService {
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userMapper.loadUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        user.setRoleList(userMapper.getRolesById(user.getId()));
+        return user;
+    }
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.service;
+
+import com.xuxx.security_db_dynamic.bean.Menu;
+import com.xuxx.security_db_dynamic.mapper.MenuMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class MenuService {
+
+    @Autowired
+    MenuMapper menuMapper;
+
+    public List<Menu> getAllMenus() {
+        return menuMapper.getAllMenus();
+    }
+}
+```
+
+配置类
+
+```java
+package com.xuxx.security_db_dynamic.config;
+
+import com.xuxx.security_db_dynamic.bean.Menu;
+import com.xuxx.security_db_dynamic.bean.Role;
+import com.xuxx.security_db_dynamic.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * 根据传来的请求地址，分析出该请求所需要的权限(角色)
+ */
+@Component
+public class MyFilter implements FilterInvocationSecurityMetadataSource {
+
+    //路径匹配器
+    AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    @Autowired
+    MenuService menuService;
+
+    //根据请求地址分析所需要的权限(角色)
+    @Override
+    public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        //拿到请求的URl
+        String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        List<Menu> allMenus = menuService.getAllMenus();
+        for (Menu menu : allMenus) {
+            //如果请求的URL和定义的规则匹配上了
+            if (pathMatcher.match(menu.getPattern(), requestUrl)) {
+                List<Role> roles = menu.getRoles();
+                String[] rolesStr = new String[roles.size()];
+                //将请求的URL所需要的所有role转成字符串数组
+                for (int i = 0; i < roles.size(); i++) {
+                    rolesStr[i] = "ROLE_" + roles.get(i).getName();
+                }
+                return SecurityConfig.createList(rolesStr);
+            }
+        }
+        //如果路径匹配不上，返回ROLE_login(相当于自定义的一个标记)，则登录后可以访问（自定义的）
+        return SecurityConfig.createList("ROLE_LOGIN");
+    }
+
+    @Override
+    public Collection<ConfigAttribute> getAllConfigAttributes() {
+        return null;
+    }
+
+    @Override//是否支持
+    public boolean supports(Class<?> clazz) {
+        return true;
+    }
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.config;
+
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+
+/**
+ * 判断当前用户是否具备其访问路径的权限(角色)
+ */
+@Component
+public class MyAccessDecisionManager implements AccessDecisionManager {
+    /**
+     * @param authentication   保存了当前登录用户信息(已经有哪些角色)
+     * @param object           (FilterInvocation对象，是Myfilter类的getAttributes方法中的object参数)用来获取当前请求对象
+     * @param configAttributes 是Myfilter类的getAttributes方法的返回值，请求需要哪些角色
+     * @throws AccessDeniedException
+     * @throws InsufficientAuthenticationException
+     */
+    @Override
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+        for (ConfigAttribute attribute : configAttributes) {
+            if ("ROLE_LOGIN".equals(attribute.getAttribute())) {
+                //AnonymousAuthenticationToken匿名身份验证令牌(未登录)
+                if (authentication instanceof AnonymousAuthenticationToken) {
+                    throw new AccessDeniedException("非法请求！");
+                } else {
+                    //已登录
+                    return;
+                }
+            }
+            //如果具备所需的角色
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            for (GrantedAuthority authority : authorities) {
+                //如果已具备角色存在一个所需角色就通过(也可以配置其他验证方式，例如：所需多个角色时，必须与已具备角色一一匹配)
+                if (authority.getAuthority().equals(attribute.getAttribute())) {
+                    //return就会验证通过
+                    return;
+                }
+            }
+            //此时登录的root,访问的/admin/hello
+            //authorities:[ROLE_dba, ROLE_admin]
+            //System.out.println("authorities:" + authorities.toString());
+            //object:FilterInvocation: URL: /admin/hello
+            //System.out.println("object:" + object.toString());
+            //configAttributes:[ROLE_admin]
+            //System.out.println("configAttributes:" + configAttributes.toString());
+        }
+        throw new AccessDeniedException("非法请求！");
+    }
+
+    @Override//是否支持
+    public boolean supports(ConfigAttribute attribute) {
+        return true;
+    }
+
+    @Override//是否支持
+    public boolean supports(Class<?> clazz) {
+        return true;
+    }
+}
+```
+
+```java
+package com.xuxx.security_db_dynamic.config;
+
+import com.xuxx.security_db_dynamic.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    MyFilter myFilter;
+    @Autowired
+    MyAccessDecisionManager myAccessDecisionManager;
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                        object.setAccessDecisionManager(myAccessDecisionManager);
+                        object.setSecurityMetadataSource(myFilter);
+                        return object;
+                    }
+                })
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .csrf().disable();
+    }
+}
+```
+
+大功告成！！累死了...

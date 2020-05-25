@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring Boot构建REST服务
+title: Spring Boot整合OAuth2
 slug: bj22
 date: 2020-05-22 23:50
 status: publish

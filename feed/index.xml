@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 25 May 2020 16:06:22 +0806</lastBuildDate><pubDate>Mon, 25 May 2020 16:06:22 +0806</pubDate><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;ol&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 25 May 2020 16:11:14 +0806</lastBuildDate><pubDate>Mon, 25 May 2020 16:11:14 +0806</pubDate><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt; 一次会话:浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止&lt;/code&gt;&lt;/pre&gt;
@@ -101,29 +101,32 @@ setMaxAge(int seconds )&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;使用HttpSession对象:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Object getAttribute( String name)
-void setAttribute(string name, object value)
-void removeAttribute(String name)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;Object getAttribute( String name);
+void setAttribute(string name, object value);
+void removeAttribute(String name);&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h6&gt;3. 原理&lt;/h6&gt;
 &lt;p&gt;Session的实现是依赖于cookie的。&lt;/p&gt;
 &lt;h6&gt;4. 细节&lt;/h6&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;当客户端关闭后,服务器不关闭，两次获取session是否为同- 个?
+&lt;li&gt;&lt;p&gt;当客户端关闭后,服务器不关闭，两次获取session是否为同一个?
 默认情况下。不是。
-如果需要相同，则可以创建Cookie,键为JSESSIONID，设置最大存活时间，让cookie持久化保存。
-Cookie C = new Cookie("ISESSIONID" , session. getId());
+如果需要相同，则可以创建Cookie,键为JSESSIONID，设置最大存活时间，让cookie持久化保存。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Cookie C = new Cookie("ISESSIONID" , session. getId());
 C. setMaxAge(60* 60) ;
-response. addcookie(c);&lt;/p&gt;
+response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;客户端不关闭，服务器关闭后，两次获取的session是同一个吗?&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;         不是同一个，但是要确保数据不丢失
+&lt;pre&gt;&lt;code&gt;         不是同一个，但是要确保数据不丢失。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;session的钝化(序列化):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt; 在服务器正常关闭之前，将session对象序列化到硬盘上
+&lt;pre&gt;&lt;code&gt; 在服务器正常关闭之前，将session对象序列化到硬盘上。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;session的活化(反序列化):&lt;/p&gt;
 
@@ -4135,7 +4138,7 @@ public class MultiHttpSecurity {
 
 &lt;pre&gt;&lt;code&gt;
 &lt;/code&gt;&lt;/pre&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj21/</guid><pubDate>Mon, 18 May 2020 15:10:00 +0806</pubDate></item><item><title>Spring Boot构建REST服务</title><link>/Xuxx_Blogs/archives/bj22/</link><description>&lt;h2&gt;1.OAuth2基本介绍&lt;/h2&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj21/</guid><pubDate>Mon, 18 May 2020 15:10:00 +0806</pubDate></item><item><title>Spring Boot整合OAuth2</title><link>/Xuxx_Blogs/archives/bj22/</link><description>&lt;h2&gt;1.OAuth2基本介绍&lt;/h2&gt;
 &lt;h3&gt;1.OAuth2是什么&lt;/h3&gt;
 &lt;p&gt;OAuth 是一个开放标准，该标准允许用户让第三方应用访问该用户在某一网站上存储的私密资源（如头像、照片、视频等），而在这个过程中无需将用户名和密码提供给第三方应用。实现这一功能是通过提供一个令牌（token），而不是用户名和密码来访问他们存放在特定服务提供者的数据。采用令牌（token）的方式可以让用户灵活的对第三方应用授权或者收回权限。&lt;/p&gt;
 &lt;p&gt;OAuth2 是 OAuth 协议的下一版本，但不向下兼容 OAuth 1.0。传统的 Web 开发登录认证一般都是基于 session 的，但是在前后端分离的架构中继续使用 session 就会有许多不便，因为移动端（Android、iOS、微信小程序等）要么不支持 cookie（微信小程序），要么使用非常不便，对于这些问题，使用 OAuth2 认证都能解决。&lt;/p&gt;

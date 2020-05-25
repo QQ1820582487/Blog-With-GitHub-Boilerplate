@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/df216b61f6b9d2167edebaa1133e4465.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/44668df897ad27b09106941fdf27cdee.json"
         }
     </script>
     
@@ -123,11 +123,11 @@
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
     <span class="cm">/*</span>
-<span class="cm">    Spring5之后密码必须要加密，所以要配置PasswordEncoder</span>
+<span class="cm">    Spring Security 5之后密码必须要加密，所以要配置PasswordEncoder</span>
 <span class="cm">    */</span>
     <span class="nd">@Bean</span>
     <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder以过期</span>
+        <span class="c1">//密码编码器，密码不加密，NoOpPasswordEncoder已过期</span>
         <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -137,12 +137,32 @@
         <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
                 <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
                 <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+<p>由于 Spring Security 支持多种数据源，例如内存、数据库、LDAP 等，这些不同来源的数据被共同封装成了一个 UserDetailService 接口，任何实现了该接口的对象都可以作为认证数据源。</p>
+<p>因此还可以通过重写 WebSecurityConfigurerAdapter 中的 userDetailsService 方法来提供一个 UserDetailService 实例进而配置多个用户：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+    <span class="nd">@Bean</span>
+    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">//与上面一样，也是基于内存的定义用户的方法</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">protected</span> <span class="n">UserDetailsService</span> <span class="nf">userDetailsService</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">InMemoryUserDetailsManager</span> <span class="n">manager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InMemoryUserDetailsManager</span><span class="p">();</span>
+        <span class="n">manager</span><span class="p">.</span><span class="na">createUser</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">withUsername</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
+        <span class="n">manager</span><span class="p">.</span><span class="na">createUser</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="na">withUsername</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">).</span><span class="na">build</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">manager</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>两种基于内存定义用户的方法，任选一个即可。</p>
 <h2>2.Spring Security进阶</h2>
-<p>以上的拦截规则是除了Security的方法，会拦截其他所有的请求，为了实现多种权限配置方案，所以需要了解<code>HttpSecurity</code>的配置。</p>
+<p><strong>看看<a href="https://mp.weixin.qq.com/s/z6GeR5O-vBzY3SHehmccVA"> Spring Security 登录流程</a></strong></p>
 <h3>1.HttpSecurity的配置</h3>
 <p>还是在之前的配置类中进行配置</p>
 <div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security.config</span><span class="p">;</span>
@@ -223,13 +243,12 @@
 <p><figure class="pswp-item" style="flex: 171.39423076923077" data-width="1426" data-height="416"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ceed167930d7eaa6af59a87583b65528.png" alt="" /></figure></p>
 <p>虽然报了<code>404</code>,当时其实已经登录成功了，404只是因为Security登录成功后往<code>http://localhost:8080/</code>跳转，但是这个路径下没有东西，所以404了，不信的话再访问一下配置的接口，成功了。</p>
 <p><figure class="pswp-item" style="flex: 168.59756097560975" data-width="1106" data-height="328"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/37bb3f52d1ff6928719118c69c88d7fa.png" alt="" /></figure></p>
-<h3>2.登录表单的详细配置</h3>
+<h3>2.登录的详细配置</h3>
 <p>属于HttpSecurity中的配置</p>
 <div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.security.config</span><span class="p">;</span>
 
 <span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.ObjectMapper</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.authentication.*</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.config.annotation.web.builders.HttpSecurity</span><span class="p">;</span>
@@ -238,6 +257,7 @@
 <span class="kn">import</span> <span class="nn">org.springframework.security.core.AuthenticationException</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.NoOpPasswordEncoder</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.crypto.password.PasswordEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.security.web.AuthenticationEntryPoint</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationFailureHandler</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.AuthenticationSuccessHandler</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.security.web.authentication.logout.LogoutSuccessHandler</span><span class="p">;</span>
@@ -254,7 +274,7 @@
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
 
     <span class="cm">/*</span>
-<span class="cm">    Spring5之后密码必须要加密，所以必须配置PasswordEncoder</span>
+<span class="cm">    Spring 5之后密码必须要加密，所以必须配置PasswordEncoder</span>
 <span class="cm">    */</span>
     <span class="nd">@Bean</span>
     <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
@@ -268,7 +288,7 @@
         <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
                 <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
                 <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">).</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="nd">@Override</span>
@@ -276,19 +296,20 @@
         <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span><span class="c1">//开启授权请求配置</span>
                 <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">)</span><span class="c1">//要拦截的请求路径</span>
                 <span class="p">.</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(一个)</span>
-                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/users/**&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">hasAnyRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;users&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(其中一个)</span>
-<span class="c1">//                .antMatchers().access(&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;)//和上面效果一样</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/user/**&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">hasAnyRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">)</span><span class="c1">//所需要的角色(其中一个)</span>
+<span class="c1">//                .antMatchers(&quot;/user/**&quot;).access(&quot;hasAnyRole(&#39;admin&#39;,&#39;user&#39;)&quot;)//和上面两行效果一样</span>
                 <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span><span class="c1">//剩下的其他请求</span>
                 <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span><span class="c1">//认证后访问</span>
                 <span class="p">.</span><span class="na">and</span><span class="p">()</span>
                 <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span><span class="c1">//表单登录</span>
                 <span class="p">.</span><span class="na">loginProcessingUrl</span><span class="p">(</span><span class="s">&quot;/doLogin&quot;</span><span class="p">)</span><span class="c1">//进行登录处理的Url</span>
-                <span class="p">.</span><span class="na">loginPage</span><span class="p">(</span><span class="s">&quot;/login&quot;</span><span class="p">)</span><span class="c1">//登录页面的Url，可以配置自己的登录页面</span>
-                <span class="p">.</span><span class="na">usernameParameter</span><span class="p">(</span><span class="s">&quot;uname&quot;</span><span class="p">)</span><span class="c1">//用户名的key，默认username</span>
-                <span class="p">.</span><span class="na">passwordParameter</span><span class="p">(</span><span class="s">&quot;pass&quot;</span><span class="p">)</span><span class="c1">//密码的key，默认password</span>
+<span class="c1">//                .loginPage(&quot;/login&quot;)//登录页面的Url，可以配置自己的登录页面</span>
+<span class="c1">//                .usernameParameter(&quot;uname&quot;)//用户名的key，默认username</span>
+<span class="c1">//                .passwordParameter(&quot;pass&quot;)//密码的key，默认password</span>
 <span class="c1">//                .successForwardUrl(&quot;/index&quot;)//登录成功自动跳转，一般用于前后端不分</span>
-                <span class="p">.</span><span class="na">successHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationSuccessHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录成功的处理，一般用于前后端分离</span>
+                <span class="c1">//登录成功的处理，一般用于前后端分离</span>
+                <span class="p">.</span><span class="na">successHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationSuccessHandler</span><span class="p">()</span> <span class="p">{</span>
                     <span class="c1">//authentication中保存了登录成功的用户信息</span>
                     <span class="nd">@Override</span>
                     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationSuccess</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span>
@@ -304,7 +325,8 @@
                     <span class="p">}</span>
                 <span class="p">})</span>
 <span class="c1">//                .failureForwardUrl(&quot;/login_error&quot;)//登录失败自动跳转</span>
-                <span class="p">.</span><span class="na">failureHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationFailureHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//登录失败的处理</span>
+                <span class="c1">//登录失败的处理</span>
+                <span class="p">.</span><span class="na">failureHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationFailureHandler</span><span class="p">()</span> <span class="p">{</span>
                     <span class="nd">@Override</span>
                     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationFailure</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">AuthenticationException</span> <span class="n">exception</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
                         <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
@@ -314,7 +336,7 @@
                         <span class="c1">//根据异常类型返回错误信息，相关异常可以查看AuthenticationException的子类</span>
                         <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">LockedException</span><span class="p">)</span> <span class="p">{</span>
                             <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;账户被锁定，登录失败！&quot;</span><span class="p">);</span>
-                        <span class="c1">//Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库</span>
+                            <span class="c1">//Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库</span>
                         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">BadCredentialsException</span><span class="p">)</span> <span class="p">{</span>
                             <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;用户名或密码输入错误，登录失败！&quot;</span><span class="p">);</span>
                         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">exception</span> <span class="k">instanceof</span> <span class="n">DisabledException</span><span class="p">)</span> <span class="p">{</span>
@@ -333,8 +355,37 @@
                 <span class="p">})</span>
                 <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span><span class="c1">//允许登录相关的所有请求</span>
                 <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">logout</span><span class="p">()</span><span class="c1">//注销登录</span>
+                <span class="p">.</span><span class="na">logoutUrl</span><span class="p">(</span><span class="s">&quot;/logout&quot;</span><span class="p">)</span>
+                <span class="c1">//.logoutSuccessUrl(&quot;/login&quot;)//注销成功后自动跳转</span>
+                <span class="p">.</span><span class="na">logoutSuccessHandler</span><span class="p">(</span><span class="k">new</span> <span class="n">LogoutSuccessHandler</span><span class="p">()</span> <span class="p">{</span><span class="c1">//注销成功的回调</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onLogoutSuccess</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Authentication</span> <span class="n">authentication</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+                        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;msg&quot;</span><span class="p">,</span> <span class="s">&quot;注销成功&quot;</span><span class="p">);</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
                 <span class="p">.</span><span class="na">csrf</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">disable</span><span class="p">();</span><span class="c1">//为了方便测试，先关闭csrf(跨域)保护</span>
+                <span class="p">.</span><span class="na">disable</span><span class="p">()</span><span class="c1">//为了方便测试，先关闭csrf(跨域)保护</span>
+                <span class="c1">//未认证处理方案，这里是给前端一个尚未登录的提示，前端根据提示信息，再决定页面跳转。</span>
+                <span class="p">.</span><span class="na">exceptionHandling</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">authenticationEntryPoint</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthenticationEntryPoint</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">commence</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">AuthenticationException</span> <span class="n">authException</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+                        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;application/json;charset=utf-8&quot;</span><span class="p">);</span>
+                        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;尚未登录，请先登录&quot;</span><span class="p">);</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+                        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -824,7 +875,11 @@ public class MultiHttpSecurity {
 <p>这个表示 <code>/db/**</code> 格式的路径需要具备 dba 角色才能访问， <code>/admin/**</code> 格式的路径则需要具备 admin 角色才能访问， <code>/user/**</code> 格式的路径，则需要具备 user 角色才能访问，此时提供相关接口，会发现dba 除了访问 <code>/db/**</code> ，也能访问 <code>/admin/**</code> 和 <code>/user/**</code> ，admin 角色除了访问 <code>/admin/**</code> ，也能访问 <code>/user/**</code> ，user 角色则只能访问 <code>/user/**</code> 。</p>
 <h3>8.基于数据库的认证</h3>
 <p>之前的用户和密码都是在代码或者配置文件中写死的，一般不满足开发的需要。</p>
-<p>没啥说的，上代码！！</p>
+<p>Spring Security 支持多种不同的数据源，这些不同的数据源最终都将被封装成 UserDetailsService 的实例，除了使用系统默认提供的 UserDetailsService 实例，我们也可以自己封装。例如<code>InMemoryUserDetailsManager</code>、<code>JdbcUserDetailsManager</code>。</p>
+<p>查看详情：</p>
+<p><a href="https://mp.weixin.qq.com/s/EurEXmU0M9AKuUs4Jh_V5">Spring Security 基于数据库的认证</a></p>
+<p><a href="https://mp.weixin.qq.com/s/VWJvINbi1DB3fF-Mcx7mGg">Spring Security+Spring Data Jpa，基于数据库的认证</a></p>
+<p>这里是使用<code>Mybatis</code>操作数据库，没啥说的，上代码！！</p>
 <p>首先准备好数据库</p>
 <div class="highlight"><pre><span></span><span class="o">--</span><span class="err">取消外键约束</span><span class="p">:</span>
 <span class="kt">SET</span> <span class="n">FOREIGN_KEY_CHECKS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
@@ -1255,6 +1310,173 @@ public class MultiHttpSecurity {
 <span class="p">}</span>
 </pre></div>
 <p>大功告成。</p>
+<h3>9.添加自定义Filter-例：添加登录验证码</h3>
+<p><a href="https://mp.weixin.qq.com/s/aaop_dS9UIOgTtQd0hl_tw">https://mp.weixin.qq.com/s/aaop_dS9UIOgTtQd0hl_tw</a></p>
+<h4>1.准备验证码</h4>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * 生成验证码的工具类</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VerifyCode</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span><span class="c1">// 生成验证码图片的宽度</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span><span class="c1">// 生成验证码图片的高度</span>
+    <span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">fontNames</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;宋体&quot;</span><span class="p">,</span> <span class="s">&quot;楷体&quot;</span><span class="p">,</span> <span class="s">&quot;隶书&quot;</span><span class="p">,</span> <span class="s">&quot;微软雅黑&quot;</span> <span class="p">};</span>
+    <span class="kd">private</span> <span class="n">Color</span> <span class="n">bgColor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span><span class="c1">// 定义验证码图片的背景颜色为白色</span>
+    <span class="kd">private</span> <span class="n">Random</span> <span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">codes</span> <span class="o">=</span> <span class="s">&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">text</span><span class="p">;</span><span class="c1">// 记录随机字符串</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取一个随意颜色</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">Color</span> <span class="nf">randomColor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">red</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">150</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">green</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">150</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">blue</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">150</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Color</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取一个随机字体</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">Font</span> <span class="nf">randomFont</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">fontNames</span><span class="o">[</span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">fontNames</span><span class="p">.</span><span class="na">length</span><span class="p">)</span><span class="o">]</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">style</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">24</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Font</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 获取一个随机字符</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">char</span> <span class="nf">randomChar</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">codes</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">codes</span><span class="p">.</span><span class="na">length</span><span class="p">()));</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 创建一个空白的BufferedImage对象</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">BufferedImage</span> <span class="nf">createImage</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">BufferedImage</span> <span class="n">image</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedImage</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">BufferedImage</span><span class="p">.</span><span class="na">TYPE_INT_RGB</span><span class="p">);</span>
+        <span class="n">Graphics2D</span> <span class="n">g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Graphics2D</span><span class="p">)</span> <span class="n">image</span><span class="p">.</span><span class="na">getGraphics</span><span class="p">();</span>
+        <span class="n">g2</span><span class="p">.</span><span class="na">setColor</span><span class="p">(</span><span class="n">bgColor</span><span class="p">);</span><span class="c1">// 设置验证码图片的背景颜色</span>
+        <span class="n">g2</span><span class="p">.</span><span class="na">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">image</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">BufferedImage</span> <span class="nf">getImage</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">BufferedImage</span> <span class="n">image</span> <span class="o">=</span> <span class="n">createImage</span><span class="p">();</span>
+        <span class="n">Graphics2D</span> <span class="n">g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Graphics2D</span><span class="p">)</span> <span class="n">image</span><span class="p">.</span><span class="na">getGraphics</span><span class="p">();</span>
+        <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">randomChar</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+            <span class="n">sb</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">setColor</span><span class="p">(</span><span class="n">randomColor</span><span class="p">());</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">setFont</span><span class="p">(</span><span class="n">randomFont</span><span class="p">());</span>
+            <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="mi">4</span><span class="p">;</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">drawString</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">15</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+        <span class="n">drawLine</span><span class="p">(</span><span class="n">image</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">image</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * 绘制干扰线</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param image</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawLine</span><span class="p">(</span><span class="n">BufferedImage</span> <span class="n">image</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Graphics2D</span> <span class="n">g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Graphics2D</span><span class="p">)</span> <span class="n">image</span><span class="p">.</span><span class="na">getGraphics</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">width</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">height</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">width</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="n">height</span><span class="p">);</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">setColor</span><span class="p">(</span><span class="n">randomColor</span><span class="p">());</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">setStroke</span><span class="p">(</span><span class="k">new</span> <span class="n">BasicStroke</span><span class="p">(</span><span class="mf">1.5f</span><span class="p">));</span>
+            <span class="n">g2</span><span class="p">.</span><span class="na">drawLine</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getText</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">output</span><span class="p">(</span><span class="n">BufferedImage</span> <span class="n">image</span><span class="p">,</span> <span class="n">OutputStream</span> <span class="n">out</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="n">ImageIO</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s">&quot;JPEG&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>就是画一个简单的验证码，通过流将验证码写到前端页面，提供验证码的 Controller 如下：</p>
+<div class="highlight"><pre><span></span><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VerifyCodeController</span> <span class="p">{</span>
+    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/vercode&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">code</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+        <span class="n">VerifyCode</span> <span class="n">vc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VerifyCode</span><span class="p">();</span>
+        <span class="n">BufferedImage</span> <span class="n">image</span> <span class="o">=</span> <span class="n">vc</span><span class="p">.</span><span class="na">getImage</span><span class="p">();</span>
+        <span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">vc</span><span class="p">.</span><span class="na">getText</span><span class="p">();</span>
+        <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="p">.</span><span class="na">getSession</span><span class="p">();</span>
+        <span class="n">session</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;index_code&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+        <span class="n">VerifyCode</span><span class="p">.</span><span class="na">output</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>2.自定义Filter</h4>
+<div class="highlight"><pre><span></span><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VerifyCodeFilter</span> <span class="kd">extends</span> <span class="n">GenericFilterBean</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">defaultFilterProcessUrl</span> <span class="o">=</span> <span class="s">&quot;/doLogin&quot;</span><span class="p">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="p">(</span><span class="n">ServletRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">ServletResponse</span> <span class="n">res</span><span class="p">,</span> <span class="n">FilterChain</span> <span class="n">chain</span><span class="p">)</span>
+            <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">ServletException</span> <span class="p">{</span>
+        <span class="n">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="p">(</span><span class="n">HttpServletRequest</span><span class="p">)</span> <span class="n">req</span><span class="p">;</span>
+        <span class="n">HttpServletResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">)</span> <span class="n">res</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s">&quot;POST&quot;</span><span class="p">.</span><span class="na">equalsIgnoreCase</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">&amp;&amp;</span> <span class="n">defaultFilterProcessUrl</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getServletPath</span><span class="p">()))</span> <span class="p">{</span>
+            <span class="c1">// 验证码验证</span>
+            <span class="n">String</span> <span class="n">requestCaptcha</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;code&quot;</span><span class="p">);</span>
+            <span class="n">String</span> <span class="n">genCaptcha</span> <span class="o">=</span> <span class="p">(</span><span class="n">String</span><span class="p">)</span> <span class="n">request</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getAttribute</span><span class="p">(</span><span class="s">&quot;index_code&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">(</span><span class="n">requestCaptcha</span><span class="p">))</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">AuthenticationServiceException</span><span class="p">(</span><span class="s">&quot;验证码不能为空!&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">genCaptcha</span><span class="p">.</span><span class="na">toLowerCase</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">requestCaptcha</span><span class="p">.</span><span class="na">toLowerCase</span><span class="p">()))</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">AuthenticationServiceException</span><span class="p">(</span><span class="s">&quot;验证码错误!&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">chain</span><span class="p">.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>自定义过滤器继承自 GenericFilterBean，并实现其中的 doFilter 方法，在 doFilter 方法中，当请求方法是 POST，并且请求地址是 <code>/doLogin</code> 时，获取参数中的 code 字段值，该字段保存了用户从前端页面传来的验证码，然后获取 session 中保存的验证码，如果用户没有传来验证码，则抛出验证码不能为空异常，如果用户传入了验证码，则判断验证码是否正确，如果不正确则抛出异常，否则执行 <code>chain.doFilter(request, response);</code> 使请求继续向下走。</p>
+<h4>3.配置Filter</h4>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">VerifyCodeFilter</span> <span class="n">verifyCodeFilter</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">addFilterBefore</span><span class="p">(</span><span class="n">verifyCodeFilter</span><span class="p">,</span> <span class="n">UsernamePasswordAuthenticationFilter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">).</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+                <span class="p">...</span>
+                <span class="p">...</span>
+                <span class="p">.</span><span class="na">permitAll</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">csrf</span><span class="p">().</span><span class="na">disable</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 <h2>3.动态权限配置</h2>
 <p>目的是实现Spring Security从DB中加载URL的相关权限，且当DB中配置发生更改时，可以让运行中的项目无需重启，动态更改访问权限。</p>
 <h3>1.数据库</h3>
@@ -1855,6 +2077,11 @@ public class MultiHttpSecurity {
 </pre></div>
 <p>此时便可以进行动态的权限控制了，修改数据库便可以改变各用户权限等。</p>
 <p>大功告成！！累死了...</p>
+<h2>4.Spring Security结合OAuth2</h2>
+<h3>1.依赖</h3>
+
+<pre><code>
+</code></pre>
 
             </div>
         </article>
@@ -1879,8 +2106,8 @@ public class MultiHttpSecurity {
 <section id="ga-content_pager">
 
     <div class="next">
-        <h3>没有了</h3>
-        <p class="yue">这是最新的文章</p>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj22/">Spring Boot构建REST服务</a>
+        <p class="yue">笔记</p>
     </div>
 
 

@@ -72,11 +72,11 @@ spring.security.user.roles=admin
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/*
-    Spring5之后密码必须要加密，所以要配置PasswordEncoder
+    Spring Security 5之后密码必须要加密，所以要配置PasswordEncoder
     */
     @Bean
     PasswordEncoder passwordEncoder() {
-        //密码编码器，密码不加密，NoOpPasswordEncoder以过期
+        //密码编码器，密码不加密，NoOpPasswordEncoder已过期
         return NoOpPasswordEncoder.getInstance();
     }
 
@@ -86,14 +86,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("xuxx").password("123").roles("admin")
                 .and()
-                .withUser("test").password("123").roles("users");
+                .withUser("test").password("123").roles("user");
     }
 }
 ```
 
+由于 Spring Security 支持多种数据源，例如内存、数据库、LDAP 等，这些不同来源的数据被共同封装成了一个 UserDetailService 接口，任何实现了该接口的对象都可以作为认证数据源。
+
+因此还可以通过重写 WebSecurityConfigurerAdapter 中的 userDetailsService 方法来提供一个 UserDetailService 实例进而配置多个用户：
+
+```java
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    //与上面一样，也是基于内存的定义用户的方法
+    @Bean
+    protected UserDetailsService userDetailsService() {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("xuxx").password("123").roles("admin").build());
+        manager.createUser(User.withUsername("test").password("123").roles("user").build());
+        return manager;
+    }
+}
+```
+
+两种基于内存定义用户的方法，任选一个即可。
+
 ## 2.Spring Security进阶
 
-以上的拦截规则是除了Security的方法，会拦截其他所有的请求，为了实现多种权限配置方案，所以需要了解`HttpSecurity`的配置。
+**看看[ Spring Security 登录流程](https://mp.weixin.qq.com/s/z6GeR5O-vBzY3SHehmccVA)**
 
 ### 1.HttpSecurity的配置
 
@@ -190,7 +215,7 @@ public class HelloController {
 
 ![](..\static\笔记图片\2020-05-18-Spring Boot整合Security_05.png)
 
-### 2.登录表单的详细配置
+### 2.登录的详细配置
 
 属于HttpSecurity中的配置
 
@@ -199,7 +224,6 @@ package com.xuxx.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -208,6 +232,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -224,7 +249,7 @@ import java.util.Map;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /*
-    Spring5之后密码必须要加密，所以必须配置PasswordEncoder
+    Spring 5之后密码必须要加密，所以必须配置PasswordEncoder
     */
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -238,7 +263,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("xuxx").password("123").roles("admin")
                 .and()
-                .withUser("test").password("123").roles("users");
+                .withUser("test").password("123").roles("user");
     }
 
     @Override
@@ -246,19 +271,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()//开启授权请求配置
                 .antMatchers("/admin/**")//要拦截的请求路径
                 .hasRole("admin")//所需要的角色(一个)
-                .antMatchers("/users/**")
-                .hasAnyRole("admin", "users")//所需要的角色(其中一个)
-//                .antMatchers().access("hasAnyRole('admin','user')")//和上面效果一样
+                .antMatchers("/user/**")
+                .hasAnyRole("admin", "user")//所需要的角色(其中一个)
+//                .antMatchers("/user/**").access("hasAnyRole('admin','user')")//和上面两行效果一样
                 .anyRequest()//剩下的其他请求
                 .authenticated()//认证后访问
                 .and()
                 .formLogin()//表单登录
                 .loginProcessingUrl("/doLogin")//进行登录处理的Url
-                .loginPage("/login")//登录页面的Url，可以配置自己的登录页面
-                .usernameParameter("uname")//用户名的key，默认username
-                .passwordParameter("pass")//密码的key，默认password
+//                .loginPage("/login")//登录页面的Url，可以配置自己的登录页面
+//                .usernameParameter("uname")//用户名的key，默认username
+//                .passwordParameter("pass")//密码的key，默认password
 //                .successForwardUrl("/index")//登录成功自动跳转，一般用于前后端不分
-                .successHandler(new AuthenticationSuccessHandler() {//登录成功的处理，一般用于前后端分离
+                //登录成功的处理，一般用于前后端分离
+                .successHandler(new AuthenticationSuccessHandler() {
                     //authentication中保存了登录成功的用户信息
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -274,7 +300,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
 //                .failureForwardUrl("/login_error")//登录失败自动跳转
-                .failureHandler(new AuthenticationFailureHandler() {//登录失败的处理
+                //登录失败的处理
+                .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                         response.setContentType("application/json;charset=utf-8");
@@ -284,7 +311,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         //根据异常类型返回错误信息，相关异常可以查看AuthenticationException的子类
                         if (exception instanceof LockedException) {
                             map.put("msg", "账户被锁定，登录失败！");
-                        //Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库
+                            //Security屏蔽了UsernameNotFoundException，抛出UsernameNotFoundException也会变成BadCredentialsException，防止撞库
                         } else if (exception instanceof BadCredentialsException) {
                             map.put("msg", "用户名或密码输入错误，登录失败！");
                         } else if (exception instanceof DisabledException) {
@@ -303,10 +330,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()//允许登录相关的所有请求
                 .and()
+                .logout()//注销登录
+                .logoutUrl("/logout")
+                //.logoutSuccessUrl("/login")//注销成功后自动跳转
+                .logoutSuccessHandler(new LogoutSuccessHandler() {//注销成功的回调
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        response.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = response.getWriter();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("status", 200);
+                        map.put("msg", "注销成功");
+                        out.write(new ObjectMapper().writeValueAsString(map));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .and()
                 .csrf()
-                .disable();//为了方便测试，先关闭csrf(跨域)保护
+                .disable()//为了方便测试，先关闭csrf(跨域)保护
+                //未认证处理方案，这里是给前端一个尚未登录的提示，前端根据提示信息，再决定页面跳转。
+                .exceptionHandling()
+                .authenticationEntryPoint(new AuthenticationEntryPoint() {
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                        response.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = response.getWriter();
+                        out.write("尚未登录，请先登录");
+                        out.flush();
+                        out.close();
+                    }
+                });
     }
 }
+
 ```
 
 测试：
@@ -877,9 +934,15 @@ SpringSecurity 在角色继承上有两种不同的写法，在 Spring Boot2.0.8
 
 之前的用户和密码都是在代码或者配置文件中写死的，一般不满足开发的需要。
 
-没啥说的，上代码！！
+Spring Security 支持多种不同的数据源，这些不同的数据源最终都将被封装成 UserDetailsService 的实例，除了使用系统默认提供的 UserDetailsService 实例，我们也可以自己封装。例如`InMemoryUserDetailsManager`、`JdbcUserDetailsManager`。
 
+查看详情：
 
+[Spring Security 基于数据库的认证](https://mp.weixin.qq.com/s/EurEXmU0M9AKuUs4Jh_V5)
+
+[Spring Security+Spring Data Jpa，基于数据库的认证](https://mp.weixin.qq.com/s/VWJvINbi1DB3fF-Mcx7mGg)
+
+这里是使用`Mybatis`操作数据库，没啥说的，上代码！！
 
 首先准备好数据库
 
@@ -1337,6 +1400,190 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 
 大功告成。
+
+### 9.添加自定义Filter-例：添加登录验证码
+
+https://mp.weixin.qq.com/s/aaop_dS9UIOgTtQd0hl_tw
+
+#### 1.准备验证码
+
+```java
+/**
+ * 生成验证码的工具类
+ */
+public class VerifyCode {
+
+	private int width = 100;// 生成验证码图片的宽度
+	private int height = 50;// 生成验证码图片的高度
+	private String[] fontNames = { "宋体", "楷体", "隶书", "微软雅黑" };
+	private Color bgColor = new Color(255, 255, 255);// 定义验证码图片的背景颜色为白色
+	private Random random = new Random();
+	private String codes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private String text;// 记录随机字符串
+
+	/**
+	 * 获取一个随意颜色
+	 *
+	 * @return
+	 */
+	private Color randomColor() {
+		int red = random.nextInt(150);
+		int green = random.nextInt(150);
+		int blue = random.nextInt(150);
+		return new Color(red, green, blue);
+	}
+
+	/**
+	 * 获取一个随机字体
+	 *
+	 * @return
+	 */
+	private Font randomFont() {
+		String name = fontNames[random.nextInt(fontNames.length)];
+		int style = random.nextInt(4);
+		int size = random.nextInt(5) + 24;
+		return new Font(name, style, size);
+	}
+
+	/**
+	 * 获取一个随机字符
+	 *
+	 * @return
+	 */
+	private char randomChar() {
+		return codes.charAt(random.nextInt(codes.length()));
+	}
+
+	/**
+	 * 创建一个空白的BufferedImage对象
+	 *
+	 * @return
+	 */
+	private BufferedImage createImage() {
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = (Graphics2D) image.getGraphics();
+		g2.setColor(bgColor);// 设置验证码图片的背景颜色
+		g2.fillRect(0, 0, width, height);
+		return image;
+	}
+
+	public BufferedImage getImage() {
+		BufferedImage image = createImage();
+		Graphics2D g2 = (Graphics2D) image.getGraphics();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < 4; i++) {
+			String s = randomChar() + "";
+			sb.append(s);
+			g2.setColor(randomColor());
+			g2.setFont(randomFont());
+			float x = i * width * 1.0f / 4;
+			g2.drawString(s, x, height - 15);
+		}
+		this.text = sb.toString();
+		drawLine(image);
+		return image;
+	}
+
+	/**
+	 * 绘制干扰线
+	 *
+	 * @param image
+	 */
+	private void drawLine(BufferedImage image) {
+		Graphics2D g2 = (Graphics2D) image.getGraphics();
+		int num = 5;
+		for (int i = 0; i < num; i++) {
+			int x1 = random.nextInt(width);
+			int y1 = random.nextInt(height);
+			int x2 = random.nextInt(width);
+			int y2 = random.nextInt(height);
+			g2.setColor(randomColor());
+			g2.setStroke(new BasicStroke(1.5f));
+			g2.drawLine(x1, y1, x2, y2);
+		}
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public static void output(BufferedImage image, OutputStream out) throws IOException {
+		ImageIO.write(image, "JPEG", out);
+	}
+}
+```
+
+就是画一个简单的验证码，通过流将验证码写到前端页面，提供验证码的 Controller 如下：
+
+```java
+@RestController
+public class VerifyCodeController {
+    @GetMapping("/vercode")
+    public void code(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        VerifyCode vc = new VerifyCode();
+        BufferedImage image = vc.getImage();
+        String text = vc.getText();
+        HttpSession session = req.getSession();
+        session.setAttribute("index_code", text);
+        VerifyCode.output(image, resp.getOutputStream());
+    }
+}
+```
+
+#### 2.自定义Filter
+
+```java
+@Component
+public class VerifyCodeFilter extends GenericFilterBean {
+    private String defaultFilterProcessUrl = "/doLogin";
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+        if ("POST".equalsIgnoreCase(request.getMethod()) && defaultFilterProcessUrl.equals(request.getServletPath())) {
+            // 验证码验证
+            String requestCaptcha = request.getParameter("code");
+            String genCaptcha = (String) request.getSession().getAttribute("index_code");
+            if (StringUtils.isEmpty(requestCaptcha))
+                throw new AuthenticationServiceException("验证码不能为空!");
+            if (!genCaptcha.toLowerCase().equals(requestCaptcha.toLowerCase())) {
+                throw new AuthenticationServiceException("验证码错误!");
+            }
+        }
+        chain.doFilter(request, response);
+    }
+}
+```
+
+自定义过滤器继承自 GenericFilterBean，并实现其中的 doFilter 方法，在 doFilter 方法中，当请求方法是 POST，并且请求地址是 `/doLogin` 时，获取参数中的 code 字段值，该字段保存了用户从前端页面传来的验证码，然后获取 session 中保存的验证码，如果用户没有传来验证码，则抛出验证码不能为空异常，如果用户传入了验证码，则判断验证码是否正确，如果不正确则抛出异常，否则执行 `chain.doFilter(request, response);` 使请求继续向下走。
+
+#### 3.配置Filter
+
+```java
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    VerifyCodeFilter verifyCodeFilter;
+    ...
+    ...
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("admin")
+                ...
+                ...
+                .permitAll()
+                .and()
+                .csrf().disable();
+    }
+}
+```
+
+
 
 ## 3.动态权限配置
 
@@ -1978,3 +2225,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 此时便可以进行动态的权限控制了，修改数据库便可以改变各用户权限等。
 
 大功告成！！累死了...
+
+## 4.Spring Security结合OAuth2
+
+### 1.依赖
+
+```
+
+```
+

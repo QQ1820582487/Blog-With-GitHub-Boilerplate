@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 25 May 2020 16:11:14 +0806</lastBuildDate><pubDate>Mon, 25 May 2020 16:11:14 +0806</pubDate><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;ol&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 27 May 2020 12:47:57 +0806</lastBuildDate><pubDate>Wed, 27 May 2020 12:47:57 +0806</pubDate><item><title>会话技术</title><link>/Xuxx_Blogs/archives/bj14/</link><description>&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt; 一次会话:浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止&lt;/code&gt;&lt;/pre&gt;
@@ -2217,7 +2217,7 @@ public class GreetingController {
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;两种基于内存定义用户的方法，任选一个即可。&lt;/p&gt;
-&lt;h2&gt;2.Spring Security进阶&lt;/h2&gt;
+&lt;h2&gt;2.Spring Security入门&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;看看&lt;a href="https://mp.weixin.qq.com/s/z6GeR5O-vBzY3SHehmccVA"&gt; Spring Security 登录流程&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;h3&gt;1.HttpSecurity的配置&lt;/h3&gt;
 &lt;p&gt;还是在之前的配置类中进行配置&lt;/p&gt;

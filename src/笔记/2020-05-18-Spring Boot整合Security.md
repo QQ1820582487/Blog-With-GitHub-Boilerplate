@@ -116,7 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 两种基于内存定义用户的方法，任选一个即可。
 
-## 2.Spring Security进阶
+## 2.Spring Security入门
 
 **看看[ Spring Security 登录流程](https://mp.weixin.qq.com/s/z6GeR5O-vBzY3SHehmccVA)**
 

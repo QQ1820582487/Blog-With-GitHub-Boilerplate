@@ -334,10 +334,10 @@ Swagger的所有注解定义在io.swagger.annotations包下
 也可以给请求的接口配置一些注释
 
 ```java
-@ApiOperation("狂神的接口")
-@PostMapping("/kuang")
+@ApiOperation(value = "api接口-getUsername",tags ="xxx的接口" )
+@PostMapping("/getUsername")
 @ResponseBody
-public String kuang(@ApiParam("这个名字会被返回")String username){
+public String getUsername(@ApiParam("这个username会被返回")String username){
    return username;
 }
 ```

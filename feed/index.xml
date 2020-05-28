@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Thu, 28 May 2020 17:42:39 +0806</lastBuildDate><pubDate>Thu, 28 May 2020 17:42:39 +0806</pubDate><item><title>JSP和MVC开发模式</title><link>/Xuxx_Blogs/archives/bj15/</link><description>&lt;h3&gt;1.JSP&lt;/h3&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Thu, 28 May 2020 18:55:38 +0806</lastBuildDate><pubDate>Thu, 28 May 2020 18:55:38 +0806</pubDate><item><title>JSP和MVC开发模式</title><link>/Xuxx_Blogs/archives/bj15/</link><description>&lt;h3&gt;1.JSP&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;1. 指令
     * 作用：用于配置JSP页面，导入资源文件
@@ -4245,10 +4245,10 @@ public class MultiHttpSecurity {
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;也可以给请求的接口配置一些注释&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@ApiOperation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;狂神的接口&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nd"&gt;@PostMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/kuang&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@ApiOperation&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;api接口-getUsername&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;xxx的接口&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;@PostMapping&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/getUsername&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="nd"&gt;@ResponseBody&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;kuang&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nd"&gt;@ApiParam&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;这个名字会被返回&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;getUsername&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nd"&gt;@ApiParam&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;这个username会被返回&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

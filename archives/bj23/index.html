@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/65de967c0d5ff581bdc032e910577f80.json"
+        }
+    </script>
+    
+<title>Spring Boot整合Swagger - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot整合Swagger - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj23/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-05-27T23:50:00-00.00" />
+<meta name="twitter:title" content="Spring Boot整合Swagger - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot整合Swagger</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-05-27
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>1. Swagger简介</h2>
+<p><strong>前后端分离</strong></p>
+<ul>
+<li>前端 -&gt; 前端控制层、视图层</li>
+<li>后端 -&gt; 后端控制层、服务层、数据访问层</li>
+<li>前后端通过API进行交互</li>
+<li>前后端相对独立且松耦合</li>
+</ul>
+<p><strong>产生的问题</strong></p>
+<ul>
+<li>前后端集成，前端或者后端无法做到“及时协商，尽早解决”，最终导致问题集中爆发</li>
+</ul>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>首先定义schema [ 计划的提纲 ]，并实时跟踪最新的API，降低集成风险</li>
+</ul>
+<p><strong>Swagger</strong></p>
+<ul>
+<li>号称世界上最流行的API框架</li>
+<li>Restful Api 文档在线自动生成器 =&gt; <strong>API 文档 与API 定义同步更新</strong></li>
+<li>直接运行，在线测试API</li>
+<li>支持多种语言 （如：Java，PHP等）</li>
+<li>官网：<a href="https://swagger.io/">https://swagger.io/</a></li>
+</ul>
+<h2>2. Spring Boot集成Swagger</h2>
+<p><strong>Spring Boot集成Swagger</strong> -&gt; <strong>springfox</strong>，两个jar包</p>
+<ul>
+<li><strong>Springfox-swagger2</strong></li>
+<li><strong>swagger-springmvc</strong></li>
+</ul>
+<p><strong>使用Swagger</strong></p>
+<p>要求：jdk 1.8 + 否则swagger2无法运行</p>
+<p>步骤：</p>
+<p>1、新建一个Spring Boot-web项目</p>
+<p>2、添加Maven依赖</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>springfox-swagger2<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.9.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+        <span class="c">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>springfox-swagger-ui<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.9.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>3、编写HelloController，测试确保运行成功！</p>
+<p>4、要使用Swagger，需要编写一个配置类-SwaggerConfig来配置 Swagger</p>
+<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="nd">@EnableSwagger2</span><span class="c1">// 开启Swagger2</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwaggerConfig</span> <span class="p">{</span>  <span class="p">}</span>
+</pre></div>
+<p>5、访问测试 ：<a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a> ，可以看到swagger的界面；</p>
+<p><figure class="pswp-item" style="flex: 119.63840399002494" data-width="1919" data-height="802"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ec355bdb47aa00f17b401e61ffa5c79b.png" alt="" /></figure></p>
+<h2>3. 配置Swagger</h2>
+<p>1、Swagger实例Bean是Docket，所以通过配置Docket实例来配置Swaggger。</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span> <span class="c1">//配置docket以配置Swagger具体参数</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">()</span> <span class="p">{</span>   
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>2、可以通过apiInfo()属性配置文档信息</p>
+<div class="highlight"><pre><span></span><span class="c1">//配置Swagger信息&gt;&gt;&gt;ApiInfo</span>
+    <span class="kd">private</span> <span class="n">ApiInfo</span> <span class="nf">apiInfo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//作者信息</span>
+        <span class="n">Contact</span> <span class="n">contact</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Contact</span><span class="p">(</span><span class="s">&quot;Xuxx&quot;</span><span class="p">,</span> <span class="s">&quot;暂无&quot;</span><span class="p">,</span> <span class="s">&quot;xuxx3319@gmail.com&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">ApiInfo</span><span class="p">(</span>
+                <span class="s">&quot;API信息&quot;</span><span class="p">,</span>
+                <span class="s">&quot;ApI描述&quot;</span><span class="p">,</span>
+                <span class="s">&quot;v1.0&quot;</span><span class="p">,</span>
+                <span class="s">&quot;服务条款网址&quot;</span><span class="p">,</span>
+                <span class="n">contact</span><span class="p">,</span>
+                <span class="s">&quot;Apache 2.0&quot;</span><span class="p">,</span>
+                <span class="s">&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;</span><span class="p">,</span>
+                <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">VendorExtension</span><span class="o">&gt;</span><span class="p">());</span>
+    <span class="p">}</span>
+</pre></div>
+<p>3、Docket 实例关联上 apiInfo()</p>
+<div class="highlight"><pre><span></span><span class="c1">//配置Swagger的Docket</span>
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+<p>4、重启项目，访问测试 <a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a>  看下效果；</p>
+<p><figure class="pswp-item" style="flex: 109.96563573883161" data-width="1920" data-height="873"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/08e0001208af5daae27382acfb5f728c.png" alt="" /></figure></p>
+<h2>4. 配置扫描接口</h2>
+<p>1、构建Docket时通过select()方法配置怎么扫描接口。</p>
+<div class="highlight"><pre><span></span><span class="c1">//配置Swagger的Docket</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">())</span>
+                <span class="p">.</span><span class="na">select</span><span class="p">()</span>
+                <span class="c1">//RequestHandlerSelectors 配置要扫描的接口</span>
+                <span class="p">.</span><span class="na">apis</span><span class="p">(</span><span class="n">RequestHandlerSelectors</span><span class="p">.</span><span class="na">basePackage</span><span class="p">(</span><span class="s">&quot;com.xuxx.swagger.controller&quot;</span><span class="p">))</span>
+                <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></div>
+<p>2、重启项目测试，由于配置根据包的路径扫描接口，所以只能看到一个类</p>
+<p>3、除了通过包路径配置扫描接口外，还可以通过配置其他方式扫描接口，这里注释一下所有的配置方式：</p>
+<div class="highlight"><pre><span></span><span class="c1">//any:扫描全部</span>
+<span class="c1">//none:全部不扫描</span>
+<span class="c1">//basePackage:指定要扫描的包 </span>
+<span class="c1">//withMethodAnnotation:扫描带注解的方法,例:withMethodAnnotation(GetMapping.class)</span>
+<span class="c1">//withClassAnnotation:扫描带注解的类,例:withClassAnnotation(RestController.class)</span>
+</pre></div>
+<p>4、除此之外，还可以配置接口扫描过滤：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">()</span> <span class="p">{</span>   
+<span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">select</span><span class="p">()</span><span class="c1">// select():配置扫描接口, RequestHandlerSelectors:配置如何扫描接口</span>
+    <span class="p">.</span><span class="na">apis</span><span class="p">(</span><span class="n">RequestHandlerSelectors</span><span class="p">.</span><span class="na">basePackage</span><span class="p">(</span><span class="s">&quot;com.xuxx.swagger.controller&quot;</span><span class="p">))</span>
+    <span class="c1">//配置如何通过path过滤,即这里只扫描请求以&#39;/api/&#39;为前缀的接口</span>
+    <span class="p">.</span><span class="na">paths</span><span class="p">(</span><span class="n">PathSelectors</span><span class="p">.</span><span class="na">ant</span><span class="p">(</span><span class="s">&quot;/api/**&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p>5、这里的可选值还有</p>
+<div class="highlight"><pre><span></span><span class="n">any</span><span class="p">()</span> <span class="c1">//任何请求都扫描</span>
+<span class="n">none</span><span class="p">()</span> <span class="c1">//任何请求都不扫描</span>
+<span class="n">regex</span><span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">pathRegex</span><span class="p">)</span> <span class="c1">//通过正则表达式控制</span>
+<span class="n">ant</span><span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">antPattern</span><span class="p">)</span> <span class="c1">//通过ant()匹配</span>
+</pre></div>
+<h2>5. 配置Swagger开关</h2>
+<p>1、通过enable()方法配置是否启用swagger，如果为false，则不能访问swagger</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+      <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">())</span>
+      <span class="p">.</span><span class="na">enable</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="c1">//配置是否启用swagger，如果是false，则不能访问swagger</span>
+      <span class="p">.</span><span class="na">select</span><span class="p">()</span><span class="c1">// select():配置扫描接口, RequestHandlerSelectors:配置如何扫描接口</span>
+      <span class="p">.</span><span class="na">apis</span><span class="p">(</span><span class="n">RequestHandlerSelectors</span><span class="p">.</span><span class="na">basePackage</span><span class="p">(</span><span class="s">&quot;com.xuxx.swagger.controller&quot;</span><span class="p">))</span>
+      <span class="c1">//配置如何通过path过滤,即这里只扫描请求以&#39;/api/&#39;为前缀的接口</span>
+    <span class="p">.</span><span class="na">paths</span><span class="p">(</span><span class="n">PathSelectors</span><span class="p">.</span><span class="na">ant</span><span class="p">(</span><span class="s">&quot;/api/**&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p>2、如何动态配置当项目处于dev、test环境时使用swagger，处于prod时不显示？</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="c1">//environment:表示当前应用程序运行的环境的接口。</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">(</span><span class="n">Environment</span> <span class="n">environment</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">//配置要使用swagger的环境</span>
+    <span class="n">Profiles</span> <span class="n">profiles</span> <span class="o">=</span> <span class="n">Profiles</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;dev&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">);</span>
+    <span class="c1">//判断当前是否处于该环境</span>
+    <span class="c1">//通过enable()接收此参数判断是否使用swagger</span>
+    <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="n">environment</span><span class="p">.</span><span class="na">acceptsProfiles</span><span class="p">(</span><span class="n">profiles</span><span class="p">);</span>
+
+   <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+      <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">())</span>
+      <span class="p">.</span><span class="na">enable</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="c1">//配置是否启用swagger，如果是false，在浏览器将无法访问</span>
+      <span class="p">.</span><span class="na">select</span><span class="p">()</span><span class="c1">// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口</span>
+      <span class="p">.</span><span class="na">apis</span><span class="p">(</span><span class="n">RequestHandlerSelectors</span><span class="p">.</span><span class="na">basePackage</span><span class="p">(</span><span class="s">&quot;com.xuxx.swagger.controller&quot;</span><span class="p">))</span>
+       <span class="c1">//配置如何通过path过滤,即这里只扫描请求以&#39;/api/&#39;为前缀的接口</span>
+      <span class="p">.</span><span class="na">paths</span><span class="p">(</span><span class="n">PathSelectors</span><span class="p">.</span><span class="na">ant</span><span class="p">(</span><span class="s">&quot;/api/**&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p>3、可以在项目中增加一个dev的配置文件查看效果！</p>
+<p>application.properties</p>
+<div class="highlight"><pre><span></span><span class="na">spring.profiles.active</span><span class="o">=</span><span class="s">dev</span>
+</pre></div>
+<p>application-dev.properties</p>
+<div class="highlight"><pre><span></span><span class="na">server.port</span><span class="o">=</span><span class="s">8081</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 145.7886676875957" data-width="1904" data-height="653"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9ea05279d2ed4fc2a7ddb7eec4e00242.png" alt="" /></figure></p>
+<p>如果环境不是<code>dev</code>或者<code>test</code>,swagger便关闭。</p>
+<h2>6. 配置API分组</h2>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9Z7k4Y8iaVnHtPd78o82ff8hItej9Cyf0wvbG8u8KgXic7gVh77NoZw4RQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img" /><figcaption>img</figcaption></figure></p>
+<p>1、如果没有配置分组，默认是default。通过groupName()方法即可配置分组：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket</span><span class="p">(</span><span class="n">Environment</span> <span class="n">environment</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">)</span>
+       <span class="p">.</span><span class="na">apiInfo</span><span class="p">(</span><span class="n">apiInfo</span><span class="p">())</span>
+      <span class="p">.</span><span class="na">groupName</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">)</span> <span class="c1">// 配置分组</span>
+       <span class="c1">// 省略....</span>
+<span class="p">}</span>
+</pre></div>
+<p>2、重启项目查看分组</p>
+<p>3、如何配置多个分组？配置多个分组只需要配置多个docket即可：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket1</span><span class="p">(){</span>
+   <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">).</span><span class="na">groupName</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Docket</span> <span class="nf">docket2</span><span class="p">(){</span>
+   <span class="k">return</span> <span class="k">new</span> <span class="n">Docket</span><span class="p">(</span><span class="n">DocumentationType</span><span class="p">.</span><span class="na">SWAGGER_2</span><span class="p">).</span><span class="na">groupName</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>4、重启项目查看即可</p>
+<p><figure class="pswp-item" style="flex: 127.82956058588549" data-width="1920" data-height="751"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5b98ef7984dfbf5c80d54d37e21463c1.png" alt="" /></figure></p>
+<h2>7. 实体配置</h2>
+<p>1、新建一个实体类</p>
+<div class="highlight"><pre><span></span><span class="nd">@ApiModel</span><span class="p">(</span><span class="s">&quot;用户实体类-user&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="nd">@ApiModelProperty</span><span class="p">(</span><span class="s">&quot;用户名&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
+    <span class="nd">@ApiModelProperty</span><span class="p">(</span><span class="s">&quot;密码&quot;</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">password</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>2、只要这个实体在<strong>请求接口</strong>的返回值上（即使是泛型），都能映射到实体项中：</p>
+<div class="highlight"><pre><span></span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/getUser&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">User</span> <span class="nf">getUser</span><span class="p">(){</span>
+   <span class="k">return</span> <span class="k">new</span> <span class="n">User</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<p>3、重启查看测试</p>
+<p><figure class="pswp-item" style="flex: 270.80924855491327" data-width="1874" data-height="346"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e5824d7ab3a687391ffda24b9c3ef7af.png" alt="" /></figure></p>
+<p>注：并不是因为@ApiModel这个注解让实体显示在这里了，而是只要出现在接口方法的返回值上的实体都会显示在这里，而@ApiModel和@ApiModelProperty这两个注解只是为实体添加注释的。</p>
+<ul>
+<li>@ApiModel为类添加注释</li>
+</ul>
+<ul>
+<li>@ApiModelProperty为类属性添加注释</li>
+</ul>
+<h2>8. 常用注解</h2>
+<p>Swagger的所有注解定义在io.swagger.annotations包下</p>
+<p>下面列一些经常用到的，未列举出来的可以另行查阅说明：</p>
+<table>
+<thead><tr>
+<th>Swagger注解</th>
+<th>简单说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Api(tags = "xxx模块说明")</td>
+<td>作用在模块类上,为接口添加标签</td>
+</tr>
+<tr>
+<td>@ApiOperation(vale="xxx接口说明"，tags="xxx")</td>
+<td>作用在接口方法上,vale:添加说明,tage:添加标签</td>
+</tr>
+<tr>
+<td>@ApiModel("xxxPOJO说明")</td>
+<td>作用在模型类上：如VO、BO</td>
+</tr>
+<tr>
+<td>@ApiModelProperty(value = "xxx属性说明",hidden = true)</td>
+<td>作用在类方法和属性上，hidden设置为true可以隐藏该属性</td>
+</tr>
+<tr>
+<td>@ApiParam("xxx参数说明")</td>
+<td>作用在参数、方法和字段上，类似@ApiModelProperty</td>
+</tr>
+</tbody>
+</table>
+<p>也可以给请求的接口配置一些注释</p>
+<div class="highlight"><pre><span></span><span class="nd">@ApiOperation</span><span class="p">(</span><span class="s">&quot;狂神的接口&quot;</span><span class="p">)</span>
+<span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/kuang&quot;</span><span class="p">)</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">kuang</span><span class="p">(</span><span class="nd">@ApiParam</span><span class="p">(</span><span class="s">&quot;这个名字会被返回&quot;</span><span class="p">)</span><span class="n">String</span> <span class="n">username</span><span class="p">){</span>
+   <span class="k">return</span> <span class="n">username</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>这样的话，可以给一些比较难理解的属性或者接口，增加一些配置信息，让人更容易阅读！</p>
+<p>相较于传统的Postman或Curl方式测试接口，使用swagger简直就是傻瓜式操作，不需要额外说明文档(写得好本身就是文档)而且更不容易出错，只需要录入数据然后点击Execute，如果再配合自动化框架，可以说基本就不需要人为操作了。</p>
+<p>Swagger是个优秀的工具，现在国内已经有很多的中小型互联网公司都在使用它，相较于传统的要先出Word接口文档再测试的方式，显然这样也更符合现在的快速迭代开发行情。当然了，提醒下大家在正式环境要记得关闭Swagger，一来出于安全考虑二来也可以节省运行时内存。</p>
+<h2>拓展：其他皮肤</h2>
+<p>可以导入不同的包实现不同的皮肤定义：</p>
+<p>1、默认的   <strong>访问 <a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></strong></p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>   
+    <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>   
+    <span class="nt">&lt;artifactId&gt;</span>springfox-swagger-ui<span class="nt">&lt;/artifactId&gt;</span>   
+    <span class="nt">&lt;version&gt;</span>2.9.2<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZrYUroibnsmILAYo1PyuaSDAkrqUvlNibxW9S9niaRomPFd9rrD6SY4wjA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img" /><figcaption>img</figcaption></figure></p>
+<p>2、bootstrap-ui  <strong>访问 <a href="http://localhost:8080/doc.html">http://localhost:8080/doc.html</a></strong></p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 引入swagger-bootstrap-ui包 /doc.html--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>   
+    <span class="nt">&lt;groupId&gt;</span>com.github.xiaoymin<span class="nt">&lt;/groupId&gt;</span>   
+    <span class="nt">&lt;artifactId&gt;</span>swagger-bootstrap-ui<span class="nt">&lt;/artifactId&gt;</span>   
+    <span class="nt">&lt;version&gt;</span>1.9.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZxQ9fXkPFt9TtX6PiaPDWWFSCJQK6H0ibiagM2w2f99zqHuOJffyRycCIg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img" /><figcaption>img</figcaption></figure></p>
+<p>3、Layui-ui   <strong>访问 <a href="http://localhost:8080/docs.html">http://localhost:8080/docs.html</a></strong></p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 引入swagger-ui-layer包 /docs.html--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>   
+    <span class="nt">&lt;groupId&gt;</span>com.github.caspar-chen<span class="nt">&lt;/groupId&gt;</span>   
+    <span class="nt">&lt;artifactId&gt;</span>swagger-ui-layer<span class="nt">&lt;/artifactId&gt;</span>   
+    <span class="nt">&lt;version&gt;</span>1.1.3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZYA6g5VyspYIqFMokAGg7dbx47P2ibC8Z80saA7XdrByPFhgmrduSHbA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img" /><figcaption>img</figcaption></figure></p>
+<p>4、mg-ui   <strong>访问 <a href="http://localhost:8080/document.html">http://localhost:8080/document.html</a></strong></p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 引入swagger-ui-layer包 /document.html--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>   
+    <span class="nt">&lt;groupId&gt;</span>com.zyplayer<span class="nt">&lt;/groupId&gt;</span>   
+    <span class="nt">&lt;artifactId&gt;</span>swagger-mg-ui<span class="nt">&lt;/artifactId&gt;</span>   
+    <span class="nt">&lt;version&gt;</span>1.0.6<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZBJPCcHFicV2dklg3l88IuYia3OIFNfNVbWZXpppPS93jghTUJiaeJQx6Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="img" /><figcaption>img</figcaption></figure></p>
+<hr>
+<p>狂神讲解的配套视频地址：<a href="https://www.bilibili.com/video/BV1Y441197Lw">https://www.bilibili.com/video/BV1Y441197Lw</a></p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Java/">#Java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Spring/">#Spring</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Swagger/">#Swagger</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj22/">Spring Boot整合OAuth2</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

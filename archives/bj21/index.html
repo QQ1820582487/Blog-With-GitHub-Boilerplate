@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/1933577e913aeda4c317253614c343a7.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/65de967c0d5ff581bdc032e910577f80.json"
         }
     </script>
     
@@ -1466,7 +1466,9 @@ public class MultiHttpSecurity {
     <span class="p">...</span>
     <span class="nd">@Override</span>
     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+
         <span class="n">http</span><span class="p">.</span><span class="na">addFilterBefore</span><span class="p">(</span><span class="n">verifyCodeFilter</span><span class="p">,</span> <span class="n">UsernamePasswordAuthenticationFilter</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+
         <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
                 <span class="p">.</span><span class="na">antMatchers</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">).</span><span class="na">hasRole</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
                 <span class="p">...</span>

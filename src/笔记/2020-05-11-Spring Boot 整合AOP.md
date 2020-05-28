@@ -192,6 +192,7 @@ public class LogComponent {
 所以,基于注解的AOP配置通知类的方法**最好单独使用环绕通知(Around)**
 
 补充：基于注解的执行顺序
+
 1.进入环绕通知(Around)
 
 2.前置通知(Before) 

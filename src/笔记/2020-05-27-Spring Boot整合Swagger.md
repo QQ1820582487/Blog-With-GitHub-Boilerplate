@@ -362,7 +362,7 @@ Swagger是个优秀的工具，现在国内已经有很多的中小型互联网�
 </dependency>
 ```
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZrYUroibnsmILAYo1PyuaSDAkrqUvlNibxW9S9niaRomPFd9rrD6SY4wjA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](..\static\笔记图片\2020-05-27-Spring Boot整合Swagger_06.png)
 
 2、bootstrap-ui  **访问 http://localhost:8080/doc.html**
 
@@ -375,7 +375,7 @@ Swagger是个优秀的工具，现在国内已经有很多的中小型互联网�
 </dependency>
 ```
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZxQ9fXkPFt9TtX6PiaPDWWFSCJQK6H0ibiagM2w2f99zqHuOJffyRycCIg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](..\static\笔记图片\2020-05-27-Spring Boot整合Swagger_07.png)
 
 3、Layui-ui   **访问 http://localhost:8080/docs.html**
 
@@ -388,7 +388,7 @@ Swagger是个优秀的工具，现在国内已经有很多的中小型互联网�
 </dependency>
 ```
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZYA6g5VyspYIqFMokAGg7dbx47P2ibC8Z80saA7XdrByPFhgmrduSHbA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](..\static\笔记图片\2020-05-27-Spring Boot整合Swagger_08.png)
 
 4、mg-ui   **访问 http://localhost:8080/document.html**
 
@@ -401,8 +401,5 @@ Swagger是个优秀的工具，现在国内已经有很多的中小型互联网�
 </dependency>
 ```
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9ZBJPCcHFicV2dklg3l88IuYia3OIFNfNVbWZXpppPS93jghTUJiaeJQx6Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](..\static\笔记图片\2020-05-27-Spring Boot整合Swagger_09.png)
 
-------
-
-狂神讲解的配套视频地址：https://www.bilibili.com/video/BV1Y441197Lw

@@ -249,8 +249,6 @@ server.port=8081
 
 ## 6. 配置API分组
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/uJDAUKrGC7IExpkhknhzRFQicsic8yibm9Z7k4Y8iaVnHtPd78o82ff8hItej9Cyf0wvbG8u8KgXic7gVh77NoZw4RQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
-
 1、如果没有配置分组，默认是default。通过groupName()方法即可配置分组：
 
 ```java

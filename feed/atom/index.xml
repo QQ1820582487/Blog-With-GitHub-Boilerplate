@@ -1,165 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-31T19:45:12.949798+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj14/</id><title>会话技术</title><updated>2020-05-31T19:45:12.950099+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;会话:一次会话中包含多次请求和响应。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; 一次会话:浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;功能:在一次会话的范围内的多次请求间，共享数据&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;方式:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;客户端会话技术: Cookie&lt;/li&gt;
-&lt;li&gt;服务器端会话技术: Session&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4&gt;1. Cookie&lt;/h4&gt;
-&lt;h6&gt;1. 概念:&lt;/h6&gt;
-&lt;p&gt;客户端会话技术，将数据保存到客户端&lt;/p&gt;
-&lt;h6&gt;2. 快速入门:&lt;/h6&gt;
-&lt;p&gt;使用步骤:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建cookie对象， 绑定数据&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; new Cookie(String name, String value)&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;发送Cookie对象&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;response. addCookie(Cookie cookie)&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;获取Cookie, 到数据&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Cookie[] request. getColkies()&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h6&gt;3. 实现原理&lt;/h6&gt;
-&lt;p&gt;基于响应头set-cookie和请求头cookie实现&lt;/p&gt;
-&lt;h6&gt;4. cookie的细节&lt;/h6&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;一次可不可以发送多个cookie?
-可以，创建多个Cookie对象，使用response调用多次addCookie方法发送cookie即可。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;cookie在浏览器中保存多长时间?&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;默认情况下，当浏览器关闭后，Cookie数据被销毁&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;持久化存储:
-setMaxAge(int seconds )&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;正数:将Cooki e数据写到硬盘的文件中。持久化存储。并指定cookie存活时间，时间到后，cookie文件自动失效&lt;/li&gt;
-&lt;li&gt;负数:默认值&lt;/li&gt;
-&lt;li&gt;零:删除cookie信息&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;cookie能不能存中文?
-在tomcat 8之前cookie中不能直接存储中文数据。 ——需要将中文数据转码---- -般采用URL编码&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在tomcat 8之后，cookie支持中文数据。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;cookie共享问题 ?&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;假设在一个tomcat服务器中，部署了多个web项目，那么在这些web项目中cookie能不能共享?
-  默认情况下cookie不能共享&lt;/p&gt;
-&lt;p&gt;setPath(String path) :设置cookie的获取范围。默认设置为当前的虚拟目录&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;      如果要共享给同一台服务器的上的其他项目，则可以将path设置为"/" 
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ol&gt;
-&lt;li&gt;不同的tomcat服务器间cookie共享问题?&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;​     setDomain(String path) :如果设置一级域名相同， 那么多个服务器之间cookie可以共享&lt;/p&gt;
-&lt;p&gt;​     例：setDomain(" .baidu. com") ,那么tieba. baidu. com和news . baidu. com中cookie可以共享&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Cookie的特点和作用&lt;/p&gt;
-&lt;p&gt;特点:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;cookie存储数据在客户端浏览器&lt;/li&gt;
-&lt;li&gt;浏览器对于单个cookie的大小有限制(4kb)以及对同一个域名下的总cookie数量也有限制(20个)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;作用:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;cookie- 般用于存 出少量的不太敏感的数据&lt;/li&gt;
-&lt;li&gt;在不登录的情况下，完成服务器对客户端的身份识别&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4&gt;2. Session&lt;/h4&gt;
-&lt;h6&gt;1. 概念:&lt;/h6&gt;
-&lt;p&gt;服务器端会话技术，在一次会话的多次请求间共享数据，将数据保存在服务器端的对象中。&lt;/p&gt;
-&lt;h6&gt;2.快速入门&lt;/h6&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;获取HttpSession对象:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;HttpSession session = request. getSession();&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用HttpSession对象:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Object getAttribute( String name);
-void setAttribute(string name, object value);
-void removeAttribute(String name);&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h6&gt;3. 原理&lt;/h6&gt;
-&lt;p&gt;Session的实现是依赖于cookie的。&lt;/p&gt;
-&lt;h6&gt;4. 细节&lt;/h6&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;当客户端关闭后,服务器不关闭，两次获取session是否为同一个?
-默认情况下。不是。
-如果需要相同，则可以创建Cookie,键为JSESSIONID，设置最大存活时间，让cookie持久化保存。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Cookie C = new Cookie("ISESSIONID" , session. getId());
-C. setMaxAge(60* 60) ;
-response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;客户端不关闭，服务器关闭后，两次获取的session是同一个吗?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;         不是同一个，但是要确保数据不丢失。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;session的钝化(序列化):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; 在服务器正常关闭之前，将session对象序列化到硬盘上。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;session的活化(反序列化):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;   在服务器启动后，将session文件转化为内存中的session对象即可。&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;session什么时候被销毁?&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;服务器关闭&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;session对象调用invalidate()&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;session默认失效时间30分钟
-在web.xml中（可以是项目的web.xml,也可以是tomcat的conf下的web.xml）选择性配置修改&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;session-config&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;session-timeout&amp;gt;&lt;/span&gt;30&lt;span class="nt"&gt;&amp;lt;/session-timeout&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/session-config&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h6&gt;5. session的特点&lt;/h6&gt;
-&lt;ol&gt;
-&lt;li&gt;session用于存储一次会话的多次请求的数据， 存在服务器端&lt;/li&gt;
-&lt;li&gt;session可以存 储任意类型，任意大小的数据&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;session与cookie的区别:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;session存 储数据在服务器端，Cookie在客户端&lt;/li&gt;
-&lt;li&gt;session没有数据大小限制，Cookie有&lt;/li&gt;
-&lt;li&gt;session数据安全，Cookie相对于不安全&lt;/li&gt;
-&lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj14/" rel="alternate"/><published>2020-05-07T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj15/</id><title>JSP和MVC开发模式</title><updated>2020-05-31T19:45:12.950080+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.JSP&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-05-31T19:58:20.682836+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj15/</id><title>JSP和MVC开发模式</title><updated>2020-05-31T19:58:20.683112+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.JSP&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;1. 指令
     * 作用：用于配置JSP页面，导入资源文件
@@ -368,7 +208,7 @@ response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
     2. 编码
 4. 测试
 5. 部署运维&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj15/" rel="alternate"/><published>2020-05-08T22:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合AOP</title><updated>2020-05-31T19:45:12.950060+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一、前言&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj15/" rel="alternate"/><published>2020-05-08T22:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj16/</id><title>Spring Boot整合AOP</title><updated>2020-05-31T19:58:20.683092+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;众所周知，spring最核心的两个功能是aop和ioc，即面向切面和控制反转。本文会讲一讲SpringBoot如何使用AOP实现面向切面的过程原理。&lt;/p&gt;
 &lt;h3&gt;二、何为aop&lt;/h3&gt;
 &lt;p&gt;aop全称&lt;code&gt;Aspect Oriented Programming&lt;/code&gt;，面向切面，AOP主要实现的目的是针对业务处理过程中的切面进行提取，它所面对的是处理过程中的某个步骤或阶段，以获得逻辑过程中各部分之间低耦合性的隔离效果。其与设计模式完成的任务差不多，是提供另一种角度来思考程序的结构，来弥补面向对象编程的不足。&lt;/p&gt;
@@ -528,7 +368,7 @@ response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;3.退出环绕通知(Around)&lt;/p&gt;
 &lt;p&gt;4.后置通知(After)&lt;/p&gt;
 &lt;p&gt;5.返回通知(AfterRunning)/异常通知(AfterThrowing)&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-11T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj18/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-05-31T19:45:12.950041+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.简单使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj16/" rel="alternate"/><published>2020-05-11T02:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj18/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-05-31T19:58:20.683072+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.简单使用&lt;/h2&gt;
 &lt;h4&gt;1.添加依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
             &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
@@ -778,7 +618,7 @@ response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
 &lt;span class="nd"&gt;@Resource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;jdbcTemplate2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JdbcTemplate&lt;/span&gt; &lt;span class="n"&gt;jdbcTemplate2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj18/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-05-31T19:45:12.950003+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj18/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-05-31T19:58:20.683051+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
 &lt;h3&gt;1.依赖&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
@@ -1025,7 +865,7 @@ response. addcookie(c);&lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code&gt;user1：[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
 user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lisi, address=北京2), User(id=3, username=xuxx, address=四川2)]&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-05-31T19:45:12.949983+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-05-31T19:58:20.683030+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
 &lt;h3&gt;1. JPA是什么&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Java Persistence API：用于对象持久化的 API&lt;/li&gt;
@@ -1561,7 +1401,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;自定义的 XxxxRepository 需要继承 JpaRepository，这样的 XxxxRepository 接口就具备了通用的数据访问控制层的能力。&lt;/li&gt;
 &lt;li&gt;JpaSpecificationExecutor： 不属于Repository体系，实现一组 JPA Criteria 查询相关的方法&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-05-31T19:45:12.949963+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-05-31T19:58:20.683008+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -1736,7 +1576,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;&lt;p&gt;全局配置：编写配置类，重写&lt;code&gt;addCorsMappings&lt;/code&gt;方法&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-05-31T19:45:12.949929+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-05-31T19:58:20.682987+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
 &lt;p&gt;WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。&lt;/p&gt;
 &lt;p&gt;WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。&lt;/p&gt;
 &lt;p&gt;在 WebSocket API 中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。&lt;/p&gt;
@@ -2141,7 +1981,7 @@ public class GreetingController {
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 128.05194805194805" data-width="986" data-height="385"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1c18b11e196a9d7b931491e2af7c2efa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-05-31T19:45:12.949902+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-05-31T19:58:20.682965+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
 &lt;h3&gt;1.Spring Security初体验&lt;/h3&gt;
 &lt;h4&gt;1.引入依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -4139,7 +3979,7 @@ public class MultiHttpSecurity {
 
 &lt;pre&gt;&lt;code&gt;
 &lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-05-31T19:45:12.949854+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-05-31T19:58:20.682939+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;前后端分离&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;前端 -&amp;gt; 前端控制层、视图层&lt;/li&gt;
@@ -4439,4 +4279,887 @@ public class MultiHttpSecurity {
 &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 190.47619047619048" data-width="1920" data-height="504"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69d2f605e680bd7eae5ef85c2f353794.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RibbitMQ实战教程</title><updated>2020-05-31T19:58:20.682891+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
+&lt;h3&gt;1.1 什么是MQ&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;MQ&lt;/code&gt;(Message Quene) :  翻译为 &lt;code&gt;消息队列&lt;/code&gt;,通过典型的 &lt;code&gt;生产者&lt;/code&gt;和&lt;code&gt;消费者&lt;/code&gt;模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 &lt;code&gt;消息中间件&lt;/code&gt; 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。&lt;/p&gt;
+&lt;h3&gt;1.2 MQ有哪些&lt;/h3&gt;
+&lt;p&gt;当今市面上有很多主流的消息中间件，如老牌的&lt;code&gt;ActiveMQ&lt;/code&gt;、&lt;code&gt;RabbitMQ&lt;/code&gt;，炙手可热的&lt;code&gt;Kafka&lt;/code&gt;，阿里巴巴自主开发&lt;code&gt;RocketMQ&lt;/code&gt;等。&lt;/p&gt;
+&lt;h3&gt;1.3 不同MQ特点&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# 1.ActiveMQ
+        ActiveMQ 是Apache出品，最流行的，能力强劲的开源消息总线。它是一个完全支持JMS规范的的消息中间件。丰富的API,多种集群架构模式让ActiveMQ在业界成为老牌的消息中间件,在中小型企业颇受欢迎!
+
+# 2.Kafka
+        Kafka是LinkedIn开源的分布式发布-订阅消息系统，目前归属于Apache顶级项目。Kafka主要特点是基于Pull的模式来处理消息消费，
+        追求高吞吐量，一开始的目的就是用于日志收集和传输。0.8版本开始支持复制，不支持事务，对消息的重复、丢失、错误没有严格要求，
+        适合产生大量数据的互联网服务的数据收集业务。
+
+# 3.RocketMQ
+        RocketMQ是阿里开源的消息中间件，它是纯Java开发，具有高吞吐量、高可用性、适合大规模分布式系统应用的特点。RocketMQ思路起
+        源于Kafka，但并不是Kafka的一个Copy，它对消息的可靠传输及事务性做了优化，目前在阿里集团被广泛应用于交易、充值、流计算、消
+        息推送、日志流式处理、binglog分发等场景。
+
+# 4.RabbitMQ
+        RabbitMQ是使用Erlang语言开发的开源消息队列系统，基于AMQP协议来实现。AMQP的主要特征是面向消息、队列、路由（包括点对点和
+        发布/订阅）、可靠性、安全。AMQP协议更多用在企业系统内对数据一致性、稳定性和可靠性要求很高的场景，对性能和吞吐量的要求还在
+        其次。&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;&lt;p&gt;RabbitMQ比Kafka可靠，Kafka更适合IO高吞吐的处理，一般应用在大数据日志处理或对实时性（少量延迟），可靠性（少量丢数据）要求稍低的场景使用，比如ELK日志收集。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;2.RabbitMQ 的引言&lt;/h2&gt;
+&lt;h3&gt;2.1 RabbitMQ&lt;/h3&gt;
+&lt;blockquote&gt;&lt;p&gt;基于&lt;code&gt;AMQP&lt;/code&gt;协议，erlang语言开发，是部署最广泛的开源消息中间件,是最受欢迎的开源消息中间件之一。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 87.60162601626017" data-width="2586" data-height="1476"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/768832c026023439932cf76fa1c05b88.png" alt="image-20190925215603036" /&gt;&lt;figcaption&gt;image-20190925215603036&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;官网&lt;/code&gt;: &lt;a href="https://www.rabbitmq.com/"&gt;https://www.rabbitmq.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;官方教程&lt;/code&gt;: &lt;a href="https://www.rabbitmq.com/#getstarted"&gt;https://www.rabbitmq.com/#getstarted&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; # AMQP 协议
+        AMQP（advanced message queuing protocol）`在2003年时被提出，最早用于解决金融领不同平台之间的消息传递交互问题。顾名思义，AMQP是一种协议，更准确的说是一种binary wire-level protocol（链接协议）。这是其和JMS的本质差别，AMQP不从API层进行限定，而是直接定义网络交换的数据格式。这使得实现了AMQP的provider天然性就是跨平台的。以下是AMQP协议模型:&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 123.42799188640974" data-width="1217" data-height="493"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9ef65242b80e1ebc1d73f53ed50086a4.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;2.2 RabbitMQ 的安装&lt;/h3&gt;
+&lt;h4&gt;2.2.1 下载&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;官网下载地址&lt;/code&gt;: &lt;a href="https://www.rabbitmq.com/download.html![image-20190925220115235](..\static\笔记图片\RibbitMQ\image-20190925220115235.png"&gt;https://www.rabbitmq.com/download.html![image-20190925220115235](..\static\笔记图片\RibbitMQ\image-20190925220115235.png&lt;/a&gt;)&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;最新版本&lt;/code&gt;: 3.7.18&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;2.2.2 下载的安装包&lt;figure class="pswp-item" style="flex: 478.0487804878049" data-width="1568" data-height="164"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4dd564f0437ff4a3ef3c7960342d835c.png" alt="image-20190925220343521" /&gt;&lt;figcaption&gt;image-20190925220343521&lt;/figcaption&gt;&lt;/figure&gt;&lt;/h4&gt;
+&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;注意&lt;/code&gt;:这里的安装包是centos7安装的包&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;2.2.3 安装步骤&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;# 1.将rabbitmq安装包上传到linux系统中
+    erlang-22.0.7-1.el7.x86_64.rpm
+    rabbitmq-server-3.7.18-1.el7.noarch.rpm
+
+# 2.安装Erlang依赖包
+    rpm -ivh erlang-22.0.7-1.el7.x86_64.rpm
+
+# 3.安装RabbitMQ安装包(需要联网)
+    yum install -y rabbitmq-server-3.7.18-1.el7.noarch.rpm
+        注意:默认安装完成后配置文件模板在:/usr/share/doc/rabbitmq-server-3.7.18/rabbitmq.config.example目录中,需要   
+                将配置文件复制到/etc/rabbitmq/目录中,并修改名称为rabbitmq.config
+# 4.复制配置文件
+    cp /usr/share/doc/rabbitmq-server-3.7.18/rabbitmq.config.example /etc/rabbitmq/rabbitmq.config
+
+# 5.查看配置文件位置
+    ls /etc/rabbitmq/rabbitmq.config
+
+# 6.修改配置文件(参见下图:)
+    vim /etc/rabbitmq/rabbitmq.config&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 244.23963133640552" data-width="2120" data-height="434"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4b971848376cfdaa2408a0e73f86ca26.png" alt="image-20190925222230260" /&gt;&lt;figcaption&gt;image-20190925222230260&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;将上图中配置文件中红色部分去掉&lt;code&gt;%%&lt;/code&gt;,以及最后的&lt;code&gt;,&lt;/code&gt;逗号 修改为下图:&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 358.44594594594594" data-width="2122" data-height="296"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6b01794883d70d3d5a4fa6334360d22d.png" alt="image-20190925222329200" /&gt;&lt;figcaption&gt;image-20190925222329200&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 7.执行如下命令,启动rabbitmq中的插件管理
+    rabbitmq-plugins enable rabbitmq_management
+
+    出现如下说明:
+        Enabling plugins on node rabbit@localhost:
+    rabbitmq_management
+    The following plugins have been configured:
+      rabbitmq_management
+      rabbitmq_management_agent
+      rabbitmq_web_dispatch
+    Applying plugin configuration to rabbit@localhost...
+    The following plugins have been enabled:
+      rabbitmq_management
+      rabbitmq_management_agent
+      rabbitmq_web_dispatch
+
+    set 3 plugins.
+    Offline change; changes will take effect at broker restart.
+
+# 8.启动RabbitMQ的服务
+    systemctl start rabbitmq-server
+    systemctl restart rabbitmq-server
+    systemctl stop rabbitmq-server
+
+
+# 9.查看服务状态(见下图:)
+    systemctl status rabbitmq-server
+  ● rabbitmq-server.service - RabbitMQ broker
+     Loaded: loaded (/usr/lib/systemd/system/rabbitmq-server.service; disabled; vendor preset: disabled)
+     Active: active (running) since 三 2019-09-25 22:26:35 CST; 7s ago
+   Main PID: 2904 (beam.smp)
+     Status: "Initialized"
+     CGroup: /system.slice/rabbitmq-server.service
+             ├─2904 /usr/lib64/erlang/erts-10.4.4/bin/beam.smp -W w -A 64 -MBas ageffcbf -MHas ageffcbf -
+             MBlmbcs...
+             ├─3220 erl_child_setup 32768
+             ├─3243 inet_gethost 4
+             └─3244 inet_gethost 4
+      .........&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 82.46951219512195" data-width="3246" data-height="1968"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f2be7a0ae07763b79a893a2c6b61d404.png" alt="image-20190925222743776" /&gt;&lt;figcaption&gt;image-20190925222743776&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 10.关闭防火墙服务
+    systemctl disable firewalld
+    Removed syamlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+    Removed syamlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+    systemctl stop firewalld   
+
+# 11.访问web管理界面
+    http://10.15.0.8:15672/&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 221.79054054054055" data-width="2626" data-height="592"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fa9424976bd1e88efcdd268ebc8c5001.png" alt="image-20190926194738708" /&gt;&lt;figcaption&gt;image-20190926194738708&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 12.登录管理界面
+    username:  guest
+    password:  guest&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 98.342939481268" data-width="2730" data-height="1388"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2d5da6c6b8bf716d77efae35d336a115.png" alt="image-20190926194954822" /&gt;&lt;figcaption&gt;image-20190926194954822&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;3. RabiitMQ 配置&lt;/h2&gt;
+&lt;h3&gt;3.1RabbitMQ 管理命令行&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# 1.服务启动相关
+    systemctl start|restart|stop|status rabbitmq-server
+
+# 2.管理命令行  用来在不使用web管理界面情况下命令操作RabbitMQ
+    rabbitmqctl  help  可以查看更多命令
+
+# 3.插件管理命令行
+    rabbitmq-plugins enable|list|disable&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;3.2 web管理界面介绍&lt;/h3&gt;
+&lt;h4&gt;3.2.1 overview概览&lt;/h4&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 111.92080876158383" data-width="2657" data-height="1187"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b0418696e5653ec1ad90f52af9efd25a.png" alt="image-20191126162026720" /&gt;&lt;figcaption&gt;image-20191126162026720&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;connections：无论生产者还是消费者，都需要与RabbitMQ建立连接后才可以完成消息的生产和消费，在这里可以查看连接情况&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;channels：通道，建立连接后，会形成通道，消息的投递获取依赖通道。&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Exchanges：交换机，用来实现消息的路由&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Queues：队列，即消息队列，消息存放在队列中，等待消费，消费后被移除队列。&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;3.2.2 Admin用户和虚拟主机管理&lt;/h4&gt;
+&lt;h5&gt;1. 添加用户&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 215.75121163166398" data-width="2671" data-height="619"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4121e483f4e3f71bbbe09d624fd406cc.png" alt="image-20191126162617280" /&gt;&lt;figcaption&gt;image-20191126162617280&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面的Tags选项，其实是指定用户的角色，可选的有以下几个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;超级管理员(administrator)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可登陆管理控制台，可查看所有的信息，并且可以对用户，策略(policy)进行操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;监控者(monitoring)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可登陆管理控制台，同时可以查看rabbitmq节点的相关信息(进程数，内存使用情况，磁盘使用情况等)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;策略制定者(policymaker)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可登陆管理控制台, 同时可以对policy进行管理。但无法查看节点的相关信息(上图红框标识的部分)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;普通管理者(management)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;仅可登陆管理控制台，无法看到节点信息，也无法对策略进行管理。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;其他&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;无法登陆管理控制台，通常就是普通的生产者和消费者。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;2. 创建虚拟主机&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code&gt;# 虚拟主机
+    为了让各个用户可以互不干扰的工作，RabbitMQ添加了虚拟主机（Virtual Hosts）的概念。其实就是一个独立的访问路径，不同用户使用不同路径，各自有自己的队列、交换机，互相不会影响。&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 275.0" data-width="2651" data-height="482"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4a6f6e328da79eaaf8823b2b7476e8a3.png" alt="image-20191126163023153" /&gt;&lt;figcaption&gt;image-20191126163023153&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h5&gt;3. 绑定虚拟主机和用户&lt;/h5&gt;
+&lt;p&gt;创建好虚拟主机，我们还要给用户添加访问权限：&lt;/p&gt;
+&lt;p&gt;点击添加好的虚拟主机：&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 309.05882352941177" data-width="2627" data-height="425"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0ea5750a4b74193ba2fd3c1df75850c2.png" alt="image-20191126163506795" /&gt;&lt;figcaption&gt;image-20191126163506795&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;进入虚拟机设置界面:&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 121.84014869888476" data-width="2622" data-height="1076"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f83a3112ad19417e8a9de04673e4c3ef.png" alt="image-20191126163631889" /&gt;&lt;figcaption&gt;image-20191126163631889&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;4.RabbitMQ 的第一个程序&lt;/h2&gt;
+&lt;h3&gt;4.0 AMQP协议的回顾&lt;/h3&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 179.20604914933838" data-width="1896" data-height="529"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2c0402a64943df3ea1edf391d5bdfaa2.png" alt="image-20200312140114784" /&gt;&lt;figcaption&gt;image-20200312140114784&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;4.1 RabbitMQ支持的消息模型&lt;/h3&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 100.83333333333333" data-width="3146" data-height="1560"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5f0b0986e26e72ab7a05f17ae78e93ad.png" alt="image-20191126165434784" /&gt;&lt;figcaption&gt;image-20191126165434784&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 100.97402597402598" data-width="3110" data-height="1540"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ab8610f1223d604017a491346f3c0435.png" alt="image-20191126165459282" /&gt;&lt;figcaption&gt;image-20191126165459282&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;4.2 引入依赖&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.rabbitmq&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;amqp-client&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.7.2&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;4.3 第一种模型(直连)&lt;/h3&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 337.0860927152318" data-width="1018" data-height="151"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/208409a80ad47ab5310b8b7da055cc86.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在上图的模型中，有以下概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;P：生产者，也就是要发送消息的程序&lt;/li&gt;
+&lt;li&gt;C：消费者：消息的接受者，会一直等待消息到来。&lt;/li&gt;
+&lt;li&gt;queue：消息队列，图中红色部分。类似一个邮箱，可以缓存消息；生产者向其中投递消息，消费者从其中取出消息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;1. 开发生产者&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//创建连接工厂&lt;/span&gt;
+  &lt;span class="n"&gt;ConnectionFactory&lt;/span&gt; &lt;span class="n"&gt;connectionFactory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ConnectionFactory&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接rabbitmq主机&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;192.168.123.128&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接端口号&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setPort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5672&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接的虚拟主机(自己创建的)&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setUsername&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ems&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接的虚拟主机的用户名和密码&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setPassword&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;123&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVirtualHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/ems&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//创建连接对象&lt;/span&gt;
+  &lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;newConnection&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//创建通道&lt;/span&gt;
+  &lt;span class="n"&gt;Channel&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createChannel&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//将通道绑定到队列上&lt;/span&gt;
+  &lt;span class="c1"&gt;//参数1 queue:队列名称(如果不存在则自动创建) 参数2 durable:持久化队列，则为true。参数3 exclusive:独占队列，则为true。参数4 autoDelete:是否在消费完成后自动删除队列，是则为true。参数5 arguments:队列的其他附件参数&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//发布消息(此时没有使用交换机)&lt;/span&gt;
+  &lt;span class="c1"&gt;//参数1: 交换机名称 参数2:队列名称 参数3 :传递消息额外设置 参数4 :消息的具体内容&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicPublish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello rabbitmq&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2. 开发消费者&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//创建连接工厂&lt;/span&gt;
+  &lt;span class="n"&gt;ConnectionFactory&lt;/span&gt; &lt;span class="n"&gt;connectionFactory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ConnectionFactory&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接rabbitmq主机&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;192.168.123.128&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接端口号&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setPort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5672&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接的虚拟主机(自己创建的)&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setUsername&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ems&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//设置连接的虚拟主机的用户名和密码&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setPassword&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;123&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVirtualHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/ems&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//创建连接对象&lt;/span&gt;
+  &lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;connectionFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;newConnection&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//创建通道&lt;/span&gt;
+  &lt;span class="n"&gt;Channel&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createChannel&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="c1"&gt;//将通道绑定到队列上&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;//消费消息&lt;/span&gt;
+  &lt;span class="c1"&gt;//参数1:queue—队列的名称&lt;/span&gt;
+  &lt;span class="c1"&gt;//参数2:autoAck—开启消息的自动确认机制&lt;/span&gt;
+  &lt;span class="c1"&gt;//参数3:callback—消费时回调接口&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3. 参数说明&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;参数1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;用来声明通道对应的队列&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;如果不存在则自动创建&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;参数2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;用来指定是否持久化队列&lt;/span&gt;
+  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;参数3&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;用来指定是否独占队列&lt;/span&gt;
+  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;参数4&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;用来指定是否自动删除队列&lt;/span&gt;
+  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;参数5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;对队列的额外配置&lt;/span&gt;
+  &lt;span class="c1"&gt;//消费者需要和生产者绑定一样的队列上才能进行&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;h3&gt;4.4 第二种模型(work quene)&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Work queues&lt;/code&gt;，也被称为（&lt;code&gt;Task queues&lt;/code&gt;），任务模型。当消息处理比较耗时的时候，可能生产消息的速度会远远大于消息的消费速度。长此以往，消息就会堆积越来越多，无法及时处理。此时就可以使用work 模型：&lt;strong&gt;让多个消费者绑定到一个队列，共同消费队列中的消息&lt;/strong&gt;。队列中的消息一旦消费，就会消失，因此任务是不会被重复执行的。&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 359.92063492063494" data-width="1814" data-height="252"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f3eba840cae99216c59e99ff41cfc82e.png" alt="image-20200314221002008" /&gt;&lt;figcaption&gt;image-20200314221002008&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;角色：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;P：生产者：任务的发布者&lt;/li&gt;
+&lt;li&gt;C1：消费者-1，领取任务并完成任务，假设完成速度较慢&lt;/li&gt;
+&lt;li&gt;C2：消费者-2：领取任务并完成任务，假设完成速度较快&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;1. 开发生产者&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicPublish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;====&amp;gt;:我是消息&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2.开发消费者-1&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者1: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.开发消费者-2&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;   &lt;span class="c1"&gt;//处理消息比较慢 一秒处理一个消息&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InterruptedException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printStackTrace&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者2: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;  
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.测试结果&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 540.4494382022472" data-width="1924" data-height="178"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/21b0133a0bbab3ef50a2b646a6cb5753.png" alt="image-20200314223242058" /&gt;&lt;figcaption&gt;image-20200314223242058&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 603.6312849162011" data-width="2161" data-height="179"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/487e46633ef6fd87ebee9d60d386814e.png" alt="image-20200314223302207" /&gt;&lt;figcaption&gt;image-20200314223302207&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;总结:默认情况下，RabbitMQ将按顺序将每个消息发送给下一个使用者。平均而言，每个消费者都会收到相同数量的消息。这种分发消息的方式称为循环。&lt;/code&gt;&lt;a href="https://www.rabbitmq.com/tutorials/tutorial-two-java.html"&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5&gt;5.消息自动确认机制&lt;/h5&gt;
+&lt;blockquote&gt;&lt;p&gt;Doing a task can take a few seconds. You may wonder what happens if one of the consumers starts a long task and dies with it only partly done. With our current code, once RabbitMQ delivers a message to the consumer it immediately marks it for deletion. In this case, if you kill a worker we will lose the message it was just processing. We'll also lose all the messages that were dispatched to this particular worker but were not yet handled.&lt;/p&gt;
+&lt;p&gt;But we don't want to lose any tasks. If a worker dies, we'd like the task to be delivered to another worker.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicQos&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//一次只接受一条未确认的消息&lt;/span&gt;
+&lt;span class="c1"&gt;//参数2:关闭自动确认消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者1: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicAck&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDeliveryTag&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//手动确认消息&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;设置通道一次只能消费一个消息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;关闭消息的自动确认,开启手动确认消息&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 357.1917808219178" data-width="2086" data-height="292"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8b0503fcd94276ffe0b6bf29a38fcf49.png" alt="image-20200314230412178" /&gt;&lt;figcaption&gt;image-20200314230412178&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 506.8181818181818" data-width="2230" data-height="220"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/361040c596a40024c5a056a69e7bf299.png" alt="image-20200314230423280" /&gt;&lt;figcaption&gt;image-20200314230423280&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;4.5 第三种模型(fanout)&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;fanout 扇出 也称为广播&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 214.07035175879398" data-width="852" data-height="199"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f9ace2504750521640bb28c2f473a7a0.png" alt="image-20191126213115873" /&gt;&lt;figcaption&gt;image-20191126213115873&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在广播模式下，消息发送流程是这样的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以有多个消费者&lt;/li&gt;
+&lt;li&gt;每个&lt;strong&gt;消费者有自己的queue&lt;/strong&gt;（队列）&lt;/li&gt;
+&lt;li&gt;每个&lt;strong&gt;队列都要绑定到Exchange&lt;/strong&gt;（交换机）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;生产者发送的消息，只能发送到交换机&lt;/strong&gt;，交换机来决定要发给哪个队列，生产者无法决定。&lt;/li&gt;
+&lt;li&gt;交换机把消息发送给绑定过的所有队列&lt;/li&gt;
+&lt;li&gt;队列的消费者都能拿到消息。实现一条消息被多个消费者消费&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;1. 开发生产者&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//广播 一条消息多个消费者同时消费&lt;/span&gt;
+&lt;span class="c1"&gt;//发布消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicPublish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2. 开发消费者-1&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//绑定交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//将临时队列绑定exchange&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//处理消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者1: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3. 开发消费者-2&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//绑定交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//将临时队列绑定exchange&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//处理消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者2: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.开发消费者-3&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//绑定交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//将临时队列绑定exchange&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//处理消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者3: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;5. 测试结果&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 923.469387755102" data-width="1810" data-height="98"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d40cecbc694fee486252253e191afa2b.png" alt="image-20200315180653207" /&gt;&lt;figcaption&gt;image-20200315180653207&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 974.1935483870968" data-width="1812" data-height="93"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/bc5d149cca7ce6a283a54f9eacb9629d.png" alt="image-20200315180708489" /&gt;&lt;figcaption&gt;image-20200315180708489&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 942.7083333333334" data-width="1810" data-height="96"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/987743f4d76ae6fe2f03c612800cb911.png" alt="image-20200315180728035" /&gt;&lt;figcaption&gt;image-20200315180728035&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;4.6 第四种模型(Routing)&lt;/h3&gt;
+&lt;h4&gt;4.6.1 Routing 之订阅模型-Direct(直连)&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;在Fanout模式中，一条消息，会被所有订阅的队列都消费。但是，在某些场景下，我们希望不同的消息被不同的队列消费。这时就要用到Direct类型的Exchange。&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在Direct模型下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;队列与交换机的绑定，不能是任意绑定了，而是要指定一个&lt;code&gt;RoutingKey&lt;/code&gt;（路由key）&lt;/li&gt;
+&lt;li&gt;消息的发送方在 向 Exchange发送消息时，也必须指定消息的 &lt;code&gt;RoutingKey&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;Exchange不再把消息交给每一个绑定的队列，而是根据消息的&lt;code&gt;Routing Key&lt;/code&gt;进行判断，只有队列的&lt;code&gt;Routingkey&lt;/code&gt;与消息的 &lt;code&gt;Routing key&lt;/code&gt;完全一致，才会接收到消息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;流程:&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 206.03864734299518" data-width="853" data-height="207"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b376d282d23be3c7012b444a15dfd2cd.png" alt="image-20191126220145375" /&gt;&lt;figcaption&gt;image-20191126220145375&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;图解：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;P：生产者，向Exchange发送消息，发送消息时，会指定一个routing key。&lt;/li&gt;
+&lt;li&gt;X：Exchange（交换机），接收生产者的消息，然后把消息递交给 与routing key完全匹配的队列&lt;/li&gt;
+&lt;li&gt;C1：消费者，其所在队列指定了需要routing key 为 error 的消息&lt;/li&gt;
+&lt;li&gt;C2：消费者，其所在队列指定了需要routing key 为 info、error、warning 的消息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;1. 开发生产者&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机  参数1:交换机名称 参数2:交换机类型 基于指令的Routing key转发&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;//发布消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicPublish&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;指定的route key&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;的消息&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2.开发消费者-1&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//绑定队列和交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;info&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;warn&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;//消费消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者1: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.开发消费者-2&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//绑定队列和交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs_direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//消费消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者2: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.测试生产者发送Route key为error的消息时&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 569.2567567567568" data-width="1685" data-height="148"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5009a1d26e7f3a0f66e32682bae36668.png" alt="image-20200316102613933" /&gt;&lt;figcaption&gt;image-20200316102613933&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 519.8757763975156" data-width="1674" data-height="161"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69cb52fb9950dbab04b5c0c959a86fe6.png" alt="image-20200316102627912" /&gt;&lt;figcaption&gt;image-20200316102627912&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h5&gt;5.测试生产者发送Route key为info的消息时&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 653.1007751937984" data-width="1685" data-height="129"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/119d3d4bbfb8348c0332f627120cbd72.png" alt="image-20200316102925740" /&gt;&lt;figcaption&gt;image-20200316102925740&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 506.6265060240964" data-width="1682" data-height="166"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d3b2aae6a3db345ec626e694c6001abc.png" alt="image-20200316102947326" /&gt;&lt;figcaption&gt;image-20200316102947326&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4&gt;4.6.2 Routing 之订阅模型-Topic&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Topic&lt;/code&gt;类型的&lt;code&gt;Exchange&lt;/code&gt;与&lt;code&gt;Direct&lt;/code&gt;相比，都是可以根据&lt;code&gt;RoutingKey&lt;/code&gt;把消息路由到不同的队列。只不过&lt;code&gt;Topic&lt;/code&gt;类型&lt;code&gt;Exchange&lt;/code&gt;可以让队列在绑定&lt;code&gt;Routing key&lt;/code&gt; 的时候使用通配符！这种模型&lt;code&gt;Routingkey&lt;/code&gt; 一般都是由一个或多个单词组成，多个单词之间以”.”分割，例如： &lt;code&gt;item.insert&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 243.55769230769232" data-width="2533" data-height="520"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/78f06c5d8a0ff5df356eb84a9117d0d9.png" alt="image-20191127121900255" /&gt;&lt;figcaption&gt;image-20191127121900255&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;``` &lt;/p&gt;
+&lt;h1&gt;统配符&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;    * (star) can substitute for exactly one word.    匹配不多不少恰好1个词
+    # (hash) can substitute for zero or more words.  匹配一个或多个词
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;如:&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;    audit.#    匹配audit.irs.corporate或者 audit.irs 等
+audit.*   只能匹配 audit.irs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+##### 1.开发生产者
+
+```java
+//生命交换机和交换机类型 topic 使用动态路由(通配符方式)
+channel.exchangeDeclare("topics","topic");
+String routekey = "user.save";//动态路由key
+//发布消息
+channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模型,route key: ["+routekey+"]").getBytes());&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;2.开发消费者-1&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;Routing Key中使用*通配符方式&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//绑定队列与交换机并设置获取交换机中动态路由&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;//消费消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者1: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;3.开发消费者-2&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;Routing Key中使用#通配符方式&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//声明交换机&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;exchangeDeclare&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueDeclare&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getQueue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//绑定队列与交换机并设置获取交换机中动态路由&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;queueBind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;//消费消息&lt;/span&gt;
+&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;basicConsume&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;DefaultConsumer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;channel&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;handleDelivery&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;consumerTag&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Envelope&lt;/span&gt; &lt;span class="n"&gt;envelope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMQP&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BasicProperties&lt;/span&gt; &lt;span class="n"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;消费者2: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;4.测试结果&lt;/h5&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 510.0" data-width="1683" data-height="165"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0eae8ccbbb077ff027c5bf5c44acf3df.png" alt="image-20200316113935785" /&gt;&lt;figcaption&gt;image-20200316113935785&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 508.73493975903614" data-width="1689" data-height="166"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fbaa84d9b6ab86474b8d147fa1f1370c.png" alt="image-20200316114000459" /&gt;&lt;figcaption&gt;image-20200316114000459&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2&gt;5. SpringBoot中使用RabbitMQ&lt;/h2&gt;
+&lt;h3&gt;5.0 搭建初始环境&lt;/h3&gt;
+&lt;h5&gt;1. 引入依赖&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-amqp&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h5&gt;2. 配置配置文件&lt;/h5&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;spring&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="nt"&gt;application&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;springboot_rabbitmq&lt;/span&gt;
+  &lt;span class="nt"&gt;rabbitmq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nt"&gt;host&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;10.15.0.9&lt;/span&gt;
+    &lt;span class="nt"&gt;port&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;5672&lt;/span&gt;
+    &lt;span class="nt"&gt;username&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ems&lt;/span&gt;
+    &lt;span class="nt"&gt;password&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;123&lt;/span&gt;
+    &lt;span class="nt"&gt;virtual-host&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;/ems&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;RabbitTemplate&lt;/code&gt;  用来简化操作     使用时候直接在项目中注入即可使用&lt;/p&gt;
+&lt;h3&gt;5.1 第一种hello world模型使用&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发生产者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RabbitTemplate&lt;/span&gt; &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Test&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;testHello&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+  &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;convertAndSend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;##### 开发消费者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queuesToDeclare&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloCustomer&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitHandler&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.2 第二种work模型使用&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发生产者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RabbitTemplate&lt;/span&gt; &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Test&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;testWork&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;convertAndSend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;work&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello work!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;##### 开发消费者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WorkCustomer&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queuesToDeclare&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;work&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;work message1 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;queuesToDeclare&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;work&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;work message2 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;&lt;p&gt;&lt;code&gt;说明:默认在Spring AMQP实现中Work这种方式就是公平调度,如果需要实现能者多劳需要额外配置&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.3 Fanout 广播模型&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发生产者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RabbitTemplate&lt;/span&gt; &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Test&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;testFanout&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;InterruptedException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;convertAndSend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;这是日志广播&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发消费者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FanoutCustomer&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message1 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c1"&gt;//创建临时队列&lt;/span&gt;
+            &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fanout&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;//绑定交换机类型&lt;/span&gt;
+    &lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message2 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.4 Route 路由模型&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发生产者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RabbitTemplate&lt;/span&gt; &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="nd"&gt;@Test&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;testDirect&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+  &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;convertAndSend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;directs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error 的日志信息&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;##### 开发消费者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DirectCustomer&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                    &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+                    &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;info&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+                    &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;directs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)})&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message1 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                    &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+                    &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+                    &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;direct&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;directs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)})&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message2 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;5.5 Topic 订阅模型(动态路由模型)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发生产者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Autowired&lt;/span&gt;
+&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;RabbitTemplate&lt;/span&gt; &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;//topic&lt;/span&gt;
+&lt;span class="nd"&gt;@Test&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;testTopic&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+  &lt;span class="n"&gt;rabbitTemplate&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;convertAndSend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.save.findAll&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.save.findAll 的消息&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 开发消费者&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TopCustomer&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                    &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+                    &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;topic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;})&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message1 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@RabbitListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bindings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nd"&gt;@QueueBinding&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                    &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Queue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;user.#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+                    &lt;span class="n"&gt;exchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nd"&gt;@Exchange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;topic&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;})&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;receive2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;message2 = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;6. MQ的应用场景&lt;/h2&gt;
+&lt;h3&gt;6.1 异步处理&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;场景说明：用户注册后，需要发注册邮件和注册短信,传统的做法有两种 1.串行的方式 2.并行的方式&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;串行方式:&lt;/code&gt; 将注册信息写入数据库后,发送注册邮件,再发送注册短信,以上三个任务全部完成后才返回给客户端。 这有一个问题是,邮件,短信并不是必须的,它只是一个通知,而这种做法让客户端等待没有必要等待的东西.&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 217.77777777777777" data-width="980" data-height="225"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3ce4d8367cb1aa1d179880d1387903b7.png" alt="这里写图片描述" /&gt;&lt;figcaption&gt;这里写图片描述&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;并行方式:&lt;/code&gt;将注册信息写入数据库后,发送邮件的同时,发送短信,以上三个任务完成后,返回给客户端,并行的方式能提高处理的时间。&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 107.96344647519582" data-width="827" data-height="383"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/09834f8d58428aeb26f2ba595507d306.png" alt="这里写图片描述" /&gt;&lt;figcaption&gt;这里写图片描述&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;消息队列:&lt;/code&gt;假设三个业务节点分别使用50ms,串行方式使用时间150ms,并行使用时间100ms。虽然并行已经提高的处理时间,但是,前面说过,邮件和短信对我正常的使用网站没有任何影响，客户端没有必要等着其发送完成才显示注册成功,应该是写入数据库后就返回.  &lt;code&gt;消息队列&lt;/code&gt;: 引入消息队列后，把发送邮件,短信不是必须的业务逻辑异步处理&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 174.83660130718954" data-width="1070" data-height="306"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2956cd8a88dd85797b386bdbd96a46ef.jpg" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由此可以看出,引入消息队列后，用户的响应时间就等于写入数据库的时间+写入消息队列的时间(可以忽略不计),引入消息队列后处理后,响应时间是串行的3倍,是并行的2倍。&lt;/p&gt;
+&lt;h3&gt;6.2 应用解耦&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;场景：双11是购物狂节,用户下单后,订单系统需要通知库存系统,传统的做法就是订单系统调用库存系统的接口.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 148.59550561797752" data-width="529" data-height="178"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d0358403d610cf347b88ae21217e7e52.png" alt="这里写图片描述" /&gt;&lt;figcaption&gt;这里写图片描述&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这种做法有一个缺点:&lt;/p&gt;
+&lt;p&gt;当库存系统出现故障时,订单就会失败。 订单系统和库存系统高耦合.  引入消息队列&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 101.90058479532163" data-width="697" data-height="342"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5a93fc34f7f1a5ee79c70f557f508f2b.png" alt="这里写图片描述" /&gt;&lt;figcaption&gt;这里写图片描述&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;订单系统:&lt;/code&gt;用户下单后,订单系统完成持久化处理,将消息写入消息队列,返回用户订单下单成功。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;库存系统:&lt;/code&gt;订阅下单的消息,获取下单消息,进行库操作。  就算库存系统出现故障,消息队列也能保证消息的可靠投递,不会导致消息丢失.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;6.3 流量削峰&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;场景:&lt;/code&gt; 秒杀活动，一般会因为流量过大，导致应用挂掉,为了解决这个问题，一般在应用前端加入消息队列。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;作用:&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;​           1.可以控制活动人数，超过此一定阀值的订单直接丢弃(我为什么秒杀一次都没有成功过呢^^)&lt;/p&gt;
+&lt;p&gt;​           2.可以缓解短时间的高流量压垮应用(应用程序按自己的最大处理能力获取订单)&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 189.26829268292684" data-width="776" data-height="205"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1ba6793827fcce1679c42ef26bd163c3.png" alt="这里写图片描述" /&gt;&lt;figcaption&gt;这里写图片描述&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;1.用户的请求,服务器收到之后,首先写入消息队列,加入消息队列长度超过最大值,则直接抛弃用户请求或跳转到错误页面.&lt;/p&gt;
+&lt;p&gt;2.秒杀业务根据消息队列中的请求信息，再做后续处理.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;7. RabbitMQ的集群&lt;/h2&gt;
+&lt;h3&gt;7.1 集群架构&lt;/h3&gt;
+&lt;h4&gt;7.1.1 普通集群(副本集群)&lt;/h4&gt;
+&lt;blockquote&gt;&lt;p&gt;All data/state required for the operation of a RabbitMQ broker is replicated across all nodes. An exception to this are message queues, which by default reside on one node, though they are visible and reachable from all nodes. To replicate queues across nodes in a cluster   --摘自官网&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;默认情况下:RabbitMQ代理操作所需的所有数据/状态都将跨所有节点复制。这方面的一个例外是消息队列，默认情况下，消息队列位于一个节点上，尽管它们可以从所有节点看到和访问&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;##### 架构图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 237.3913043478261" data-width="1638" data-height="345"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2b587cff61f10667ed450ec7dab44348.png" alt="image-20200320094147471" /&gt;&lt;figcaption&gt;image-20200320094147471&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;​   核心解决问题:  &lt;code&gt;当集群中某一时刻master节点宕机,可以对Quene中信息,进行备份&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 集群搭建&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 0.集群规划
+ node1: 10.15.0.3  mq1  master 主节点
+ node2: 10.15.0.4  mq2  repl1  副本节点
+ node3: 10.15.0.5  mq3  repl2  副本节点
+
+# 1.克隆三台机器主机名和ip映射
+ vim /etc/hosts加入:
+      10.15.0.3 mq1
+     10.15.0.4 mq2
+     10.15.0.5 mq3
+ node1: vim /etc/hostname 加入:  mq1
+ node2: vim /etc/hostname 加入:  mq2
+ node3: vim /etc/hostname 加入:  mq3
+
+# 2.三个机器安装rabbitmq,并同步cookie文件,在node1上执行:
+ scp /var/lib/rabbitmq/.erlang.cookie root@mq2:/var/lib/rabbitmq/
+ scp /var/lib/rabbitmq/.erlang.cookie root@mq3:/var/lib/rabbitmq/
+
+# 3.查看cookie是否一致:
+ node1: cat /var/lib/rabbitmq/.erlang.cookie 
+ node2: cat /var/lib/rabbitmq/.erlang.cookie 
+ node3: cat /var/lib/rabbitmq/.erlang.cookie 
+
+# 4.后台启动rabbitmq所有节点执行如下命令,启动成功访问管理界面:
+ rabbitmq-server -detached 
+
+# 5.在node2和node3执行加入集群命令:
+ 1.关闭       rabbitmqctl stop_app
+ 2.加入集群    rabbitmqctl join_cluster rabbit@mq1
+ 3.启动服务    rabbitmqctl start_app
+
+# 6.查看集群状态,任意节点执行:
+ rabbitmqctl cluster_status
+
+# 7.如果出现如下显示,集群搭建成功:
+ Cluster status of node rabbit@mq3 ...
+ [{nodes,[{disc,[rabbit@mq1,rabbit@mq2,rabbit@mq3]}]},
+ {running_nodes,[rabbit@mq1,rabbit@mq2,rabbit@mq3]},
+ {cluster_name,&amp;lt;&amp;lt;"rabbit@mq1"&amp;gt;&amp;gt;},
+ {partitions,[]},
+ {alarms,[{rabbit@mq1,[]},{rabbit@mq2,[]},{rabbit@mq3,[]}]}]
+
+# 8.登录管理界面,展示如下状态:&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 262.262156448203" data-width="2481" data-height="473"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/811dac6ed4dd334484f7bc5b7e8a6053.png" alt="image-20200320095613586" /&gt;&lt;figcaption&gt;image-20200320095613586&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 9.测试集群在node1上,创建队列&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 168.5472496473907" data-width="2390" data-height="709"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b0a2c04e531ad85286735a30eef4167d.png" alt="image-20200320095743935" /&gt;&lt;figcaption&gt;image-20200320095743935&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 10.查看node2和node3节点:&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 200.55467511885897" data-width="2531" data-height="631"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f87d209315fa55451d49ede1f70ef110.png" alt="image-20200320095827688" /&gt;&lt;figcaption&gt;image-20200320095827688&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 204.2604501607717" data-width="2541" data-height="622"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/eab9f236545175fc76b62d83b3ecc12c.png" alt="image-20200320095843370" /&gt;&lt;figcaption&gt;image-20200320095843370&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 11.关闭node1节点,执行如下命令,查看node2和node3:
+ rabbitmqctl stop_app&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 204.03225806451613" data-width="2530" data-height="620"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f3a8a0c75edf8d2f9fec83fd805ab892.png" alt="image-20200320100000347" /&gt;&lt;figcaption&gt;image-20200320100000347&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 203.33863275039747" data-width="2558" data-height="629"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/64509a79a1947753f285c3db1e4650b4.png" alt="image-20200320100010968" /&gt;&lt;figcaption&gt;image-20200320100010968&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;7.1.2 镜像集群&lt;/h4&gt;
+&lt;blockquote&gt;&lt;p&gt;This guide covers mirroring (queue contents replication) of classic queues  --摘自官网&lt;/p&gt;
+&lt;p&gt;By default, contents of a queue within a RabbitMQ cluster are located on a single node (the node on which the queue was declared). This is in contrast to exchanges and bindings, which can always be considered to be on all nodes. Queues can optionally be made &lt;em&gt;mirrored&lt;/em&gt; across multiple nodes. --摘自官网&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;镜像队列机制就是将队列在三个节点之间设置主从关系，消息会在三个节点之间进行自动同步，且如果其中一个节点不可用，并不会导致消息丢失或服务不可用的情况，提升MQ集群的整体高可用性。&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 集群架构图&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 154.25330812854443" data-width="1632" data-height="529"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/382fbbbed821182db54204db5f749ecf.png" alt="image-20200320113423235" /&gt;&lt;figcaption&gt;image-20200320113423235&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;##### 配置集群架构&lt;/p&gt;
+&lt;p&gt;```
+# 0.策略说明
+ rabbitmqctl set_policy [-p &lt;vhost&gt;] [--priority &lt;priority&gt;] [--apply-to &lt;apply-to&gt;] &lt;name&gt; &lt;pattern&gt;  &lt;definition&gt;
+ -p Vhost： 可选参数，针对指定vhost下的queue进行设置
+ Name:     policy的名称
+ Pattern: queue的匹配模式(正则表达式)
+ Definition：镜像定义，包括三个部分ha-mode, ha-params, ha-sync-mode&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;             ha-mode:指明镜像队列的模式，有效值为 all/exactly/nodes
+                    all：表示在集群中所有的节点上进行镜像
+                    exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定
+                    nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定
+          ha-params：ha-mode模式需要用到的参数
+            ha-sync-mode：进行队列中消息的同步方式，有效值为automatic和manual
+            priority：可选参数，policy的优先级&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;1.查看当前策略&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;rabbitmqctl list_policies
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;2.添加策略&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;rabbitmqctl set_policy ha-all '^hello' '{"ha-mode":"all","ha-sync-mode":"automatic"}' 
+说明:策略正则表达式为 “^” 表示所有匹配所有队列名称  ^hello:匹配hello开头队列
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;3.删除策略&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;rabbitmqctl clear_policy ha-all
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;4.测试集群&lt;/h1&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;hr&gt;
+</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry></feed>

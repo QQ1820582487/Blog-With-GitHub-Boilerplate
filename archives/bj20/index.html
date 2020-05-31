@@ -17,21 +17,21 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/45b725608518ef60b87115b88be42bf1.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/d8cbc89fb2cd859d3014d075490715db.json"
         }
     </script>
     
-<title>Spring Boot整合WebSocket - Xuxx的个人博客。</title>
+<title>Spring Boot构建REST服务 - Xuxx的个人博客。</title>
 <meta name="author" content="Xuxx" />
 <meta name="description" content="笔记" />
-<meta property="og:title" content="Spring Boot整合WebSocket - Xuxx的个人博客。" />
+<meta property="og:title" content="Spring Boot构建REST服务 - Xuxx的个人博客。" />
 <meta property="og:description" content="笔记" />
 <meta property="og:site_name" content="Xuxx的个人博客。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/Xuxx_Blogs/archives/bj20/" />
 <meta property="og:image" content="" />
-<meta property="article:published_time" content="2020-05-17T23:20:00-00.00" />
-<meta name="twitter:title" content="Spring Boot整合WebSocket - Xuxx的个人博客。" />
+<meta property="article:published_time" content="2020-05-16T02:20:00-00.00" />
+<meta name="twitter:title" content="Spring Boot构建REST服务 - Xuxx的个人博客。" />
 <meta name="twitter:description" content="笔记" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:image" content="" />
@@ -72,11 +72,11 @@
 <main>    
     <section class="ga-section ga-content">
         <article class="yue">
-            <h1 class="ga-post_title">Spring Boot整合WebSocket</h1>
+            <h1 class="ga-post_title">Spring Boot构建REST服务</h1>
             <span class="ga-post_meta ga-mono">
                 <span>Xuxx</span>
                 <time>
-                    2020-05-17
+                    2020-05-16
                 </time>
                 
                 in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
@@ -86,409 +86,179 @@
                 
             </span>
             <div class="ga-content_body">
-                <h2>1.什么是WebSocket?</h2>
-<p>WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。</p>
-<p>WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。</p>
-<p>在 WebSocket API 中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。</p>
-<p><figure class="pswp-item" style="flex: 93.91891891891892" data-width="834" data-height="444"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8b4dc0d32e9474d647b5f4c374713455.png" alt="img" /><figcaption>img</figcaption></figure></p>
-
-<pre><code>Upgrade: websocket
-Connection: Upgrade</code></pre>
-<p>补充：</p>
-<p><strong>SockJs</strong></p>
-<p>SockJS是一个JavaScript库，为了应对许多浏览器不支持WebSocket协议的问题，设计了备选SockJs。SockJS 是 WebSocket 技术的一种模拟。SockJS会尽可能对应 WebSocket API，但如果WebSocket 技术不可用的话，会自动降为轮询的方式。</p>
-<p><strong>Stompjs</strong></p>
-<p>STOMP—— Simple Text Oriented Message Protocol——面向消息的简单文本协议。
-SockJS 为 WebSocket 提供了 备选方案。但无论哪种场景，对于实际应用来说，这种通信形式层级过低。 STOMP协议，来为浏览器 和 server 间的 通信增加适当的消息语义。</p>
-<p><strong>WebSocket、SockJs、STOMP三者关系</strong></p>
-<p>简而言之，WebSocket 是底层协议，SockJS 是WebSocket 的备选方案，也是底层协议，而 STOMP 是基于 WebSocket（SockJS）的上层协议。</p>
-<p>1、HTTP协议解决了 web 浏览器发起请求以及 web 服务器响应请求的细节，假设 HTTP 协议 并不存在，只能使用 TCP 套接字来 编写 web 应用。</p>
-<p>2、直接使用 WebSocket（SockJS） 就很类似于 使用 TCP 套接字来编写 web 应用，因为没有高层协议，就需要我们定义应用间所发送消息的语义，还需要确保连接的两端都能遵循这些语义；</p>
-<p>3、同HTTP在TCP 套接字上添加请求-响应模型层一样，STOMP在WebSocket 之上提供了一个基于帧的线路格式层，用来定义消息语义；</p>
-<h2>2.WebSocket实现在线群聊</h2>
+                <h2>1.基础版</h2>
 <ol>
 <li><p>依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
  <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-rest<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
-
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
-<ol>
-<li><p>配置类</p>
-<div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="nd">@EnableWebSocketMessageBroker</span><span class="c1">//开启消息代理</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSocketConfig</span> <span class="kd">implements</span> <span class="n">WebSocketMessageBrokerConfigurer</span> <span class="p">{</span>
+</li>
+<li><p>配置</p>
+<div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
+  <span class="nt">datasource</span><span class="p">:</span>
+    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-       <span class="c1">//消息代理前缀（发送消息到外部 的前缀）</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">);</span>
-        <span class="c1">//接收外部消息 的前缀</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//建立连接点</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+  <span class="nt">jpa</span><span class="p">:</span>
+    <span class="nt">database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span> <span class="c1">#连接数据库类型</span>
+    <span class="nt">database-platform</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">org.hibernate.dialect.MySQL57Dialect</span> <span class="c1">#配置默认引擎</span>
+    <span class="nt">hibernate</span><span class="p">:</span>
+      <span class="nt">ddl-auto</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">update</span>
+    <span class="nt">show-sql</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
-</li>
-<li><p>bean</p>
-
-<pre><code>@Data
-public class Message {
-    private String name;
-    private String content;
-}</code></pre>
-</li>
-<li><p>Controller</p>
-
-<pre><code>@Controller
-public class GreetingController {
-
-    //消息映射路径
-    @MessageMapping("/hello")
-    //转发到"/topic/greetings",此时便由配置的消息代理进行广播
-    @SendTo("/topic/greetings")
-    public Message greeting(Message message) {
-        return message;
-    }
-
-    /*@Autowired
-    SimpMessagingTemplate simpMessagingTemplate;//消息发送模板
-
-    @MessageMapping("/hello")
-    public void greeting(Message message) {
-        simpMessagingTemplate.convertAndSend("/topic/greetings", message);//此时与上面的是一样的效果
-    }*/
-}</code></pre>
-</li>
-<li><p>聊天页面<code>chat.html</code></p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>群聊<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/jquery/jquery.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/sockjs-client/sockjs.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/stomp-websocket/stomp.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>请输入用户名<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;connect&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;连接&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;disconnect&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;断开连接&quot;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&quot;disabled&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;chat&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>请输入聊天内容<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;send&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;发送&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;conversation&quot;</span><span class="p">&gt;</span>群聊进行中...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">connect</span><span class="p">();</span>
-        <span class="p">})</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">stompClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-        <span class="p">});</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/hello&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
-        <span class="p">});</span>
-
-        <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-        <span class="kd">function</span> <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
-            <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/topic/greetings&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
-                <span class="p">})</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
-
-        <span class="kd">function</span> <span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="kd">function</span> <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">})</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</pre></div>
-</li>
-<li><p>测试结果</p>
-<p><figure class="pswp-item" style="flex: 75.51581843191197" data-width="1098" data-height="727"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b34624b771351299e7ccb9f35dca2c7b.png" alt="" /></figure></p>
 </li>
 </ol>
-</li>
-</ol>
-<h2>3.WebSocket实现在线私聊</h2>
 <ol>
-<li><p>依赖</p>
-<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="c">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-</li>
-<li><p>配置类</p>
-<div class="highlight"><pre><span></span><span class="cm">/*Security配置类*/</span>
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
-    <span class="nd">@Bean</span>
-    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xu&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">permitAll</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="cm">/*WebSocket配置类*/</span>
-<span class="nd">@Configuration</span>
-<span class="nd">@EnableWebSocketMessageBroker</span><span class="c1">//开启消息代理</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSocketConfig</span> <span class="kd">implements</span> <span class="n">WebSocketMessageBrokerConfigurer</span> <span class="p">{</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//发到/topic认为是群聊消息，发到/queue认为是单聊消息</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">,</span> <span class="s">&quot;/queue&quot;</span><span class="p">);</span><span class="c1">//发送消息到外部 的前缀</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span><span class="c1">//接收外部消息 的前缀</span>
-    <span class="p">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</li>
-<li><p>bean</p>
+<li><p>实体类</p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Chat</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">from</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">to</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">content</span><span class="p">;</span>
+<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;user_jpa&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">age</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </li>
-<li><p>Controller</p>
-
-<pre><code>@Controller
-public class GreetingController {
-
-    @MessageMapping("/chat")
-    //principal为用户信息
-    public void chat(Principal principal, Chat chat) {
-        chat.setFrom(principal.getName());
-        simpMessagingTemplate.convertAndSendToUser(chat.getTo(), "/queue/chat", chat);
-    }
-
-}</code></pre>
-</li>
-<li><p>聊天页面<code>onlinechat.html</code></p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>私聊<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/jquery/jquery.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/sockjs-client/sockjs.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/stomp-websocket/stomp.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;connect&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;连接&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;disconnect&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;断开连接&quot;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&quot;disabled&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
-消息内容：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
-目标用户：<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;to&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;发送&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;send&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;conversation&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">connect</span><span class="p">();</span>
-        <span class="p">})</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">stompClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-        <span class="p">});</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/chat&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;to&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#to&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
-        <span class="p">});</span>
-
-        <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-        <span class="kd">function</span> <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
-            <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/user/queue/chat&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span><span class="c1">//点对点需要加前缀</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
-                <span class="p">})</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
-
-        <span class="kd">function</span> <span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="kd">function</span> <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">from</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">})</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<li><p>dao</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="p">}</span>
 </pre></div>
 </li>
-<li><p>测试结果</p>
-<p><figure class="pswp-item" style="flex: 128.05194805194805" data-width="986" data-height="385"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1c18b11e196a9d7b931491e2af7c2efa.png" alt="" /></figure></p>
+<li><p>测试</p>
+<ol>
+<li><p>查询（GET请求）</p>
+<p>批量查询 <figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5c6e22c198c99c504311e785b4f41cbc.png" alt="批量查询" /><figcaption>批量查询</figcaption></figure></p>
+<p>分页查询</p>
+<p><figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e5cd51d5825430b1aa075bece2038df9.png" alt="分页查询" /><figcaption>分页查询</figcaption></figure></p>
+<p>分页+排序</p>
+<p><figure class="pswp-item" style="flex: 93.20388349514563" data-width="1920" data-height="1030"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cfb11185710191a9b3e5e0f5297532ad.png" alt="分页+排序" /><figcaption>分页+排序</figcaption></figure></p>
+<p>单个查询</p>
+<p><figure class="pswp-item" style="flex: 129.23976608187135" data-width="1326" data-height="513"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7d2a793267a80e8edde41e3d8ca4f81e.png" alt="单个查询" /><figcaption>单个查询</figcaption></figure></p>
+</li>
+<li><p>保存（POST请求）</p>
+<p><figure class="pswp-item" style="flex: 135.3734439834025" data-width="1305" data-height="482"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/33a7a36168db9b3ae17f72a19615f7b5.png" alt="保存" /><figcaption>保存</figcaption></figure></p>
+</li>
+<li><p>更新（PUT请求）</p>
+<p><figure class="pswp-item" style="flex: 134.24242424242425" data-width="1329" data-height="495"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/bd597374091c4020766f0b24167ccbcb.png" alt="更新" /><figcaption>更新</figcaption></figure></p>
+</li>
+<li><p>删除（DELETE请求）</p>
+<p><figure class="pswp-item" style="flex: 222.29965156794424" data-width="1276" data-height="287"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/edb3267018887be93e0cf6850c87789e.png" alt="删除" /><figcaption>删除</figcaption></figure></p>
+</li>
+</ol>
+</li>
+</ol>
+<p>到此就是一个基础版的REST服务了。</p>
+<h2>2.进阶版</h2>
+<h3>1.自定义查询方法</h3>
+<p>修改dao</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>重启项目，访问<code>http://localhost:8080/users/search</code></p>
+<p><figure class="pswp-item" style="flex: 152.1341463414634" data-width="1497" data-height="492"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/20aa23b7679f44b6e88f592d6783fff3.png" alt="" /></figure></p>
+<p>此时便可以看到所有的自定义查询方法(默认路径就是方法名)。</p>
+<p>访问自定义查询方法<code>findByNameContaining</code></p>
+<p><figure class="pswp-item" style="flex: 118.53312302839117" data-width="1503" data-height="634"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c65b81072e1be7704440c61590671f39.png" alt="" /></figure></p>
+<p>由于JPA的关键字命名一般较长，为了更加便捷，可以在自定义查询方法上使用<code>@RestResource</code>注解</p>
+<p><strong><code>@RestResource</code>参数</strong>:</p>
+<ul>
+<li><p>exported:是否暴露，默认为true</p>
+</li>
+<li><p>path:访问自定义查询方法的路径</p>
+</li>
+<li>rel:在生成到此资源的链接时要使用的rel值。</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 162.92906178489702" data-width="1424" data-height="437"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/da930afbf97b7a86fb1537bab0b0eac5.png" alt="" /></figure></p>
+<h3>2.自定义请求路径、结果 key 值</h3>
+<p>（1）默认情况下请求路径都是实体类名小写加 <code>@RepositoryRestResource</code></p>
+<p><strong><code>@RepositoryRestResource</code>参数：</strong></p>
+<ul>
+<li>path：表示将所有请求路径中的 <code>(例:)uesrs</code>，如 <code>http://localhost:8080/us</code></li>
+<li>collectionResourceRel：表示将返回的 JSON 集合中的<code>(例:)uesrs</code> 集合的 <strong>key</strong>。</li>
+<li>itemResourceRel ：表示将返回的 JSON 集合中的单个<code>(例:)uesr</code> 的 <strong>key</strong>。</li>
+<li>exported:是否暴露，默认为true</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nd">@RepositoryRestResource</span><span class="p">(</span><span class="n">collectionResourceRel</span> <span class="o">=</span> <span class="s">&quot;userlist&quot;</span><span class="p">,</span> <span class="n">itemResourceRel</span> <span class="o">=</span> <span class="s">&quot;u&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 140.81632653061226" data-width="1380" data-height="490"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4ae6ff01a78415d6db817eb004c4b20.png" alt="" /></figure></p>
+<h3>3.配置REST</h3>
+<ol>
+<li><strong>配置文件</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
+  <span class="nt">data</span><span class="p">:</span>
+    <span class="nt">rest</span><span class="p">:</span>
+      <span class="c1">#添加统一前缀</span>
+      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
+</pre></div>
+<p>配置后<code>http://localhost:8080/users</code>--&gt;<code>http://localhost:8080/api/users</code></p>
+<div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
+  <span class="nt">data</span><span class="p">:</span>
+    <span class="nt">rest</span><span class="p">:</span>
+      <span class="c1">#添加统一前缀</span>
+      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
+      <span class="c1">#是否在创建实体后返回记录，默认为true</span>
+      <span class="nt">return-body-on-create</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="c1">#是否在更新实体后返回记录，默认为true</span>
+      <span class="nt">return-body-on-update</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="c1">#每页的默认大小，默认20</span>
+      <span class="nt">default-page-size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+      <span class="l l-Scalar l-Scalar-Plain">......</span>
+</pre></div>
+<ol>
+<li><strong>编写配置类</strong>（优先级更高）</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * rest的配置类</span>
+<span class="cm"> */</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestConfig</span> <span class="kd">implements</span> <span class="n">RepositoryRestConfigurer</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureRepositoryRestConfiguration</span><span class="p">(</span><span class="n">RepositoryRestConfiguration</span> <span class="n">config</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">config</span><span class="p">.</span><span class="na">setBasePath</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">).</span><span class="na">setDefaultPageSize</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="c1">//链式编程，可以配置多个</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>4.配置 CORS（解决跨域请求问题）</h3>
+<p>具体参考<a href="https://qq1820582487.github.io/Xuxx_Blogs/archives/bj12/">Spring Boot通过CROS实现跨域）</a></p>
+<ol>
+<li><p>单独配置：添加<code>@CrossOrigin</code>注解</p>
+</li>
+<li><p>全局配置：编写配置类，重写<code>addCorsMappings</code>方法</p>
 </li>
 </ol>
 
@@ -504,10 +274,6 @@ public class GreetingController {
         <a class="ga-highlight" href="/Xuxx_Blogs/tag/Spring/">#Spring</a>
     </span>
     
-    <span class="ga-tag">
-        <a class="ga-highlight" href="/Xuxx_Blogs/tag/WebSocket/">#WebSocket</a>
-    </span>
-    
 </div>
     </section>
 
@@ -515,13 +281,13 @@ public class GreetingController {
 <section id="ga-content_pager">
 
     <div class="next">
-        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj21/">Spring Boot整合Security</a>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj21/">Spring Boot整合WebSocket</a>
         <p class="yue">笔记</p>
     </div>
 
 
     <div class="prev">
-        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj19/">Spring Boot构建REST服务</a>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj19/">Spring Boot整合Spring Data JPA</a>
         <p class="yue">笔记</p>
     </div>
 

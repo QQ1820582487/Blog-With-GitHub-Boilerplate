@@ -22,34 +22,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
         <loc>/Xuxx_Blogs/archives/bj22/</loc>
-        <lastmod>2020-05-22</lastmod>
-        <changefreq>always</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <url>
-        <loc>/Xuxx_Blogs/archives/bj21/</loc>
         <lastmod>2020-05-18</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/bj20/</loc>
+        <loc>/Xuxx_Blogs/archives/bj21/</loc>
         <lastmod>2020-05-17</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/bj19/</loc>
+        <loc>/Xuxx_Blogs/archives/bj20/</loc>
         <lastmod>2020-05-16</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/bj18/</loc>
+        <loc>/Xuxx_Blogs/archives/bj19/</loc>
         <lastmod>2020-05-13</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
@@ -63,7 +56,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     </url>
 
     <url>
-        <loc>/Xuxx_Blogs/archives/bj16/</loc>
+        <loc>/Xuxx_Blogs/archives/bj18/</loc>
         <lastmod>2020-05-12</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>

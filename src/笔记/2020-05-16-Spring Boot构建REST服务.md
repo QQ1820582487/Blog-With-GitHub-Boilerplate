@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Boot构建REST服务
-slug: bj19
+slug: bj20
 date: 2020-05-16 02:20
 status: publish
 author: Xuxx

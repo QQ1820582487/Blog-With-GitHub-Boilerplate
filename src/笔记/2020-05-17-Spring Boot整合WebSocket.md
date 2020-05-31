@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Boot整合WebSocket
-slug: bj20
+slug: bj21
 date: 2020-05-17 23:20
 status: publish
 author: Xuxx

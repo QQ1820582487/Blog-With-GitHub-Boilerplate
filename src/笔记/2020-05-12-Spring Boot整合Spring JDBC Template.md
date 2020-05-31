@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Boot整合Spring JDBC Template
-slug: bj16
+slug: bj18
 date: 2020-05-12 16:20
 status: publish
 author: Xuxx

@@ -1,3 +1,4 @@
+```
 ---
 layout: post
 title: Spring Boot整合OAuth2
@@ -13,6 +14,8 @@ tags:
   - OAuth2
 excerpt: 笔记
 ---
+```
+
 ## 1.OAuth2基本介绍
 
 ### 1.OAuth2是什么

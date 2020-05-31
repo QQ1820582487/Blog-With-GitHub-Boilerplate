@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Boot整合Security
-slug: bj21
+slug: bj22
 date: 2020-05-18 15:10
 status: publish
 author: Xuxx

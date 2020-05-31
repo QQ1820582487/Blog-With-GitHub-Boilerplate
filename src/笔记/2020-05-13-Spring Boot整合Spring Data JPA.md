@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Boot整合Spring Data JPA
-slug: bj18
+slug: bj19
 date: 2020-05-13 01:20
 status: publish
 author: Xuxx

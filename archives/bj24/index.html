@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/fcc824a98dfa3c0db6e939ee06adcff4.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/98a9a5a88e646282a31ca60886dec052.json"
         }
     </script>
     
@@ -628,7 +628,7 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
   <span class="nt">application</span><span class="p">:</span>
     <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">springboot_rabbitmq</span>
   <span class="nt">rabbitmq</span><span class="p">:</span>
-    <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.15.0.9</span>
+    <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.123.128</span>
     <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5672</span>
     <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ems</span>
     <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">123</span>
@@ -643,18 +643,26 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 
 <span class="nd">@Test</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testHello</span><span class="p">(){</span>
-  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="s">&quot;hello world&quot;</span><span class="p">);</span>
+     <span class="c1">//参数1:队列名 参数2:消息对象</span>
+ <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;hello word&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 <li><p>##### 开发消费者</p>
-<div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queuesToDeclare</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">))</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloCustomer</span> <span class="p">{</span>
-
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @author Xuxx3309</span>
+<span class="cm"> * @Description hello word模式</span>
+<span class="cm"> * Queue注解:可以配置队列名称，是否持久化，是否独占,是否自动删除...</span>
+<span class="cm"> * @create 2020-06-03 2:02</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;helloCustomer&quot;</span><span class="p">)</span>
+<span class="c1">//让当前消费者监听&quot;hello&quot;队列</span>
+<span class="err">@</span><span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queuesToDeclare</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="n">durable</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span><span class="p">,</span> <span class="n">autoDelete</span> <span class="o">=</span> <span class="s">&quot;false&quot;</span><span class="p">))</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+    <span class="c1">//将方法标记为被RabbitListener注释的类中的Rabbit消息侦听器的目标，方法自定义</span>
     <span class="nd">@RabbitHandler</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者：&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -666,6 +674,9 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 <div class="highlight"><pre><span></span><span class="nd">@Autowired</span>
 <span class="kd">private</span> <span class="n">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="p">;</span>
 
+<span class="cm">/**</span>
+<span class="cm">* Work模式</span>
+<span class="cm">*/</span>
 <span class="nd">@Test</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testWork</span><span class="p">(){</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -675,16 +686,24 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 </pre></div>
 </li>
 <li><p>##### 开发消费者</p>
-<div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WorkCustomer</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @author Xuxx3309</span>
+<span class="cm"> * @Description Work模式</span>
+<span class="cm"> * @create 2020-06-03 2:19</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;workCustomer&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+
+    <span class="c1">//@RabbitListener可以直接加在方法上，第一个消费者</span>
     <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queuesToDeclare</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(</span><span class="s">&quot;work&quot;</span><span class="p">))</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;work message1 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者1:&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 
+    <span class="c1">//第二个消费者</span>
     <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queuesToDeclare</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(</span><span class="s">&quot;work&quot;</span><span class="p">))</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;work message2 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者2:&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -696,34 +715,42 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 <ol>
 <li><p>##### 开发生产者</p>
 <div class="highlight"><pre><span></span><span class="nd">@Autowired</span>
-<span class="kd">private</span> <span class="n">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="p">;</span>
+<span class="n">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="p">;</span>
 
+<span class="cm">/**</span>
+<span class="cm">* Fanout 广播模式</span>
+<span class="cm">*/</span>
 <span class="nd">@Test</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFanout</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="p">{</span>
-  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;logs&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="s">&quot;这是日志广播&quot;</span><span class="p">);</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFanout</span><span class="p">()</span> <span class="p">{</span>
+ <span class="c1">//此时routingKey还没用</span>
+    <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;广播模式&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 </ol>
 <ol>
 <li><p>##### 开发消费者</p>
-<div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FanoutCustomer</span> <span class="p">{</span>
-
-    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="nd">@QueueBinding</span><span class="p">(</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">,</span>
-            <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;logs&quot;</span><span class="p">,</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;fanout&quot;</span><span class="p">)</span>
-    <span class="p">))</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message1 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @author Xuxx3309</span>
+<span class="cm"> * @Description 广播模式, 需要交换机</span>
+<span class="cm"> * @create 2020-06-03 2:43</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;fanoutCustomer&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nd">@QueueBinding</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="c1">//此时没配置队列名称，是临时队列</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;fanout&quot;</span><span class="p">))</span><span class="c1">//绑定 交换机</span>
+    <span class="p">})</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者1:&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="nd">@QueueBinding</span><span class="p">(</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">,</span> <span class="c1">//创建临时队列</span>
-            <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;logs&quot;</span><span class="p">,</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;fanout&quot;</span><span class="p">)</span>  <span class="c1">//绑定交换机类型</span>
-    <span class="p">))</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message2 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nd">@QueueBinding</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;fanout&quot;</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者2:&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -735,34 +762,44 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 <div class="highlight"><pre><span></span><span class="nd">@Autowired</span>
 <span class="kd">private</span> <span class="n">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="p">;</span>
 
+<span class="cm">/**</span>
+<span class="cm">* Route-directs 路由模式</span>
+<span class="cm">*/</span>
 <span class="nd">@Test</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testDirect</span><span class="p">(){</span>
-  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;directs&quot;</span><span class="p">,</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="s">&quot;error 的日志信息&quot;</span><span class="p">);</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testRoute</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;directs&quot;</span><span class="p">,</span> <span class="s">&quot;info&quot;</span><span class="p">,</span> <span class="s">&quot;info的路由信息&quot;</span><span class="p">);</span>
+    <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;directs&quot;</span><span class="p">,</span> <span class="s">&quot;error&quot;</span><span class="p">,</span> <span class="s">&quot;error的路由信息&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 <li><p>##### 开发消费者</p>
-<div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DirectCustomer</span> <span class="p">{</span>
-
-    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @author Xuxx3309</span>
+<span class="cm"> * @Description 路由 directs模式</span>
+<span class="cm"> * @create 2020-06-03 2:59</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;directsCustomer&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nd">@QueueBinding</span><span class="p">(</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(),</span>
-                    <span class="n">key</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;info&quot;</span><span class="p">,</span><span class="s">&quot;error&quot;</span><span class="p">},</span>
-                    <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;direct&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;directs&quot;</span><span class="p">)</span>
-            <span class="p">)})</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message1 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="c1">//创建临时队列</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;directs&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;direct&quot;</span><span class="p">)</span><span class="c1">//绑定交换机</span>
+                    <span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;info&quot;</span><span class="p">,</span> <span class="s">&quot;error&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+    <span class="p">})</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者1：&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span><span class="p">{</span>
+    <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nd">@QueueBinding</span><span class="p">(</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">(),</span>
-                    <span class="n">key</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;error&quot;</span><span class="p">},</span>
-                    <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;direct&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;directs&quot;</span><span class="p">)</span>
-            <span class="p">)})</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message2 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="c1">//创建临时队列</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;directs&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;direct&quot;</span><span class="p">)</span><span class="c1">//绑定交换机</span>
+                    <span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;error&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+    <span class="p">})</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者2：&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -774,38 +811,48 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 <div class="highlight"><pre><span></span><span class="nd">@Autowired</span>
 <span class="kd">private</span> <span class="n">RabbitTemplate</span> <span class="n">rabbitTemplate</span><span class="p">;</span>
 
-<span class="c1">//topic</span>
+<span class="cm">/**</span>
+<span class="cm"> * Route-Topic 动态路由模式</span>
+<span class="cm"> */</span>
 <span class="nd">@Test</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testTopic</span><span class="p">(){</span>
-  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;topics&quot;</span><span class="p">,</span><span class="s">&quot;user.save.findAll&quot;</span><span class="p">,</span><span class="s">&quot;user.save.findAll 的消息&quot;</span><span class="p">);</span>
+  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;topics&quot;</span><span class="p">,</span> <span class="s">&quot;user.save&quot;</span><span class="p">,</span> <span class="s">&quot;user.save的路由信息&quot;</span><span class="p">);</span>
+  <span class="n">rabbitTemplate</span><span class="p">.</span><span class="na">convertAndSend</span><span class="p">(</span><span class="s">&quot;topics&quot;</span><span class="p">,</span> <span class="s">&quot;order.save.error&quot;</span><span class="p">,</span> <span class="s">&quot;order.save.error的路由信息&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 </ol>
 <ol>
 <li><p>##### 开发消费者</p>
-<div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TopCustomer</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @author Xuxx3309</span>
+<span class="cm"> * @Description 动态路由 topic模式</span>
+<span class="cm"> * &#39;#&#39; 匹配一个获多个</span>
+<span class="cm"> * &#39;*&#39; 匹配一个</span>
+<span class="cm"> * @create 2020-06-03 3:09</span>
+<span class="cm"> */</span>
+<span class="nd">@Component</span><span class="p">(</span><span class="s">&quot;topicCustomer&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
     <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nd">@QueueBinding</span><span class="p">(</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">,</span>
-                    <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;user.*&quot;</span><span class="p">},</span>
-                    <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;topic&quot;</span><span class="p">,</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;topics&quot;</span><span class="p">)</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="c1">//创建临时队列</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;topics&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;topic&quot;</span><span class="p">)</span><span class="c1">//绑定交换机</span>
+                    <span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;user.save&quot;</span><span class="p">,</span><span class="s">&quot;user.#&quot;</span><span class="p">}</span>
             <span class="p">)</span>
     <span class="p">})</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message1 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel1</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者1：&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
             <span class="nd">@QueueBinding</span><span class="p">(</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="p">,</span>
-                    <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;user.#&quot;</span><span class="p">},</span>
-                    <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&quot;topic&quot;</span><span class="p">,</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;topics&quot;</span><span class="p">)</span>
-            <span class="p">)</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nd">@Queue</span><span class="c1">//创建临时队列</span>
+                    <span class="p">,</span> <span class="n">exchange</span> <span class="o">=</span> <span class="nd">@Exchange</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;topics&quot;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;topic&quot;</span><span class="p">)</span><span class="c1">//绑定交换机</span>
+                    <span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;order.#&quot;</span><span class="p">,</span><span class="s">&quot;user.*&quot;</span><span class="p">}</span>
+         <span class="p">)</span>
     <span class="p">})</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receive2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">){</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;message2 = &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">receivel2</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;消费者2：&quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -942,12 +989,12 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
  Definition：镜像定义，包括三个部分ha-mode, ha-params, ha-sync-mode</p>
 
 <pre><code>             ha-mode:指明镜像队列的模式，有效值为 all/exactly/nodes
-                    all：表示在集群中所有的节点上进行镜像
-                    exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定
-                    nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定
+                     all：表示在集群中所有的节点上进行镜像
+                     exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定
+                     nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定
           ha-params：ha-mode模式需要用到的参数
-            ha-sync-mode：进行队列中消息的同步方式，有效值为automatic和manual
-            priority：可选参数，policy的优先级</code></pre>
+          ha-sync-mode：进行队列中消息的同步方式，有效值为automatic和manual
+          priority：可选参数，policy的优先级</code></pre>
 </li>
 </ol>
 <h1>1.查看当前策略</h1>
@@ -993,8 +1040,8 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 <section id="ga-content_pager">
 
     <div class="next">
-        <h3>没有了</h3>
-        <p class="yue">这是最新的文章</p>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj25/">Spring Boot发送邮件</a>
+        <p class="yue">笔记</p>
     </div>
 
 

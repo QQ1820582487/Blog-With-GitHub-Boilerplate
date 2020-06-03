@@ -1,0 +1,491 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/98a9a5a88e646282a31ca60886dec052.json"
+        }
+    </script>
+    
+<title>Spring Boot发送邮件 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Spring Boot发送邮件 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj25/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-06-03T23:50:00-00.00" />
+<meta name="twitter:title" content="Spring Boot发送邮件 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Spring Boot发送邮件</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-06-03
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>1.基础知识</h2>
+<ol>
+<li>什么是SMTP？
+ SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。</li>
+<li>什么是IMAP？
+ IMAP全称为Internet Message Access Protocol（互联网邮件访问协议），IMAP允许从邮件服务器上获取邮件的信息、下载邮件等。IMAP与POP类似，都是一种邮件获取协议。</li>
+<li>什么是POP3？
+ POP3全称为Post Office Protocol 3（邮局协议），POP3支持客户端远程管理服务器端的邮件。POP3常用于“离线”邮件处理，即允许客户端下载服务器邮件，然后服务器上的邮件将会被删除。目前很多POP3的邮件服务器只提供下载邮件功能，服务器本身并不删除邮件，这种属于改进版的POP3协议。</li>
+<li>IMAP和POP3协议有什么不同呢？
+ 两者最大的区别在于，IMAP允许双向通信，即在客户端的操作会反馈到服务器上，例如在客户端收取邮件、标记已读等操作，服务器会跟着同步这些操作。而对于POP协议虽然也允许客户端下载服务器邮件，但是在客户端的操作并不会同步到服务器上面的，例如在客户端收取或标记已读邮件，服务器不会同步这些操作。</li>
+</ol>
+<h2>2.进阶知识</h2>
+<ul>
+<li>什么是<code>JavaMailSender</code>和<code>JavaMailSenderImpl</code>？
+ <code>JavaMailSender</code>和<code>JavaMailSenderImpl</code> 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。</li>
+<li>如何通过<code>JavaMailSenderImpl</code>发送邮件？
+ 非常简单，直接在业务类注入<code>JavaMailSenderImpl</code>并调用<code>send</code>方法发送邮件。其中简单邮件可以通过<code>SimpleMailMessage</code>来发送邮件，而复杂的邮件（例如添加附件）可以借助<code>MimeMessageHelper</code>来构建<code>MimeMessage</code>发送邮件。</li>
+</ul>
+<h2>3.使用教程</h2>
+<h3>1.开启邮件服务</h3>
+<p>登陆使用的邮箱，在设置中打开并勾选POP3/SMTP/IMAP服务，然后会得到一个授权码，这个邮箱和授权码将用作登陆认证。</p>
+<h3>2.创建Spring Boot项目，引入依赖</h3>
+<p>依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-mail<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>配置</p>
+<div class="highlight"><pre><span></span><span class="na">spring.mail.host</span><span class="o">=</span><span class="s">smtp.qq.com</span>
+<span class="na">spring.mail.port</span><span class="o">=</span><span class="s">465</span>
+<span class="na">spring.mail.username</span><span class="o">=</span><span class="s">1820502...@qq.com</span>
+<span class="c">#授权码</span>
+<span class="na">spring.mail.password</span><span class="o">=</span><span class="s">***...</span>
+<span class="na">spring.mail.default-encoding</span><span class="o">=</span><span class="s">UTF-8</span>
+<span class="c">#加密连接</span>
+<span class="na">spring.mail.properties.mail.smtp.socketFactory.class</span><span class="o">=</span><span class="s">javax.net.ssl.SSLSocketFactory</span>
+<span class="c">#日志</span>
+<span class="na">spring.mail.properties.mail.debug</span><span class="o">=</span><span class="s">true</span>
+</pre></div>
+<h3>3.发送邮件</h3>
+<h4>3.1 发送简单邮件</h4>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//写邮件</span>
+        <span class="n">SimpleMailMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleMailMessage</span><span class="p">();</span>
+        <span class="n">message</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+        <span class="n">message</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word&quot;</span><span class="p">);</span>
+        <span class="n">message</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+        <span class="n">message</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+        <span class="n">message</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+        <span class="c1">//message.setCc();//抄送</span>
+        <span class="c1">//message.setBcc();//密抄</span>
+
+        <span class="c1">//发送邮件</span>
+        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>3.2 发送带附件的邮件</h4>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">test1</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
+        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+
+        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+        <span class="c1">//写邮件</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word (带附件)&quot;</span><span class="p">);</span>
+        <span class="c1">//添加附件</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addAttachment</span><span class="p">(</span><span class="s">&quot;1.jpg&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">));</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+
+        <span class="c1">//发送邮件</span>
+        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>3.3发送带图片的邮件</h4>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">test2</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
+        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+        <span class="c1">//写邮件</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word(带图片)，这是图1：&lt;img src=&#39;cid:p01&#39;/&gt;，这是图2：&lt;img src=&#39;cid:p02&#39;/&gt;&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p01&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p02&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+
+        <span class="c1">//发送邮件</span>
+        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>4.使用模板</h3>
+<h4>4.1使用Thymeleaf</h4>
+<p>加入依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>mail.html（放在templates目录下）</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;cn&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org/&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>邮件<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    Hello,<span class="p">&lt;</span><span class="nt">span</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${name}&quot;</span><span class="p">/&gt;</span>,欢迎加入XXX大家庭
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    您的入职信息如下:
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>职位<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${position}&quot;</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>职称<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${jobtitle}&quot;</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>薪资<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${salary}&quot;</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>部门<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">th:text</span><span class="o">=</span><span class="s">&quot;${department}&quot;</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-size: 24px&quot;</span><span class="p">&gt;</span>希望在未来的日子里，携手并进！<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="n">TemplateEngine</span> <span class="n">templateEngine</span><span class="p">;</span><span class="c1">//thymeleaf模板引擎</span>
+
+    <span class="cm">/*发送邮件模板 thymeleaf*/</span>
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">test3</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
+        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span>
+        <span class="c1">//写邮件</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+        <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Context</span><span class="p">();</span>
+        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;position&quot;</span><span class="p">,</span> <span class="s">&quot;Java开发&quot;</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;jobtitle&quot;</span><span class="p">,</span> <span class="s">&quot;Java开发初级工程师&quot;</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;salary&quot;</span><span class="p">,</span> <span class="s">&quot;13*6k&quot;</span><span class="p">);</span>
+        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;department&quot;</span><span class="p">,</span> <span class="s">&quot;产品开发部&quot;</span><span class="p">);</span>
+        <span class="n">String</span> <span class="n">process</span> <span class="o">=</span> <span class="n">templateEngine</span><span class="p">.</span><span class="na">process</span><span class="p">(</span><span class="s">&quot;mail.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="n">process</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+        <span class="c1">//发送邮件</span>
+        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h4>4.2使用Freemarker</h4>
+<p>加入依赖</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>mail.ftl（放在templates目录下）</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;cn&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>邮件<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    Hello,${name},欢迎加入XXX大家庭
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    您的入职信息如下:
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>职位<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>${position}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>职称<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>${jobtitle}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>薪资<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>${salary}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>部门<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>${department}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-size: 24px&quot;</span><span class="p">&gt;</span>希望在未来的日子里，携手并进！<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+
+<pre><code>@SpringBootTest
+class MailApplicationTests {
+
+    @Autowired
+    JavaMailSender javaMailSender;
+
+    /*发送邮件模板 freemarker*/
+    @Test
+    void test4() throws MessagingException, IOException, TemplateException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+
+        //写邮件
+        messageHelper.setSubject("测试邮件-主题");
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_29);
+        configuration.setClassLoaderForTemplateLoading(this.getClass().getClassLoader(), "templates");
+        Template template = configuration.getTemplate("mail.ftl");
+        Map&lt;String, Object&gt; map = new HashMap();
+        map.put("name", "xuxx");
+        map.put("position", "Java开发");
+        map.put("jobtitle", "Java开发初级工程师");
+        map.put("salary", "13*6k");
+        map.put("department", "产品开发部");
+        StringWriter out = new StringWriter();
+        template.process(map, out);
+        messageHelper.setText(out.toString(), true);
+        messageHelper.setFrom("1820502...@qq.com");
+        messageHelper.setSentDate(new Date());
+        messageHelper.setTo("1913312...@qq.com");
+        //发送邮件
+        javaMailSender.send(message);
+    }
+}</code></pre>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Java/">#Java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Spring/">#Spring</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/RibbitMQ/">#RibbitMQ</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj24/">RibbitMQ实战教程</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

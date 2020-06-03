@@ -9,7 +9,7 @@ categories:
   - 笔记
 tags: 
   - Java
-  - Spring
+  - Spring Boot
   - Jdbc Template
 excerpt: 笔记
 ---

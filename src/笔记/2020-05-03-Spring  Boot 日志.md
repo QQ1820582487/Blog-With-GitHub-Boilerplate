@@ -10,7 +10,7 @@ categories:
 tags: 
   - 日志
   - Java
-  - Spring
+  - Spring Boot
 excerpt: 笔记
 ---
 ### 1.基本操作

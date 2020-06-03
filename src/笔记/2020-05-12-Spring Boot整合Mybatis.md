@@ -9,7 +9,7 @@ categories:
   - 笔记
 tags: 
   - Java
-  - Spring
+  - Spring Boot
   - Mybatis
 excerpt: 笔记
 ---

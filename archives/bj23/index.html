@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/b120b43e8c4312c0815b37b256d358e8.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/72befadd0fb5c56b5a5ea4f92a6c57fb.json"
         }
     </script>
     
@@ -321,7 +321,7 @@
 <td>作用在模块类上,为接口添加标签</td>
 </tr>
 <tr>
-<td>@ApiOperation(vale="xxx接口说明"，tags="xxx")</td>
+<td>@ApiOperation(vale="xxx接口说明"，tags="xxx"，notes="接口的详细描述")</td>
 <td>作用在接口方法上,vale:添加说明,tage:添加标签</td>
 </tr>
 <tr>
@@ -339,7 +339,7 @@
 </tbody>
 </table>
 <p>也可以给请求的接口配置一些注释</p>
-<div class="highlight"><pre><span></span><span class="nd">@ApiOperation</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;api接口-getUsername&quot;</span><span class="p">,</span><span class="n">tags</span> <span class="o">=</span><span class="s">&quot;xxx的接口&quot;</span> <span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nd">@ApiOperation</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;api接口-getUsername&quot;</span><span class="p">,</span><span class="n">tags</span> <span class="o">=</span><span class="s">&quot;属于xxx的接口&quot;</span><span class="p">,</span><span class="n">notes</span> <span class="o">=</span> <span class="s">&quot;接口的详细描述&quot;</span><span class="p">)</span>
 <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/getUsername&quot;</span><span class="p">)</span>
 <span class="nd">@ResponseBody</span>
 <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUsername</span><span class="p">(</span><span class="nd">@ApiParam</span><span class="p">(</span><span class="s">&quot;这个username会被返回&quot;</span><span class="p">)</span><span class="n">String</span> <span class="n">username</span><span class="p">){</span>

@@ -103,7 +103,7 @@ public Docket docket() {
 2、可以通过apiInfo()属性配置文档信息
 
 ```java
-    //配置Swagger信息>>>ApiInfo
+    //配置API描述信息>>>ApiInfo
     private ApiInfo apiInfo() {
         //作者信息
         Contact contact = new Contact("Xuxx", "暂无", "xuxx3319@gmail.com");

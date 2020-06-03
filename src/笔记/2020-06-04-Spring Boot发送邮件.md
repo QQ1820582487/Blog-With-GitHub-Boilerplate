@@ -27,9 +27,10 @@ excerpt: 笔记
 
 ## 2.进阶知识
 
-- 什么是`JavaMailSender`和`JavaMailSenderImpl`？
+1. 什么是`JavaMailSender`和`JavaMailSenderImpl`？
    `JavaMailSender`和`JavaMailSenderImpl` 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。
-- 如何通过`JavaMailSenderImpl`发送邮件？
+
+2. 如何通过`JavaMailSenderImpl`发送邮件？
    非常简单，直接在业务类注入`JavaMailSenderImpl`并调用`send`方法发送邮件。其中简单邮件可以通过`SimpleMailMessage`来发送邮件，而复杂的邮件（例如添加附件）可以借助`MimeMessageHelper`来构建`MimeMessage`发送邮件。
 
 ## 3.使用教程

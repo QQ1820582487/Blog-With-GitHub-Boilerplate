@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/98a9a5a88e646282a31ca60886dec052.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ceee8be870b03746d2ab8b38229e13bf.json"
         }
     </script>
     
@@ -98,12 +98,14 @@
  两者最大的区别在于，IMAP允许双向通信，即在客户端的操作会反馈到服务器上，例如在客户端收取邮件、标记已读等操作，服务器会跟着同步这些操作。而对于POP协议虽然也允许客户端下载服务器邮件，但是在客户端的操作并不会同步到服务器上面的，例如在客户端收取或标记已读邮件，服务器不会同步这些操作。</li>
 </ol>
 <h2>2.进阶知识</h2>
-<ul>
-<li>什么是<code>JavaMailSender</code>和<code>JavaMailSenderImpl</code>？
- <code>JavaMailSender</code>和<code>JavaMailSenderImpl</code> 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。</li>
-<li>如何通过<code>JavaMailSenderImpl</code>发送邮件？
- 非常简单，直接在业务类注入<code>JavaMailSenderImpl</code>并调用<code>send</code>方法发送邮件。其中简单邮件可以通过<code>SimpleMailMessage</code>来发送邮件，而复杂的邮件（例如添加附件）可以借助<code>MimeMessageHelper</code>来构建<code>MimeMessage</code>发送邮件。</li>
-</ul>
+<ol>
+<li><p>什么是<code>JavaMailSender</code>和<code>JavaMailSenderImpl</code>？
+<code>JavaMailSender</code>和<code>JavaMailSenderImpl</code> 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。</p>
+</li>
+<li><p>如何通过<code>JavaMailSenderImpl</code>发送邮件？
+非常简单，直接在业务类注入<code>JavaMailSenderImpl</code>并调用<code>send</code>方法发送邮件。其中简单邮件可以通过<code>SimpleMailMessage</code>来发送邮件，而复杂的邮件（例如添加附件）可以借助<code>MimeMessageHelper</code>来构建<code>MimeMessage</code>发送邮件。</p>
+</li>
+</ol>
 <h2>3.使用教程</h2>
 <h3>1.开启邮件服务</h3>
 <p>登陆使用的邮箱，在设置中打开并勾选POP3/SMTP/IMAP服务，然后会得到一个授权码，这个邮箱和授权码将用作登陆认证。</p>

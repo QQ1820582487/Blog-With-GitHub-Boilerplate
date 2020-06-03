@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 03 Jun 2020 19:01:31 +0806</lastBuildDate><pubDate>Wed, 03 Jun 2020 19:01:31 +0806</pubDate><item><title>Spring Boot整合AOP</title><link>/Xuxx_Blogs/archives/bj16/</link><description>&lt;h3&gt;一、前言&lt;/h3&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 03 Jun 2020 19:08:36 +0806</lastBuildDate><pubDate>Wed, 03 Jun 2020 19:08:36 +0806</pubDate><item><title>Spring Boot整合AOP</title><link>/Xuxx_Blogs/archives/bj16/</link><description>&lt;h3&gt;一、前言&lt;/h3&gt;
 &lt;p&gt;众所周知，spring最核心的两个功能是aop和ioc，即面向切面和控制反转。本文会讲一讲SpringBoot如何使用AOP实现面向切面的过程原理。&lt;/p&gt;
 &lt;h3&gt;二、何为aop&lt;/h3&gt;
 &lt;p&gt;aop全称&lt;code&gt;Aspect Oriented Programming&lt;/code&gt;，面向切面，AOP主要实现的目的是针对业务处理过程中的切面进行提取，它所面对的是处理过程中的某个步骤或阶段，以获得逻辑过程中各部分之间低耦合性的隔离效果。其与设计模式完成的任务差不多，是提供另一种角度来思考程序的结构，来弥补面向对象编程的不足。&lt;/p&gt;
@@ -3834,7 +3834,7 @@ public class MultiHttpSecurity {
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;2、可以通过apiInfo()属性配置文档信息&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//配置Swagger信息&amp;gt;&amp;gt;&amp;gt;ApiInfo&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//配置API描述信息&amp;gt;&amp;gt;&amp;gt;ApiInfo&lt;/span&gt;
     &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ApiInfo&lt;/span&gt; &lt;span class="nf"&gt;apiInfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="c1"&gt;//作者信息&lt;/span&gt;
         &lt;span class="n"&gt;Contact&lt;/span&gt; &lt;span class="n"&gt;contact&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Contact&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Xuxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;暂无&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xuxx3319@gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -5012,12 +5012,14 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
  两者最大的区别在于，IMAP允许双向通信，即在客户端的操作会反馈到服务器上，例如在客户端收取邮件、标记已读等操作，服务器会跟着同步这些操作。而对于POP协议虽然也允许客户端下载服务器邮件，但是在客户端的操作并不会同步到服务器上面的，例如在客户端收取或标记已读邮件，服务器不会同步这些操作。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;2.进阶知识&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;什么是&lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;？
- &lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt; 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。&lt;/li&gt;
-&lt;li&gt;如何通过&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;发送邮件？
- 非常简单，直接在业务类注入&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;并调用&lt;code&gt;send&lt;/code&gt;方法发送邮件。其中简单邮件可以通过&lt;code&gt;SimpleMailMessage&lt;/code&gt;来发送邮件，而复杂的邮件（例如添加附件）可以借助&lt;code&gt;MimeMessageHelper&lt;/code&gt;来构建&lt;code&gt;MimeMessage&lt;/code&gt;发送邮件。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;什么是&lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;？
+&lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt; 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如何通过&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;发送邮件？
+非常简单，直接在业务类注入&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;并调用&lt;code&gt;send&lt;/code&gt;方法发送邮件。其中简单邮件可以通过&lt;code&gt;SimpleMailMessage&lt;/code&gt;来发送邮件，而复杂的邮件（例如添加附件）可以借助&lt;code&gt;MimeMessageHelper&lt;/code&gt;来构建&lt;code&gt;MimeMessage&lt;/code&gt;发送邮件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h2&gt;3.使用教程&lt;/h2&gt;
 &lt;h3&gt;1.开启邮件服务&lt;/h3&gt;
 &lt;p&gt;登陆使用的邮箱，在设置中打开并勾选POP3/SMTP/IMAP服务，然后会得到一个授权码，这个邮箱和授权码将用作登陆认证。&lt;/p&gt;

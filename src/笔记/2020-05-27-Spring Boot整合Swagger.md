@@ -323,18 +323,18 @@ Swagger的所有注解定义在io.swagger.annotations包下
 
 下面列一些经常用到的，未列举出来的可以另行查阅说明：
 
-| Swagger注解                                            | 简单说明                                             |
-| ------------------------------------------------------ | ---------------------------------------------------- |
-| @Api(tags = "xxx模块说明")                             | 作用在模块类上,为接口添加标签                        |
-| @ApiOperation(vale="xxx接口说明"，tags="xxx")          | 作用在接口方法上,vale:添加说明,tage:添加标签         |
-| @ApiModel("xxxPOJO说明")                               | 作用在模型类上：如VO、BO                             |
-| @ApiModelProperty(value = "xxx属性说明",hidden = true) | 作用在类方法和属性上，hidden设置为true可以隐藏该属性 |
-| @ApiParam("xxx参数说明")                               | 作用在参数、方法和字段上，类似@ApiModelProperty      |
+| Swagger注解                                                  | 简单说明                                             |
+| ------------------------------------------------------------ | ---------------------------------------------------- |
+| @Api(tags = "xxx模块说明")                                   | 作用在模块类上,为接口添加标签                        |
+| @ApiOperation(vale="xxx接口说明"，tags="xxx"，notes="接口的详细描述") | 作用在接口方法上,vale:添加说明,tage:添加标签         |
+| @ApiModel("xxxPOJO说明")                                     | 作用在模型类上：如VO、BO                             |
+| @ApiModelProperty(value = "xxx属性说明",hidden = true)       | 作用在类方法和属性上，hidden设置为true可以隐藏该属性 |
+| @ApiParam("xxx参数说明")                                     | 作用在参数、方法和字段上，类似@ApiModelProperty      |
 
 也可以给请求的接口配置一些注释
 
 ```java
-@ApiOperation(value = "api接口-getUsername",tags ="xxx的接口" )
+@ApiOperation(value = "api接口-getUsername",tags ="属于xxx的接口",notes = "接口的详细描述")
 @PostMapping("/getUsername")
 @ResponseBody
 public String getUsername(@ApiParam("这个username会被返回")String username){

@@ -10,7 +10,6 @@ categories:
 tags: 
   - Java
   - Spring
-  - RibbitMQ
 excerpt: 笔记
 ---
 

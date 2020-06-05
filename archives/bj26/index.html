@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/4944019230d810ad3018251c19280c5c.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/cbdedaef9c730044853fb6f5fb6fb509.json"
         }
     </script>
     
@@ -601,6 +601,153 @@
     <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;com.xuxx&quot;</span><span class="p">,</span>
     <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-06-04T20:39:03.874Z&quot;</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>4.Spring Boot Admin监控系统</h2>
+<h3>1.什么是 Spring Boot Admin?</h3>
+<p>Spring Boot Admin 是一个管理和监控 Spring Boot 应用程序的开源软件。每个应用都认为是一个客户端，通过 HTTP 或者使用 Eureka 注册到 admin server 中进行展示，Spring Boot Admin UI 部分使用 VueJs 将数据展示在前端。</p>
+<h3>2.简单使用</h3>
+<h4>2.1.Admin Server 端</h4>
+<p>首先来创建一个Spring Boot Admin Server工程作为服务端</p>
+<p>依赖：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>de.codecentric<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-admin-starter-server<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>然后在应用主类上通过加<code>@EnableAdminServer</code>注解来启用Spring Boot Admin。</p>
+<div class="highlight"><pre><span></span><span class="nd">@EnableAdminServer</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdminApplication</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">AdminApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+<p>启动程序，浏览器打开<code>localhost:8080</code>查看Spring Boot Admin主页面：</p>
+<p><figure class="pswp-item" style="flex: 161.63575042158516" data-width="1917" data-height="593"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9d6bb093e54cfac76367edc6405102c0.png" alt="" /></figure></p>
+<p>此时Application一栏空空如也，等待待监控的应用加入</p>
+<h4>2.2.Admin Clent 端</h4>
+<p>创建要监控的Spring Boot应用</p>
+<p>依赖：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>de.codecentric<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-admin-starter-client<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>简单配置</p>
+<div class="highlight"><pre><span></span><span class="na">server.port</span><span class="o">=</span><span class="s">8081</span>
+<span class="c">#配置actuator</span>
+<span class="na">management.endpoints.web.exposure.include</span><span class="o">=</span><span class="s">*</span>
+<span class="c">#配置admin，将应用注册到Admin服务端去</span>
+<span class="na">spring.boot.admin.client.url</span><span class="o">=</span><span class="s">http://127.0.0.1:8080</span>
+</pre></div>
+<p>Clent 端一启动，Admin 服务 端立马推送来了消息，告诉你Admin Clent 端上线了：</p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_08.png" alt="" /></figure></p>
+<p>此时再去查看Admin主界面</p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_09.png" alt="" /></figure></p>
+<p>补充：如果我们使用的是单个 Spring Boot 应用，就需要在每一个被监控的应用中配置 Admin Server 的地址信息；如果应用都注册在 Eureka 中就不需要再对每个应用进行配置，Spring Boot Admin 会自动从注册中心抓取应用的相关信息。</p>
+<h3>3. 通知</h3>
+<h4>3.1邮件通知</h4>
+<p>在 Spring Boot Admin 中 当注册的应用程序状态更改为DOWN、UNKNOWN、OFFLINE 都可以指定触发通知，下面讲解配置邮件通知。</p>
+<p>在Admin Server 端，加上mail的依赖：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-mail<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>收发邮件的配置：</p>
+<div class="highlight"><pre><span></span><span class="na">spring.mail.host</span><span class="o">=</span><span class="s">smtp.qq.com</span>
+<span class="na">spring.mail.port</span><span class="o">=</span><span class="s">465</span>
+<span class="na">spring.mail.username</span><span class="o">=</span><span class="s">1820502487@qq.com</span>
+<span class="c">#授权码</span>
+<span class="na">spring.mail.password</span><span class="o">=</span><span class="s">zdbnotvgejxmbeji</span>
+<span class="na">spring.mail.default-encoding</span><span class="o">=</span><span class="s">UTF-8</span>
+<span class="c">#加密连接</span>
+<span class="na">spring.mail.properties.mail.smtp.socketFactory.class</span><span class="o">=</span><span class="s">javax.net.ssl.SSLSocketFactory</span>
+<span class="c">#日志</span>
+<span class="na">spring.mail.properties.mail.debug</span><span class="o">=</span><span class="s">true</span>
+<span class="c">#将邮件发送给谁</span>
+<span class="na">spring.boot.admin.notify.mail.to</span><span class="o">=</span><span class="s">1913312971@qq.com</span>
+<span class="c">#从哪儿发来的</span>
+<span class="na">spring.boot.admin.notify.mail.from</span><span class="o">=</span><span class="s">1820502487@qq.com</span>
+<span class="c">#忽略状态变化，留空就是每一个状态变化都不忽略</span>
+<span class="na">spring.boot.admin.notify.mail.ignore-changes</span><span class="o">=</span>
+</pre></div>
+<p>重启Admin Server 端，之后若出现注册的<strong>客户端的状态从 UP 变为 OFFLINE 或其他状态，服务端就会自动将电子邮件发送到上面配置的收件地址。</strong></p>
+<p><strong>注意 : 配置了邮件通知后，会出现 反复通知 service offline / up。这个问题的原因在于 查询应用程序的状态和信息超时，下面给出两种解决方案：</strong></p>
+<p>(Admin Clent 端配置)</p>
+<div class="highlight"><pre><span></span><span class="c">#方法一：配置超时时间（单位:ms）</span>
+
+<span class="na">spring.boot.admin.monitor.read-timeout</span><span class="o">=</span><span class="s">20000</span>
+
+<span class="c">#方法二：关闭未使用或不重要的检查点</span>
+
+<span class="na">management.health.db.enabled</span><span class="o">=</span><span class="s">false</span>
+<span class="na">management.health.mail.enabled</span><span class="o">=</span><span class="s">false</span>
+<span class="na">management.health.redis.enabled</span><span class="o">=</span><span class="s">false</span>
+<span class="na">management.health.mongo.enabled</span><span class="o">=</span><span class="s">false</span>
+</pre></div>
+<h4>3.2. 自定义通知</h4>
+<p>可以通过添加实现Notifier接口的Spring Beans来添加您自己的通知程序，最好通过扩展 AbstractEventNotifier或AbstractStatusChangeNotifier。在Admin Server 端中编写一个自定义的通知器：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomNotifier</span>  <span class="kd">extends</span> <span class="n">AbstractStatusChangeNotifier</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span> <span class="n">LoggingNotifier</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+
+    <span class="kd">public</span> <span class="nf">CustomNotifier</span><span class="p">(</span><span class="n">InstanceRepository</span> <span class="n">repository</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">super</span><span class="p">(</span><span class="n">repository</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="n">Mono</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="nf">doNotify</span><span class="p">(</span><span class="n">InstanceEvent</span> <span class="n">event</span><span class="p">,</span> <span class="n">Instance</span> <span class="n">instance</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">Mono</span><span class="p">.</span><span class="na">fromRunnable</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="k">instanceof</span> <span class="n">InstanceStatusChangedEvent</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">LOGGER</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Instance {} ({}) is {}&quot;</span><span class="p">,</span> <span class="n">instance</span><span class="p">.</span><span class="na">getRegistration</span><span class="p">().</span><span class="na">getName</span><span class="p">(),</span> <span class="n">event</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(),</span>
+                        <span class="p">((</span><span class="n">InstanceStatusChangedEvent</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getStatusInfo</span><span class="p">().</span><span class="na">getStatus</span><span class="p">());</span>
+
+                <span class="n">String</span> <span class="n">status</span> <span class="o">=</span> <span class="p">((</span><span class="n">InstanceStatusChangedEvent</span><span class="p">)</span> <span class="n">event</span><span class="p">).</span><span class="na">getStatusInfo</span><span class="p">().</span><span class="na">getStatus</span><span class="p">();</span>
+
+                <span class="k">switch</span> <span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="c1">// 健康检查没通过</span>
+                    <span class="k">case</span> <span class="s">&quot;DOWN&quot;</span><span class="p">:</span>
+                        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;发送 健康检查没通过 的通知！&quot;</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="c1">// 服务离线</span>
+                    <span class="k">case</span> <span class="s">&quot;OFFLINE&quot;</span><span class="p">:</span>
+                        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;发送 服务离线 的通知！&quot;</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="c1">//服务上线</span>
+                    <span class="k">case</span> <span class="s">&quot;UP&quot;</span><span class="p">:</span>
+                        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;发送 服务上线 的通知！&quot;</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="c1">// 服务未知异常</span>
+                    <span class="k">case</span> <span class="s">&quot;UNKNOWN&quot;</span><span class="p">:</span>
+                        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;发送 服务未知异常 的通知！&quot;</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="k">default</span><span class="p">:</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">LOGGER</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Instance {} ({}) {}&quot;</span><span class="p">,</span> <span class="n">instance</span><span class="p">.</span><span class="na">getRegistration</span><span class="p">().</span><span class="na">getName</span><span class="p">(),</span> <span class="n">event</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(),</span>
+                        <span class="n">event</span><span class="p">.</span><span class="na">getType</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 

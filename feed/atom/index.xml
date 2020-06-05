@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-06-04T20:49:15.022085+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj18/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-06-04T20:49:15.022313+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.简单使用&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-06-05T17:24:14.369552+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj18/</id><title>Spring Boot整合Spring JDBC Template</title><updated>2020-06-05T17:24:14.369842+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.简单使用&lt;/h2&gt;
 &lt;h4&gt;1.添加依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
             &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
@@ -249,7 +249,7 @@
 &lt;span class="nd"&gt;@Resource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;jdbcTemplate2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JdbcTemplate&lt;/span&gt; &lt;span class="n"&gt;jdbcTemplate2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj18/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-06-04T20:49:15.022297+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj18/" rel="alternate"/><published>2020-05-12T16:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-06-05T17:24:14.369823+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
 &lt;h3&gt;1.依赖&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
@@ -496,7 +496,7 @@
 
 &lt;pre&gt;&lt;code&gt;user1：[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
 user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lisi, address=北京2), User(id=3, username=xuxx, address=四川2)]&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-06-04T20:49:15.022280+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-06-05T17:24:14.369788+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
 &lt;h3&gt;1. JPA是什么&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Java Persistence API：用于对象持久化的 API&lt;/li&gt;
@@ -1032,7 +1032,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;自定义的 XxxxRepository 需要继承 JpaRepository，这样的 XxxxRepository 接口就具备了通用的数据访问控制层的能力。&lt;/li&gt;
 &lt;li&gt;JpaSpecificationExecutor： 不属于Repository体系，实现一组 JPA Criteria 查询相关的方法&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-06-04T20:49:15.022264+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-06-05T17:24:14.369769+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -1207,7 +1207,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;&lt;p&gt;全局配置：编写配置类，重写&lt;code&gt;addCorsMappings&lt;/code&gt;方法&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-06-04T20:49:15.022247+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-06-05T17:24:14.369750+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
 &lt;p&gt;WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。&lt;/p&gt;
 &lt;p&gt;WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。&lt;/p&gt;
 &lt;p&gt;在 WebSocket API 中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。&lt;/p&gt;
@@ -1612,7 +1612,7 @@ public class GreetingController {
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 128.05194805194805" data-width="986" data-height="385"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1c18b11e196a9d7b931491e2af7c2efa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-06-04T20:49:15.022230+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-06-05T17:24:14.369730+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
 &lt;h3&gt;1.Spring Security初体验&lt;/h3&gt;
 &lt;h4&gt;1.引入依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -3610,7 +3610,7 @@ public class MultiHttpSecurity {
 
 &lt;pre&gt;&lt;code&gt;
 &lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-06-04T20:49:15.022214+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-06-05T17:24:14.369711+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;前后端分离&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;前端 -&amp;gt; 前端控制层、视图层&lt;/li&gt;
@@ -3910,7 +3910,7 @@ public class MultiHttpSecurity {
 &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 190.47619047619048" data-width="1920" data-height="504"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69d2f605e680bd7eae5ef85c2f353794.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RibbitMQ实战教程</title><updated>2020-06-04T20:49:15.022195+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RibbitMQ实战教程</title><updated>2020-06-05T17:24:14.369691+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
 &lt;h3&gt;1.1 什么是MQ&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;MQ&lt;/code&gt;(Message Quene) :  翻译为 &lt;code&gt;消息队列&lt;/code&gt;,通过典型的 &lt;code&gt;生产者&lt;/code&gt;和&lt;code&gt;消费者&lt;/code&gt;模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 &lt;code&gt;消息中间件&lt;/code&gt; 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。&lt;/p&gt;
 &lt;h3&gt;1.2 MQ有哪些&lt;/h3&gt;
@@ -4840,7 +4840,7 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 &lt;h1&gt;4.测试集群&lt;/h1&gt;
 &lt;p&gt;```&lt;/p&gt;
 &lt;hr&gt;
-</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-06-04T20:49:15.022173+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-06-05T17:24:14.369667+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;什么是SMTP？
  SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
@@ -5117,7 +5117,7 @@ class MailApplicationTests {
         javaMailSender.send(message);
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj26/</id><title>Spring Boot应用监控</title><updated>2020-06-04T20:49:15.022132+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Actuator入门&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj26/</id><title>Spring Boot应用监控</title><updated>2020-06-05T17:24:14.369605+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Actuator入门&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints"&gt;官方文档&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Actuator是Spring Boot提供的一个服务，可以通过暴露端点路由，用来输出应用中的诸多端点信息。&lt;/p&gt;
 &lt;p&gt;每个单独的端点都可以&lt;a href="https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints-exposing-endpoints"&gt;通过HTTP或JMX &lt;/a&gt;&lt;a href="https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints-enabling-endpoints"&gt;启用或禁用&lt;/a&gt;和&lt;a href="https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints-exposing-endpoints"&gt;公开（可远程访问）&lt;/a&gt;。启用和公开端点均被视为可用。内置端点只有在可用时才会被自动配置。大多数应用程序选择通过HTTP公开，其中端点的ID和前缀&lt;code&gt;/actuator&lt;/code&gt;映射到URL。例如，默认情况下，&lt;code&gt;health&lt;/code&gt;端点映射到&lt;code&gt;/actuator/health&lt;/code&gt;。&lt;/p&gt;
@@ -5632,6 +5632,153 @@ class MailApplicationTests {
     &lt;span class="nt"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;com.xuxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;quot;time&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2020-06-04T20:39:03.874Z&amp;quot;&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;4.Spring Boot Admin监控系统&lt;/h2&gt;
+&lt;h3&gt;1.什么是 Spring Boot Admin?&lt;/h3&gt;
+&lt;p&gt;Spring Boot Admin 是一个管理和监控 Spring Boot 应用程序的开源软件。每个应用都认为是一个客户端，通过 HTTP 或者使用 Eureka 注册到 admin server 中进行展示，Spring Boot Admin UI 部分使用 VueJs 将数据展示在前端。&lt;/p&gt;
+&lt;h3&gt;2.简单使用&lt;/h3&gt;
+&lt;h4&gt;2.1.Admin Server 端&lt;/h4&gt;
+&lt;p&gt;首先来创建一个Spring Boot Admin Server工程作为服务端&lt;/p&gt;
+&lt;p&gt;依赖：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;de.codecentric&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-admin-starter-server&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后在应用主类上通过加&lt;code&gt;@EnableAdminServer&lt;/code&gt;注解来启用Spring Boot Admin。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@EnableAdminServer&lt;/span&gt;
+&lt;span class="nd"&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;AdminApplication&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;SpringApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AdminApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;启动程序，浏览器打开&lt;code&gt;localhost:8080&lt;/code&gt;查看Spring Boot Admin主页面：&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 161.63575042158516" data-width="1917" data-height="593"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/9d6bb093e54cfac76367edc6405102c0.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;此时Application一栏空空如也，等待待监控的应用加入&lt;/p&gt;
+&lt;h4&gt;2.2.Admin Clent 端&lt;/h4&gt;
+&lt;p&gt;创建要监控的Spring Boot应用&lt;/p&gt;
+&lt;p&gt;依赖：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-actuator&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;de.codecentric&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-admin-starter-client&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;简单配置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;server.port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;8081&lt;/span&gt;
+&lt;span class="c"&gt;#配置actuator&lt;/span&gt;
+&lt;span class="na"&gt;management.endpoints.web.exposure.include&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*&lt;/span&gt;
+&lt;span class="c"&gt;#配置admin，将应用注册到Admin服务端去&lt;/span&gt;
+&lt;span class="na"&gt;spring.boot.admin.client.url&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;http://127.0.0.1:8080&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Clent 端一启动，Admin 服务 端立马推送来了消息，告诉你Admin Clent 端上线了：&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_08.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;此时再去查看Admin主界面&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_09.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;补充：如果我们使用的是单个 Spring Boot 应用，就需要在每一个被监控的应用中配置 Admin Server 的地址信息；如果应用都注册在 Eureka 中就不需要再对每个应用进行配置，Spring Boot Admin 会自动从注册中心抓取应用的相关信息。&lt;/p&gt;
+&lt;h3&gt;3. 通知&lt;/h3&gt;
+&lt;h4&gt;3.1邮件通知&lt;/h4&gt;
+&lt;p&gt;在 Spring Boot Admin 中 当注册的应用程序状态更改为DOWN、UNKNOWN、OFFLINE 都可以指定触发通知，下面讲解配置邮件通知。&lt;/p&gt;
+&lt;p&gt;在Admin Server 端，加上mail的依赖：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-mail&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;收发邮件的配置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;spring.mail.host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;smtp.qq.com&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;465&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1820502487@qq.com&lt;/span&gt;
+&lt;span class="c"&gt;#授权码&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;zdbnotvgejxmbeji&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.default-encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;UTF-8&lt;/span&gt;
+&lt;span class="c"&gt;#加密连接&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.properties.mail.smtp.socketFactory.class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;javax.net.ssl.SSLSocketFactory&lt;/span&gt;
+&lt;span class="c"&gt;#日志&lt;/span&gt;
+&lt;span class="na"&gt;spring.mail.properties.mail.debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="c"&gt;#将邮件发送给谁&lt;/span&gt;
+&lt;span class="na"&gt;spring.boot.admin.notify.mail.to&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1913312971@qq.com&lt;/span&gt;
+&lt;span class="c"&gt;#从哪儿发来的&lt;/span&gt;
+&lt;span class="na"&gt;spring.boot.admin.notify.mail.from&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1820502487@qq.com&lt;/span&gt;
+&lt;span class="c"&gt;#忽略状态变化，留空就是每一个状态变化都不忽略&lt;/span&gt;
+&lt;span class="na"&gt;spring.boot.admin.notify.mail.ignore-changes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;重启Admin Server 端，之后若出现注册的&lt;strong&gt;客户端的状态从 UP 变为 OFFLINE 或其他状态，服务端就会自动将电子邮件发送到上面配置的收件地址。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意 : 配置了邮件通知后，会出现 反复通知 service offline / up。这个问题的原因在于 查询应用程序的状态和信息超时，下面给出两种解决方案：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;(Admin Clent 端配置)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;#方法一：配置超时时间（单位:ms）&lt;/span&gt;
+
+&lt;span class="na"&gt;spring.boot.admin.monitor.read-timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;20000&lt;/span&gt;
+
+&lt;span class="c"&gt;#方法二：关闭未使用或不重要的检查点&lt;/span&gt;
+
+&lt;span class="na"&gt;management.health.db.enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;management.health.mail.enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;management.health.redis.enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;management.health.mongo.enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;3.2. 自定义通知&lt;/h4&gt;
+&lt;p&gt;可以通过添加实现Notifier接口的Spring Beans来添加您自己的通知程序，最好通过扩展 AbstractEventNotifier或AbstractStatusChangeNotifier。在Admin Server 端中编写一个自定义的通知器：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@Component&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CustomNotifier&lt;/span&gt;  &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;AbstractStatusChangeNotifier&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;Logger&lt;/span&gt; &lt;span class="n"&gt;LOGGER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LoggerFactory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLogger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;LoggingNotifier&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;CustomNotifier&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InstanceRepository&lt;/span&gt; &lt;span class="n"&gt;repository&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;repository&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Override&lt;/span&gt;
+    &lt;span class="kd"&gt;protected&lt;/span&gt; &lt;span class="n"&gt;Mono&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Void&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;doNotify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;InstanceEvent&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Instance&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Mono&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fromRunnable&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="k"&gt;instanceof&lt;/span&gt; &lt;span class="n"&gt;InstanceStatusChangedEvent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;LOGGER&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Instance {} ({}) is {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getRegistration&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInstance&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+                        &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InstanceStatusChangedEvent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getStatusInfo&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getStatus&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;InstanceStatusChangedEvent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getStatusInfo&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getStatus&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+                &lt;span class="k"&gt;switch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// 健康检查没通过&lt;/span&gt;
+                    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;DOWN&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;发送 健康检查没通过 的通知！&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                    &lt;span class="c1"&gt;// 服务离线&lt;/span&gt;
+                    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;OFFLINE&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;发送 服务离线 的通知！&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                    &lt;span class="c1"&gt;//服务上线&lt;/span&gt;
+                    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;UP&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;发送 服务上线 的通知！&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                    &lt;span class="c1"&gt;// 服务未知异常&lt;/span&gt;
+                    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;UNKNOWN&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;发送 服务未知异常 的通知！&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                    &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                &lt;span class="p"&gt;}&lt;/span&gt;
+
+            &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;LOGGER&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Instance {} ({}) {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getRegistration&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInstance&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+                        &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getType&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;});&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 </content><link href="/Xuxx_Blogs/archives/bj26/" rel="alternate"/><published>2020-06-05T00:50:00+08:06</published></entry></feed>

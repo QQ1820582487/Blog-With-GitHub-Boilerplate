@@ -450,3 +450,195 @@ build.version=0.0.1-SNAPSHOT
 }
 ```
 
+## 4.Spring Boot Admin监控系统
+
+### 1.什么是 Spring Boot Admin?
+
+Spring Boot Admin 是一个管理和监控 Spring Boot 应用程序的开源软件。每个应用都认为是一个客户端，通过 HTTP 或者使用 Eureka 注册到 admin server 中进行展示，Spring Boot Admin UI 部分使用 VueJs 将数据展示在前端。
+
+### 2.简单使用
+
+#### 2.1.Admin Server 端
+
+首先来创建一个Spring Boot Admin Server工程作为服务端
+
+依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-server</artifactId>
+</dependency>
+```
+
+然后在应用主类上通过加`@EnableAdminServer`注解来启用Spring Boot Admin。
+
+```java
+@EnableAdminServer
+@SpringBootApplication
+public class AdminApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AdminApplication.class, args);
+    }
+
+}
+```
+
+启动程序，浏览器打开`localhost:8080`查看Spring Boot Admin主页面：
+
+![](..\static\笔记图片\2020-06-05-Spring Boot应用监控_07.png)
+
+此时Application一栏空空如也，等待待监控的应用加入
+
+#### 2.2.Admin Clent 端
+
+创建要监控的Spring Boot应用
+
+依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-client</artifactId>
+</dependency>
+```
+
+简单配置
+
+```properties
+server.port=8081
+#配置actuator
+management.endpoints.web.exposure.include=*
+#配置admin，将应用注册到Admin服务端去
+spring.boot.admin.client.url=http://127.0.0.1:8080
+```
+
+Clent 端一启动，Admin 服务 端立马推送来了消息，告诉你Admin Clent 端上线了：
+
+![](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_08.png)
+
+此时再去查看Admin主界面
+
+![](D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-06-05-Spring Boot应用监控_09.png)
+
+补充：如果我们使用的是单个 Spring Boot 应用，就需要在每一个被监控的应用中配置 Admin Server 的地址信息；如果应用都注册在 Eureka 中就不需要再对每个应用进行配置，Spring Boot Admin 会自动从注册中心抓取应用的相关信息。
+
+### 3. 通知
+
+#### 3.1邮件通知
+
+在 Spring Boot Admin 中 当注册的应用程序状态更改为DOWN、UNKNOWN、OFFLINE 都可以指定触发通知，下面讲解配置邮件通知。
+
+在Admin Server 端，加上mail的依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+
+收发邮件的配置：
+
+```properties
+spring.mail.host=smtp.qq.com
+spring.mail.port=465
+spring.mail.username=1820502487@qq.com
+#授权码
+spring.mail.password=zdbnotvgejxmbeji
+spring.mail.default-encoding=UTF-8
+#加密连接
+spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
+#日志
+spring.mail.properties.mail.debug=true
+#将邮件发送给谁
+spring.boot.admin.notify.mail.to=1913312971@qq.com
+#从哪儿发来的
+spring.boot.admin.notify.mail.from=1820502487@qq.com
+#忽略状态变化，留空就是每一个状态变化都不忽略
+spring.boot.admin.notify.mail.ignore-changes=
+```
+
+重启Admin Server 端，之后若出现注册的**客户端的状态从 UP 变为 OFFLINE 或其他状态，服务端就会自动将电子邮件发送到上面配置的收件地址。**
+
+**注意 : 配置了邮件通知后，会出现 反复通知 service offline / up。这个问题的原因在于 查询应用程序的状态和信息超时，下面给出两种解决方案：**
+
+(Admin Clent 端配置)
+
+```properties
+#方法一：配置超时时间（单位:ms）
+
+spring.boot.admin.monitor.read-timeout=20000
+
+#方法二：关闭未使用或不重要的检查点
+
+management.health.db.enabled=false
+management.health.mail.enabled=false
+management.health.redis.enabled=false
+management.health.mongo.enabled=false
+```
+
+#### 3.2. 自定义通知
+
+可以通过添加实现Notifier接口的Spring Beans来添加您自己的通知程序，最好通过扩展 AbstractEventNotifier或AbstractStatusChangeNotifier。在Admin Server 端中编写一个自定义的通知器：
+
+```java
+@Component
+public class CustomNotifier  extends AbstractStatusChangeNotifier {
+    private static final Logger LOGGER = LoggerFactory.getLogger( LoggingNotifier.class);
+
+    public CustomNotifier(InstanceRepository repository) {
+        super(repository);
+    }
+
+    @Override
+    protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
+        return Mono.fromRunnable(() -> {
+            if (event instanceof InstanceStatusChangedEvent) {
+                LOGGER.info("Instance {} ({}) is {}", instance.getRegistration().getName(), event.getInstance(),
+                        ((InstanceStatusChangedEvent) event).getStatusInfo().getStatus());
+
+                String status = ((InstanceStatusChangedEvent) event).getStatusInfo().getStatus();
+
+                switch (status) {
+                    // 健康检查没通过
+                    case "DOWN":
+                        System.out.println("发送 健康检查没通过 的通知！");
+                        break;
+                    // 服务离线
+                    case "OFFLINE":
+                        System.out.println("发送 服务离线 的通知！");
+                        break;
+                    //服务上线
+                    case "UP":
+                        System.out.println("发送 服务上线 的通知！");
+                        break;
+                    // 服务未知异常
+                    case "UNKNOWN":
+                        System.out.println("发送 服务未知异常 的通知！");
+                        break;
+                    default:
+                        break;
+                }
+
+            } else {
+                LOGGER.info("Instance {} ({}) {}", instance.getRegistration().getName(), event.getInstance(),
+                        event.getType());
+            }
+        });
+    }
+}
+```

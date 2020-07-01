@@ -62,4 +62,16 @@ public class SpringbootApplication {
 }
 ```
 
-![](..\static\笔记图片\Spring  Boot 记录日志_1.png)
+![](..\static\笔记图片\2020-05-03-Spring  Boot 日志_01.png)
+
+### 3.日志配置
+
+Spring Boot对各种日志框架都做了支持，我们可以通过配置来修改默认的日志的配置
+默认情况下，Spring Boot使用Logback作为日志框架
+
+```yaml
+logging:
+	file: ../1ogs/xxx.1og                      (../是当前项目的上级目录)
+	level.com.xuxx.xxx.xxx: DEBUG
+```
+

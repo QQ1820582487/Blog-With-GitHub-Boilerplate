@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 01 Jul 2020 17:18:24 +0806</lastBuildDate><pubDate>Wed, 01 Jul 2020 17:18:24 +0806</pubDate><item><title>Spring Boot整合Spring JDBC Template</title><link>/Xuxx_Blogs/archives/bj18/</link><description>&lt;h2&gt;1.简单使用&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Mon, 24 Aug 2020 06:53:32 +0806</lastBuildDate><pubDate>Mon, 24 Aug 2020 06:53:32 +0806</pubDate><item><title>Spring Boot整合Spring JDBC Template</title><link>/Xuxx_Blogs/archives/bj18/</link><description>&lt;h2&gt;1.简单使用&lt;/h2&gt;
 &lt;h4&gt;1.添加依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
             &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
@@ -3910,7 +3910,7 @@ public class MultiHttpSecurity {
 &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 190.47619047619048" data-width="1920" data-height="504"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69d2f605e680bd7eae5ef85c2f353794.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj23/</guid><pubDate>Wed, 27 May 2020 23:50:00 +0806</pubDate></item><item><title>RibbitMQ实战教程</title><link>/Xuxx_Blogs/archives/bj24/</link><description>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj23/</guid><pubDate>Wed, 27 May 2020 23:50:00 +0806</pubDate></item><item><title>RabbitMQ实战教程</title><link>/Xuxx_Blogs/archives/bj24/</link><description>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
 &lt;h3&gt;1.1 什么是MQ&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;MQ&lt;/code&gt;(Message Quene) :  翻译为 &lt;code&gt;消息队列&lt;/code&gt;,通过典型的 &lt;code&gt;生产者&lt;/code&gt;和&lt;code&gt;消费者&lt;/code&gt;模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 &lt;code&gt;消息中间件&lt;/code&gt; 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。&lt;/p&gt;
 &lt;h3&gt;1.2 MQ有哪些&lt;/h3&gt;

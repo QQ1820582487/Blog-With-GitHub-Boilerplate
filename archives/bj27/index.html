@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/1ab9c70cd7326b8f45a62d7ce1587869.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/827a9ad4ac447d839cdca9ba13951138.json"
         }
     </script>
     
@@ -111,7 +111,7 @@
 <p>常见的有：lnnoDB、MylSAM、Memory</p>
 <ul>
 <li><p>lnnoDB：它在设计的时候，它是事务优先。</p>
-<p>原理：因为它是行锁，我每一条数据都要锁，锁的太多，性能就降低了，虽然性能降低了，但是适合高并发了，就不容易出错了。</p>
+<p>原理：因为它是行锁，每一条数据都要锁，锁的太多，性能就降低了，虽然性能降低了，但是适合高并发了，就不容易出错了。</p>
 </li>
 <li><p>MylSAM：性能优先</p>
 <p>原理：因为它是表锁，对于表里面的十条数据来说是不受影响的，对十条锁一次就完了，所以性能快。</p>
@@ -137,17 +137,17 @@
 <li><p>提高检索效率，降低数据库的IO成本</p>
 <p>类似图书馆里的图书管理，提高数据的检索效率，降低了io成本。例如：图书管理有100万条藏书，ok，兄弟此时进去找书，如果没有索引，从第一条到到100万条，祖坟冒青烟你牛恰巧第一条就是要找到图书，那么点子背的找到100万条全表扫描。那么这个时候如果频繁进行100万次的IO。不仅浪费时间，而且还消耗内存。如果像上面树的方式大大减少查找时间和IO的频繁。</p>
 </li>
-<li><p>通过索引列队数据进行排序，降低数据排序的成本，降低了CPU的消耗</p>
+<li><p>通过索引列队数据进行排序，降低数据排序的成本，降低了CPU的消耗。</p>
 </li>
 </ol>
 <h3>索引的劣势</h3>
 <ol>
 <li>实际上索引也是一张表，该表保存了主键与索引字段，并指向实体表中的记录，所以索引列也是要占空间的。</li>
-<li>虽然索引大大提高了查询速度，同事会降低更新表的速度。比如对表进行INSERT、UPDATE、DELETE。因为更新表时，MySQL不仅要保存树，还要保存一下索引文件每次更新添加了索引列的字段。都会调整因为每次更新带来的键值变化后的索引。</li>
+<li>虽然索引大大提高了查询速度，同时会降低更新表的速度。比如对表进行INSERT、UPDATE、DELETE。因为更新表时，MySQL不仅要保存树，还要保存一下索引文件每次更新添加了索引列的字段。都会调整因为每次更新带来的键值变化后的索引。</li>
 </ol>
 <p>索引只是提高效率的一个因素，如果你的MySQL有大数据量的表，就需要花时间来研究建立最优秀的索引，或者优化查询SQL语句。</p>
 <h3>磁盘IO与预读</h3>
-<p>考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，<strong>当一次IO时，不光把当前磁盘地址的数据，而是把相邻的数据也都读取到内存缓冲区内</strong>，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。</p>
+<p>考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，<strong>当一次IO时，不仅把当前磁盘地址的数据，而且把相邻的数据也都读取到内存缓冲区内</strong>，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。</p>
 <h3>适合建索引和不适合建索引</h3>
 <p>哪些情况适合建索引：</p>
 <ol>
@@ -158,13 +158,13 @@
 <li>where条件里用不到的字段不创建索引</li>
 <li>单键/组合索引的选择问题，who？（在高并发下倾向创建组合索引）</li>
 <li>查询中排序的字段，排序的字段若通过索引去访问将大大提高排序速度（索引主要干两件事：检索、排序。）</li>
-<li>查询中统计或者分组的字段</li>
+<li>查询中要统计或者分组的字段</li>
 </ol>
 <p>哪些情况不适合建索引：</p>
 <ol>
 <li>表记录太少（300万左右性能开始逐渐下降，虽然官方文档说撑得住5-8百万以上，但是根本也不能等到这个时候再去优化，性能肯定会受到影响）</li>
-<li>经常增删改的表（为什么？提高了查询速度，同时却会降低了更新表的速度，入队表进行INSERT,UPDATE和DELETE。因为更新表时，MySQL不仅要保存数据，还要保存下索引文件）。</li>
-<li>数据重复切分布平均的表字段，因此应该只为最经常查询和最经常排序的数据建立索引。注意，如果某个数据列包括许多重复的内容，为它建立索引就没有太大的实际效果了。（加入一个表有10万行的记录，有一个字段A只有True和False两个值，且每个值的分布概率大约为50%，那么对这种表的A字段建立索引一般不会提高数据库的查询速度。再比如对银行卡建立索引，毕竟银行卡没有重复的。索引的选择性是指索引列中不同值的数据与表中的记录数的比，如果一个表中有2000条记录，表索引列就有1980个不同的值，那么这个索引的选择性就是1980/2000=0.99。一个索引的选择性越接近于1，那么这个索引的效率就越高。）</li>
+<li>经常增删改的表（为什么？提高了查询速度，同时却会降低了更新表的速度，入队表进行INSERT,UPDATE和DELETE。因为更新表时，MySQL不仅要保存数据，还要保存索引文件）。</li>
+<li>数据重复切分布平均的表字段，因此应该只为最经常查询和最经常排序的数据建立索引。注意，如果某个数据列包括许多重复的内容，为它建立索引就没有太大的实际效果了。（假设一个表有10万行的记录，有一个字段A只有True和False两个值，且每个值的分布概率大约为50%，那么对这种表的A字段建立索引一般不会提高数据库的查询速度。再比如对银行卡建立索引，毕竟银行卡没有重复的。索引的选择性是指索引列中不同值的数据与表中的记录数的比，如果一个表中有2000条记录，表索引列就有1980个不同的值，那么这个索引的选择性就是1980/2000=0.99。一个索引的选择性越接近于1，那么这个索引的效率就越高。）</li>
 </ol>
 <h1>MySQL索引优化1-性能分析Explain</h1>
 <h3>MySQL自带查询优化器(MySQL Query Optimizer)</h3>
@@ -179,7 +179,7 @@
 <li>服务器硬盘的性能瓶颈：top，free，iostat和vmstat来查看系统的性能状态</li>
 </ol>
 <p>如果SQL优化器没有更改，并且这些瓶颈也没有出现，那么调出MySQL分析报告来看看到底MySQL哪里惹了事。</p>
-<h3>使用 EXPLAIN</h3>
+<h3>EXPLAIN</h3>
 <blockquote><p><a href="https://dev.MySQL.com/doc/refman/8.0/en/execution-plan-information.html">官方文档</a></p>
 </blockquote>
 <ol>
@@ -286,10 +286,10 @@
 <p><strong>覆盖索引(Covering Index)，一说为索引覆盖</strong></p>
 <p>理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说<strong>查询列要被所见的索引覆盖。</strong>（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）</p>
 <p>理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此他不比读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。</p>
-<p><strong>注意：</strong>如果使用覆盖索引，一定要注意select列表中只去除需要的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。</p>
+<p><strong>注意：</strong>如果使用覆盖索引，一定要注意select列表中只要所需的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。</p>
 <h1>MySQL索引优化2-优化法则</h1>
 <ol>
-<li><p>全值匹配我最爱(怎么建怎么用)</p>
+<li><p>全值匹配我最爱(怎么建就怎么用)</p>
 </li>
 <li><p><strong>最佳左前缀法则</strong>：如果索引了多列，要遵守最左前缀法则。指的是查询从索引的最左前列开始并且不跳过索引中的列。</p>
 </li>
@@ -480,7 +480,7 @@
 <p>补充：</p>
 <p>SQL语句执行顺序详见：<a href="https://blog.csdn.net/wqc19920906/article/details/79411854">SQL语句执行顺序</a></p>
 <ol>
-<li>EXISTS(subquery)只返回TRUE或者FALSE，因此子查询中的SELECT * 也可以是SELECT 1或者SELECT 'X'，官方说法是实际执行时会忽略SELECT清单，因此没有区别。</li>
+<li>EXISTS(subquery)只返回TRUE或者FALSE，因此子查询中的SELECT * 也可以是SELECT 1 或者SELECT 'X'，官方说法是实际执行时会忽略SELECT清单，因此没有区别。</li>
 <li>EXISTS子查询的实际执行过程可能经过了优化而不是我们理解上的逐条对比，如果担忧效率问题，可进行实际校验。</li>
 <li>EXISTS子查询旺旺可以用条件表达式，其他子查询或者JOIN来替代，何种最优需要具体问题具体分析。</li>
 </ol>
@@ -619,6 +619,84 @@ Parse and summarize the MySQL slow query log. Options are
 MySQLdumpslow -s c -t 10 /data/MySQL/MySQL-slow.log //得到访问次数最多的10个SQL 
 MySQLdumpslow -s t -t 10 -g "left join" /data/MySQL/MySQL-slow.log  //得到按照时间排序的前10条里面含有做了连接的查询SQL
 MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使用这些命令时结合|和more使用，否则有可能出现爆屏情况</code></pre>
+<h1>MySQL查询优化(3)-show profile</h1>
+<p>如果想要进行SQL查询的数据调优、排查。</p>
+<p>第一步，一定要让出现的问题重现啊(运营工程师或DBA他们从监控系统里面，收到了爆炸，系统变慢了，大家都知道，重要的核心系统都会有另外一套辅助的系统来监控，这种监控系统，比如说现在这个系统慢与每一个模块平均时间，可能5秒钟就能执行完，但是已经长达20秒了，这个时候就要判断为什么慢了。</p>
+<p>有很多种可能的原因：可能是程序的内存泄漏，可能是死锁，可能是网络，可能是SQL写的烂。</p>
+<p>假设是SQL的问题，那么我们需要把有问题的SQL抓出来</p>
+<p>执行过程：</p>
+<ol>
+<li>收到问题，诊断SQL</li>
+<li>开启慢查询日志，抓出执行的慢的SQL</li>
+<li>使用explain分析（基本上可以找到为题所在，但是如果还是没有摆平，SQL在传输、网络、连接、死锁，需要进一步细粒度的查询和排查的时候就需要使用show profile）</li>
+<li>show profile（还是解决的一般般）</li>
+<li>配合DBA 到my.cnf配置文件中对各种性能的参数调优和修改(基本上是DBA修改)</li>
+</ol>
+<h2>show profile</h2>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/show-profile.html">MySQL 8.0参考手册-show profile</a></p>
+<p>是什么：是mysql 提供可以用来分析当前会话中语句执行的资源消耗情况。可以用于SQL的调优的测量。（默认情况下，参数处于关闭状态，并保存最近15次的运行结果）</p>
+<p>分析步骤：</p>
+<ol>
+<li><p>是否支持，看看当前的MySQL版本是否支持:</p>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling&#39;</span><span class="p">;</span>
+ <span class="c1">#或</span>
+ <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling%&#39;</span><span class="p">;</span>
+</pre></div>
+</li>
+<li><p>开启功能，默认是关闭，使用前需要开启:</p>
+<div class="highlight"><pre><span></span><span class="kt">set</span> <span class="n">profiling</span> <span class="o">=</span> <span class="k">on</span><span class="p">;</span>
+</pre></div>
+</li>
+<li><p>运行sql</p>
+<p>随便运行几条SQL，以便于show prifiles的日志分析。</p>
+</li>
+<li><p>查询结果</p>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profiles</span><span class="p">;</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="1598813070387" /><figcaption>1598813070387</figcaption></figure></p>
+</li>
+<li><p>诊断SQL</p>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profile</span> <span class="n">cpu</span><span class="p">,</span> <span class="n">block</span> <span class="n">io</span> <span class="k">for</span> <span class="n">query</span> <span class="p">[</span><span class="err">上一步的</span><span class="n">Query_ID</span><span class="p">];</span>
+</pre></div>
+<p><img src="..\static\笔记图片\2020-08-27-Mysql优化相关_12.png" alt="1598813177307" style="zoom:80%;" /></p>
+<p>从图中可以看到开始，打开表，加载，关闭表，释放资源、记录日志，清理工作，在这儿可以看到一条SQL执行的完整生命周期。</p>
+<p><figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="1598813935414" /><figcaption>1598813935414</figcaption></figure></p>
+</li>
+<li><p>开发中需要注意的问题</p>
+<p>如果<code>show profile ... for query [Query_ID];</code>出现了如下四个，则必须优化这条sql。</p>
+<ul>
+<li><strong>converting HEAP to MyISAM</strong> : 查询结果太大， 内存都不够用了，会往磁盘上搬了</li>
+<li><strong>Creating tmp table</strong> : 创建临时表<ol>
+<li>拷贝数据到临时表: 假设要查询两百万数据，刚好匹配的条件有一百万，恰巧要把这一百万的数据拷贝到临时表，然后再把数据推送给用户，最后再把临时表删掉，这种情况就是导致SQL变慢的罪魁祸首</li>
+<li>用完再删除</li>
+</ol>
+</li>
+<li><strong>Copying to tmp table on disk</strong> : 把内存中临时表复制到磁盘</li>
+<li><strong>locked</strong></li>
+</ul>
+</li>
+</ol>
+<h1>MySQL查询优化(4)-全局查询日志</h1>
+<p>show profile可以帮我们记录下来了后台执行过得SQL，全局查询日志有时也能帮助我们来调SQL。但是，切记，这个全局查询日志只能在<strong>测试环境</strong>使用，绝不可以在生产环境使用（公司中一般都是生产环境、测试环境分离，但是测试环境一般都不如生产环境，或多或少会有些差距，但是大部分的SQL正常来说在部到生产之前会在测试上先跑一遍甚至几遍）。</p>
+<p>切记：<strong>永远不要再生产环境开启全局查询日志这个功能</strong>。</p>
+<p>配置方式启用:</p>
+<p>在MySQL的配置文件中，配置如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">#开启</span>
+<span class="n">general_log</span><span class="o">=</span><span class="mi">1</span>
+<span class="c1">#记录日志文件的路径</span>
+<span class="n">general_log_file</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">logfile</span>
+<span class="c1">#输出格式</span>
+<span class="n">log_output</span><span class="o">=</span><span class="n">file</span>
+</pre></div>
+<p>命令方式启用:</p>
+<div class="highlight"><pre><span></span><span class="kt">set</span> <span class="n">global</span> <span class="n">general_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="c1">#开启后会把所有的SQL进行记录</span>
+<span class="kt">set</span> <span class="n">global</span> <span class="n">log_output</span><span class="o">=</span><span class="s1">&#39;TABLE&#39;</span><span class="p">;</span>
+</pre></div>
+<p>此后所编写的SQL语句，将会记录到MySQL库里的general_log表，可以用下面的命令查看。</p>
+<div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">mysql</span><span class="p">.</span><span class="n">general_log</span><span class="p">;</span>
+</pre></div>
+<p>如果需要做系统的定案分析(如：今天下午2点-3点出现的故障），如果要观察和复现的话，可以在测试环境下模拟一遍，然后把所有的问题复现一下。</p>
+<p>然后用<code>general_log</code>这个表来查看什么时间段发生了什么样的SQL，帮助我们定位问题。</p>
 
             </div>
         </article>

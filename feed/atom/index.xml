@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-09-05T15:34:27.168413+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-09-05T15:34:27.168693+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-09-12T14:43:24.231769+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj17/</id><title>Spring Boot整合Mybatis</title><updated>2020-09-12T14:43:24.232033+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基本使用&lt;/h2&gt;
 &lt;h3&gt;1.依赖&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
@@ -246,7 +246,7 @@
 
 &lt;pre&gt;&lt;code&gt;user1：[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
 user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lisi, address=北京2), User(id=3, username=xuxx, address=四川2)]&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-09-05T15:34:27.168674+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj17/" rel="alternate"/><published>2020-05-12T22:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-09-12T14:43:24.232013+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
 &lt;h3&gt;1. JPA是什么&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Java Persistence API：用于对象持久化的 API&lt;/li&gt;
@@ -782,7 +782,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;自定义的 XxxxRepository 需要继承 JpaRepository，这样的 XxxxRepository 接口就具备了通用的数据访问控制层的能力。&lt;/li&gt;
 &lt;li&gt;JpaSpecificationExecutor： 不属于Repository体系，实现一组 JPA Criteria 查询相关的方法&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-09-05T15:34:27.168641+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-09-12T14:43:24.231994+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -957,7 +957,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;&lt;p&gt;全局配置：编写配置类，重写&lt;code&gt;addCorsMappings&lt;/code&gt;方法&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-09-05T15:34:27.168624+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-09-12T14:43:24.231975+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
 &lt;p&gt;WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。&lt;/p&gt;
 &lt;p&gt;WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。&lt;/p&gt;
 &lt;p&gt;在 WebSocket API 中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。&lt;/p&gt;
@@ -1362,7 +1362,7 @@ public class GreetingController {
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 128.05194805194805" data-width="986" data-height="385"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1c18b11e196a9d7b931491e2af7c2efa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-09-05T15:34:27.168608+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-09-12T14:43:24.231955+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
 &lt;h3&gt;1.Spring Security初体验&lt;/h3&gt;
 &lt;h4&gt;1.引入依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -3360,7 +3360,7 @@ public class MultiHttpSecurity {
 
 &lt;pre&gt;&lt;code&gt;
 &lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-09-05T15:34:27.168592+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-09-12T14:43:24.231935+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;前后端分离&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;前端 -&amp;gt; 前端控制层、视图层&lt;/li&gt;
@@ -3660,7 +3660,7 @@ public class MultiHttpSecurity {
 &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 190.47619047619048" data-width="1920" data-height="504"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69d2f605e680bd7eae5ef85c2f353794.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RabbitMQ实战教程</title><updated>2020-09-05T15:34:27.168574+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RabbitMQ实战教程</title><updated>2020-09-12T14:43:24.231914+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
 &lt;h3&gt;1.1 什么是MQ&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;MQ&lt;/code&gt;(Message Quene) :  翻译为 &lt;code&gt;消息队列&lt;/code&gt;,通过典型的 &lt;code&gt;生产者&lt;/code&gt;和&lt;code&gt;消费者&lt;/code&gt;模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 &lt;code&gt;消息中间件&lt;/code&gt; 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。&lt;/p&gt;
 &lt;h3&gt;1.2 MQ有哪些&lt;/h3&gt;
@@ -4590,7 +4590,7 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 &lt;h1&gt;4.测试集群&lt;/h1&gt;
 &lt;p&gt;```&lt;/p&gt;
 &lt;hr&gt;
-</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-09-05T15:34:27.168556+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-09-12T14:43:24.231893+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;什么是SMTP？
  SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
@@ -4867,7 +4867,7 @@ class MailApplicationTests {
         javaMailSender.send(message);
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-09-05T15:34:27.168535+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-09-12T14:43:24.231869+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
 &lt;h3&gt;一. MySQL逻辑分层&lt;/h3&gt;
 &lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给我们想要的结果。&lt;/p&gt;
 &lt;h4&gt;1.连接层&lt;/h4&gt;
@@ -5065,7 +5065,7 @@ class MailApplicationTests {
 &lt;/ul&gt;
 &lt;h3&gt;补充&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;覆盖索引(Covering Index)，一说为索引覆盖&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说&lt;strong&gt;查询列要被所见的索引覆盖。&lt;/strong&gt;（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）&lt;/p&gt;
+&lt;p&gt;理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说&lt;strong&gt;查询列要被所建的索引覆盖。&lt;/strong&gt;（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）&lt;/p&gt;
 &lt;p&gt;理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此他不比读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;如果使用覆盖索引，一定要注意select列表中只要所需的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。&lt;/p&gt;
 &lt;h1&gt;MySQL索引优化2-优化法则&lt;/h1&gt;
@@ -5100,7 +5100,7 @@ class MailApplicationTests {
 ​   不等空值还有or，索引失效要少用;
 ​   VAR引号不可丢，SQL高级也不难!&lt;/p&gt;
 &lt;p&gt;例子：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2&gt;Sql 语句中 IN 和 EXISTS 的区别及应用&lt;/h2&gt;
 &lt;p&gt;student表&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="k"&gt;IF&lt;/span&gt; &lt;span class="k"&gt;EXISTS&lt;/span&gt; &lt;span class="ss"&gt;`student`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -5195,10 +5195,10 @@ class MailApplicationTests {
 &lt;p&gt;具体sql示例：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_08.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 55.88235294117647" data-width="247" data-height="221"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4f4916684820eb253733a0241388ad90.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;1005&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_09.png" alt="1598607451959" /&gt;&lt;figcaption&gt;1598607451959&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;以上两个语句的执行流程：&lt;/p&gt;
 &lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据我们的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
 &lt;h3&gt;EXISTS语句：执行student.length次&lt;/h3&gt;
@@ -5213,7 +5213,7 @@ class MailApplicationTests {
 &lt;p&gt;　　使用exists关键字进行查询的时候，首先，我们先查询的不是子查询的内容，而是查我们的主查询的表，也就是说，我们先执行的sql语句是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_10.png" alt="1598607619622" /&gt;&lt;figcaption&gt;1598607619622&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 55.6" data-width="278" data-height="250"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/605a25566c74143dfd27c97534313339.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;如果成立则返回true不成立则返回false。如果返回的是true的话，则该行结果保留，如果返回的是false的话，则删除该行，最后将得到的结果返回。&lt;/p&gt;
 &lt;h3&gt;IN和EXISTS的区别及应用场景&lt;/h3&gt;
 &lt;p&gt;​   如果子查询得出的结果集记录较少，主查询中的表较大且又有索引时应该用 in , 反之如果外层的主查询记录较少，子查询中的表大，又有索引时使用 exists 。其实我们区分 in 和 exists 主要是造成了驱动顺序的改变(这是性能变化的关键)，如果是 exists ，那么以外层表为驱动表，先被访问，如果是 in ，那么先执行子查询，所以我们会以驱动表的快速返回为目标，那么就会考虑到索引及结果集的关系了 ，另外 in 时不对NULL进行处理。&lt;/p&gt;
@@ -5278,7 +5278,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;not in 和not exists如果查询语句使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。&lt;/p&gt;
 &lt;p&gt;例：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="1598594697055" /&gt;&lt;figcaption&gt;1598594697055&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;2.Order By关键字优化&lt;/h4&gt;
 &lt;p&gt;Order By子句，尽量使用Index方式排序,避免使用FileSort方式排序 。&lt;/p&gt;
 &lt;p&gt;尽可能在索引列上完成排序操作，遵照索引的最佳左前缀。&lt;/p&gt;
@@ -5299,7 +5299,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;p&gt;提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高磁盘I/O活动和低CPU使用率。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="1598597628950" /&gt;&lt;figcaption&gt;1598597628950&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;3.Group By关键字优化&lt;/h4&gt;
 &lt;p&gt;与Order By相似。&lt;/p&gt;
 &lt;ul&gt;
@@ -5343,7 +5343,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_04.png" alt="1598601396920" /&gt;&lt;figcaption&gt;1598601396920&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;查看当前系统中多少条满记录：&lt;code&gt;show global status like '%Slow_queries%';&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="1598601445174" /&gt;&lt;figcaption&gt;1598601445174&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;配置版&lt;/strong&gt;&lt;/p&gt;
@@ -5434,14 +5434,14 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;&lt;p&gt;查询结果&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;profiles&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="1598813070387" /&gt;&lt;figcaption&gt;1598813070387&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;诊断SQL&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt; &lt;span class="n"&gt;cpu&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;block&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;上一步的&lt;/span&gt;&lt;span class="n"&gt;Query_ID&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src="..\static\笔记图片\2020-08-27-Mysql优化相关_12.png" alt="1598813177307" style="zoom:80%;" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 63.71473354231975" data-width="813" data-height="638"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0f37e83a461cfc5cea96d84f7d3b0432.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;从图中可以看到开始，打开表，加载，关闭表，释放资源、记录日志，清理工作，在这儿可以看到一条SQL执行的完整生命周期。&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="1598813935414" /&gt;&lt;figcaption&gt;1598813935414&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;开发中需要注意的问题&lt;/p&gt;
 &lt;p&gt;如果&lt;code&gt;show profile ... for query [Query_ID];&lt;/code&gt;出现了如下四个，则必须优化这条sql。&lt;/p&gt;
@@ -5525,8 +5525,8 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;查看表上的锁：&lt;a href="https://dev.mysql.com/doc/refman/8.0/en/show-open-tables.html"&gt;官方文档-show open tables&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;open&lt;/span&gt; &lt;span class="kp"&gt;tables&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="1598959631988" /&gt;&lt;figcaption&gt;1598959631988&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="1598959391374" /&gt;&lt;figcaption&gt;1598959391374&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;加读锁后，读取自己可以，写自己以及读取本库中别的表都不可以，言下之意就是只要加了读锁，就必须要把这笔读的账清掉再去做别的事&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;(窗口1)获得表mylock的read锁定时：&lt;/p&gt;
@@ -5551,7 +5551,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;&lt;p&gt;表独占写锁（Table Write Lock）&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;结论：&lt;/p&gt;
 &lt;p&gt;对MyISAM引擎的表进行操作，会有以下情况：&lt;/p&gt;
 &lt;ol&gt;
@@ -5602,7 +5602,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;事务隔离级别：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="1599151071824" /&gt;&lt;figcaption&gt;1599151071824&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;案例分析&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;建表SQL&lt;/li&gt;
@@ -5647,9 +5647,9 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h5&gt;索引失效行锁变表锁&lt;/h5&gt;
 &lt;p&gt;首先我们知道如果索引失效的情况下，那么肯定会导致索引失效，但是如果使用不当，会导致行锁变成表锁。&lt;/p&gt;
 &lt;p&gt;上文中数据库的存储引擎为InnoDB，并且关闭了自动提交，在创建表的时候创建了两个索引，分别在表中的a和b字段上建立了两个单值索引。如下&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;看一下表信息&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="1599153201730" /&gt;&lt;figcaption&gt;1599153201730&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;其中，a为int型，b为varchar型&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;上文中说过，两个会话去执行不同的记录各不相干不会导致阻塞状态。&lt;/p&gt;
 &lt;p&gt;在讲索引优化的时候说过“var引号不能丢”，如果丢失，会导致索引失效。现在来模拟一下这种情况，上面说过b字段是varchar型，故意把它写错不加单引号。&lt;/p&gt;
@@ -5674,7 +5674,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;通过检查 &lt;code&gt;InnoDB_row_lock&lt;/code&gt; 状态变量来分析系统上的行锁的争夺情况&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="k"&gt;like&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;innodb_row_lock%&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="1599153578159" /&gt;&lt;figcaption&gt;1599153578159&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;对各个状态量的说明如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Innodb_row_lock_current_waits：当前正在等待锁定的数量；&lt;/strong&gt;&lt;/p&gt;
@@ -5709,7 +5709,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;补充：&lt;/p&gt;
 &lt;p&gt;如何锁定一行？&lt;/p&gt;
 &lt;p&gt;在SQL语句后面加上&lt;code&gt;for update&lt;/code&gt;，直到锁定行的会话提交commit。&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="1599154742368" /&gt;&lt;figcaption&gt;1599154742368&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;3.页锁&lt;/h4&gt;
 &lt;p&gt;开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般。&lt;/p&gt;
 &lt;h1&gt;MySQL主从复制&lt;/h1&gt;
@@ -5745,7 +5745,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/ol&gt;
 &lt;h3&gt;一主一从常见配置&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://www.bilibili.com/video/BV12b411K7Zu?p=241"&gt;参考&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-09-05T15:34:27.168490+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-09-12T14:43:24.231824+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;1. 内存模型 &amp;amp; 分区&lt;/h2&gt;
 &lt;p&gt;Java虚拟机在运行Java程序时，会管理着一块内存区域：运行时数据区&lt;/p&gt;
 &lt;p&gt;在运行时数据区里，会根据用途进行划分：&lt;/p&gt;

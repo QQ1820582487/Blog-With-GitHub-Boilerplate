@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Sat, 05 Sep 2020 15:34:27 +0806</lastBuildDate><pubDate>Sat, 05 Sep 2020 15:34:27 +0806</pubDate><item><title>Spring Boot整合Mybatis</title><link>/Xuxx_Blogs/archives/bj17/</link><description>&lt;h2&gt;1.基本使用&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Sat, 12 Sep 2020 14:43:24 +0806</lastBuildDate><pubDate>Sat, 12 Sep 2020 14:43:24 +0806</pubDate><item><title>Spring Boot整合Mybatis</title><link>/Xuxx_Blogs/archives/bj17/</link><description>&lt;h2&gt;1.基本使用&lt;/h2&gt;
 &lt;h3&gt;1.依赖&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
@@ -5065,7 +5065,7 @@ class MailApplicationTests {
 &lt;/ul&gt;
 &lt;h3&gt;补充&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;覆盖索引(Covering Index)，一说为索引覆盖&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说&lt;strong&gt;查询列要被所见的索引覆盖。&lt;/strong&gt;（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）&lt;/p&gt;
+&lt;p&gt;理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说&lt;strong&gt;查询列要被所建的索引覆盖。&lt;/strong&gt;（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）&lt;/p&gt;
 &lt;p&gt;理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此他不比读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;如果使用覆盖索引，一定要注意select列表中只要所需的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。&lt;/p&gt;
 &lt;h1&gt;MySQL索引优化2-优化法则&lt;/h1&gt;
@@ -5100,7 +5100,7 @@ class MailApplicationTests {
 ​   不等空值还有or，索引失效要少用;
 ​   VAR引号不可丢，SQL高级也不难!&lt;/p&gt;
 &lt;p&gt;例子：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2&gt;Sql 语句中 IN 和 EXISTS 的区别及应用&lt;/h2&gt;
 &lt;p&gt;student表&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="k"&gt;IF&lt;/span&gt; &lt;span class="k"&gt;EXISTS&lt;/span&gt; &lt;span class="ss"&gt;`student`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -5195,10 +5195,10 @@ class MailApplicationTests {
 &lt;p&gt;具体sql示例：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_08.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 55.88235294117647" data-width="247" data-height="221"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4f4916684820eb253733a0241388ad90.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;1005&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_09.png" alt="1598607451959" /&gt;&lt;figcaption&gt;1598607451959&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;以上两个语句的执行流程：&lt;/p&gt;
 &lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据我们的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
 &lt;h3&gt;EXISTS语句：执行student.length次&lt;/h3&gt;
@@ -5213,7 +5213,7 @@ class MailApplicationTests {
 &lt;p&gt;　　使用exists关键字进行查询的时候，首先，我们先查询的不是子查询的内容，而是查我们的主查询的表，也就是说，我们先执行的sql语句是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_10.png" alt="1598607619622" /&gt;&lt;figcaption&gt;1598607619622&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 55.6" data-width="278" data-height="250"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/605a25566c74143dfd27c97534313339.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;如果成立则返回true不成立则返回false。如果返回的是true的话，则该行结果保留，如果返回的是false的话，则删除该行，最后将得到的结果返回。&lt;/p&gt;
 &lt;h3&gt;IN和EXISTS的区别及应用场景&lt;/h3&gt;
 &lt;p&gt;​   如果子查询得出的结果集记录较少，主查询中的表较大且又有索引时应该用 in , 反之如果外层的主查询记录较少，子查询中的表大，又有索引时使用 exists 。其实我们区分 in 和 exists 主要是造成了驱动顺序的改变(这是性能变化的关键)，如果是 exists ，那么以外层表为驱动表，先被访问，如果是 in ，那么先执行子查询，所以我们会以驱动表的快速返回为目标，那么就会考虑到索引及结果集的关系了 ，另外 in 时不对NULL进行处理。&lt;/p&gt;
@@ -5278,7 +5278,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;not in 和not exists如果查询语句使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。&lt;/p&gt;
 &lt;p&gt;例：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="1598594697055" /&gt;&lt;figcaption&gt;1598594697055&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;2.Order By关键字优化&lt;/h4&gt;
 &lt;p&gt;Order By子句，尽量使用Index方式排序,避免使用FileSort方式排序 。&lt;/p&gt;
 &lt;p&gt;尽可能在索引列上完成排序操作，遵照索引的最佳左前缀。&lt;/p&gt;
@@ -5299,7 +5299,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;p&gt;提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高磁盘I/O活动和低CPU使用率。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="1598597628950" /&gt;&lt;figcaption&gt;1598597628950&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;3.Group By关键字优化&lt;/h4&gt;
 &lt;p&gt;与Order By相似。&lt;/p&gt;
 &lt;ul&gt;
@@ -5343,7 +5343,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_04.png" alt="1598601396920" /&gt;&lt;figcaption&gt;1598601396920&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;查看当前系统中多少条满记录：&lt;code&gt;show global status like '%Slow_queries%';&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="1598601445174" /&gt;&lt;figcaption&gt;1598601445174&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;配置版&lt;/strong&gt;&lt;/p&gt;
@@ -5434,14 +5434,14 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;&lt;p&gt;查询结果&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;profiles&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="1598813070387" /&gt;&lt;figcaption&gt;1598813070387&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;诊断SQL&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt; &lt;span class="n"&gt;cpu&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;block&lt;/span&gt; &lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;上一步的&lt;/span&gt;&lt;span class="n"&gt;Query_ID&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src="..\static\笔记图片\2020-08-27-Mysql优化相关_12.png" alt="1598813177307" style="zoom:80%;" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 63.71473354231975" data-width="813" data-height="638"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0f37e83a461cfc5cea96d84f7d3b0432.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;从图中可以看到开始，打开表，加载，关闭表，释放资源、记录日志，清理工作，在这儿可以看到一条SQL执行的完整生命周期。&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="1598813935414" /&gt;&lt;figcaption&gt;1598813935414&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;开发中需要注意的问题&lt;/p&gt;
 &lt;p&gt;如果&lt;code&gt;show profile ... for query [Query_ID];&lt;/code&gt;出现了如下四个，则必须优化这条sql。&lt;/p&gt;
@@ -5525,8 +5525,8 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;查看表上的锁：&lt;a href="https://dev.mysql.com/doc/refman/8.0/en/show-open-tables.html"&gt;官方文档-show open tables&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;open&lt;/span&gt; &lt;span class="kp"&gt;tables&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="1598959631988" /&gt;&lt;figcaption&gt;1598959631988&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="1598959391374" /&gt;&lt;figcaption&gt;1598959391374&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;加读锁后，读取自己可以，写自己以及读取本库中别的表都不可以，言下之意就是只要加了读锁，就必须要把这笔读的账清掉再去做别的事&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;(窗口1)获得表mylock的read锁定时：&lt;/p&gt;
@@ -5551,7 +5551,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;&lt;p&gt;表独占写锁（Table Write Lock）&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;结论：&lt;/p&gt;
 &lt;p&gt;对MyISAM引擎的表进行操作，会有以下情况：&lt;/p&gt;
 &lt;ol&gt;
@@ -5602,7 +5602,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;事务隔离级别：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="1599151071824" /&gt;&lt;figcaption&gt;1599151071824&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;案例分析&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;建表SQL&lt;/li&gt;
@@ -5647,9 +5647,9 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h5&gt;索引失效行锁变表锁&lt;/h5&gt;
 &lt;p&gt;首先我们知道如果索引失效的情况下，那么肯定会导致索引失效，但是如果使用不当，会导致行锁变成表锁。&lt;/p&gt;
 &lt;p&gt;上文中数据库的存储引擎为InnoDB，并且关闭了自动提交，在创建表的时候创建了两个索引，分别在表中的a和b字段上建立了两个单值索引。如下&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;看一下表信息&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="1599153201730" /&gt;&lt;figcaption&gt;1599153201730&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;其中，a为int型，b为varchar型&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;上文中说过，两个会话去执行不同的记录各不相干不会导致阻塞状态。&lt;/p&gt;
 &lt;p&gt;在讲索引优化的时候说过“var引号不能丢”，如果丢失，会导致索引失效。现在来模拟一下这种情况，上面说过b字段是varchar型，故意把它写错不加单引号。&lt;/p&gt;
@@ -5674,7 +5674,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;通过检查 &lt;code&gt;InnoDB_row_lock&lt;/code&gt; 状态变量来分析系统上的行锁的争夺情况&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="k"&gt;like&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;innodb_row_lock%&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="1599153578159" /&gt;&lt;figcaption&gt;1599153578159&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;对各个状态量的说明如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Innodb_row_lock_current_waits：当前正在等待锁定的数量；&lt;/strong&gt;&lt;/p&gt;
@@ -5709,7 +5709,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;补充：&lt;/p&gt;
 &lt;p&gt;如何锁定一行？&lt;/p&gt;
 &lt;p&gt;在SQL语句后面加上&lt;code&gt;for update&lt;/code&gt;，直到锁定行的会话提交commit。&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="1599154742368" /&gt;&lt;figcaption&gt;1599154742368&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h4&gt;3.页锁&lt;/h4&gt;
 &lt;p&gt;开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般。&lt;/p&gt;
 &lt;h1&gt;MySQL主从复制&lt;/h1&gt;

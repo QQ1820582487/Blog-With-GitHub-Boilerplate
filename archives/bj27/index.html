@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/93f7a6e3ba4bcee1c825f7787cac5fc5.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/57154dd4b1490bd37fe26e5941ccf3ec.json"
         }
     </script>
     
@@ -284,7 +284,7 @@
 </ul>
 <h3>补充</h3>
 <p><strong>覆盖索引(Covering Index)，一说为索引覆盖</strong></p>
-<p>理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说<strong>查询列要被所见的索引覆盖。</strong>（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）</p>
+<p>理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说<strong>查询列要被所建的索引覆盖。</strong>（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）</p>
 <p>理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此他不比读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。</p>
 <p><strong>注意：</strong>如果使用覆盖索引，一定要注意select列表中只要所需的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。</p>
 <h1>MySQL索引优化2-优化法则</h1>
@@ -319,7 +319,7 @@
 ​   不等空值还有or，索引失效要少用;
 ​   VAR引号不可丢，SQL高级也不难!</p>
 <p>例子：</p>
-<p><figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="img" /><figcaption>img</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="" /></figure></p>
 <h2>Sql 语句中 IN 和 EXISTS 的区别及应用</h2>
 <p>student表</p>
 <div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`student`</span><span class="p">;</span>
@@ -414,10 +414,10 @@
 <p>具体sql示例：</p>
 <div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">student</span> <span class="n">s</span> <span class="k">where</span> <span class="n">s</span><span class="p">.</span><span class="n">stuid</span> <span class="k">in</span><span class="p">(</span><span class="k">select</span> <span class="n">stuid</span> <span class="k">from</span> <span class="n">score</span> <span class="n">ss</span> <span class="k">where</span> <span class="n">ss</span><span class="p">.</span><span class="n">stuid</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">stuid</span><span class="p">)</span>
 </pre></div>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_08.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 55.88235294117647" data-width="247" data-height="221"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4f4916684820eb253733a0241388ad90.png" alt="" /></figure></p>
 <div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">student</span> <span class="n">s</span> <span class="k">where</span> <span class="n">s</span><span class="p">.</span><span class="n">stuid</span> <span class="k">in</span><span class="p">(</span><span class="k">select</span> <span class="n">stuid</span> <span class="k">from</span> <span class="n">score</span> <span class="n">ss</span> <span class="k">where</span> <span class="n">ss</span><span class="p">.</span><span class="n">stuid</span> <span class="o">&lt;</span><span class="mi">1005</span><span class="p">)</span>
 </pre></div>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_09.png" alt="1598607451959" /><figcaption>1598607451959</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /></figure></p>
 <p>以上两个语句的执行流程：</p>
 <p>首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据我们的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。</p>
 <h3>EXISTS语句：执行student.length次</h3>
@@ -432,7 +432,7 @@
 <p>　　使用exists关键字进行查询的时候，首先，我们先查询的不是子查询的内容，而是查我们的主查询的表，也就是说，我们先执行的sql语句是：</p>
 <div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">student</span> <span class="n">s</span>
 </pre></div>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="D:\UserData\Desktop\杂物\Xuxx_Blogs\src\static\笔记图片\2020-08-27-Mysql优化相关_10.png" alt="1598607619622" /><figcaption>1598607619622</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 55.6" data-width="278" data-height="250"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/605a25566c74143dfd27c97534313339.png" alt="" /></figure></p>
 <p>如果成立则返回true不成立则返回false。如果返回的是true的话，则该行结果保留，如果返回的是false的话，则删除该行，最后将得到的结果返回。</p>
 <h3>IN和EXISTS的区别及应用场景</h3>
 <p>​   如果子查询得出的结果集记录较少，主查询中的表较大且又有索引时应该用 in , 反之如果外层的主查询记录较少，子查询中的表大，又有索引时使用 exists 。其实我们区分 in 和 exists 主要是造成了驱动顺序的改变(这是性能变化的关键)，如果是 exists ，那么以外层表为驱动表，先被访问，如果是 in ，那么先执行子查询，所以我们会以驱动表的快速返回为目标，那么就会考虑到索引及结果集的关系了 ，另外 in 时不对NULL进行处理。</p>
@@ -497,7 +497,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 </pre></div>
 <p>not in 和not exists如果查询语句使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。</p>
 <p>例：</p>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="1598594697055" /><figcaption>1598594697055</figcaption></figure></p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_01.png" alt="" /></figure></p>
 <h4>2.Order By关键字优化</h4>
 <p>Order By子句，尽量使用Index方式排序,避免使用FileSort方式排序 。</p>
 <p>尽可能在索引列上完成排序操作，遵照索引的最佳左前缀。</p>
@@ -518,7 +518,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 <p>提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高磁盘I/O活动和低CPU使用率。</p>
 </li>
 </ol>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="1598597628950" /><figcaption>1598597628950</figcaption></figure></p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_02.png" alt="" /></figure></p>
 <h4>3.Group By关键字优化</h4>
 <p>与Order By相似。</p>
 <ul>
@@ -562,7 +562,7 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 <p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_04.png" alt="1598601396920" /><figcaption>1598601396920</figcaption></figure></p>
 </li>
 <li><p>查看当前系统中多少条满记录：<code>show global status like '%Slow_queries%';</code></p>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="1598601445174" /><figcaption>1598601445174</figcaption></figure></p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="..\static\笔记图片\2020-08-27-MySQL优化相关_05.png" alt="" /></figure></p>
 </li>
 </ul>
 <p><strong>配置版</strong></p>
@@ -653,14 +653,14 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <li><p>查询结果</p>
 <div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profiles</span><span class="p">;</span>
 </pre></div>
-<p><figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="1598813070387" /><figcaption>1598813070387</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="" /></figure></p>
 </li>
 <li><p>诊断SQL</p>
 <div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profile</span> <span class="n">cpu</span><span class="p">,</span> <span class="n">block</span> <span class="n">io</span> <span class="k">for</span> <span class="n">query</span> <span class="p">[</span><span class="err">上一步的</span><span class="n">Query_ID</span><span class="p">];</span>
 </pre></div>
-<p><img src="..\static\笔记图片\2020-08-27-Mysql优化相关_12.png" alt="1598813177307" style="zoom:80%;" /></p>
+<p><figure class="pswp-item" style="flex: 63.71473354231975" data-width="813" data-height="638"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0f37e83a461cfc5cea96d84f7d3b0432.png" alt="" /></figure></p>
 <p>从图中可以看到开始，打开表，加载，关闭表，释放资源、记录日志，清理工作，在这儿可以看到一条SQL执行的完整生命周期。</p>
-<p><figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="1598813935414" /><figcaption>1598813935414</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 116.45021645021644" data-width="1076" data-height="462"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fd2db3d168cdcca999dc993c99807b29.png" alt="" /></figure></p>
 </li>
 <li><p>开发中需要注意的问题</p>
 <p>如果<code>show profile ... for query [Query_ID];</code>出现了如下四个，则必须优化这条sql。</p>
@@ -744,8 +744,8 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>查看表上的锁：<a href="https://dev.mysql.com/doc/refman/8.0/en/show-open-tables.html">官方文档-show open tables</a></p>
 <div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">open</span> <span class="kp">tables</span><span class="p">;</span>
 </pre></div>
-<p><figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="1598959631988" /><figcaption>1598959631988</figcaption></figure></p>
-<p><figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="1598959391374" /><figcaption>1598959391374</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="" /></figure></p>
 <p><strong>加读锁后，读取自己可以，写自己以及读取本库中别的表都不可以，言下之意就是只要加了读锁，就必须要把这笔读的账清掉再去做别的事</strong>。</p>
 <p><strong>总结</strong></p>
 <p>(窗口1)获得表mylock的read锁定时：</p>
@@ -770,7 +770,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <li><p>表独占写锁（Table Write Lock）</p>
 </li>
 </ul>
-<p><figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="img" /><figcaption>img</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 395.29411764705884" data-width="672" data-height="85"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e15df19d0008aa6cbdad8fd469b58df0.png" alt="" /></figure></p>
 <p>结论：</p>
 <p>对MyISAM引擎的表进行操作，会有以下情况：</p>
 <ol>
@@ -821,7 +821,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 </li>
 </ul>
 <p>事务隔离级别：</p>
-<p><figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="1599151071824" /><figcaption>1599151071824</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 125.10917030567686" data-width="1719" data-height="687"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8078334147c880fb78f8beb8b2f69c5c.png" alt="" /></figure></p>
 <p>案例分析</p>
 <ul>
 <li>建表SQL</li>
@@ -866,9 +866,9 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <h5>索引失效行锁变表锁</h5>
 <p>首先我们知道如果索引失效的情况下，那么肯定会导致索引失效，但是如果使用不当，会导致行锁变成表锁。</p>
 <p>上文中数据库的存储引擎为InnoDB，并且关闭了自动提交，在创建表的时候创建了两个索引，分别在表中的a和b字段上建立了两个单值索引。如下</p>
-<p><figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="img" /><figcaption>img</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="" /></figure></p>
 <p>看一下表信息</p>
-<p><figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="1599153201730" /><figcaption>1599153201730</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 91.7624521072797" data-width="479" data-height="261"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/178aabaa1b71d9332ad765e341777baa.png" alt="" /></figure></p>
 <p><em>其中，a为int型，b为varchar型</em></p>
 <p>上文中说过，两个会话去执行不同的记录各不相干不会导致阻塞状态。</p>
 <p>在讲索引优化的时候说过“var引号不能丢”，如果丢失，会导致索引失效。现在来模拟一下这种情况，上面说过b字段是varchar型，故意把它写错不加单引号。</p>
@@ -893,7 +893,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>通过检查 <code>InnoDB_row_lock</code> 状态变量来分析系统上的行锁的争夺情况</p>
 <div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">status</span> <span class="k">like</span> <span class="s1">&#39;innodb_row_lock%&#39;</span><span class="p">;</span>
 </pre></div>
-<p><figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="1599153578159" /><figcaption>1599153578159</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="" /></figure></p>
 <p>对各个状态量的说明如下：</p>
 <ul>
 <li><p><strong>Innodb_row_lock_current_waits：当前正在等待锁定的数量；</strong></p>
@@ -928,7 +928,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>补充：</p>
 <p>如何锁定一行？</p>
 <p>在SQL语句后面加上<code>for update</code>，直到锁定行的会话提交commit。</p>
-<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="1599154742368" /><figcaption>1599154742368</figcaption></figure></p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="C:\Users\Xuxx3309\AppData\Roaming\Typora\typora-user-images\1599154742368.png" alt="" /></figure></p>
 <h4>3.页锁</h4>
 <p>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般。</p>
 <h1>MySQL主从复制</h1>

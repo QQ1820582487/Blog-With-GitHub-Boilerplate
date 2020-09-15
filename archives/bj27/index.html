@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/bf07a203627946c66307dd3e038aebcf.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/c84b6dbb5b587cf4bb782ba8100e4b91.json"
         }
     </script>
     
@@ -322,91 +322,91 @@
 <p><figure class="pswp-item" style="flex: 127.46478873239437" data-width="724" data-height="284"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6a22c90a5f9e338160ca39b7255acbef.png" alt="" /></figure></p>
 <h2>Sql 语句中 IN 和 EXISTS 的区别及应用</h2>
 <p>student表</p>
-<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`student`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`student`</span> <span class="p">(</span>
-  <span class="ss">`stuid`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="n">COMMENT</span> <span class="s1">&#39;学号&#39;</span><span class="p">,</span>
-  <span class="ss">`stunm`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="n">COMMENT</span> <span class="s1">&#39;学生姓名&#39;</span><span class="p">,</span>
-  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`stuid`</span><span class="p">)</span>
-<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">`student`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">`student`</span> <span class="p">(</span>
+  <span class="n">`stuid`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;学号&#39;</span><span class="p">,</span>
+  <span class="n">`stunm`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="k">COMMENT</span> <span class="s1">&#39;学生姓名&#39;</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">`stuid`</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of student</span>
 <span class="c1">-- ----------------------------</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;张三&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;李四&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;赵二&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;王五&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;刘青&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;周明&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1007&#39;</span><span class="p">,</span> <span class="s1">&#39;吴七&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;张三&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;李四&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;赵二&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;王五&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;刘青&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;周明&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`student`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1007&#39;</span><span class="p">,</span> <span class="s1">&#39;吴七&#39;</span><span class="p">);</span>
 </pre></div>
 <p>score表</p>
-<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`score`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`score`</span> <span class="p">(</span>
-  <span class="ss">`stuid`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`courseno`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`scores`</span> <span class="kt">float</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`stuid`</span><span class="p">,</span><span class="ss">`courseno`</span><span class="p">)</span>
-<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">`score`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">`score`</span> <span class="p">(</span>
+  <span class="n">`stuid`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="n">`courseno`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="n">`scores`</span> <span class="kt">float</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">`stuid`</span><span class="p">,</span><span class="n">`courseno`</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of score</span>
 <span class="c1">-- ----------------------------</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;67&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;87&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;83&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;77&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;77&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;68&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;84&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;89&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;78&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;78&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;69&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;89&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;85&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;90&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;79&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;79&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;70&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;90&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;86&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;91&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;80&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;80&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;71&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;91&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;87&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;92&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;81&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;81&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;72&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;92&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;93&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;82&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;82&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;67&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;87&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;83&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;77&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1001&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;77&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;68&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;84&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;89&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;78&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1002&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;78&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;69&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;89&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;85&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;90&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;79&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1003&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;79&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;70&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;90&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;86&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;91&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;80&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1004&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;80&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;71&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;91&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;87&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;92&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;81&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1005&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;81&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;72&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;92&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;88&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;93&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;82&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`score`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;1006&#39;</span><span class="p">,</span> <span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;82&#39;</span><span class="p">);</span>
 </pre></div>
 <p>course表</p>
-<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`courses`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`courses`</span> <span class="p">(</span>
-  <span class="ss">`courseno`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`coursenm`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`courseno`</span><span class="p">)</span>
-<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span> <span class="n">COMMENT</span><span class="o">=</span><span class="s1">&#39;课程表&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">`courses`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">`courses`</span> <span class="p">(</span>
+  <span class="n">`courseno`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="n">`coursenm`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">`courseno`</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span> <span class="k">COMMENT</span><span class="o">=</span><span class="s1">&#39;课程表&#39;</span><span class="p">;</span>
 
 <span class="c1">-- ----------------------------</span>
 <span class="c1">-- Records of courses</span>
 <span class="c1">-- ----------------------------</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;大学语文&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;新视野英语&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;离散数学&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;概率论与数理统计&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;线性代数&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;高等数学(一)&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C007&#39;</span><span class="p">,</span> <span class="s1">&#39;高等数学(二)&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C001&#39;</span><span class="p">,</span> <span class="s1">&#39;大学语文&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C002&#39;</span><span class="p">,</span> <span class="s1">&#39;新视野英语&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C003&#39;</span><span class="p">,</span> <span class="s1">&#39;离散数学&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C004&#39;</span><span class="p">,</span> <span class="s1">&#39;概率论与数理统计&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C005&#39;</span><span class="p">,</span> <span class="s1">&#39;线性代数&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C006&#39;</span><span class="p">,</span> <span class="s1">&#39;高等数学(一)&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">`courses`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C007&#39;</span><span class="p">,</span> <span class="s1">&#39;高等数学(二)&#39;</span><span class="p">);</span>
 </pre></div>
 <p>补充：SQL语句执行顺序详见：<a href="https://blog.csdn.net/wqc19920906/article/details/79411854">SQL语句执行顺序</a></p>
 <h3>IN 语句：只执行一次</h3>
@@ -460,7 +460,7 @@
 <p><strong>相当于A.id等B表里面的，相当于从部门表获得对应的id。</strong></p>
 <p><strong>当B表的数据集必须小于A表的数据集时，用in优于exists。</strong>
 反之</p>
-<div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">A</span> <span class="n">where</span> <span class="nf">exists</span> <span class="p">(</span><span class="n">select</span> <span class="mi">1</span> <span class="n">from</span> <span class="n">B</span> <span class="n">where</span> <span class="n">B</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">id</span><span class="p">);</span> 
+<div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">A</span> <span class="n">where</span> <span class="n">exists</span> <span class="p">(</span><span class="n">select</span> <span class="mi">1</span> <span class="n">from</span> <span class="n">B</span> <span class="n">where</span> <span class="n">B</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">id</span><span class="p">);</span> 
 <span class="cp"># 这里的select 1并不绝对，可以写为select &#39;X&#39;或者&#39;A&#39;,&#39;B&#39;,&#39;C&#39;都可以，只要是常量就可以。</span>
 </pre></div>
 <p>等价于：</p>
@@ -638,25 +638,25 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>分析步骤：</p>
 <ol>
 <li><p>是否支持，看看当前的MySQL版本是否支持:</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling&#39;</span><span class="p">;</span>
  <span class="c1">#或</span>
- <span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling%&#39;</span><span class="p">;</span>
+ <span class="k">show</span> <span class="k">variables</span> <span class="k">like</span> <span class="s1">&#39;profiling%&#39;</span><span class="p">;</span>
 </pre></div>
 </li>
 <li><p>开启功能，默认是关闭，使用前需要开启:</p>
-<div class="highlight"><pre><span></span><span class="kt">set</span> <span class="n">profiling</span> <span class="o">=</span> <span class="k">on</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">set</span> <span class="n">profiling</span> <span class="o">=</span> <span class="k">on</span><span class="p">;</span>
 </pre></div>
 </li>
 <li><p>运行sql</p>
 <p>随便运行几条SQL，以便于show prifiles的日志分析。</p>
 </li>
 <li><p>查询结果</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profiles</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">profiles</span><span class="p">;</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 94.5578231292517" data-width="1112" data-height="588"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d7b7871622ba995c7ad16bb1f2cbb95e.png" alt="" /></figure></p>
 </li>
 <li><p>诊断SQL</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">profile</span> <span class="n">cpu</span><span class="p">,</span> <span class="n">block</span> <span class="n">io</span> <span class="k">for</span> <span class="n">query</span> <span class="p">[</span><span class="err">上一步的</span><span class="n">Query_ID</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">profile</span> <span class="k">cpu</span><span class="p">,</span> <span class="k">block</span> <span class="k">io</span> <span class="k">for</span> <span class="k">query</span> <span class="err">[</span><span class="n">上一步的Query_ID</span><span class="err">]</span><span class="p">;</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 63.71473354231975" data-width="813" data-height="638"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0f37e83a461cfc5cea96d84f7d3b0432.png" alt="" /></figure></p>
 <p>从图中可以看到开始，打开表，加载，关闭表，释放资源、记录日志，清理工作，在这儿可以看到一条SQL执行的完整生命周期。</p>
@@ -684,13 +684,13 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <div class="highlight"><pre><span></span><span class="c1">#开启</span>
 <span class="n">general_log</span><span class="o">=</span><span class="mi">1</span>
 <span class="c1">#记录日志文件的路径</span>
-<span class="n">general_log_file</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">logfile</span>
+<span class="n">general_log_file</span><span class="o">=/</span><span class="k">path</span><span class="o">/</span><span class="k">logfile</span>
 <span class="c1">#输出格式</span>
-<span class="n">log_output</span><span class="o">=</span><span class="n">file</span>
+<span class="n">log_output</span><span class="o">=</span><span class="k">file</span>
 </pre></div>
 <p>命令方式启用:</p>
-<div class="highlight"><pre><span></span><span class="kt">set</span> <span class="n">global</span> <span class="n">general_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="c1">#开启后会把所有的SQL进行记录</span>
-<span class="kt">set</span> <span class="n">global</span> <span class="n">log_output</span><span class="o">=</span><span class="s1">&#39;TABLE&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">set</span> <span class="k">global</span> <span class="n">general_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="c1">#开启后会把所有的SQL进行记录</span>
+<span class="k">set</span> <span class="k">global</span> <span class="n">log_output</span><span class="o">=</span><span class="s1">&#39;TABLE&#39;</span><span class="p">;</span>
 </pre></div>
 <p>此后所编写的SQL语句，将会记录到MySQL库里的general_log表，可以用下面的命令查看。</p>
 <div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">mysql</span><span class="p">.</span><span class="n">general_log</span><span class="p">;</span>
@@ -720,21 +720,21 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <ul>
 <li>建表SQL</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">create</span> <span class="k">table</span> <span class="nf">mylock</span><span class="p">(</span>
-    <span class="o">-&gt;</span> <span class="n">id</span> <span class="kt">int</span> <span class="k">not</span> <span class="n">nul</span> <span class="k">primary</span> <span class="k">key</span> <span class="kp">auto_increment</span><span class="p">,</span>
-    <span class="o">-&gt;</span> <span class="n">name</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-    <span class="o">-&gt;</span> <span class="p">)</span><span class="kp">engine</span> <span class="n">myisam</span><span class="p">;</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="nf">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="nf">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="nf">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="nf">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="nf">mylock</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">create</span> <span class="k">table</span> <span class="n">mylock</span><span class="p">(</span>
+    <span class="o">-&gt;</span> <span class="n">id</span> <span class="kt">int</span> <span class="k">not</span> <span class="n">nul</span> <span class="k">primary</span> <span class="k">key</span> <span class="k">auto_increment</span><span class="p">,</span>
+    <span class="o">-&gt;</span> <span class="k">name</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="p">)</span><span class="k">engine</span> <span class="n">myisam</span><span class="p">;</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">mylock</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">mylock</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">mylock</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">mylock</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">mylock</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">);</span>
 
 <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">mylock</span><span class="p">;</span>
 </pre></div>
 <p>加锁和解锁命令：</p>
-<div class="highlight"><pre><span></span><span class="k">lock</span> <span class="k">table</span> <span class="err">表名</span><span class="mi">1</span> <span class="k">read</span><span class="o">|</span><span class="k">write</span><span class="p">,</span> <span class="err">表名</span><span class="mi">2</span> <span class="k">read</span><span class="o">|</span><span class="k">write</span><span class="p">;</span> <span class="c1">#加锁</span>
-<span class="k">unlock</span> <span class="kp">tables</span><span class="p">;</span> <span class="c1">#解锁</span>
+<div class="highlight"><pre><span></span><span class="k">lock</span> <span class="k">table</span> <span class="n">表名1</span> <span class="k">read</span><span class="o">|</span><span class="k">write</span><span class="p">,</span> <span class="n">表名2</span> <span class="k">read</span><span class="o">|</span><span class="k">write</span><span class="p">;</span> <span class="c1">#加锁</span>
+<span class="k">unlock</span> <span class="k">tables</span><span class="p">;</span> <span class="c1">#解锁</span>
 </pre></div>
 <ul>
 <li>加读锁(共享锁)</li>
@@ -742,7 +742,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <div class="highlight"><pre><span></span>lock table mylock read;
 </pre></div>
 <p>查看表上的锁：<a href="https://dev.mysql.com/doc/refman/8.0/en/show-open-tables.html">官方文档-show open tables</a></p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">open</span> <span class="kp">tables</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">open</span> <span class="k">tables</span><span class="p">;</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 95.87155963302752" data-width="1045" data-height="545"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d529183b04f1a2dda47c410d3d24078f.png" alt="" /></figure></p>
 <p><figure class="pswp-item" style="flex: 74.14500683994528" data-width="1084" data-height="731"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/68e216909f4ecd38f85861d7f1ddbe9a.png" alt="" /></figure></p>
@@ -782,7 +782,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>如何分析表锁定</p>
 <p>可以通过查看<code>table_locks_waited</code>和<code>table_locks_immediate</code>状态变量来分析系统上的表锁定。</p>
 <p>SQL：</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">status</span> <span class="k">like</span> <span class="s1">&#39;table%&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">status</span> <span class="k">like</span> <span class="s1">&#39;table%&#39;</span><span class="p">;</span>
 </pre></div>
 <p>这里会有几个变量来记录MySQL内部表级锁定的情况，其中最重要的两个变量说明如下：</p>
 <ul>
@@ -826,32 +826,32 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <ul>
 <li>建表SQL</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nf">test_innodb_lock</span> <span class="p">(</span>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">test_innodb_lock</span> <span class="p">(</span>
   <span class="n">a</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
   <span class="n">b</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="p">)</span> <span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b2&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;4000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;5000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;6000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;7000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;8000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;9000&#39;</span><span class="p">);</span>
-<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="nf">valeus</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b1&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b2&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;4000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;5000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;6000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;7000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;8000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;9000&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">test_innodb_lock</span> <span class="n">valeus</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b1&#39;</span><span class="p">);</span>
 
-<span class="k">create</span> <span class="k">index</span> <span class="n">test_innodb_a_ind</span> <span class="k">on</span> <span class="nf">test_innodb_lock</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="k">create</span> <span class="k">index</span> <span class="n">test_innodb_a_ind</span> <span class="k">on</span> <span class="n">test_innodb_lock</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
 
-<span class="k">create</span> <span class="k">index</span> <span class="n">test_innodb_lock_b_ind</span> <span class="k">on</span> <span class="nf">test_innodb_lock</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<span class="k">create</span> <span class="k">index</span> <span class="n">test_innodb_lock_b_ind</span> <span class="k">on</span> <span class="n">test_innodb_lock</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
 
 <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">test_innodb_lock</span><span class="p">;</span>
 </pre></div>
 <ul>
 <li><p>行锁演示</p>
 <p>MySQL5.5以后默认存储引擎为InnoDB，MySQL默认的数据提交操作模式是自动提交模式（autocommit），这就表示除非显式地开始一个事务，否则每个查询都被当做一个单独的事务自动执行。</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s2">&quot;autocommit&quot;</span><span class="p">;</span> <span class="c1">#查看自动提交状态</span>
-<span class="kt">set</span> <span class="n">autocommit</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">#关闭自动提交</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">variables</span> <span class="k">like</span> <span class="s2">&quot;autocommit&quot;</span><span class="p">;</span> <span class="c1">#查看自动提交状态</span>
+<span class="k">set</span> <span class="n">autocommit</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">#关闭自动提交</span>
 </pre></div>
 </li>
 </ul>
@@ -891,7 +891,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 <p>但是，InnoDB的行级锁定同样也有其脆弱的一面，当使用不当的时候，可能会让InnoDB的整体性能表现不仅不能比MyISAM高，甚至可能更差（就像前面说过的行锁可能变表锁）。</p>
 <p>行锁分析：</p>
 <p>通过检查 <code>InnoDB_row_lock</code> 状态变量来分析系统上的行锁的争夺情况</p>
-<div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">status</span> <span class="k">like</span> <span class="s1">&#39;innodb_row_lock%&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">status</span> <span class="k">like</span> <span class="s1">&#39;innodb_row_lock%&#39;</span><span class="p">;</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 109.5" data-width="438" data-height="200"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/943e40b7b9531d21af768ac39cd40b7c.png" alt="" /></figure></p>
 <p>对各个状态量的说明如下：</p>

@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/c84b6dbb5b587cf4bb782ba8100e4b91.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/673a907a87070cad5bed5ec759f9d889.json"
         }
     </script>
     
@@ -95,60 +95,96 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>bin</strong></td>
-<td>存放二进制可执行文件(<code>ls</code>,<code>cat</code>,<code>mkdir</code>等)</td>
+<td><strong>/root</strong></td>
+<td>根目录，万物起源</td>
 </tr>
 <tr>
-<td>boot</td>
-<td>存放用于系统引导时使用的各种文件</td>
+<td>/<strong>boot</strong></td>
+<td>包含 Linux 内核，最初的 RMA 磁盘映像（系统启动时，由驱动程序所需），和启动加载程序 <strong>有趣的文件</strong>： /boot/grub/grub.conf or menu.lst，被用来配置启动；加载程序 /boot/vmlinuz， Linux 内核</td>
 </tr>
 <tr>
-<td>dev</td>
-<td>用于存放设备文件</td>
+<td><strong>/bin</strong></td>
+<td>包含系统启动和运行所必须的二进制程序</td>
 </tr>
 <tr>
-<td><strong>etc</strong></td>
-<td>存放系统配置文件</td>
+<td><strong>/sbin</strong></td>
+<td>s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序</td>
 </tr>
 <tr>
-<td>home</td>
-<td>存放所有用户文件的根目录</td>
+<td><strong>/usr</strong></td>
+<td>这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。usr (unix software resource | unix 软件资源)</td>
 </tr>
 <tr>
-<td>lib</td>
-<td>存放跟文件系统中的程序运行所需要的共享库及内核模块</td>
+<td><strong>/usr/bin</strong></td>
+<td>系统用户使用的应用程序</td>
 </tr>
 <tr>
-<td>mnt</td>
-<td>系统管理员安装临时文件系统的安装点</td>
+<td><strong>/usr/sbin</strong></td>
+<td>超级用户使用的比较高级的管理程序和系统守护程序</td>
 </tr>
 <tr>
-<td>opt</td>
-<td>额外安装的可选应用程序包所放置的位置</td>
+<td>/usr/src</td>
+<td>内核源代码默认的放置目录</td>
 </tr>
 <tr>
-<td>proc</td>
-<td>虚拟文件系统，存放当前内存的映射</td>
+<td><strong>/proc</strong></td>
+<td>系统内存的映射目录，提供内核与进程信息</td>
 </tr>
 <tr>
-<td>root</td>
-<td>超级用户目录</td>
+<td>/lost+found</td>
+<td>一般情况下是空的，当系统非法关机后，这里就存放了一些文件，文件系统恢复时的恢复文件</td>
 </tr>
 <tr>
-<td>sbin</td>
-<td>存放二进制可执行文件，只有root才能访问</td>
+<td><strong>/var</strong></td>
+<td>这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。存放邮件、系统日志等变化文件，存放系统或程序运行过程中的数据文件(variable)</td>
 </tr>
 <tr>
-<td>tmp</td>
-<td>用于存放各种临时文件</td>
+<td><strong>/tmp</strong></td>
+<td>这个目录是用来存放一些临时文件的</td>
 </tr>
 <tr>
-<td><strong>usr</strong></td>
-<td>用于存放系统应用程序，比较重要的目录<code>/usr/1ocal</code>--本地管理员软件安装目录</td>
+<td><strong>/etc</strong></td>
+<td>存放系统配置文件。它也包含一系列的 shell 脚本，在系统启动时，这些脚本会运行每个系统服务。这个目录中的任何文件应该是可读的文本文件。  <code>/etc/crontab</code>，定义自动运行的任务。 <code>/etc/fstab</code>，包含存储设备的列表，以及与他们相关的 挂载点。 <code>/etc/passwd</code>，包含用户帐号列表。</td>
 </tr>
 <tr>
-<td><strong>var</strong></td>
-<td>用于存放运行时需要改变数据的文件</td>
+<td><strong>/home</strong></td>
+<td>用户主目录，在通常的配置环境下，系统会在 /home 下，给每个用户分配一个目录。普通只能在他们自己的目录下创建文件。这个限制保护系统免受错误的用户活动破坏。</td>
+</tr>
+<tr>
+<td><strong>/dev</strong></td>
+<td>这是一个包含设备结点的特殊目录。“一切都是文件”，也使用于设备。在这个目录里，内核维护着它支持的设备</td>
+</tr>
+<tr>
+<td><strong>/lib</strong></td>
+<td>动态连接共享库，<code>.so</code> 文件，类似于 Windows 里的 dll 文件。</td>
+</tr>
+<tr>
+<td><strong>/mnt</strong></td>
+<td>系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。</td>
+</tr>
+<tr>
+<td><strong>/media</strong></td>
+<td>系统会自动识别一些设备，例如 U 盘、光驱等等，把识别的设备挂载到这个目录下。</td>
+</tr>
+<tr>
+<td>/sys</td>
+<td>sys 虚拟文件系统挂载点</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>存放服务相关数据</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>这是给主机额外安装软件所摆放的目录。比如你安装一个 ORACLE 数据库则就可以放到这个目录下。默认是空的。</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>该目录存放一些服务启动之后需要提取的数据。</td>
+</tr>
+<tr>
+<td>/selinux</td>
+<td>这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux 相关的文件的。</td>
 </tr>
 </tbody>
 </table>
@@ -620,6 +656,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 <ul>
 <li>chmod -R u+r directory       　    递归地给directory目录下所有文件和子目录的属主分配读的权限</li>
 </ul>
+<p><a href="https://frank-lam.github.io/fullstack-tutorial/#/Linux">学习指南</a></p>
 
             </div>
         </article>
@@ -636,8 +673,8 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 <section id="ga-content_pager">
 
     <div class="next">
-        <h3>没有了</h3>
-        <p class="yue">这是最新的文章</p>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj30/">Docker基础</a>
+        <p class="yue">笔记</p>
     </div>
 
 

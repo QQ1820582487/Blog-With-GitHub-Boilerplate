@@ -1,541 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-09-15T15:45:44.409211+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj19/</id><title>Spring Boot整合Spring Data JPA</title><updated>2020-09-15T15:45:44.409485+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.了解JPA&lt;/h2&gt;
-&lt;h3&gt;1. JPA是什么&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;Java Persistence API：用于对象持久化的 API&lt;/li&gt;
-&lt;li&gt;Java EE 5.0 平台标准的 ORM 规范，使得应用程序以统一的方式访问持久层
-&lt;figure class="pswp-item" style="flex: 88.78326996197718" data-width="467" data-height="263"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/71ac7413dbdac1140ee8516a64610395.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;2. JPA和Hibernate的关系&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;JPA 是 Hibernate 的一个抽象（就像JDBC和JDBC驱动的关系）；&lt;/li&gt;
-&lt;li&gt;JPA 是规范：JPA 本质上就是一种 ORM 规范，不是ORM 框架，这是因为 JPA 并未提供 ORM 实现，它只是制订了一些规范，提供了一些编程的 API 接口，但具体实现则由 ORM 厂商提供实现；&lt;/li&gt;
-&lt;li&gt;Hibernate 是实现：Hibernate 除了作为 ORM 框架之外，它也是一种 JPA 实现&lt;/li&gt;
-&lt;li&gt;从功能上来说， JPA 是 Hibernate 功能的一个子集&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;3. JPA的供应商&lt;/h3&gt;
-&lt;p&gt;JPA 的目标之一是制定一个可以由很多供应商实现的 API，Hibernate 3.2+、TopLink 10.1+ 以及 OpenJPA 都提供了 JPA 的实现，Jpa 供应商有很多，常见的有如下四种：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Hibernate
-JPA 的始作俑者就是 Hibernate 的作者，Hibernate 从 3.2 开始兼容 JPA。&lt;/li&gt;
-&lt;li&gt;OpenJPA
-OpenJPA 是 Apache 组织提供的开源项目。&lt;/li&gt;
-&lt;li&gt;TopLink
-TopLink 以前需要收费，如今开源了。&lt;/li&gt;
-&lt;li&gt;EclipseLink&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;4. JPA的优势&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;标准化: 提供相同的 API，这保证了基于JPA 开发的企业应用能够经过少量的修改就能够在不同的 JPA 框架下运行。&lt;/li&gt;
-&lt;li&gt;简单易用，集成方便: JPA 的主要目标之一就是提供更加简单的编程模型，在 JPA 框架下创建实体和创建 Java 类一样简单，只需要使用 javax.persistence.Entity 进行注解；JPA 的框架和接口也都非常简单。&lt;/li&gt;
-&lt;li&gt;可媲美JDBC的查询能力: JPA的查询语言是面向对象的，JPA定义了独特的JPQL，而且能够支持批量更新和修改、JOIN、GROUP BY、HAVING 等通常只有 SQL 才能够提供的高级查询特性，甚至还能够支持子查询。&lt;/li&gt;
-&lt;li&gt;支持面向对象的高级特性: JPA 中能够支持面向对象的高级特性，如类之间的继承、多态和类之间的复杂关系，最大限度的使用面向对象的模型&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;5. JPA包含的技术&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;ORM 映射元数据：JPA 支持 XML 和 JDK 5.0 注解两种元数据的形式，元数据描述对象和表之间的映射关系，框架据此将实体对象持久化到数据库表中。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;JPA 的 API：用来操作实体对象，执行CRUD操作，框架在后台完成所有的事情，开发者从繁琐的 JDBC 和 SQL 代码中解脱出来。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;查询语言（JPQL）：这是持久化操作中很重要的一个方面，通过面向对象而非面向数据库的查询语言查询数据，避免程序和具体的 SQL 紧密耦合。&lt;/p&gt;
-&lt;p&gt;## Spring Data&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Spring Data 是 Spring 的一个子项目。用于简化数据库访问，支持NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。Spring Data 具有如下特点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;SpringData 项目支持 NoSQL 存储：
-MongoDB （文档数据库）
-Neo4j（图形数据库）
-Redis（键/值存储）
-Hbase（列族数据库）&lt;/li&gt;
-&lt;li&gt;SpringData 项目所支持的关系数据存储技术：
-JDBC
-JPA&lt;/li&gt;
-&lt;li&gt;Spring Data Jpa 致力于减少数据访问层 (DAO) 的开发量. 开发者唯一要做的，就是声明持久层的接口，其他都交给 Spring Data JPA 来帮你完成！&lt;/li&gt;
-&lt;li&gt;框架怎么可能代替开发者实现业务逻辑呢？比如：当有一个 UserDao.findUserById() 这样一个方法声明，大致应该能判断出这是根据给定条件的 ID 查询出满足条件的 User 对象。Spring Data JPA 做的便是规范方法的名字，根据符合规范的名字来确定方法需要实现什么样的逻辑。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;补充：&lt;/h3&gt;
-&lt;h4&gt;关于 JPQL&lt;/h4&gt;
-&lt;ol&gt;
-&lt;li&gt;JPQL语言，即 Java Persistence Query Language 的简称。JPQL 是一种和 SQL 非常类似的中间性和对象化查询语言，它最终会被编译成针对不同底层数据库的 SQL 查询，从而屏蔽不同数据库的差异。JPQL语言的语句可以是 select 语句、update 语句或delete语句，它们都通过 Query 接口封装执行。&lt;/li&gt;
-&lt;li&gt;Query接口封装了执行数据库查询的相关方法。调用 EntityManager 的 createQuery、create NamedQuery 及 createNativeQuery 方法可以获得查询对象，进而可调用 Query 接口的相关方法来执行查询操作。&lt;/li&gt;
-&lt;li&gt;Query接口的主要方法如下：&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;int executeUpdate();&lt;/strong&gt; | 用于执行update或delete语句。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;List getResultList();&lt;/strong&gt; | 用于执行select语句并返回结果集实体列表。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Object getSingleResult();&lt;/strong&gt; | 用于执行只返回单个结果实体的select语句。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Query setFirstResult(int startPosition);&lt;/strong&gt; | 用于设置从哪个实体记录开始返回查询结果。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Query setMaxResults(int maxResult);&lt;/strong&gt; | 用于设置返回结果实体的最大数。与setFirstResult结合使用可实现分页查询。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Query setFlushMode(FlushModeType flushMode);&lt;/strong&gt; | 设置查询对象的Flush模式。参数可以取2个枚举值：FlushModeType.AUTO 为自动更新数据库记录，FlushMode Type.COMMIT 为直到提交事务时才更新数据库记录。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setHint(String hintName, Object value);&lt;/strong&gt; | 设置与查询对象相关的特定供应商参数或提示信息。参数名及其取值需要参考特定 JPA 实现库提供商的文档。如果第二个参数无效将抛出IllegalArgumentException异常。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(int position, Object value);&lt;/strong&gt; | 为查询语句的指定位置参数赋值。Position 指定参数序号，value 为赋给参数的值。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(int position, Date d, TemporalType type);&lt;/strong&gt; | 为查询语句的指定位置参数赋 Date 值。Position 指定参数序号，value 为赋给参数的值，temporalType 取 TemporalType 的枚举常量，包括 DATE、TIME 及 TIMESTAMP 三个，，用于将 Java 的 Date 型值临时转换为数据库支持的日期时间类型（java.sql.Date、java.sql.Time及java.sql.Timestamp）。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(int position, Calendar c, TemporalType type);&lt;/strong&gt; | 为查询语句的指定位置参数赋 Calenda r值。position 指定参数序号，value 为赋给参数的值，temporalType 的含义及取舍同前。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(String name, Object value);&lt;/strong&gt; | 为查询语句的指定名称参数赋值。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(String name, Date d, TemporalType type);&lt;/strong&gt; | 为查询语句的指定名称参数赋 Date 值,用法同前。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;setParameter(String name, Calendar c, TemporalType type);&lt;/strong&gt; | 为查询语句的指定名称参数设置Calendar值。name为参数名，其它同前。该方法调用时如果参数位置或参数名不正确，或者所赋的参数值类型不匹配，将抛出 IllegalArgumentException 异常。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;JPQL 举例&lt;/h4&gt;
-&lt;p&gt;和在 SQL 中一样，JPQL 中的 select 语句用于执行查询。其语法可表示为：
-&lt;code&gt;select_clause form_clause [where_clause] [groupby_clause] [having_clause] [orderby_clause]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;其中：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;from 子句是查询语句的必选子句。&lt;/li&gt;
-&lt;li&gt;select 用来指定查询返回的结果实体或实体的某些属性。&lt;/li&gt;
-&lt;li&gt;from 子句声明查询源实体类，并指定标识符变量（相当于SQL表的别名）。&lt;/li&gt;
-&lt;li&gt;如果不希望返回重复实体，可使用关键字 distinct 修饰。select、from 都是 JPQL 的关键字，通常全大写或全小写，建议不要大小写混用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在 JPQL 中，查询所有实体的 JPQL 查询语句很简单，如下：
-&lt;code&gt;select o from Order o 或 select o from Order as o&lt;/code&gt;
-这里关键字 as 可以省去，标识符变量的命名规范与 Java 标识符相同，且区分大小写,调用 EntityManager 的 createQuery() 方法可创建查询对象，接着调用 Query 接口的 getResultList() 方法就可获得查询结果集，如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Query query = entityManager.createQuery( "select o from Order o"); List orders = query.getResultList();Iterator iterator = orders.iterator();while(iterator.hasNext() ) {  // 处理Order}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;其他方法的与此类似，这里不再赘述。&lt;/p&gt;
-&lt;h2&gt;2.使用JPA&lt;/h2&gt;
-&lt;h3&gt;1.简单使用&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!--依赖--&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-data-jpa&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;mysql&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mysql-connector-java&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;scope&amp;gt;&lt;/span&gt;runtime&lt;span class="nt"&gt;&amp;lt;/scope&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.1.27&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.projectlombok&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;lombok&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;optional&amp;gt;&lt;/span&gt;true&lt;span class="nt"&gt;&amp;lt;/optional&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;# 配置数据库连接池及数据库驱动&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.zaxxer.hikari.HikariDataSource&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.url&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql://localhost:3306/test?useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;serverTimezone=Asia/Shanghai&lt;/span&gt;
-
-&lt;span class="c"&gt;#jpa&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.database&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;mysql&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.database-platform&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;mysql&lt;/span&gt;
-&lt;span class="c"&gt;# 生成方式 update 运行时在数据库生成表，若有更新则去更新数据&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.hibernate.ddl-auto&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;update&lt;/span&gt;
-&lt;span class="c"&gt;# 控制台展示 JPA 框架生成的sql语句&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.show-sql&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
-&lt;span class="c"&gt;# 使用JPA 创建表时，默认使用的存储引擎是MyISAM，通过指定数据库版本，可以使用InnoDB&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.hibernate.dialect&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;org.hibernate.dialect.MySQL57Dialect&lt;/span&gt;
-
-&lt;span class="c"&gt;##是否自动生成dd&lt;/span&gt;
-&lt;span class="c"&gt;#spring.jpa.generate-ddl=true&lt;/span&gt;
-&lt;span class="c"&gt;# 格式化sql语句&lt;/span&gt;
-&lt;span class="c"&gt;#spring.jpa.properties.hibernate-format_sql=true&lt;/span&gt;
-&lt;span class="c"&gt;# 解决 hibernate multiple merge 问题&lt;/span&gt;
-&lt;span class="c"&gt;#spring.jpa.properties.hibernate.event.merge.entity_copy_observer = allow&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-15 0:41&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="nd"&gt;@Data&lt;/span&gt;
-&lt;span class="c1"&gt;//默认情况下类名即表名&lt;/span&gt;
-&lt;span class="nd"&gt;@Entity&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;t_book&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Book&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;//标注主键字段&lt;/span&gt;
-    &lt;span class="nd"&gt;@Id&lt;/span&gt;
-    &lt;span class="c1"&gt;//主键自增&lt;/span&gt;
-    &lt;span class="nd"&gt;@GeneratedValue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;strategy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GenerationType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;IDENTITY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="c1"&gt;//@Column(name = &amp;quot;id&amp;quot;, length = 50, nullable = false)&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="c1"&gt;//@Column(name = &amp;quot;name&amp;quot;, length = 50, nullable = false)&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;author&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-15 0:51&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;BookDao&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JpaRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;补充：&lt;/p&gt;
-&lt;p&gt;与继承 Repository 接口等价的一种方式是在持久层接口上使用 @RepositoryDefinition 注解，并为其指定 domainClass 和 idClass 属性。像下面这样：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@RepositoryDefinition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;domainClass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idClass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Inetger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;BookDao&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;pre&gt;&lt;code&gt;//测试JPA中自带的方法
-
-@SpringBootTest
-class JpaApplicationTests {
-    @Autowired
-    BookDao bookDao;
-
-    @Test
-    void testSave() {
-        Book book = new Book();
-        book.setName("JAVA开发指南");
-        book.setAuthor("Xuxx");
-        Book save_book = bookDao.save(book);
-        System.out.println(save_book);
-    }
-
-    @Test
-    public void testUpdate() {
-        Book book = new Book();
-        book.setId(1);
-        book.setName("JAVA开发指南");
-        book.setAuthor("X");
-        //saveAndFlush:数据库中有（根据id判断）就更新，没有就添加
-        Book saveAndFlush = bookDao.saveAndFlush(book);
-        System.out.println(saveAndFlush);
-    }
-
-    @Test
-    public void testDaelete() {
-        bookDao.deleteById(1);
-    }
-
-    @Test
-    public void testFind1() {
-        Optional&amp;lt;Book&amp;gt; book1 = bookDao.findById(1);
-        System.out.println(book1.get());
-
-        List&amp;lt;Book&amp;gt; books = bookDao.findAll();
-        for (Book book : books) {
-            System.out.println(book);
-        }
-    }
-
-    /**
-     * 排序
-     */
-    @Test
-    public void testFind2() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        List&amp;lt;Book&amp;gt; books = bookDao.findAll(sort);
-        for (Book book : books) {
-            System.out.println(book);
-        }
-    }
-
-    /**
-     * 分页
-     */
-    @Test
-    public void testFind3() {
-        //of参数：1.第几页（从0开始） 2.每页几条
-        Pageable pageable = PageRequest.of(0, 2);
-        Page&amp;lt;Book&amp;gt; page = bookDao.findAll(pageable);
-        System.out.println("总记录数：" + page.getTotalElements());
-        System.out.println("总页数：" + page.getTotalPages());
-        System.out.println("当前页数（从0开始）：" + page.getNumber());
-        System.out.println("每页记录数：" + page.getSize());
-        System.out.println("当前页中存在的记录数：" + page.getNumberOfElements());
-        System.out.println("是否是首页：" + page.isFirst());
-        System.out.println("是否是尾页页：" + page.isLast());
-        System.out.println("查询结果：" + page.getContent());
-        for (Book book : page) {
-            System.out.println(book);
-        }
-    }
-
-    /**
-     * 排序+分页
-     */
-    @Test
-    public void testFind4() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(0, 2, sort);
-        Page&amp;lt;Book&amp;gt; page = bookDao.findAll(pageable);
-        for (Book book : page) {
-            System.out.println(book);
-        }
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;2.关键字自定义查询方法&lt;/h3&gt;
-&lt;h4&gt;方法定义规范&lt;/h4&gt;
-&lt;h5&gt;1.简单条件查询&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;按照 Spring Data 的规范，查询方法以 find | read | get 开头&lt;/li&gt;
-&lt;li&gt;涉及条件查询时，条件的属性用条件关键字连接，要注意的是：条件属性以首字母大写&lt;/li&gt;
-&lt;li&gt;支持属性的级联查询. 若当前类有符合条件的属性, 则优先使用, 而不使用级联属性. 若需要使用级联属性, 则属性之间使用 _ 进行连接.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;查询举例：
-1.按照id查询&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;User getUserById(Long id);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;2.查询所有年龄小于90岁的人&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByAgeLessThan(Long age);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;3.查询所有姓赵的人（以赵开头）&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByUsernameStartingWith(String u);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;4.查询所有姓赵的、并且id大于50的人&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByUsernameStartingWithAndIdGreaterThan(String name, Long id);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;5.查询所有姓名中包含”上”字的人&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByUsernameContaining(String name);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;6.查询所有姓赵的或者年龄大于90岁的&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByUsernameStartingWithOrAgeGreaterThan(String name, Long age);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;7.查询所有角色为1的用户&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;List&amp;lt;User&amp;gt; findByRole_Id(Long id);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;8.模糊查询（可以直接用 例5）&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;//调用时要加 "%"+name+"%"
-List&amp;lt;User&amp;gt; findByNameLike(String name);&lt;/code&gt;&lt;/pre&gt;
-&lt;h5&gt;2.支持的关键字&lt;/h5&gt;
-&lt;p&gt;支持的查询关键字如下图：&lt;/p&gt;
-&lt;p&gt;&lt;figure class="pswp-item" style="flex: 56.96378830083565" data-width="818" data-height="718"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/dc596932a06b2dfd41ac0d8315fa65c3.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h5&gt;3.查询方法流程解析&lt;/h5&gt;
-&lt;p&gt;为什么写上方法名，JPA就知道你想干嘛了呢？假如创建如下的查询：&lt;code&gt;findByUserDepUuid()&lt;/code&gt;，框架在解析该方法时，首先剔除 findBy，然后对剩下的属性进行解析，假设查询实体为Doc：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;先判断 userDepUuid （根据 POJO 规范，首字母变为小写）是否为查询实体的一个属性，如果是，则表示根据该属性进行查询；如果没有该属性，继续第二步；&lt;/li&gt;
-&lt;li&gt;从右往左截取第一个大写字母开头的字符串(此处为Uuid)，然后检查剩下的字符串是否为查询实体的一个属性，如果是，则表示根据该属性进行查询；如果没有该属性，则重复第二步，继续从右往左截取；最后假设 user 为查询实体的一个属性；&lt;/li&gt;
-&lt;li&gt;接着处理剩下部分（DepUuid），先判断 user 所对应的类型是否有depUuid属性，如果有，则表示该方法最终是根据 “ Doc.user.depUuid” 的取值进行查询；否则继续按照步骤 2 的规则从右往左截取，最终表示根据 “Doc.user.dep.uuid” 的值进行查询。&lt;/li&gt;
-&lt;li&gt;可能会存在一种特殊情况，比如 Doc包含一个 user 的属性，也有一个 userDep 属性，此时会存在混淆。可以明确在属性之间加上 “_” 以显式表达意图，比如 “findByUser_DepUuid()” 或者 “findByUserDep_uuid()”&lt;/li&gt;
-&lt;li&gt;还有一些特殊的参数：例如分页或排序的参数：&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;Page&amp;lt;UserModel&amp;gt; findByName(String name, Pageable pageable);  List&amp;lt;UserModel&amp;gt; findByName(String name, Sort sort);&lt;/code&gt;&lt;/pre&gt;
-&lt;h6&gt;@Query注解&lt;/h6&gt;
-&lt;p&gt;有的时候，这里提供的查询关键字并不能满足我们的查询需求，这个时候就可以使用 @Query 关键字，来自定义查询 SQL，例如查询Id最大的User：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Query("select u from t_user u where id=(select max(id) from t_user)")
-User getMaxIdUser();&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果查询有参数的话，参数有两种不同的传递方式:&lt;/p&gt;
-&lt;p&gt;1.利用下标索引传参，索引参数如下所示，索引值从1开始，查询中 ”?X” 个数需要与方法定义的参数个数相一致，并且顺序也要一致：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Query("select u from t_user u where id&amp;gt;?1 and username like ?2")
-List&amp;lt;User&amp;gt; selectUserByParam(Long id, String name);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;2.命名参数（推荐）：这种方式可以定义好参数名，赋值时采用@Param(“参数名”)，而不用管顺序：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Query("select u from t_user u where id&amp;gt;:id and username like :name")
-List&amp;lt;User&amp;gt; selectUserByParam2(@Param("name") String name, @Param("id") Long id);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;查询时候，也可以是使用原生的SQL查询，如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Query(value = "select * from t_user",nativeQuery = true)
-List&amp;lt;User&amp;gt; selectAll();&lt;/code&gt;&lt;/pre&gt;
-&lt;h6&gt;@Modifying注解&lt;/h6&gt;
-&lt;p&gt;涉及到数据修改操作，可以使用 @Modifying 注解，@Query 与 @Modifying 这两个 annotation一起声明，可定义个性化更新操作，例如涉及某些字段更新时最为常用，示例如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Modifying
-@Query("update t_user set age=:age where id&amp;gt;:id")
-int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;注意：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;可以通过自定义的 JPQL 完成 UPDATE 和 DELETE 操作. 注意: JPQL 不支持使用 INSERT&lt;/li&gt;
-&lt;li&gt;方法的返回值应该是 int，表示更新语句所影响的行数&lt;/li&gt;
-&lt;li&gt;在调用的地方必须加事务，没有事务不能正常执行&lt;/li&gt;
-&lt;li&gt;默认情况下, Spring Data 的每个方法上有事务, 但都是一个只读事务. 他们不能完成修改操作&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h6&gt;@Transactional 注解&lt;/h6&gt;
-&lt;p&gt;说到这里，再来顺便说说&lt;strong&gt;Spring Data 中的事务问题&lt;/strong&gt;：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Spring Data 提供了默认的事务处理方式，即所有的查询均声明为只读事务。&lt;/li&gt;
-&lt;li&gt;对于自定义的方法，如需改变 Spring Data 提供的事务默认方式，可以在方法上添加 &lt;code&gt;@Transactional 注解&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;3. Spring Boot整合JPA多数据源&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!--依赖--&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-data-jpa&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;mysql&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;mysql-connector-java&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;scope&amp;gt;&lt;/span&gt;runtime&lt;span class="nt"&gt;&amp;lt;/scope&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;5.1.27&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.projectlombok&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;lombok&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;optional&amp;gt;&lt;/span&gt;true&lt;span class="nt"&gt;&amp;lt;/optional&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;# 配置数据库连接池及数据库驱动&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.one.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.zaxxer.hikari.HikariDataSource&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.one.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.one.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="c"&gt;#使用Hikari的话要讲url换成jdbcurl，Druid直接使用url&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.one.jdbcurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql://localhost:3306/test?useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;serverTimezone=Asia/Shanghai&lt;/span&gt;
-
-&lt;span class="na"&gt;spring.datasource.two.type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;com.zaxxer.hikari.HikariDataSource&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.two.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.two.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;root&lt;/span&gt;
-&lt;span class="na"&gt;spring.datasource.two.jdbcurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;jdbc:mysql://localhost:3306/test2?useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;serverTimezone=Asia/Shanghai&lt;/span&gt;
-
-&lt;span class="c"&gt;#与单数据源不同的是 在jpa后都要加上properties&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.database&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;mysql&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.database-platform&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;mysql&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.hibernate.ddl-auto&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;update&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.show-sql&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
-&lt;span class="na"&gt;spring.jpa.properties.hibernate.dialect&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;org.hibernate.dialect.MySQL57Dialect&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description 配置数据源&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-16 0:30&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DataSourceConfig&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="nd"&gt;@Primary&lt;/span&gt;&lt;span class="c1"&gt;//优先考虑被注解的对象注入&lt;/span&gt;
-    &lt;span class="nd"&gt;@ConfigurationProperties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spring.datasource.one&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="nf"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="c1"&gt;//此处使用Hikari&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;DataSourceBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HikariDataSource&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="c1"&gt;//使用Druid DataSource&lt;/span&gt;
-&lt;span class="c1"&gt;//        return DruidDataSourceBuilder.create().build();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="nd"&gt;@ConfigurationProperties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spring.datasource.two&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="nf"&gt;dsTwo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;DataSourceBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;create&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HikariDataSource&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description 配置jpa1&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-16 0:39&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="nd"&gt;@EnableJpaRepositories&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;basePackages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;com.xuxx.jpa2.dao1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;entityManagerFactoryRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;localContainerEntityManagerFactoryBeanOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;transactionManagerRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;platformTransactionManagerOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;JpaConfigOne&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="nd"&gt;@Qualifier&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dsOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JpaProperties&lt;/span&gt; &lt;span class="n"&gt;jpaProperties&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="nd"&gt;@Primary&lt;/span&gt;
-    &lt;span class="n"&gt;LocalContainerEntityManagerFactoryBean&lt;/span&gt; &lt;span class="nf"&gt;localContainerEntityManagerFactoryBeanOne&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EntityManagerFactoryBuilder&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dataSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;jpaProperties&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProperties&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;persistenceUnit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pu1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx.jpa2.bean&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt;     * PlatformTransactionManager是JpaTransactionManager的顶层父类&lt;/span&gt;
-&lt;span class="cm"&gt;     *&lt;/span&gt;
-&lt;span class="cm"&gt;     * @param builder&lt;/span&gt;
-&lt;span class="cm"&gt;     * @return&lt;/span&gt;
-&lt;span class="cm"&gt;     */&lt;/span&gt;
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;PlatformTransactionManager&lt;/span&gt; &lt;span class="nf"&gt;platformTransactionManagerOne&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EntityManagerFactoryBuilder&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JpaTransactionManager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localContainerEntityManagerFactoryBeanOne&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getObject&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description 配置jpa2&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-16 0:39&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="nd"&gt;@Configuration&lt;/span&gt;
-&lt;span class="nd"&gt;@EnableJpaRepositories&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;basePackages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;com.xuxx.jpa2.dao2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;entityManagerFactoryRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;localContainerEntityManagerFactoryBeanTwo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;transactionManagerRef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;platformTransactionManagerTwo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;JpaConfigTwo&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="nd"&gt;@Qualifier&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dsOne&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;DataSource&lt;/span&gt; &lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JpaProperties&lt;/span&gt; &lt;span class="n"&gt;jpaProperties&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;LocalContainerEntityManagerFactoryBean&lt;/span&gt; &lt;span class="nf"&gt;localContainerEntityManagerFactoryBeanTwo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EntityManagerFactoryBuilder&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dataSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dsOne&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;properties&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;jpaProperties&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProperties&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;persistenceUnit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pu1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;packages&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.xuxx.jpa2.bean&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-                &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;build&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Bean&lt;/span&gt;
-    &lt;span class="n"&gt;PlatformTransactionManager&lt;/span&gt; &lt;span class="nf"&gt;platformTransactionManagerTwo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EntityManagerFactoryBuilder&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JpaTransactionManager&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;localContainerEntityManagerFactoryBeanTwo&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getObject&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-16 1:46&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;BookDao1&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JpaRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * @author Xuxx3309&lt;/span&gt;
-&lt;span class="cm"&gt; * @Description&lt;/span&gt;
-&lt;span class="cm"&gt; * @create 2020-05-16 1:47&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nc"&gt;BookDao2&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JpaRepository&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
-&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Jpa2ApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;BookDao1&lt;/span&gt; &lt;span class="n"&gt;bookDao1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;BookDao2&lt;/span&gt; &lt;span class="n"&gt;bookDao2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Test&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dao1All&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bookDao1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findAll&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dao1All&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;-------------&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Book&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dao2All&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bookDao2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findAll&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dao2All&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;测试：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[Book(id=1, name=11, author=11), Book(id=2, name=22, author=22), Book(id=6, name=33, author=33), Book(id=7, name=44, author=44), Book(id=8, name=1, author=1), Book(id=9, name=JAVA, author=Xuxx), Book(id=10, name=JAVA1, author=Xuxx), Book(id=11, name=JAVA2, author=Xuxx)]
--------------
-[Book(id=1, name=11, author=11), Book(id=2, name=22, author=22), Book(id=6, name=33, author=33), Book(id=7, name=44, author=44), Book(id=8, name=1, author=1), Book(id=9, name=JAVA, author=Xuxx), Book(id=10, name=JAVA1, author=Xuxx), Book(id=11, name=JAVA2, author=Xuxx)]&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;4.Repository接口&lt;/h3&gt;
-&lt;p&gt;来看 Repository 的一个继承关系图：
-   &lt;figure class="pswp-item" style="flex: 80.15759312320917" data-width="1119" data-height="698"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6079a0043be0c5085838df77633e5a68.png" alt="img" /&gt;&lt;figcaption&gt;img&lt;/figcaption&gt;&lt;/figure&gt;
-可以看到，实现类不少。那么到底如何理解 Repository 呢？&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Repository 接口是 Spring Data 的一个核心接口，它不提供任何方法，开发者需要在自己定义的接口中声明需要的方法 &lt;code&gt;public interface Repository&amp;lt;T, ID extends Serializable&amp;gt; { }&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;若我们定义的接口继承了 Repository, 则该接口会被 IOC 容器识别为一个 Repository Bean，进而纳入到 IOC 容器中，进而可以在该接口中定义满足一定规范的方法。&lt;/li&gt;
-&lt;li&gt;Spring Data可以让我们只定义接口，只要遵循 Spring Data 的规范，就无需写实现类。&lt;/li&gt;
-&lt;li&gt;与继承 Repository 等价的一种方式，就是在持久层接口上使用 @RepositoryDefinition 注解，并为其指定 domainClass 和 idClass 属性。像下面这样：&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;@RepositoryDefinition(domainClass = User.class, idClass = Long.class)public interface UserDao{    User findById(Long id);    List&amp;lt;User&amp;gt; findAll();}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;基础的 Repository 提供了最基本的数据访问功能，其几个子接口则扩展了一些功能，它的几个常用的实现类如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;CrudRepository： 继承 Repository，实现了一组 CRUD 相关的方法&lt;/li&gt;
-&lt;li&gt;PagingAndSortingRepository： 继承 CrudRepository，实现了一组分页排序相关的方法&lt;/li&gt;
-&lt;li&gt;JpaRepository： 继承 PagingAndSortingRepository，实现一组 JPA 规范相关的方法&lt;/li&gt;
-&lt;li&gt;自定义的 XxxxRepository 需要继承 JpaRepository，这样的 XxxxRepository 接口就具备了通用的数据访问控制层的能力。&lt;/li&gt;
-&lt;li&gt;JpaSpecificationExecutor： 不属于Repository体系，实现一组 JPA Criteria 查询相关的方法&lt;/li&gt;
-&lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj19/" rel="alternate"/><published>2020-05-13T01:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-09-15T15:45:44.409464+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-09-16T20:44:15.976677+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj20/</id><title>Spring Boot构建REST服务</title><updated>2020-09-16T20:44:15.976964+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础版&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;依赖&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -710,7 +174,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);&lt;/code&gt;&l
 &lt;li&gt;&lt;p&gt;全局配置：编写配置类，重写&lt;code&gt;addCorsMappings&lt;/code&gt;方法&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-09-15T15:45:44.409444+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj20/" rel="alternate"/><published>2020-05-16T02:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj21/</id><title>Spring Boot整合WebSocket</title><updated>2020-09-16T20:44:15.976942+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.什么是WebSocket?&lt;/h2&gt;
 &lt;p&gt;WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。&lt;/p&gt;
 &lt;p&gt;WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。&lt;/p&gt;
 &lt;p&gt;在 WebSocket API 中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。&lt;/p&gt;
@@ -1115,7 +579,7 @@ public class GreetingController {
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 128.05194805194805" data-width="986" data-height="385"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1c18b11e196a9d7b931491e2af7c2efa.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-09-15T15:45:44.409423+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj21/" rel="alternate"/><published>2020-05-17T23:20:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj22/</id><title>Spring Boot整合Security</title><updated>2020-09-16T20:44:15.976921+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.Spring Security入门&lt;/h2&gt;
 &lt;h3&gt;1.Spring Security初体验&lt;/h3&gt;
 &lt;h4&gt;1.引入依赖&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
@@ -3113,7 +2577,7 @@ public class MultiHttpSecurity {
 
 &lt;pre&gt;&lt;code&gt;
 &lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-09-15T15:45:44.409402+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj22/" rel="alternate"/><published>2020-05-18T15:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj23/</id><title>Spring Boot整合Swagger</title><updated>2020-09-16T20:44:15.976899+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Swagger简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;前后端分离&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;前端 -&amp;gt; 前端控制层、视图层&lt;/li&gt;
@@ -3413,7 +2877,7 @@ public class MultiHttpSecurity {
 &lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 190.47619047619048" data-width="1920" data-height="504"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69d2f605e680bd7eae5ef85c2f353794.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RabbitMQ实战教程</title><updated>2020-09-15T15:45:44.409382+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj23/" rel="alternate"/><published>2020-05-27T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj24/</id><title>RabbitMQ实战教程</title><updated>2020-09-16T20:44:15.976877+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.MQ引言&lt;/h2&gt;
 &lt;h3&gt;1.1 什么是MQ&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;MQ&lt;/code&gt;(Message Quene) :  翻译为 &lt;code&gt;消息队列&lt;/code&gt;,通过典型的 &lt;code&gt;生产者&lt;/code&gt;和&lt;code&gt;消费者&lt;/code&gt;模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 &lt;code&gt;消息中间件&lt;/code&gt; 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。&lt;/p&gt;
 &lt;h3&gt;1.2 MQ有哪些&lt;/h3&gt;
@@ -4343,7 +3807,7 @@ channel.basicPublish("topics",routekey,null,("这是路由中的动态订阅模�
 &lt;h1&gt;4.测试集群&lt;/h1&gt;
 &lt;p&gt;```&lt;/p&gt;
 &lt;hr&gt;
-</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-09-15T15:45:44.409361+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj24/" rel="alternate"/><published>2020-05-31T22:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-09-16T20:44:15.976854+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;什么是SMTP？
  SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
@@ -4620,7 +4084,7 @@ class MailApplicationTests {
         javaMailSender.send(message);
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-09-15T15:45:44.409339+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-09-16T20:44:15.976831+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
 &lt;h3&gt;一. MySQL逻辑分层&lt;/h3&gt;
 &lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给我们想要的结果。&lt;/p&gt;
 &lt;h4&gt;1.连接层&lt;/h4&gt;
@@ -5498,7 +4962,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/ol&gt;
 &lt;h3&gt;一主一从常见配置&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://www.bilibili.com/video/BV12b411K7Zu?p=241"&gt;参考&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-09-15T15:45:44.409313+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-09-16T20:44:15.976808+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;1. 内存模型 &amp;amp; 分区&lt;/h2&gt;
 &lt;p&gt;Java虚拟机在运行Java程序时，会管理着一块内存区域：运行时数据区&lt;/p&gt;
 &lt;p&gt;在运行时数据区里，会根据用途进行划分：&lt;/p&gt;
@@ -5564,7 +5028,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h2&gt;8. 总结&lt;/h2&gt;
 &lt;p&gt;本文全面讲解JVM中的内存模型 &amp;amp; 分区，总结如下&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 144.0" data-width="1080" data-height="375"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/10936d10647a2b939c1bd64c8f774d6b.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-09-15T15:45:44.409266+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-09-16T20:44:15.976781+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
 &lt;th&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/th&gt;
@@ -5573,60 +5037,96 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;bin&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;存放二进制可执行文件(&lt;code&gt;ls&lt;/code&gt;,&lt;code&gt;cat&lt;/code&gt;,&lt;code&gt;mkdir&lt;/code&gt;等)&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/root&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;根目录，万物起源&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;boot&lt;/td&gt;
-&lt;td&gt;存放用于系统引导时使用的各种文件&lt;/td&gt;
+&lt;td&gt;/&lt;strong&gt;boot&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;包含 Linux 内核，最初的 RMA 磁盘映像（系统启动时，由驱动程序所需），和启动加载程序 &lt;strong&gt;有趣的文件&lt;/strong&gt;： /boot/grub/grub.conf or menu.lst，被用来配置启动；加载程序 /boot/vmlinuz， Linux 内核&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;dev&lt;/td&gt;
-&lt;td&gt;用于存放设备文件&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/bin&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;包含系统启动和运行所必须的二进制程序&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;etc&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;存放系统配置文件&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/sbin&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;home&lt;/td&gt;
-&lt;td&gt;存放所有用户文件的根目录&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/usr&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。usr (unix software resource | unix 软件资源)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;lib&lt;/td&gt;
-&lt;td&gt;存放跟文件系统中的程序运行所需要的共享库及内核模块&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/usr/bin&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;系统用户使用的应用程序&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;mnt&lt;/td&gt;
-&lt;td&gt;系统管理员安装临时文件系统的安装点&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/usr/sbin&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;超级用户使用的比较高级的管理程序和系统守护程序&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;opt&lt;/td&gt;
-&lt;td&gt;额外安装的可选应用程序包所放置的位置&lt;/td&gt;
+&lt;td&gt;/usr/src&lt;/td&gt;
+&lt;td&gt;内核源代码默认的放置目录&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;proc&lt;/td&gt;
-&lt;td&gt;虚拟文件系统，存放当前内存的映射&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/proc&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;系统内存的映射目录，提供内核与进程信息&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;root&lt;/td&gt;
-&lt;td&gt;超级用户目录&lt;/td&gt;
+&lt;td&gt;/lost+found&lt;/td&gt;
+&lt;td&gt;一般情况下是空的，当系统非法关机后，这里就存放了一些文件，文件系统恢复时的恢复文件&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;sbin&lt;/td&gt;
-&lt;td&gt;存放二进制可执行文件，只有root才能访问&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/var&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。存放邮件、系统日志等变化文件，存放系统或程序运行过程中的数据文件(variable)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;tmp&lt;/td&gt;
-&lt;td&gt;用于存放各种临时文件&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/tmp&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;这个目录是用来存放一些临时文件的&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;usr&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;用于存放系统应用程序，比较重要的目录&lt;code&gt;/usr/1ocal&lt;/code&gt;--本地管理员软件安装目录&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/etc&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;存放系统配置文件。它也包含一系列的 shell 脚本，在系统启动时，这些脚本会运行每个系统服务。这个目录中的任何文件应该是可读的文本文件。  &lt;code&gt;/etc/crontab&lt;/code&gt;，定义自动运行的任务。 &lt;code&gt;/etc/fstab&lt;/code&gt;，包含存储设备的列表，以及与他们相关的 挂载点。 &lt;code&gt;/etc/passwd&lt;/code&gt;，包含用户帐号列表。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;var&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;用于存放运行时需要改变数据的文件&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;/home&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;用户主目录，在通常的配置环境下，系统会在 /home 下，给每个用户分配一个目录。普通只能在他们自己的目录下创建文件。这个限制保护系统免受错误的用户活动破坏。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;/dev&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;这是一个包含设备结点的特殊目录。“一切都是文件”，也使用于设备。在这个目录里，内核维护着它支持的设备&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;/lib&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;动态连接共享库，&lt;code&gt;.so&lt;/code&gt; 文件，类似于 Windows 里的 dll 文件。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;/mnt&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;/media&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;系统会自动识别一些设备，例如 U 盘、光驱等等，把识别的设备挂载到这个目录下。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/sys&lt;/td&gt;
+&lt;td&gt;sys 虚拟文件系统挂载点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/srv&lt;/td&gt;
+&lt;td&gt;存放服务相关数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/opt&lt;/td&gt;
+&lt;td&gt;这是给主机额外安装软件所摆放的目录。比如你安装一个 ORACLE 数据库则就可以放到这个目录下。默认是空的。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/srv&lt;/td&gt;
+&lt;td&gt;该目录存放一些服务启动之后需要提取的数据。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/selinux&lt;/td&gt;
+&lt;td&gt;这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux 相关的文件的。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -6098,4 +5598,252 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 &lt;ul&gt;
 &lt;li&gt;chmod -R u+r directory       　    递归地给directory目录下所有文件和子目录的属主分配读的权限&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry></feed>
+&lt;p&gt;&lt;a href="https://frank-lam.github.io/fullstack-tutorial/#/Linux"&gt;学习指南&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-09-16T20:44:15.976733+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
+&lt;h3&gt;Docker是什么？&lt;/h3&gt;
+&lt;p&gt;Docker是Docker.Lnc公司开源的一个基于LXC技术之上搭建的 Container 容器引擎，源代码托管在Github上，使用 Google 公司的 Go 语言，基于Go语言并遵从Apache2.0协议开源。Docker将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了Docker，就不用担心环境问题。
+总体来说，Docker的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。&lt;/p&gt;
+&lt;p&gt;容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。&lt;/p&gt;
+&lt;p&gt;简单来说：Docker是一个虚拟环境容器，可以将你的开发环境、代码、配置文件等一并打包到这个容器中，并发布和应用到任意平台中。&lt;/p&gt;
+&lt;h3&gt;Docker的设计理念和概念&lt;/h3&gt;
+&lt;p&gt;docker设想是交付运行环境如同海运，OS如同一个货轮，每一个在OS基础上的软件都如同一个集装箱，用户可以通过标准化手段自由组装运行环境，同时集装箱的内容可以由用户自定义，也可以由专业人员制造。这样，交付一个软件，就是一系列标准化组件的集合的交付，如同乐高积木，用户只需要选择合适的积木组合，并且在最顶端署上自己的名字(最后一个标准化组件是用户的app)。这也就是基于 docker 的 PaaS 产品的原型。&lt;/p&gt;
+&lt;p&gt;所以Docker的主要目标是“&lt;code&gt;Build，Ship and Run Any App,Anywhere&lt;/code&gt;(在任何地方构建、发布和运行任何应用程序)”，也就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，使用户的APP（可以是一个Web应用或数据库应用等等）及其运行环境能够做到&lt;strong&gt;“一次封装，到处运行”&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Docker是开发人员和系统管理员使用容器开发、部署和运行应用程序的平台。使用Linux容器来部署应用程序称为集装箱化。使用docker轻松部署应用程序。目前，Docker 从 17.03 版本之后分为 CE（Community Edition: 社区版） 和 EE（Enterprise Edition: 企业版），学习时用社区版就可以了。&lt;/p&gt;
+&lt;h3&gt;Docker的组成&lt;/h3&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 97.50996015936255" data-width="979" data-height="502"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e039df4cc61e644108026a13e8852aae.png" alt="Docker组成" /&gt;&lt;figcaption&gt;Docker组成&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h4&gt;镜像(image)：&lt;/h4&gt;
+&lt;p&gt;Docker镜像就相当于是一个文件系统，通俗来说就是为容器用来创建容器的&lt;/p&gt;
+&lt;h4&gt;容器(Container)：&lt;/h4&gt;
+&lt;p&gt;Docker 利用容器 (Container) 独立运行的一个或一组应用，容器是用镜像创建的运行实例，它可以被启动、开始、停止、删除，每个容器都是相互隔离的、保证安全的平台，可以把容器看做是一个简易版的Linux系统&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;容器就相当于Java中的对象，镜像相当于Java中的类&lt;/strong&gt;&lt;/p&gt;
+&lt;h4&gt;仓库(Repository)&lt;/h4&gt;
+&lt;p&gt;仓库是集中存放镜像文件的场所
+仓库注册服务器 (Registry) 上往往存放着多个仓库，每个仓库中又包含了多个镜像，每个镜像有不同的标签 
+仓库分为公开仓库和私有仓库两种形式
+最大的公开仓库是&lt;a href="https://hub.docker.com"&gt;DockerHub&lt;/a&gt;存放了数量庞大的镜像供用户下载，国内的公开仓库包括阿里云等&lt;/p&gt;
+&lt;h3&gt;Docker对比传统虚拟化方式的优势&lt;/h3&gt;
+&lt;h4&gt;更高效的利用系统资源&lt;/h4&gt;
+&lt;p&gt;由于容器不需要进行硬件虚拟以及运行完整操作系统等额外开销，Docker对系统资源的利用率更高。无论是应用执行速度、内存损耗或者文件存储速度，都要比传统虚拟机技术更高效。因此，相比虚拟机技术，一个相同配置的&lt;/p&gt;
+&lt;p&gt;主机，往往可以运行更多数量的应用。&lt;/p&gt;
+&lt;h4&gt;一致的运行环境&lt;/h4&gt;
+&lt;p&gt;开发过程中一个常见的问题是环境一致性问题。由于开发环境、测试环境、生产环境不一致，导致有些bug并未在开发过程中被发现。而Docker的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现「&lt;strong&gt;这段代码在我机器上没问题啊&lt;/strong&gt;」这类问题。&lt;/p&gt;
+&lt;h4&gt;更快速的启动时间&lt;/h4&gt;
+&lt;p&gt;传统的虚拟机技术启动应用服务往往需要数分钟，而Docker容器应用，由于直接运行于宿主内核，无需启动完整&lt;/p&gt;
+&lt;p&gt;的操作系统，因此可以做到种级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。&lt;/p&gt;
+&lt;h4&gt;持续交付和部署&lt;/h4&gt;
+&lt;p&gt;对开发和运维( DevOps ）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。&lt;/p&gt;
+&lt;p&gt;使用Docker可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfi1e来进行镜像构建，并结合 &lt;strong&gt;持续集成(Continuous Integration)&lt;/strong&gt; 系统进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至结合 &lt;strong&gt;持续部署(Continuous Delivery/Deployment)&lt;/strong&gt; 系统进行自动部署。&lt;/p&gt;
+&lt;p&gt;而且使用 &lt;code&gt;Dockerfile&lt;/code&gt;使镜像构建透明化，不仅仅开发团队可以理解应用运行环境，也方便运维团队理解应用运行所需条件，帮助更好的生产环境中部署该镜像。&lt;/p&gt;
+&lt;h4&gt;更轻松的迁移&lt;/h4&gt;
+&lt;p&gt;由于Docker确保了执行环境的一致性，使得应用的迁移更加容易。Docker可以在很多平台上运行，无论是物理机、虚拟机、公有云、私有云，甚至是笔记本，其运行结果是一致的。因此用户可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。&lt;/p&gt;
+&lt;h4&gt;更轻松的维护和扩展&lt;/h4&gt;
+&lt;p&gt;Docker使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker团队同各个开源项目团队一起维护了一大批高质量的官方镜像，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。&lt;/p&gt;
+&lt;h4&gt;对比传统虚拟机总结&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;特性&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Docker&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;传统虚拟机&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;启动&lt;/td&gt;
+&lt;td&gt;秒级&lt;/td&gt;
+&lt;td&gt;分钟级&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;硬盘使用&lt;/td&gt;
+&lt;td&gt;一般为MB&lt;/td&gt;
+&lt;td&gt;一般为GB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;性能&lt;/td&gt;
+&lt;td&gt;接近原生&lt;/td&gt;
+&lt;td&gt;弱于原生&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;上千个&lt;/td&gt;
+&lt;td&gt;一般几十个&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;补充：&lt;/p&gt;
+&lt;p&gt;Docker的进程隔离&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 121.44846796657382" data-width="872" data-height="359"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d8fb7b9df7e611067e2f927b22554f0a.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h1&gt;Docker安装&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://blog.csdn.net/u014069688/article/details/100532774"&gt;转自☞&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;环境：虚拟机装的Centos7，linux 3.10 内核&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;root账户登录，查看内核版本如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# uname -a&lt;/span&gt;
+Linux localhost.localdomain &lt;span class="m"&gt;3&lt;/span&gt;.10.0-1062.12.1.el7.x86_64 &lt;span class="c1"&gt;#1 SMP Tue Feb 4 23:02:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;把 yum 包更新到最新(非必须，方便小白)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# yum update&lt;/span&gt;
+已加载插件：fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.ustc.edu.cn
+ * extras: mirrors.aliyun.com
+ * updates: mirrors.cn99.com
+base                                                                                                  &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;.6 kB  &lt;span class="m"&gt;00&lt;/span&gt;:00:00     
+extras                                                                                                &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;.4 kB  &lt;span class="m"&gt;00&lt;/span&gt;:00:00     
+updates                                                                                               &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;.4 kB  &lt;span class="m"&gt;00&lt;/span&gt;:00:00     
+正在解决依赖关系
+--&amp;gt; 正在检查事务
+---&amp;gt; 软件包 NetworkManager.x86_64.1.1.12.0-6.el7 将被 升级
+---&amp;gt; 软件包 NetworkManager.x86_64.1.1.12.0-10.el7_6 将被 更新
+&lt;span class="c1"&gt;##（期间要选择确认，输入 y 即可）&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# yum install -y yum-utils device-mapper-persistent-data lvm2&lt;/span&gt;
+已加载插件：fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.ustc.edu.cn
+ * extras: mirrors.aliyun.com
+ * updates: mirrors.cn99.com
+软件包 device-mapper-persistent-data-0.7.3-3.el7.x86_64 已安装并且是最新版本
+软件包 &lt;span class="m"&gt;7&lt;/span&gt;:lvm2-2.02.180-10.el7_6.8.x86_64 已安装并且是最新版本
+正在解决依赖关系
+--&amp;gt; 正在检查事务
+---&amp;gt; 软件包 yum-utils.noarch.0.1.1.31-50.el7 将被 安装
+--&amp;gt; 正在处理依赖关系 python-kitchen，它被软件包 yum-utils-1.1.31-50.el7.noarch 需要
+...
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;补充：LVM是Logical Volume Manager（逻辑卷管理器）的简写，又译为逻辑卷宗管理器、逻辑扇区管理器、逻辑磁盘管理器。是Linux核心所提供的逻辑卷管理（Logical Volume Management）功能。它在硬盘的硬盘分区之上，又创建了一个逻辑层以方便系统管理硬盘分区系统。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设置 yum 源（选择其中一个）&lt;/p&gt;
+&lt;p&gt;yum-config-manager --add-repo &lt;a href="http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）"&gt;http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;yum-config-manager --add-repo &lt;a href="http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）"&gt;http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# yum-config-manager --add-repo &lt;/span&gt;
+https://download.docker.com/linux/centos/docker-ce.repo
+已加载插件：fastestmirror
+adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
+grabbing file https://download.docker.com/linux/centos/docker-ce.repo to 
+/etc/yum.repos.d/docker-ce.repo
+repo saved to /etc/yum.repos.d/docker-ce.repo
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;可以查看所有仓库中所有docker版本，并选择特定版本安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# yum list docker-ce --showduplicates | sort -r&lt;/span&gt;
+已加载插件：fastestmirror
+可安装的软件包
+ * updates: mirrors.cn99.com
+Loading mirror speeds from cached hostfile
+ * extras: mirrors.aliyun.com
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:19.03.2-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:19.03.1-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:19.03.0-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.8-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.7-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.6-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.5-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.4-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.3-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.2-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.1-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;3&lt;/span&gt;:18.09.0-3.el7                     docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.06.3.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.06.2.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.06.1.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.06.0.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.03.1.ce-1.el7.centos             docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;18&lt;/span&gt;.03.0.ce-1.el7.centos             docker-ce-stable
+docker-ce.x86_64            &lt;span class="m"&gt;17&lt;/span&gt;.12.1.ce-1.el7.centos             docker-ce-stable
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装Docker，命令：&lt;code&gt;yum install docker-ce-版本号&lt;/code&gt;，我选的是&lt;code&gt;docker-ce-18.03.1.ce&lt;/code&gt;，如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# yum install docker-ce-18.03.1.ce&lt;/span&gt;
+已加载插件：fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.ustc.edu.cn
+ * extras: mirrors.aliyun.com
+ * updates: mirrors.cn99.com
+正在解决依赖关系
+--&amp;gt; 正在检查事务
+---&amp;gt; 软件包 docker-ce.x86_64.0.18.03.1.ce-1.el7.centos 将被 安装
+&lt;span class="c1"&gt;##（期间要选择确认，输入 y 即可）&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;[可选]配置阿里云镜像加速&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 104.68920392584515" data-width="1920" data-height="917"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0a7b0d2480e8e35788102af644e7a97e.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json &lt;span class="s"&gt;&amp;lt;&amp;lt;-&amp;#39;EOF&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;{&lt;/span&gt;
+&lt;span class="s"&gt;  &amp;quot;registry-mirrors&amp;quot;: [&amp;quot;https://*****.mirror.aliyuncs.com&amp;quot;]&lt;/span&gt;
+&lt;span class="s"&gt;}&lt;/span&gt;
+&lt;span class="s"&gt;EOF&lt;/span&gt;
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;启动Docker，命令：systemctl start docker，然后加入开机启动，如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# systemctl start docker&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# systemctl enable  docker&lt;/span&gt;
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+&lt;span class="o"&gt;[&lt;/span&gt;root@localhost ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# docker version&lt;/span&gt;
+Client:
+ Version:      &lt;span class="m"&gt;18&lt;/span&gt;.03.1-ce
+ API version:  &lt;span class="m"&gt;1&lt;/span&gt;.37
+ Go version:   go1.9.5
+ Git commit:   9ee9f40
+ Built:        Thu Apr &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;07&lt;/span&gt;:20:16 &lt;span class="m"&gt;2018&lt;/span&gt;
+ OS/Arch:      linux/amd64
+ Experimental: &lt;span class="nb"&gt;false&lt;/span&gt;
+ Orchestrator: swarm
+
+Server:
+ Engine:
+  Version:      &lt;span class="m"&gt;18&lt;/span&gt;.03.1-ce
+  API version:  &lt;span class="m"&gt;1&lt;/span&gt;.37 &lt;span class="o"&gt;(&lt;/span&gt;minimum version &lt;span class="m"&gt;1&lt;/span&gt;.12&lt;span class="o"&gt;)&lt;/span&gt;
+  Go version:   go1.9.5
+  Git commit:   9ee9f40
+  Built:        Thu Apr &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;07&lt;/span&gt;:23:58 &lt;span class="m"&gt;2018&lt;/span&gt;
+  OS/Arch:      linux/amd64
+  Experimental: &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;补充&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;默认情况下，&lt;code&gt;docker&lt;/code&gt; 命令会使用 &lt;a href="https://en.wikipedia.org/wiki/Unix_domain_socket"&gt;Unix socket&lt;/a&gt; 与 Docker 引擎通讯。而只有 &lt;code&gt;root&lt;/code&gt; 用户和 &lt;code&gt;docker&lt;/code&gt; 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 &lt;code&gt;root&lt;/code&gt; 用户。因此，更好地做法是将需要使用 &lt;code&gt;docker&lt;/code&gt; 的用户加入 &lt;code&gt;docker&lt;/code&gt; 用户组。&lt;/p&gt;
+&lt;p&gt;建立 &lt;code&gt;docker&lt;/code&gt; 组：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost /&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# sudo groupadd docker&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;将当前用户加入 &lt;code&gt;docker&lt;/code&gt; 组：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost /&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# sudo usermod -aG docker $USER&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;退出当前终端并重新登录，进行如下测试。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;测试 Docker 是否安装正确&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost /&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# docker run hello-world&lt;/span&gt;
+   Unable to find image &lt;span class="s1"&gt;&amp;#39;hello-world:latest&amp;#39;&lt;/span&gt; locally
+   latest: Pulling from library/hello-world
+   0e03bdcc26d7: Pull &lt;span class="nb"&gt;complete&lt;/span&gt; 
+   Digest: sha256:4cf9c47f86df71d48364001ede3a4fcd85ae80ce02ebad74156906caff5378bc
+   Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; hello-world:latest
+
+   Hello from Docker!
+   This message shows that your installation appears to be working correctly.
+
+   To generate this message, Docker took the following steps:
+    &lt;span class="m"&gt;1&lt;/span&gt;. The Docker client contacted the Docker daemon.
+    &lt;span class="m"&gt;2&lt;/span&gt;. The Docker daemon pulled the &lt;span class="s2"&gt;&amp;quot;hello-world&amp;quot;&lt;/span&gt; image from the Docker Hub.
+       &lt;span class="o"&gt;(&lt;/span&gt;amd64&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="m"&gt;3&lt;/span&gt;. The Docker daemon created a new container from that image which runs the
+       executable that produces the output you are currently reading.
+    &lt;span class="m"&gt;4&lt;/span&gt;. The Docker daemon streamed that output to the Docker client, which sent it
+       to your terminal.
+
+   To try something more ambitious, you can run an Ubuntu container with:
+    $ docker run -it ubuntu bash
+
+   Share images, automate workflows, and more with a free Docker ID:
+    https://hub.docker.com/
+
+   For more examples and ideas, visit:
+    https://docs.docker.com/get-started/
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;若能正常输出以上信息，则说明安装成功。&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry></feed>

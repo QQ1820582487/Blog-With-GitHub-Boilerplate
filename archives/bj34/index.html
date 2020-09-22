@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/65a9cfece246c74e9595256e138d95f1.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ad8006038586a64138d07773b36ddb75.json"
         }
     </script>
     
@@ -87,6 +87,31 @@
             </span>
             <div class="ga-content_body">
                 <h2>什么是GitLab</h2>
+<p>GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。</p>
+<h2>部署GitLab</h2>
+<p>使用Docker来安装和运行GitLab中文版，<code>docker-compose.yml</code>配置如下:</p>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+    <span class="nt">web</span><span class="p">:</span>
+        <span class="nt">image</span><span class="p">:</span> <span class="s">&#39;twang2218/gitlab-ce-zh&#39;</span>
+        <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+        <span class="nt">hostname</span><span class="p">:</span> <span class="s">&#39;192.168.123.128&#39;</span>
+        <span class="nt">environment</span><span class="p">:</span>
+            <span class="nt">TZ</span><span class="p">:</span> <span class="s">&#39;Asia/Shanghai&#39;</span>
+            <span class="nt">GITLAB_OMNIBUS_CONFIG</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+                <span class="no">external_url = &#39;http://192.168.123.128&#39;</span>
+                <span class="no">gitlab_rails[&#39;gitlab_shell_ssh_port&#39;] = 2222</span>
+                <span class="no">unicorn[&#39;port&#39;] = 8888</span>
+                <span class="no">nginx[&#39;listen_port&#39;] = 80</span>
+        <span class="nt">ports</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&#39;80:80&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&#39;443:443&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&#39;2222:22&#39;</span>
+        <span class="nt">volumes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./config:/etc/gitlab</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./data:/var/opt/gitlab</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./logs:/var/log/gitlab</span>
+</pre></div>
 
             </div>
         </article>
@@ -107,8 +132,8 @@
 <section id="ga-content_pager">
 
     <div class="next">
-        <h3>没有了</h3>
-        <p class="yue">这是最新的文章</p>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj35/">动态规划算法</a>
+        <p class="yue">笔记</p>
     </div>
 
 

@@ -1028,7 +1028,7 @@ services:
 		  TZ: Asia/Shanghai
 ```
 
-### 部署MySQL
+### 部署MySQL_1
 
 ```yaml
 version: '3.1'
@@ -1062,3 +1062,49 @@ services:
 		  - 8080:8080
 ```
 
+### 部署MySQL_2
+
+```yaml
+version: "3.1"
+services: 
+ db:
+  restart: always
+  container_name: mysql
+  image: mysql
+  command: 
+   --lower_case_table_names=1
+   --character-set-server=utf8mb4
+   --collation-server=utf8mb4_unicode_ci
+   --explicit_defaults_for_timestamp=true
+  environment:
+   TZ: Asia/Shanghai
+   MYSQL_ROOT_PASSWORD: root@123456
+  ports:
+   - 3306:3306
+  volumes:
+   - ./mysql/data:/var/lib/mysql
+   - ./mysql/config:/etc/mysql/conf.d
+   - ./mysql/log:/var/log/mysql
+```
+
+### 部署RabbitMQ
+
+```yaml
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.3-management
+    container_name: rabbitmq
+    restart: always
+    hostname: myRabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ./data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+```
+
+ `RABBITMQ_DEFAULT_USER`  和  `RABBITMQ_DEFAULT_PASS` 用来设置超级管理员的账号和密码，如果不设置，默认都是 `guest` 。

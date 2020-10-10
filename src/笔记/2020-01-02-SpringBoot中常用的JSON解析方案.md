@@ -158,7 +158,7 @@ public class WebMvcConfig {
 ]
 ```
 
-上面可以看到此时我只需要配置 `ObjectMapper`，与`MappingJackson2HttpMessageConverter`没太大关系（当然，它有它的用处，例如这些：![](..\images\笔记\6.png)）
+上面可以看到此时我只需要配置 `ObjectMapper`，与`MappingJackson2HttpMessageConverter`没太大关系（当然，它有它的用处，例如这些：![](..\static\笔记图片\2020-01-02-SpringBoot中常用的JSON解析方案_01.png)）
 
 所以我可以采取另一种方式来配置Jackson——直接注入自己定义的`ObjectMapper`，替换掉springboot中自动配置的`ObjectMapper`。
 

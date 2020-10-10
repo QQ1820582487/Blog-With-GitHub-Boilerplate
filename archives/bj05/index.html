@@ -197,7 +197,7 @@
   <span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
-<p>上面可以看到此时我只需要配置 <code>ObjectMapper</code>，与<code>MappingJackson2HttpMessageConverter</code>没太大关系（当然，它有它的用处，例如这些：<figure class="pswp-item" style="flex: 143.5344827586207" data-width="999" data-height="348"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7cd704ffd1adceed650825d13b2243c4.png" alt="" /></figure>）</p>
+<p>上面可以看到此时我只需要配置 <code>ObjectMapper</code>，与<code>MappingJackson2HttpMessageConverter</code>没太大关系（当然，它有它的用处，例如这些：<figure class="pswp-item" style="flex: 143.5344827586207" data-width="999" data-height="348"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7c46e733c02954bac878e05d3a654d4e.png" alt="" /></figure>）</p>
 <p>所以我可以采取另一种方式来配置Jackson——直接注入自己定义的<code>ObjectMapper</code>，替换掉springboot中自动配置的<code>ObjectMapper</code>。</p>
 <blockquote><p><em>这里我们可以发现，我们是可以注入自己配置的类来替换掉springboot中自动配置的类的，也就是springboot中的<strong>“约定大于配置 ”</strong>。</em></p>
 </blockquote>

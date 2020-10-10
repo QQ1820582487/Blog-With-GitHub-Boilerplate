@@ -183,7 +183,7 @@ public class SpringMvcConfig {
 
 **注：WebMvcConfigurationSupport中可以配置springmvc.xml中所有的方法**
 
-![](..\images\笔记\3.png)
+![](..\static\笔记图片\2019-12-29-Spring+MVC环境Java注解_01.png)
 
 #### 1.配置静态资源解析器
 
@@ -219,7 +219,7 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
 
 1.3访问静态资源,成功
 
-![](..\images\笔记\4.png)
+![](..\static\笔记图片\2019-12-29-Spring+MVC环境Java注解_02.png)
 
 #### 2.配置拦截器
 
@@ -273,7 +273,7 @@ public class MyInterceptor implements HandlerInterceptor {
 
 ###### 2.3访问任意路径
 
-![](..\images\笔记\5.png)
+![](..\static\笔记图片\2019-12-29-Spring+MVC环境Java注解_03.png)
 
 #### 3.配置fastjson
 

@@ -42,7 +42,7 @@ excerpt: 笔记
 
 2.打开项目结构，添加webapp目录和web.xml文件
 
-![](..\images\笔记\1.png)
+![](..\static\笔记图片\2019-12-29-Spring+MVC环境Xml搭建_01.png)
 
 ### 2.创建配置文件
 
@@ -240,7 +240,7 @@ excerpt: 笔记
 
 1.添加本地Tomcat
 
-注意：访问时的路径加没加项目名（都是泪![img](..\images\表情包\E9BIPM$_`9}`VS07`VD9H1F.gif)）
+*一开始访问时的路径加没加项目名（都是泪![](..\images\表情包\E9BIPM$_`9}`VS07`VD9H1F.gif)）*
 
 2.新建controller和service
 
@@ -273,4 +273,4 @@ public class HelloService {
 
 3.访问,成功
 
-![](..\images\笔记\2.png)
+![](..\static\笔记图片\2019-12-29-Spring+MVC环境Xml搭建_02.png)

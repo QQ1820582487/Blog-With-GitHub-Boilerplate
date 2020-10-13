@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-10-10T17:59:30.733429+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-10-10T17:59:30.733712+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-10-13T04:44:58.863222+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-10-13T04:44:58.863518+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;什么是SMTP？
  SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
@@ -276,11 +276,11 @@ class MailApplicationTests {
         javaMailSender.send(message);
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-10-10T17:59:30.733691+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-10-13T04:44:58.863499+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
 &lt;h3&gt;一. MySQL逻辑分层&lt;/h3&gt;
-&lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给我们想要的结果。&lt;/p&gt;
+&lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给想要的结果。&lt;/p&gt;
 &lt;h4&gt;1.连接层&lt;/h4&gt;
-&lt;p&gt;我们客户端发送一个Select是直接交给连接层来处理，而它的作用就是提供与客户端连接的服务.连接层只是与客户端建立起连接.完成一些类似连接处理,授权认证 及相关的安全方案. 在该层上引入了连接池的概念.&lt;/p&gt;
+&lt;p&gt;客户端发送一个Select是直接交给连接层来处理，而它的作用就是提供与客户端连接的服务.连接层只是与客户端建立起连接.完成一些类似连接处理,授权认证 及相关的安全方案. 在该层上引入了连接池的概念.&lt;/p&gt;
 &lt;h4&gt;2.服务层&lt;/h4&gt;
 &lt;p&gt;提供核心的服务功能,如sql接口,完成缓存的查询,&lt;/p&gt;
 &lt;p&gt;sql的分析和优化部分及内置函数的执行.&lt;/p&gt;
@@ -292,7 +292,7 @@ class MailApplicationTests {
 &lt;h5&gt;2.3-Parser解析&lt;/h5&gt;
 &lt;p&gt;查询事务    对象权限&lt;/p&gt;
 &lt;h5&gt;2.4-Optimizer优化器&lt;/h5&gt;
-&lt;p&gt;当我们编写Sql语句执行时，优化器会觉得我写的sql语句性能不够好，这个时候，优化器会自己写一个等价于跟我写的执行后结果一致的sql语句进行代替.&lt;/p&gt;
+&lt;p&gt;当编写Sql语句执行时，优化器会觉得我写的sql语句性能不够好，这个时候，优化器会自己写一个等价于跟我写的执行后结果一致的sql语句进行代替.&lt;/p&gt;
 &lt;p&gt;2.5-Cache Buffers&lt;/p&gt;
 &lt;p&gt;缓存&lt;/p&gt;
 &lt;p&gt;服务器会查询内部的缓存,如果缓存空间足够大,这样可以解决大量读操作的环境中,能够很好的提升系统性能&lt;/p&gt;
@@ -337,7 +337,7 @@ class MailApplicationTests {
 &lt;/ol&gt;
 &lt;p&gt;索引只是提高效率的一个因素，如果你的MySQL有大数据量的表，就需要花时间来研究建立最优秀的索引，或者优化查询SQL语句。&lt;/p&gt;
 &lt;h3&gt;磁盘IO与预读&lt;/h3&gt;
-&lt;p&gt;考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，&lt;strong&gt;当一次IO时，不仅把当前磁盘地址的数据，而且把相邻的数据也都读取到内存缓冲区内&lt;/strong&gt;，因为局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是我们读取一页内的数据时候，实际上才发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。&lt;/p&gt;
+&lt;p&gt;考虑到磁盘IO是非常高昂的操作，计算机操作系统做了一些优化，&lt;strong&gt;当一次IO时，不仅把当前磁盘地址的数据，而且把相邻的数据也都读取到内存缓冲区内&lt;/strong&gt;，因为局部预读性原理告诉，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。每一次IO读取的数据称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k，也就是读取一页内的数据时候，实际上才发生了一次IO，这个理论对于索引的数据结构设计非常有帮助。&lt;/p&gt;
 &lt;h3&gt;适合建索引和不适合建索引&lt;/h3&gt;
 &lt;p&gt;哪些情况适合建索引：&lt;/p&gt;
 &lt;ol&gt;
@@ -609,7 +609,7 @@ class MailApplicationTests {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;以上两个语句的执行流程：&lt;/p&gt;
-&lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据我们的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
+&lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
 &lt;h3&gt;EXISTS语句：执行student.length次&lt;/h3&gt;
 &lt;p&gt;指定一个子查询，检测行的存在。遍历循环外表，然后看外表中的记录有没有和内表的数据一样的。匹配上就将结果放入结果集中。&lt;/p&gt;
 &lt;p&gt;语法：EXISTS&lt;/p&gt;
@@ -619,13 +619,13 @@ class MailApplicationTests {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这条sql语句的执行结果和上面的in的第一条执行结果是一样的。&lt;/p&gt;
 &lt;p&gt;但是，不一样的是它们的执行流程完全不一样：&lt;/p&gt;
-&lt;p&gt;　　使用exists关键字进行查询的时候，首先，我们先查询的不是子查询的内容，而是查我们的主查询的表，也就是说，我们先执行的sql语句是：&lt;/p&gt;
+&lt;p&gt;　　使用exists关键字进行查询的时候，首先，先查询的不是子查询的内容，而是查的主查询的表，也就是说，先执行的sql语句是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 55.6" data-width="278" data-height="250"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/605a25566c74143dfd27c97534313339.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;如果成立则返回true不成立则返回false。如果返回的是true的话，则该行结果保留，如果返回的是false的话，则删除该行，最后将得到的结果返回。&lt;/p&gt;
 &lt;h3&gt;IN和EXISTS的区别及应用场景&lt;/h3&gt;
-&lt;p&gt;​   如果子查询得出的结果集记录较少，主查询中的表较大且又有索引时应该用 in , 反之如果外层的主查询记录较少，子查询中的表大，又有索引时使用 exists 。其实我们区分 in 和 exists 主要是造成了驱动顺序的改变(这是性能变化的关键)，如果是 exists ，那么以外层表为驱动表，先被访问，如果是 in ，那么先执行子查询，所以我们会以驱动表的快速返回为目标，那么就会考虑到索引及结果集的关系了 ，另外 in 时不对NULL进行处理。&lt;/p&gt;
+&lt;p&gt;​   如果子查询得出的结果集记录较少，主查询中的表较大且又有索引时应该用 in , 反之如果外层的主查询记录较少，子查询中的表大，又有索引时使用 exists 。其实区分 in 和 exists 主要是造成了驱动顺序的改变(这是性能变化的关键)，如果是 exists ，那么以外层表为驱动表，先被访问，如果是 in ，那么先执行子查询，所以会以驱动表的快速返回为目标，那么就会考虑到索引及结果集的关系了 ，另外 in 时不对NULL进行处理。&lt;/p&gt;
 &lt;p&gt;​   in 是把外表和内表作 hash 连接，而exists是对外表作loop循环，每次loop循环再对内表进行查询。一直以来认为exists比in效率高的说法是不准确的。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;not in 和not exists&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;​   如果查询语句使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。&lt;/p&gt;
@@ -671,7 +671,7 @@ class MailApplicationTests {
 &lt;p&gt;SQL语句执行顺序详见：&lt;a href="https://blog.csdn.net/wqc19920906/article/details/79411854"&gt;SQL语句执行顺序&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;EXISTS(subquery)只返回TRUE或者FALSE，因此子查询中的SELECT * 也可以是SELECT 1 或者SELECT 'X'，官方说法是实际执行时会忽略SELECT清单，因此没有区别。&lt;/li&gt;
-&lt;li&gt;EXISTS子查询的实际执行过程可能经过了优化而不是我们理解上的逐条对比，如果担忧效率问题，可进行实际校验。&lt;/li&gt;
+&lt;li&gt;EXISTS子查询的实际执行过程可能经过了优化而不是理解上的逐条对比，如果担忧效率问题，可进行实际校验。&lt;/li&gt;
 &lt;li&gt;EXISTS子查询旺旺可以用条件表达式，其他子查询或者JOIN来替代，何种最优需要具体问题具体分析。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;如果查询的两个表大小相当，那么用in和exists差别不大。&lt;/strong&gt;&lt;/p&gt;
@@ -733,9 +733,9 @@ select * from B where exists(select cc from A where cc=B.cc) ;  # 效率低，�
 &lt;p&gt;MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具
 体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。&lt;/p&gt;
 &lt;p&gt;具体指运行时间超过Iong_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行时间大于10秒的语句。&lt;/p&gt;
-&lt;p&gt;由它来查看哪些SQL超出了我们的最大忍耐时间值，再结合 explain 进行全面分析。&lt;/p&gt;
+&lt;p&gt;由它来查看哪些SQL超出了的最大忍耐时间值，再结合 explain 进行全面分析。&lt;/p&gt;
 &lt;h3&gt;2.使用&lt;/h3&gt;
-&lt;p&gt;默认MySQL没有开启慢查询，需要我们说动设置这个参数。当然，如果不是调优需要的话，一般不建议开启该参数，因为开启慢查询日志会或多或少带来一定的性能影响。慢查询日志支持将日志写入文件。&lt;/p&gt;
+&lt;p&gt;默认MySQL没有开启慢查询，需要说动设置这个参数。当然，如果不是调优需要的话，一般不建议开启该参数，因为开启慢查询日志会或多或少带来一定的性能影响。慢查询日志支持将日志写入文件。&lt;/p&gt;
 &lt;p&gt;查看是否开启  &lt;code&gt;SHOW GLOBAL VARIABLES LIKE 'slow_query_log%'&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_03.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;上面查询结果第一行，这里是开启的，第二行是默认查询路径文件名。&lt;/p&gt;
@@ -763,7 +763,7 @@ log_query_time=3;
 log_output=FILE&lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;3.日志分析工具MySQLdumpslow&lt;/h3&gt;
 &lt;p&gt;在生产环境中，如果要手动分析日志，查找、分析SQL，显然是一个体力活，MySQL提供了日志分析工具MySQLdumpslow。&lt;/p&gt;
-&lt;p&gt;上面测试的慢查询SQL只有一条，假如在实际的生产环境中，慢查询SQL远远高于测试的数量，十几条甚至几十条，假如几条慢查询出现的频率很高，我们能做到根据轻重优先级来分析并排除那是不是更好？那么就用到了MySQLdumpslow。&lt;/p&gt;
+&lt;p&gt;上面测试的慢查询SQL只有一条，假如在实际的生产环境中，慢查询SQL远远高于测试的数量，十几条甚至几十条，假如几条慢查询出现的频率很高，能做到根据轻重优先级来分析并排除那是不是更好？那么就用到了MySQLdumpslow。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;[root@lig MySQL]# MySQLdumpslow --help   ----------------------------------------------//执行命令
 Usage: MySQLdumpslow [ OPTS... ] [ LOGS... ]
@@ -813,7 +813,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;如果想要进行SQL查询的数据调优、排查。&lt;/p&gt;
 &lt;p&gt;第一步，一定要让出现的问题重现啊(运营工程师或DBA他们从监控系统里面，收到了爆炸，系统变慢了，大家都知道，重要的核心系统都会有另外一套辅助的系统来监控，这种监控系统，比如说现在这个系统慢与每一个模块平均时间，可能5秒钟就能执行完，但是已经长达20秒了，这个时候就要判断为什么慢了。&lt;/p&gt;
 &lt;p&gt;有很多种可能的原因：可能是程序的内存泄漏，可能是死锁，可能是网络，可能是SQL写的烂。&lt;/p&gt;
-&lt;p&gt;假设是SQL的问题，那么我们需要把有问题的SQL抓出来&lt;/p&gt;
+&lt;p&gt;假设是SQL的问题，那么需要把有问题的SQL抓出来&lt;/p&gt;
 &lt;p&gt;执行过程：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;收到问题，诊断SQL&lt;/li&gt;
@@ -867,7 +867,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h1&gt;MySQL查询优化(4)-全局查询日志&lt;/h1&gt;
-&lt;p&gt;show profile可以帮我们记录下来了后台执行过得SQL，全局查询日志有时也能帮助我们来调SQL。但是，切记，这个全局查询日志只能在&lt;strong&gt;测试环境&lt;/strong&gt;使用，绝不可以在生产环境使用（公司中一般都是生产环境、测试环境分离，但是测试环境一般都不如生产环境，或多或少会有些差距，但是大部分的SQL正常来说在部到生产之前会在测试上先跑一遍甚至几遍）。&lt;/p&gt;
+&lt;p&gt;show profile可以帮记录下来了后台执行过得SQL，全局查询日志有时也能帮助来调SQL。但是，切记，这个全局查询日志只能在&lt;strong&gt;测试环境&lt;/strong&gt;使用，绝不可以在生产环境使用（公司中一般都是生产环境、测试环境分离，但是测试环境一般都不如生产环境，或多或少会有些差距，但是大部分的SQL正常来说在部到生产之前会在测试上先跑一遍甚至几遍）。&lt;/p&gt;
 &lt;p&gt;切记：&lt;strong&gt;永远不要再生产环境开启全局查询日志这个功能&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;配置方式启用:&lt;/p&gt;
 &lt;p&gt;在MySQL的配置文件中，配置如下：&lt;/p&gt;
@@ -886,12 +886,12 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;general_log&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;如果需要做系统的定案分析(如：今天下午2点-3点出现的故障），如果要观察和复现的话，可以在测试环境下模拟一遍，然后把所有的问题复现一下。&lt;/p&gt;
-&lt;p&gt;然后用&lt;code&gt;general_log&lt;/code&gt;这个表来查看什么时间段发生了什么样的SQL，帮助我们定位问题。&lt;/p&gt;
+&lt;p&gt;然后用&lt;code&gt;general_log&lt;/code&gt;这个表来查看什么时间段发生了什么样的SQL，帮助定位问题。&lt;/p&gt;
 &lt;h1&gt;MySQL锁机制&lt;/h1&gt;
 &lt;h3&gt;概述&lt;/h3&gt;
 &lt;p&gt;锁是计算机协调多个进程或线程并发访问某一资源的机制(说白了就是防止争抢)。&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;打个比方，我们在淘宝上买一件商品，商品只有一个库存，这个时候如果还有另一个人购买，那么如何解决是你买到还是另一个人买到的问题？
-这里肯定要用到事务，我们先从库存表中取出物品数量，然后插入订单，付款后插入付款表信息，然后更新商品数量，在这个过程中，使用锁可以对有限的资源进行保护，解决隔离和并发的矛盾。&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;打个比方，在淘宝上买一件商品，商品只有一个库存，这个时候如果还有另一个人购买，那么如何解决是你买到还是另一个人买到的问题？
+这里肯定要用到事务，先从库存表中取出物品数量，然后插入订单，付款后插入付款表信息，然后更新商品数量，在这个过程中，使用锁可以对有限的资源进行保护，解决隔离和并发的矛盾。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;在数据库中，除传统的计算资源(如CPU、RAM、I/O等)的争用意外，数据也是一种供 许多用户共享的资源，如何保证数据并发访问的一致性，有效性是所有数据库必须解决的一个问题。锁充足也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言闲的尤其重要，也更加复杂。&lt;/p&gt;
 &lt;h3&gt;锁的分类&lt;/h3&gt;
@@ -1054,7 +1054,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;两者提交，数据显示正常。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h5&gt;索引失效行锁变表锁&lt;/h5&gt;
-&lt;p&gt;首先我们知道如果索引失效的情况下，那么肯定会导致索引失效，但是如果使用不当，会导致行锁变成表锁。&lt;/p&gt;
+&lt;p&gt;首先知道如果索引失效的情况下，那么肯定会导致索引失效，但是如果使用不当，会导致行锁变成表锁。&lt;/p&gt;
 &lt;p&gt;上文中数据库的存储引擎为InnoDB，并且关闭了自动提交，在创建表的时候创建了两个索引，分别在表中的a和b字段上建立了两个单值索引。如下&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 343.2835820895522" data-width="920" data-height="134"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d0a25eceaffc5149116205f4108a8f4.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;看一下表信息&lt;/p&gt;
@@ -1067,7 +1067,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;p&gt;&lt;strong&gt;没有索引或者索引失效时，InnoDB 的行锁变表锁&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;原因：Mysql 的行锁是通过索引实现的！&lt;/strong&gt;&lt;/p&gt;
 &lt;h5&gt;间隙锁危害&lt;/h5&gt;
-&lt;p&gt;当我们用&lt;strong&gt;范围条件&lt;/strong&gt;而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但不存在的记录，叫做&lt;strong&gt;“间隙(GAP)”&lt;/strong&gt;(宁可错杀不可放过，就算中间出现间隙，找不到指定的记录也会锁住)，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁(NEXT-KEY)锁。&lt;/p&gt;
+&lt;p&gt;当用&lt;strong&gt;范围条件&lt;/strong&gt;而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但不存在的记录，叫做&lt;strong&gt;“间隙(GAP)”&lt;/strong&gt;(宁可错杀不可放过，就算中间出现间隙，找不到指定的记录也会锁住)，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁(NEXT-KEY)锁。&lt;/p&gt;
 &lt;p&gt;间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定值范围内的任何数据，在某些场景下这可能会针对性造成很大的危害。&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;一般而言，为了云计算和大数据分析，数据最最好是连续的。每一个互联网公司的每一条数据都时很珍贵的，业务逻辑层所写的delete方法调用mapper层delete方法并没有从物理上把这条数据给切切实实的干掉。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1106,7 +1106,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;li&gt;&lt;p&gt;Innodb_row_lock_time（等待总时长）&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;尤其是当等待次数越高，而且每次等待时长也不小的时候，我们就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手制定优化计划。&lt;/p&gt;
+&lt;p&gt;尤其是当等待次数越高，而且每次等待时长也不小的时候，就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手制定优化计划。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;优化建议&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;尽可能在所有数据检索都通过索引来完成，避免无索引行锁升级为表锁&lt;/li&gt;
@@ -1154,7 +1154,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/ol&gt;
 &lt;h3&gt;一主一从常见配置&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://www.bilibili.com/video/BV12b411K7Zu?p=241"&gt;参考&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-10-10T17:59:30.733670+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-10-13T04:44:58.863462+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;1. 内存模型 &amp;amp; 分区&lt;/h2&gt;
 &lt;p&gt;Java虚拟机在运行Java程序时，会管理着一块内存区域：运行时数据区&lt;/p&gt;
 &lt;p&gt;在运行时数据区里，会根据用途进行划分：&lt;/p&gt;
@@ -1220,7 +1220,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h2&gt;8. 总结&lt;/h2&gt;
 &lt;p&gt;本文全面讲解JVM中的内存模型 &amp;amp; 分区，总结如下&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 144.0" data-width="1080" data-height="375"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/10936d10647a2b939c1bd64c8f774d6b.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-10-10T17:59:30.733650+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-10-13T04:44:58.863443+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
 &lt;th&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/th&gt;
@@ -1791,7 +1791,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 &lt;li&gt;chmod -R u+r directory       　    递归地给directory目录下所有文件和子目录的属主分配读的权限&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href="https://frank-lam.github.io/fullstack-tutorial/#/Linux"&gt;学习指南&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-10-10T17:59:30.733629+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-10-13T04:44:58.863424+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
 &lt;h3&gt;Docker是什么？&lt;/h3&gt;
 &lt;p&gt;Docker是Docker.Lnc公司开源的一个基于LXC技术之上搭建的 Container 容器引擎，源代码托管在Github上，使用 Google 公司的 Go 语言，基于Go语言并遵从Apache2.0协议开源。Docker将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了Docker，就不用担心环境问题。
 总体来说，Docker的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。&lt;/p&gt;
@@ -2038,7 +2038,7 @@ Server:
     https://docs.docker.com/get-started/
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;若能正常输出以上信息，则说明安装成功。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-10-10T17:59:30.733608+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-10-13T04:44:58.863404+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
 &lt;p&gt;Docker引擎是一个包含以下主要组件的客户端服务器应用程序。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;—种服务器，它是一种被称为守护进程（deamon）并且长时间运行的程序。&lt;/li&gt;
@@ -2301,7 +2301,7 @@ ed8b228b1e55845241c26e8ede042bae4132700d7334ae44438ce0e60282ff3c
 ...
 Total reclaimed space: &lt;span class="m"&gt;4&lt;/span&gt;.818MB
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-10-10T17:59:30.733586+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-10-13T04:44:58.863369+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;从 &lt;a href="https://yeasy.gitbook.io/docker_practice/image/commit"&gt;docker commit&lt;/a&gt; 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
 &lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
 &lt;p&gt;以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为&lt;code&gt;Dockerfile&lt;/code&gt;&lt;/p&gt;
@@ -2619,7 +2619,7 @@ Connection: keep-alive
 &lt;span class="k"&gt;RUN&lt;/span&gt; pwd
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;pwd&lt;/code&gt; 输出的结果为 &lt;code&gt;/a/b/c&lt;/code&gt;。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-10-10T17:59:30.733563+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-10-13T04:44:58.863348+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
 &lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
@@ -3332,7 +3332,7 @@ db:
       &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_PASS=root&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;RABBITMQ_DEFAULT_USER&lt;/code&gt;  和  &lt;code&gt;RABBITMQ_DEFAULT_PASS&lt;/code&gt; 用来设置超级管理员的账号和密码，如果不设置，默认都是 &lt;code&gt;guest&lt;/code&gt; 。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-10-10T17:59:30.733536+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-10-13T04:44:58.863324+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
 &lt;p&gt;GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。&lt;/p&gt;
 &lt;h2&gt;部署GitLab&lt;/h2&gt;
 &lt;p&gt;使用Docker来安装和运行GitLab中文版，&lt;code&gt;docker-compose.yml&lt;/code&gt;配置如下:&lt;/p&gt;
@@ -3358,7 +3358,7 @@ db:
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/opt/gitlab&lt;/span&gt;
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./logs:/var/log/gitlab&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-10-10T17:59:30.733486+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-10-13T04:44:58.863277+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
 &lt;h3&gt;1.计数&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有多少种方式走到右下角&lt;/li&gt;

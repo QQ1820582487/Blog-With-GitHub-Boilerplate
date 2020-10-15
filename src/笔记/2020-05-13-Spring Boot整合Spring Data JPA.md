@@ -206,7 +206,7 @@ public interface BookDao{
 }
 ```
 
-```
+```java
 //测试JPA中自带的方法
 
 @SpringBootTest
@@ -296,7 +296,6 @@ class JpaApplicationTests {
         }
     }
 }
-
 ```
 
 ### 2.关键字自定义查询方法

@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/87013387abed1e878f8fbf17be3cdd30.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/7cc9b36dec155ec540215bc66d2b90d0.json"
         }
     </script>
     
@@ -255,96 +255,96 @@ JPA</li>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookDao</span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
+<div class="highlight"><pre><span></span><span class="c1">//测试JPA中自带的方法</span>
 
-<pre><code>//测试JPA中自带的方法
+<span class="nd">@SpringBootTest</span>
+<span class="kd">class</span> <span class="nc">JpaApplicationTests</span> <span class="p">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="n">BookDao</span> <span class="n">bookDao</span><span class="p">;</span>
 
-@SpringBootTest
-class JpaApplicationTests {
-    @Autowired
-    BookDao bookDao;
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">testSave</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="p">();</span>
+        <span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
+        <span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;Xuxx&quot;</span><span class="p">);</span>
+        <span class="n">Book</span> <span class="n">save_book</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">save_book</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    @Test
-    void testSave() {
-        Book book = new Book();
-        book.setName("JAVA开发指南");
-        book.setAuthor("Xuxx");
-        Book save_book = bookDao.save(book);
-        System.out.println(save_book);
-    }
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testUpdate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="p">();</span>
+        <span class="n">book</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
+        <span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">);</span>
+        <span class="c1">//saveAndFlush:数据库中有（根据id判断）就更新，没有就添加</span>
+        <span class="n">Book</span> <span class="n">saveAndFlush</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">saveAndFlush</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">saveAndFlush</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    @Test
-    public void testUpdate() {
-        Book book = new Book();
-        book.setId(1);
-        book.setName("JAVA开发指南");
-        book.setAuthor("X");
-        //saveAndFlush:数据库中有（根据id判断）就更新，没有就添加
-        Book saveAndFlush = bookDao.saveAndFlush(book);
-        System.out.println(saveAndFlush);
-    }
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testDaelete</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">bookDao</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    @Test
-    public void testDaelete() {
-        bookDao.deleteById(1);
-    }
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind1</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">book1</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book1</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
 
-    @Test
-    public void testFind1() {
-        Optional&lt;Book&gt; book1 = bookDao.findById(1);
-        System.out.println(book1.get());
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">books</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-        List&lt;Book&gt; books = bookDao.findAll();
-        for (Book book : books) {
-            System.out.println(book);
-        }
-    }
+    <span class="cm">/**</span>
+<span class="cm">     * 排序</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind2</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Sort</span> <span class="n">sort</span> <span class="o">=</span> <span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">sort</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">books</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    /**
-     * 排序
-     */
-    @Test
-    public void testFind2() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        List&lt;Book&gt; books = bookDao.findAll(sort);
-        for (Book book : books) {
-            System.out.println(book);
-        }
-    }
+    <span class="cm">/**</span>
+<span class="cm">     * 分页</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind3</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//of参数：1.第几页（从0开始） 2.每页几条</span>
+        <span class="n">Pageable</span> <span class="n">pageable</span> <span class="o">=</span> <span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">page</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getTotalElements</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总页数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getTotalPages</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页数（从0开始）：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getNumber</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;每页记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getSize</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页中存在的记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getNumberOfElements</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是首页：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">isFirst</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是尾页页：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">isLast</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;查询结果：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getContent</span><span class="p">());</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">page</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    /**
-     * 分页
-     */
-    @Test
-    public void testFind3() {
-        //of参数：1.第几页（从0开始） 2.每页几条
-        Pageable pageable = PageRequest.of(0, 2);
-        Page&lt;Book&gt; page = bookDao.findAll(pageable);
-        System.out.println("总记录数：" + page.getTotalElements());
-        System.out.println("总页数：" + page.getTotalPages());
-        System.out.println("当前页数（从0开始）：" + page.getNumber());
-        System.out.println("每页记录数：" + page.getSize());
-        System.out.println("当前页中存在的记录数：" + page.getNumberOfElements());
-        System.out.println("是否是首页：" + page.isFirst());
-        System.out.println("是否是尾页页：" + page.isLast());
-        System.out.println("查询结果：" + page.getContent());
-        for (Book book : page) {
-            System.out.println(book);
-        }
-    }
-
-    /**
-     * 排序+分页
-     */
-    @Test
-    public void testFind4() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(0, 2, sort);
-        Page&lt;Book&gt; page = bookDao.findAll(pageable);
-        for (Book book : page) {
-            System.out.println(book);
-        }
-    }
-}</code></pre>
+    <span class="cm">/**</span>
+<span class="cm">     * 排序+分页</span>
+<span class="cm">     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind4</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Sort</span> <span class="n">sort</span> <span class="o">=</span> <span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">);</span>
+        <span class="n">Pageable</span> <span class="n">pageable</span> <span class="o">=</span> <span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sort</span><span class="p">);</span>
+        <span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">page</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">page</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 <h3>2.关键字自定义查询方法</h3>
 <h4>方法定义规范</h4>
 <h5>1.简单条件查询</h5>

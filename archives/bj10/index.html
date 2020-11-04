@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e48ec0b2fbfec4f03dfea9f13510e075.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/aa21ab2bc2181f85549579816a942c54.json"
         }
     </script>
     
@@ -94,8 +94,8 @@
 <li><strong>预设全局数据</strong></li>
 <li><strong>请求参数预处理</strong></li>
 </ul>
-<h3>1. @ControllerAdvice处理全局异常</h3>
-<p>使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，当时对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常</p>
+<h2>1. @ControllerAdvice处理全局异常</h2>
+<p>使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，但是对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常。</p>
 <p>例如：当上传文件大小超出限时，前端显示如下</p>
 <p><figure class="pswp-item" style="flex: 363.9846743295019" data-width="1900" data-height="261"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d289e0f84813f280f11ed6011b8dbdad.png" alt="" /></figure>
 解决：</p>
@@ -157,7 +157,7 @@
 </ol>
 <div class="highlight"><pre><span></span>上传文件大小超出限制，请重试
 </pre></div>
-<h3>2. @ControllerAdvice预设全局数据</h3>
+<h2>2. @ControllerAdvice预设全局数据</h2>
 <ol>
 <li><p>编写预设全局数据类</p>
 <div class="highlight"><pre><span></span><span class="nd">@ControllerAdvice</span>
@@ -201,7 +201,7 @@
    当提交表单数据不是完整的实体数据时,保证没有提交的字段使用数据库原来的数据。</p>
 </li>
 </ol>
-<h3>3.  @ControllerAdvice请求参数预处理</h3>
+<h2>3.  @ControllerAdvice请求参数预处理</h2>
 <ol>
 <li><p><strong>问题演示</strong></p>
 <p>编写实体类</p>

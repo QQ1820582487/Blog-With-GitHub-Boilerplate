@@ -24,8 +24,8 @@ excerpt: 笔记
 - **预设全局数据**
 - **请求参数预处理**
 
-### 1. @ControllerAdvice处理全局异常
-使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，当时对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常
+## 1. @ControllerAdvice处理全局异常
+使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，但是对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常。
 
 例如：当上传文件大小超出限时，前端显示如下
 
@@ -101,7 +101,7 @@ public class MyCustomException {
 上传文件大小超出限制，请重试
 ```
 
-### 2. @ControllerAdvice预设全局数据
+## 2. @ControllerAdvice预设全局数据
 
 1. 编写预设全局数据类
 
@@ -157,7 +157,7 @@ public class MyCustomException {
    
    
 
-###    3.  @ControllerAdvice请求参数预处理
+##    3.  @ControllerAdvice请求参数预处理
 
 1. **问题演示**
 

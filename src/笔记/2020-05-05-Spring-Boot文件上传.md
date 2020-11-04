@@ -13,9 +13,9 @@ tags:
 excerpt: 笔记
 ---
 
-在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。
+在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入`commons-fileupload`和`commons-io`依赖。
 
-在Spring Boot中,默认使用`StandardServletMultipartResolver(支持servlet3.0以后的版本)`代替`CommonsMultipartResolver(兼容早期的servlet)`解析Multipart请求，如果必须使用`CommonsMultipartResolver`则需要自己添加commons-fileupload和commons-io依赖。
+在Spring Boot中,默认使用`StandardServletMultipartResolver(支持servlet3.0以后的版本)`代替`CommonsMultipartResolver(兼容早期的servlet)`解析 Multipart 请求，如果必须使用`CommonsMultipartResolver`则需要自己添加`commons-fileupload`和`commons-io`依赖。
 
 ### 回顾
 
@@ -189,7 +189,7 @@ public class FileUploadController {
 
 ```
 补充：XMLHttpRequest Level2添加了一个新的接口FormData. 利用FormData对象,我们可以通过JavaScript用一些键值对来模拟一系列表单控件,我们还可以使用XMLHttpRequest的send()方法来异步的提交这个"表单".
-比起普通的ajax,使用FormData的最大优点就是我们可以异步上传一个二进制文件.
+比起普通的ajax,使用FormData的最大优点就是可以异步上传一个二进制文件.
 ```
 
 ```html
@@ -264,7 +264,7 @@ public class FileUploadController {
 
 ### 3. 多文件上传
 
-相较于单个文件上传，多文件上传上传时，后端可以用多个MultipartFile来接收，或者直接用MultipartFile数组来接收。
+相较于单个文件上传，多文件上传上传时，后端可以用多个 MultipartFile 来接收，或者直接用 MultipartFile 数组来接收。
 
 #### 3.1 编写HTML
 
@@ -284,7 +284,7 @@ public class FileUploadController {
 </html>
 ```
 
-如果使用ajax,可以向FormData多append几个文件（name属性不要相同），然后在Controller中使用多个MultipartFile来接收。
+如果使用 ajax ,可以向 FormData 多 append 几个文件（name属性不要相同），然后在 Controller 中使用多个 MultipartFile 来接收。
 
 #### 3.2 编写Controller
 

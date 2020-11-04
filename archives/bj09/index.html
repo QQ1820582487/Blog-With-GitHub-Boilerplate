@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/080d4f1d172137bdc0e5e7ce4eb6e818.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e48ec0b2fbfec4f03dfea9f13510e075.json"
         }
     </script>
     
@@ -86,8 +86,8 @@
                 
             </span>
             <div class="ga-content_body">
-                <p>在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入commons-fileupload和commons-io依赖。</p>
-<p>在Spring Boot中,默认使用<code>StandardServletMultipartResolver(支持servlet3.0以后的版本)</code>代替<code>CommonsMultipartResolver(兼容早期的servlet)</code>解析Multipart请求，如果必须使用<code>CommonsMultipartResolver</code>则需要自己添加commons-fileupload和commons-io依赖。</p>
+                <p>在Spring Boot中进行文件上传只需要额外引入web依赖，不再需要像Spring MVC那样额外引入<code>commons-fileupload</code>和<code>commons-io</code>依赖。</p>
+<p>在Spring Boot中,默认使用<code>StandardServletMultipartResolver(支持servlet3.0以后的版本)</code>代替<code>CommonsMultipartResolver(兼容早期的servlet)</code>解析 Multipart 请求，如果必须使用<code>CommonsMultipartResolver</code>则需要自己添加<code>commons-fileupload</code>和<code>commons-io</code>依赖。</p>
 <h3>回顾</h3>
 <div class="highlight"><pre><span></span><span class="nd">@Controller</span>
 <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
@@ -245,7 +245,7 @@
 <p>为方便操作，使用JQuery.js</p>
 
 <pre><code>补充：XMLHttpRequest Level2添加了一个新的接口FormData. 利用FormData对象,我们可以通过JavaScript用一些键值对来模拟一系列表单控件,我们还可以使用XMLHttpRequest的send()方法来异步的提交这个"表单".
-比起普通的ajax,使用FormData的最大优点就是我们可以异步上传一个二进制文件.</code></pre>
+比起普通的ajax,使用FormData的最大优点就是可以异步上传一个二进制文件.</code></pre>
 <div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -312,7 +312,7 @@
 <span class="p">}</span>
 </pre></div>
 <h3>3. 多文件上传</h3>
-<p>相较于单个文件上传，多文件上传上传时，后端可以用多个MultipartFile来接收，或者直接用MultipartFile数组来接收。</p>
+<p>相较于单个文件上传，多文件上传上传时，后端可以用多个 MultipartFile 来接收，或者直接用 MultipartFile 数组来接收。</p>
 <h4>3.1 编写HTML</h4>
 <div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
@@ -328,7 +328,7 @@
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
-<p>如果使用ajax,可以向FormData多append几个文件（name属性不要相同），然后在Controller中使用多个MultipartFile来接收。</p>
+<p>如果使用 ajax ,可以向 FormData 多 append 几个文件（name属性不要相同），然后在 Controller 中使用多个 MultipartFile 来接收。</p>
 <h4>3.2 编写Controller</h4>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileUploadController</span> <span class="p">{</span>

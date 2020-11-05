@@ -13,7 +13,7 @@ tags:
 excerpt: 笔记
 ---
 
-#### CORS概述
+## CORS概述
 
 当一个资源从与该资源本身所在的服务器不同的`域、协议、端口`请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考[浏览器的同源策略 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
 
@@ -21,7 +21,7 @@ excerpt: 笔记
 
 对于**浏览器限制**这个词，要着重解释一下：不一定是浏览器限制了发起跨站请求，也可能是跨站请求可以正常发起，但是返回结果被浏览器拦截了。
 
-###### 简单请求
+### 简单请求
 
 不会触发CORS预检的请求称为简单请求，满足以下**所有条件**的才会被视为简单请求，基本上我们日常开发只会关注**前两点**
 
@@ -49,7 +49,7 @@ excerpt: 笔记
 
 4. 请求中没有使用 ReadableStream 对象
 
-###### 预检请求
+### 预检请求
 
 需预检的请求要求必须首先使用 `OPTIONS` 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。"预检请求“的使用，可以避免跨域请求对服务器的用户数据产生未预期的影响
 
@@ -63,7 +63,7 @@ excerpt: 笔记
 
 4. #### 请求中使用了`ReadableStream`对象
 
-#### 1. 问题演示
+## 1. 问题演示
 
 创建两个Spring Boot项目，一个提供接口，另一个来访问。
 
@@ -107,15 +107,15 @@ cors2(端口为8081)编写一个HTML来访问`http://localhost:8080/hello`
 
 ![访问结果](..\static\笔记图片\2020-05-07-Spring Boot通过CORS实现跨域_01.png)
 
-点击get按钮时报错 （从源地址`http://localhost:8080/hello`访问XMLHttpRequest已被CORS策略阻塞:在被请求的资源上没有`Access-Control-Allow-Origin`报头。）
+点击 get 按钮时报错 （从源地址`http://localhost:8080/hello`访问 XMLHttpRequest 已被CORS策略阻塞:在被请求的资源上没有`Access-Control-Allow-Origin`报头。）
 
-#### 2. 解决问题
+## 2. 解决问题
 
-上面的报错是因为在被请求的资源上没有`Access-Control-Allow-Origin`报头，在Spring Boot中，可以简单的通过`@CrossOrigin`注解为接口配置。
+上面的报错是因为在被请求的资源上没有`Access-Control-Allow-Origin`报头，在 Spring Boot 中，可以简单的通过`@CrossOrigin`注解为接口配置。
 
-改写cros1的Controller，添加`@CrossOrigin`注解
+改写 cros1 的 Controller，添加`@CrossOrigin`注解
 
-其中@CrossOrigin中的2个常用参数：
+其中 @CrossOrigin 中的2个常用参数：
 
 **origins**  ： 允许可访问的域列表
 
@@ -138,7 +138,7 @@ public class HelloController {
 
 ![访问结果](..\static\笔记图片\2020-05-07-Spring Boot通过CORS实现跨域_02.png)
 
-#### 3. 全局CORS配置
+## 3. 全局CORS配置
 
 编写配置类
 
@@ -156,7 +156,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 }
 ```
 
-此时cros1中所有的接口都开启了CORS，可以跨域访问了。
+此时cros1中所有的接口都开启了CORS，就可以跨域访问了。
 
-#### 4. 预检请求（探测请求）
+## 4. 预检请求（探测请求）
 

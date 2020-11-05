@@ -13,7 +13,7 @@ tags:
 excerpt: 笔记
 ---
 
-#### 1. Spring Boot实现自定义错误页
+## 1. Spring Boot实现自定义错误页
 
 演示
 
@@ -68,7 +68,7 @@ public class HelloController {
 
 **错误页面查找顺序：精确>模糊，动态>静态**
 
-Spring Boot还支持模糊的错误页匹配，例如只定义了`4xx.HTML`，出现4XX错误时，都会展示`4xx.HTML`的内容。
+使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，但是对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常。
 
 当然，如果定义了`404.HTML`和`4xx.HTML`页面，出现`404`错误时，Spring Boot会优先展示`404.HTML`的内容。
 
@@ -135,7 +135,7 @@ Spring Boot还支持模糊的错误页匹配，例如只定义了`4xx.HTML`，�
 
    此时已经创建了静态错误页和动态错误页，那么此时会优先展示动态错误页。
 
-#### 2. Spring Boot异常处理源码分析
+## 2. Spring Boot异常处理源码分析
 
 打开Spring Boot异常处理的自动配置类`org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration`
 
@@ -198,7 +198,7 @@ private ModelAndView resolve(String viewName, Map<String, Object> model) {
 	}
 ```
 
-#### 3. Spring Boot自定义异常数据
+## 3. Spring Boot自定义异常数据
 
 经过查看Spring Boot异常处理的自动配置类`org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration`可知`DefaultErrorAttributes`类中定义了默认的异常数据处理逻辑。
 
@@ -300,7 +300,7 @@ public class MyErrorAttribute extends DefaultErrorAttributes {
 
 ![访问结果](..\static\笔记图片\2020-05-06-Spring Boot中的自定义异常处理_03.png)
 
-#### 4. Spring Boot自定义异常视图
+## 4. Spring Boot自定义异常视图
 
 与自定义异常数据类似，Spring Boot异常处理的自动配置类`org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration`中定义了`DefaultErrorViewResolver`类中用于异常视图处理。要自定义异常视图处理，继承`DefaultErrorViewResolver`类，然后新增或重写其方法就行了。
 

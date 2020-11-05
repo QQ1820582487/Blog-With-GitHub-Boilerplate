@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/aa21ab2bc2181f85549579816a942c54.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/72314bc75f953e7b3a334a0c006c0290.json"
         }
     </script>
     
@@ -86,7 +86,7 @@
                 
             </span>
             <div class="ga-content_body">
-                <h4>1. Spring Boot实现自定义错误页</h4>
+                <h2>1. Spring Boot实现自定义错误页</h2>
 <p>演示</p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
@@ -128,7 +128,7 @@
 <p>再次访问便会看到<code>500.HTML</code>中的内容（Controller中有int i = 1 / 0）;如果访问<code>http://localhost:8080/hello2</code>等会出现404错误的路径便会看到<code>404.HTML</code>的内容。</p>
 <p>即<strong>Spring Boot会根据状态码去寻找对应的页面来替换其默认的错误页。</strong></p>
 <p><strong>错误页面查找顺序：精确&gt;模糊，动态&gt;静态</strong></p>
-<p>Spring Boot还支持模糊的错误页匹配，例如只定义了<code>4xx.HTML</code>，出现4XX错误时，都会展示<code>4xx.HTML</code>的内容。</p>
+<p>使用Spring时，后端出现错误时，在前端的报错提示对用户来说相当不友好，所以应该对异常进行处理，但是对每一个Controller单独进行处理过于重复，所以可以使用@ControllerAdvice处理全局异常。</p>
 <p>当然，如果定义了<code>404.HTML</code>和<code>4xx.HTML</code>页面，出现<code>404</code>错误时，Spring Boot会优先展示<code>404.HTML</code>的内容。</p>
 <p>以上都是使用<strong>静态页面(static目录下)</strong>展示错误信息，但是Spring Boot还支持<strong>动态页面(templates目录下)</strong>,如：thymeleaf、freemarker。</p>
 <p>测试一下，使用thymeleaf来自定义错误页面</p>
@@ -185,7 +185,7 @@
 <p>此时已经创建了静态错误页和动态错误页，那么此时会优先展示动态错误页。</p>
 </li>
 </ol>
-<h4>2. Spring Boot异常处理源码分析</h4>
+<h2>2. Spring Boot异常处理源码分析</h2>
 <p>打开Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code></p>
 <p>其中配置了<code>DefaultErrorAttributes(默认错误属性)</code>、<code>DefaultErrorViewResolver(默认错误视图解析器)</code>等等</p>
 <p>为什么在<code>error</code>目录下创建自定义错误页会被解析呢？</p>
@@ -240,7 +240,7 @@
         <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
     <span class="p">}</span>
 </pre></div>
-<h4>3. Spring Boot自定义异常数据</h4>
+<h2>3. Spring Boot自定义异常数据</h2>
 <p>经过查看Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>可知<code>DefaultErrorAttributes</code>类中定义了默认的异常数据处理逻辑。</p>
 <p>包含了以下异常数据:</p>
 
@@ -324,7 +324,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 </pre></div>
 <p>访问结果:(访问的Controller中有by zero错误)</p>
 <p><figure class="pswp-item" style="flex: 94.10774410774411" data-width="559" data-height="297"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/dea45db15477c8040cd50f0669b5cb94.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
-<h4>4. Spring Boot自定义异常视图</h4>
+<h2>4. Spring Boot自定义异常视图</h2>
 <p>与自定义异常数据类似，Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>中定义了<code>DefaultErrorViewResolver</code>类中用于异常视图处理。要自定义异常视图处理，继承<code>DefaultErrorViewResolver</code>类，然后新增或重写其方法就行了。</p>
 <div class="highlight"><pre><span></span><span class="nd">@Component</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyErrorViewResolver</span> <span class="kd">extends</span> <span class="n">DefaultErrorViewResolver</span> <span class="p">{</span>

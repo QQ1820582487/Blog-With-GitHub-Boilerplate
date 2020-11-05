@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/aa21ab2bc2181f85549579816a942c54.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/72314bc75f953e7b3a334a0c006c0290.json"
         }
     </script>
     
@@ -86,11 +86,11 @@
                 
             </span>
             <div class="ga-content_body">
-                <h4>CORS概述</h4>
+                <h2>CORS概述</h2>
 <p>当一个资源从与该资源本身所在的服务器不同的<code>域、协议、端口</code>请求一个资源时，资源会发起一个跨域 HTTP 请求。同源策略参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy">浏览器的同源策略 | MDN</a></p>
 <p>出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求，XMLHttpRequest和Fetch API，只能从加载应用程序的同一个域请求HTTP资源，除非使用<code>CORS头文件</code></p>
 <p>对于<strong>浏览器限制</strong>这个词，要着重解释一下：不一定是浏览器限制了发起跨站请求，也可能是跨站请求可以正常发起，但是返回结果被浏览器拦截了。</p>
-<h6>简单请求</h6>
+<h3>简单请求</h3>
 <p>不会触发CORS预检的请求称为简单请求，满足以下<strong>所有条件</strong>的才会被视为简单请求，基本上我们日常开发只会关注<strong>前两点</strong></p>
 <ol>
 <li><p>使用<code>GET、POST、HEAD</code>其中一种方法</p>
@@ -129,7 +129,7 @@
 <li><p>请求中没有使用 ReadableStream 对象</p>
 </li>
 </ol>
-<h6>预检请求</h6>
+<h3>预检请求</h3>
 <p>需预检的请求要求必须首先使用 <code>OPTIONS</code> 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。"预检请求“的使用，可以避免跨域请求对服务器的用户数据产生未预期的影响</p>
 <p>下面的请求会触发预检请求，其实非简单请求之外的就会触发预检，就不用记那么多了</p>
 <ol>
@@ -142,7 +142,7 @@
 <li><p>#### 请求中使用了<code>ReadableStream</code>对象</p>
 </li>
 </ol>
-<h4>1. 问题演示</h4>
+<h2>1. 问题演示</h2>
 <p>创建两个Spring Boot项目，一个提供接口，另一个来访问。</p>
 <p>cors1(端口为8080)提供的接口 访问URL:<code>http://localhost:8080/hello</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
@@ -176,11 +176,11 @@
 </pre></div>
 <p>访问结果：</p>
 <p><figure class="pswp-item" style="flex: 325.4237288135593" data-width="1920" data-height="295"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/306104eaf0a56de98e4de7e7d0372ea9.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
-<p>点击get按钮时报错 （从源地址<code>http://localhost:8080/hello</code>访问XMLHttpRequest已被CORS策略阻塞:在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头。）</p>
-<h4>2. 解决问题</h4>
-<p>上面的报错是因为在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头，在Spring Boot中，可以简单的通过<code>@CrossOrigin</code>注解为接口配置。</p>
-<p>改写cros1的Controller，添加<code>@CrossOrigin</code>注解</p>
-<p>其中@CrossOrigin中的2个常用参数：</p>
+<p>点击 get 按钮时报错 （从源地址<code>http://localhost:8080/hello</code>访问 XMLHttpRequest 已被CORS策略阻塞:在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头。）</p>
+<h2>2. 解决问题</h2>
+<p>上面的报错是因为在被请求的资源上没有<code>Access-Control-Allow-Origin</code>报头，在 Spring Boot 中，可以简单的通过<code>@CrossOrigin</code>注解为接口配置。</p>
+<p>改写 cros1 的 Controller，添加<code>@CrossOrigin</code>注解</p>
+<p>其中 @CrossOrigin 中的2个常用参数：</p>
 <p><strong>origins</strong>  ： 允许可访问的域列表</p>
 <p><strong>maxAge</strong>：准备响应前的缓存持续的最大时间（以秒为单位）。</p>
 <p><code>@CrossOrigin</code>注解不仅能在方法上使用，也可以在类上使用。</p>
@@ -195,7 +195,7 @@ public class HelloController {
 }</code></pre>
 <p>访问结果：响应头中多了<strong>Access-Control-Allow-Origin: <a href="http://localhost:8081">http://localhost:8081</a></strong></p>
 <p><figure class="pswp-item" style="flex: 149.76599063962558" data-width="1920" data-height="641"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/118d1c850aa365ec40f5edf1ac01c93b.png" alt="访问结果" /><figcaption>访问结果</figcaption></figure></p>
-<h4>3. 全局CORS配置</h4>
+<h2>3. 全局CORS配置</h2>
 <p>编写配置类</p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="kd">implements</span> <span class="n">WebMvcConfigurer</span> <span class="p">{</span>
@@ -209,8 +209,8 @@ public class HelloController {
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-<p>此时cros1中所有的接口都开启了CORS，可以跨域访问了。</p>
-<h4>4. 预检请求（探测请求）</h4>
+<p>此时cros1中所有的接口都开启了CORS，就可以跨域访问了。</p>
+<h2>4. 预检请求（探测请求）</h2>
 
             </div>
         </article>

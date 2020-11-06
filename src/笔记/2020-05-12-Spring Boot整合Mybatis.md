@@ -43,7 +43,7 @@ excerpt: 笔记
 
 ```properties
 spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
-spring.datasource.url=jdbc:mysql:///test
+spring.datasource.url=jdbc:mysql:///test?useSSL=false&serverTimezone=Asia/Shanghai
 spring.datasource.username=root
 spring.datasource.password=root
 ```
@@ -120,9 +120,7 @@ public interface UserMapper {
    mybatis.mapper-locations=classpath:mapper/*.xml
    ```
 
-
-
-`测试`
+**测试**
 
 ```java
 @SpringBootTest
@@ -139,7 +137,7 @@ class MybatisApplicationTests {
 }
 ```
 
-结果
+**结果**
 
 ```
 [User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]
@@ -175,12 +173,12 @@ class MybatisApplicationTests {
 ```properties
 #配置多数据源
 spring.datasource.one.type=com.alibaba.druid.pool.DruidDataSource
-spring.datasource.one.url=jdbc:mysql:///test
+spring.datasource.one.url=jdbc:mysql:///test?useSSL=false&serverTimezone=Asia/Shanghai
 spring.datasource.one.username=root
 spring.datasource.one.password=root
 
 spring.datasource.two.type=com.alibaba.druid.pool.DruidDataSource
-spring.datasource.two.url=jdbc:mysql:///test2
+spring.datasource.two.url=jdbc:mysql:///test2?useSSL=false&serverTimezone=Asia/Shanghai
 spring.datasource.two.username=root
 spring.datasource.two.password=root
 ```

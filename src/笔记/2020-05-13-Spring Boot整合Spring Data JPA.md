@@ -143,7 +143,7 @@ Query query = entityManager.createQuery( "select o from Order o"); List orders =
 spring.datasource.type=com.zaxxer.hikari.HikariDataSource
 spring.datasource.username=root
 spring.datasource.password=root
-spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+spring.datasource.url=jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=Asia/Shanghai
 
 #jpa
 spring.jpa.database=mysql
@@ -362,7 +362,7 @@ List<User> findByNameLike(String name);
 
 支持的查询关键字如下图：
 
-   ![img](..\static\笔记图片\2020-05-13-Spring Boot整合Spring Data JPA_02.png)
+   ![](..\static\笔记图片\2020-05-13-Spring Boot整合Spring Data JPA_02.png)
 
 ##### 3.查询方法流程解析
 
@@ -462,13 +462,12 @@ spring.datasource.one.type=com.zaxxer.hikari.HikariDataSource
 spring.datasource.one.username=root
 spring.datasource.one.password=root
 #使用Hikari的话要讲url换成jdbcurl，Druid直接使用url
-spring.datasource.one.jdbcurl=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+spring.datasource.one.jdbcurl=jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=Asia/Shanghai
 
 spring.datasource.two.type=com.zaxxer.hikari.HikariDataSource
 spring.datasource.two.username=root
 spring.datasource.two.password=root
-spring.datasource.two.jdbcurl=jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-
+spring.datasource.two.jdbcurl=jdbc:mysql://localhost:3306/test2?useSSL=false&serverTimezone=Asia/Shanghai
 #与单数据源不同的是 在jpa后都要加上properties
 spring.jpa.properties.database=mysql
 spring.jpa.properties.database-platform=mysql
@@ -649,4 +648,4 @@ class Jpa2ApplicationTests {
 - PagingAndSortingRepository： 继承 CrudRepository，实现了一组分页排序相关的方法
 - JpaRepository： 继承 PagingAndSortingRepository，实现一组 JPA 规范相关的方法
 - 自定义的 XxxxRepository 需要继承 JpaRepository，这样的 XxxxRepository 接口就具备了通用的数据访问控制层的能力。
-- JpaSpecificationExecutor： 不属于Repository体系，实现一组 JPA Criteria 查询相关的方法
+- JpaSpecificationExecutor：不属于Repository体系，实现一组 JPA Criteria 查询相关的方法

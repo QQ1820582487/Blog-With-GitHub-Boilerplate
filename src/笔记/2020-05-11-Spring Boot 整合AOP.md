@@ -189,7 +189,7 @@ public class LogComponent {
 2. 基于注解
    前置通知(Before) → 后置通知(After) → 返回通知(AfterRunning)/异常通知(AfterThrowing)
 
-所以,基于注解的AOP配置通知类的方法**最好单独使用环绕通知(Around)**
+所以，基于注解的AOP配置通知类的方法**最好单独使用环绕通知(Around)**
 
 补充：基于注解的执行顺序
 

@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/72314bc75f953e7b3a334a0c006c0290.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/6899fce550be1807ae35e322624495ee.json"
         }
     </script>
     
@@ -109,7 +109,7 @@
 &lt;/dependency&gt;</code></pre>
 <h3>2.配置数据源</h3>
 <div class="highlight"><pre><span></span><span class="na">spring.datasource.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
-<span class="na">spring.datasource.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test</span>
+<span class="na">spring.datasource.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 <span class="na">spring.datasource.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.password</span><span class="o">=</span><span class="s">root</span>
 </pre></div>
@@ -170,7 +170,7 @@
 </pre></div>
 </li>
 </ol>
-<p><code>测试</code></p>
+<p><strong>测试</strong></p>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
 <span class="kd">class</span> <span class="nc">MybatisApplicationTests</span> <span class="p">{</span>
 
@@ -184,7 +184,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-<p>结果</p>
+<p><strong>结果</strong></p>
 
 <pre><code>[User(id=1, username=xu, address=四川), User(id=6, username=xu2, address=四川)]</code></pre>
 <h2>2.配置多数据源</h2>
@@ -211,12 +211,12 @@
 <h3>2.配置多数据源</h3>
 <div class="highlight"><pre><span></span><span class="c">#配置多数据源</span>
 <span class="na">spring.datasource.one.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
-<span class="na">spring.datasource.one.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test</span>
+<span class="na">spring.datasource.one.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 <span class="na">spring.datasource.one.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.one.password</span><span class="o">=</span><span class="s">root</span>
 
 <span class="na">spring.datasource.two.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
-<span class="na">spring.datasource.two.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test2</span>
+<span class="na">spring.datasource.two.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test2?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 <span class="na">spring.datasource.two.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.two.password</span><span class="o">=</span><span class="s">root</span>
 </pre></div>

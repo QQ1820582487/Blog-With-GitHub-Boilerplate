@@ -49,7 +49,7 @@ excerpt: 笔记
      datasource:
        username: root
        password: root
-       url: jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+       url: jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
        type: com.zaxxer.hikari.HikariDataSource
    
      jpa:

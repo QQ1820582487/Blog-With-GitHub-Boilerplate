@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-11-06T02:18:35.843041+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-11-06T02:18:35.843338+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-11-13T02:57:26.110898+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-11-13T02:57:26.111178+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;什么是SMTP？
  SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
@@ -276,7 +276,7 @@ class MailApplicationTests {
         javaMailSender.send(message);
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-11-06T02:18:35.843316+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-11-13T02:57:26.111157+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
 &lt;h3&gt;一. MySQL逻辑分层&lt;/h3&gt;
 &lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给想要的结果。&lt;/p&gt;
 &lt;h4&gt;1.连接层&lt;/h4&gt;
@@ -293,7 +293,7 @@ class MailApplicationTests {
 &lt;p&gt;查询事务    对象权限&lt;/p&gt;
 &lt;h5&gt;2.4-Optimizer优化器&lt;/h5&gt;
 &lt;p&gt;当编写Sql语句执行时，优化器会觉得我写的sql语句性能不够好，这个时候，优化器会自己写一个等价于跟我写的执行后结果一致的sql语句进行代替.&lt;/p&gt;
-&lt;p&gt;2.5-Cache Buffers&lt;/p&gt;
+&lt;h5&gt;2.5-Cache Buffers&lt;/h5&gt;
 &lt;p&gt;缓存&lt;/p&gt;
 &lt;p&gt;服务器会查询内部的缓存,如果缓存空间足够大,这样可以解决大量读操作的环境中,能够很好的提升系统性能&lt;/p&gt;
 &lt;h4&gt;3.引擎层&lt;/h4&gt;
@@ -399,7 +399,7 @@ class MailApplicationTests {
 &lt;p&gt;&lt;figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined&gt;&lt;img src="..\static\笔记图片\2020-08-27-MySQL优化相关_06.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;各字段解释:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;id：select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;id&lt;/strong&gt;：select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;包含3种情况：&lt;ul&gt;
 &lt;li&gt;id相同，执行顺序由上至下&lt;/li&gt;
@@ -423,44 +423,44 @@ class MailApplicationTests {
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;table：显示这一行的数据是关于哪张表的&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;type：访问类型, 显示查询使用了何种类型,&lt;/p&gt;
-&lt;p&gt;从最好到最差依次是：system&amp;gt;const&amp;gt;eq_ref&amp;gt;ref&amp;gt;range&amp;gt;index&amp;gt;ALL （常见的）&lt;/p&gt;
-&lt;p&gt;一般来说, 要保证查询至少达到range级别, 最好能达到ref。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;type&lt;/strong&gt;：访问类型, 显示查询使用了何种类型，&lt;/p&gt;
+&lt;p&gt;从最好到最差依次是：&lt;strong&gt;system &amp;gt; const &amp;gt; eq_ref &amp;gt; ref &amp;gt; range &amp;gt; index &amp;gt; ALL&lt;/strong&gt; （常见的）&lt;/p&gt;
+&lt;p&gt;一般来说, 要保证查询至少达到 range 级别, 最好能达到 ref 。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;system：表只有一行记录(等于系统表), 这是const类型的特例, 平时不会出现&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;system：表只有一行记录(等于系统表), 这是 const 类型的特例, 平时不会出现&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;const：表示通过索引一次就找到了, const用于比较primary key或者unique索引。因为只匹配一行数据, 索引很快, 如将主键置于where列表中, MySQL就能将该查询转换为一个“常量”。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;const：表示通过索引一次就找到了, const 用于比较 primary key 或者 unique 索引。因为只匹配一行数据, 索引很快, 如将主键置于where列表中, MySQL就能将该查询转换为一个“常量”。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;eq_ref：唯一性索引扫描, 对于每个索引键, 表中只有一条记录与之匹配。常见于主键或唯一索引扫描&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;ref：非唯一性索引扫描, 返回匹配某个单独值的所有行。本质上也是一种索引访问, 它返回所有匹配某个单独值的行, 可能会找到多个符合条件的行, 所以这个应该属于查找和扫描的混合体&lt;/p&gt;
 &lt;p&gt;eq_ref和ref：就好比一个班级里面，只有一个班主任和一群学生，t2返回的只有一个记录（就就好比班主任），而col1返回的是所有col1等于ac（所有名字是ac的学生）&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;range：只检索给定范围的行, 使用一个索引来选择行。key列显示使用了哪个索引, 一般就是在where语句中出现了between, &amp;lt; ,&amp;gt; ,in等的查询。这种范围索引扫描比全表扫描要好, 因为它只需要开始于索引的某一点, 而结束于另一点, 不用扫描全部索引。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;range：只检索给定范围的行, 使用一个索引来选择行。key 列显示使用了哪个索引, 一般就是在 where 语句中出现了between, &amp;lt; ,&amp;gt; ,in 等的查询。这种范围索引扫描比全表扫描要好, 因为它只需要开始于索引的某一点, 而结束于另一点, 不用扫描全部索引。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;index：Full Index Scan(全索引扫描), index与ALL的区别为index类型只遍历索引树。这通常比ALL快, 因为索引文件通常比数据文件小。(也就是说，虽然&lt;strong&gt;ALL和index都是读全表, 但index是从索引中读取的, 而ALL是从硬盘中读取的&lt;/strong&gt;)&lt;/li&gt;
-&lt;li&gt;ALL：Full Table Scan(全表扫描), 将遍历全表以找到匹配的行&lt;/li&gt;
+&lt;li&gt;index：Full Index Scan(全索引扫描), index与ALL的区别为index类型只遍历索引树。这通常比ALL快, 因为索引文件通常比数据文件小。(也就是说，虽然&lt;strong&gt;ALL和index都是读全表, 但index是从索引中读取的, 而ALL是从硬盘中读取的&lt;/strong&gt;)。&lt;/li&gt;
+&lt;li&gt;ALL：Full Table Scan(全表扫描), 将遍历全表以找到匹配的行。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;possible_keys：可能用到的索引，一个或多个，&lt;strong&gt;但不一定被查询实际使用&lt;/strong&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;possible_keys：可能用到的索引，一个或多个，&lt;strong&gt;但不一定被查询实际使用&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;key：&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;key&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;实际使用的索引, 如果为NULL, 则没有使用索引。（要么没建索引，要么建了索引没用，所谓索引失效）&lt;/li&gt;
+&lt;li&gt;实际使用的索引, 如果为NULL, 则没有使用索引。（要么没建索引，要么建了索引没用，即索引失效）&lt;/li&gt;
 &lt;li&gt;查询中若使用了覆盖索引, 则该索引仅出现在key列表中&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;key_len：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;表示索引中使用的字节数, 可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下, 长度越短越好。（有句话说就是：不给马吃草，又让马儿跑）&lt;/li&gt;
-&lt;li&gt;key_len显示的值为索引字段的最大可能长度, &lt;strong&gt;并非实际使用长度&lt;/strong&gt;, 即key_len是根据表定义计算而得, 不是通过表内检索获得的（同样的查询结果，key_len用的越少越好）&lt;/li&gt;
+&lt;li&gt;表示索引中使用的字节数, 可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下, 长度越短越好。（有句话说就是：不给马吃草，又要马儿跑）&lt;/li&gt;
+&lt;li&gt;key_len显示的值为索引字段的最大可能长度, &lt;strong&gt;并非实际使用长度&lt;/strong&gt;, 即 key_len 是根据表定义计算而得, 不是通过表内检索获得的（同样的查询结果，key_len用的越少越好）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;ref：显示索引的哪一列被使用了, 如果可能的话, 最好是一个常数。哪些列或常量被用于查找索引列上的值。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;rows：根据表统计信息及索引选用情况, 大致估算出找到所需记录所需要读取的行数（被张表有多行被优化器优化过）&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;rows&lt;/strong&gt;：根据表统计信息及索引选用情况, 大致估算出找到所需记录所需要读取的行数（表中有多少行被优化器查询）&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Extra：包含不适合在其他列中显示但十分重要的额外信息&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Extra&lt;/strong&gt;：包含不适合在其他列中显示但十分重要的额外信息&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Using filesort&lt;/strong&gt; : 说明MySQL会对数据使用一个外部的索引排序, 而不是按照表内索引顺序进行读取。&lt;strong&gt;MySQL中无法利用索引完成的排序操作称为"文件内排序"&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Using temporary&lt;/strong&gt; : 同比前者性能更差，使用了临时表保存中间结果, MySQL在对查询结果排序时使用了临时表。常见于排序order by和分组查询group by。&lt;/li&gt;
@@ -475,8 +475,8 @@ class MailApplicationTests {
 &lt;h3&gt;补充&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;覆盖索引(Covering Index)，一说为索引覆盖&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;理解方式一：就是select的数据列只用从索引中就能够获取，不比读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说&lt;strong&gt;查询列要被所建的索引覆盖。&lt;/strong&gt;（也就是说建的索引是col1,col2,col3的复合索引，刚好查询的也是这几列或者部分满足）&lt;/p&gt;
-&lt;p&gt;理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此他不比读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;如果使用覆盖索引，一定要注意select列表中只要所需的列，不可select *；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。&lt;/p&gt;
+&lt;p&gt;理解方式二：索引是高效找到行的一个方法，但是一般数据库也能使用索引找到一个列的行，因此它不必读取整个行，毕竟索引叶子节点存储了他们所引用的数据，当能通过读取索引就可以得到想要的数据，那就不需要读取行了，一个索引包含了（或覆盖了）满足查询结果的数据就叫做覆盖索引。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;如果使用覆盖索引，一定要注意select列表中只要所需的列，不可 select * ；因为如果将所有的字段一起做索引会导致索引文件过大，查询性能下降。&lt;/p&gt;
 &lt;h1&gt;MySQL索引优化2-优化法则&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;全值匹配我最爱(怎么建就怎么用)&lt;/p&gt;
@@ -1154,7 +1154,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/ol&gt;
 &lt;h3&gt;一主一从常见配置&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://www.bilibili.com/video/BV12b411K7Zu?p=241"&gt;参考&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-11-06T02:18:35.843294+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-11-13T02:57:26.111137+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;1. 内存模型 &amp;amp; 分区&lt;/h2&gt;
 &lt;p&gt;Java虚拟机在运行Java程序时，会管理着一块内存区域：运行时数据区&lt;/p&gt;
 &lt;p&gt;在运行时数据区里，会根据用途进行划分：&lt;/p&gt;
@@ -1220,7 +1220,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h2&gt;8. 总结&lt;/h2&gt;
 &lt;p&gt;本文全面讲解JVM中的内存模型 &amp;amp; 分区，总结如下&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 144.0" data-width="1080" data-height="375"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/10936d10647a2b939c1bd64c8f774d6b.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-11-06T02:18:35.843271+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-11-13T02:57:26.111116+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
 &lt;th&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/th&gt;
@@ -1798,7 +1798,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 开机禁用： systemctl disable firewalld  
 开机启用： systemctl enable firewalld&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href="https://frank-lam.github.io/fullstack-tutorial/#/Linux"&gt;学习指南&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-11-06T02:18:35.843248+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-11-13T02:57:26.111095+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
 &lt;h3&gt;Docker是什么？&lt;/h3&gt;
 &lt;p&gt;Docker是Docker.Lnc公司开源的一个基于LXC技术之上搭建的 Container 容器引擎，源代码托管在Github上，使用 Google 公司的 Go 语言，基于Go语言并遵从Apache2.0协议开源。Docker将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了Docker，就不用担心环境问题。
 总体来说，Docker的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。&lt;/p&gt;
@@ -2045,7 +2045,7 @@ Server:
     https://docs.docker.com/get-started/
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;若能正常输出以上信息，则说明安装成功。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-11-06T02:18:35.843226+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-11-13T02:57:26.111075+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
 &lt;p&gt;Docker引擎是一个包含以下主要组件的客户端服务器应用程序。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;—种服务器，它是一种被称为守护进程（deamon）并且长时间运行的程序。&lt;/li&gt;
@@ -2308,7 +2308,7 @@ ed8b228b1e55845241c26e8ede042bae4132700d7334ae44438ce0e60282ff3c
 ...
 Total reclaimed space: &lt;span class="m"&gt;4&lt;/span&gt;.818MB
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-11-06T02:18:35.843204+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-11-13T02:57:26.111053+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;从 &lt;a href="https://yeasy.gitbook.io/docker_practice/image/commit"&gt;docker commit&lt;/a&gt; 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
 &lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
 &lt;p&gt;以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为&lt;code&gt;Dockerfile&lt;/code&gt;&lt;/p&gt;
@@ -2626,7 +2626,7 @@ Connection: keep-alive
 &lt;span class="k"&gt;RUN&lt;/span&gt; pwd
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;pwd&lt;/code&gt; 输出的结果为 &lt;code&gt;/a/b/c&lt;/code&gt;。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-11-06T02:18:35.843180+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-11-13T02:57:26.111031+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
 &lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
@@ -3339,7 +3339,7 @@ db:
       &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_PASS=root&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;RABBITMQ_DEFAULT_USER&lt;/code&gt;  和  &lt;code&gt;RABBITMQ_DEFAULT_PASS&lt;/code&gt; 用来设置超级管理员的账号和密码，如果不设置，默认都是 &lt;code&gt;guest&lt;/code&gt; 。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-11-06T02:18:35.843154+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-11-13T02:57:26.111004+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
 &lt;p&gt;GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。&lt;/p&gt;
 &lt;h2&gt;部署GitLab&lt;/h2&gt;
 &lt;p&gt;使用Docker来安装和运行GitLab中文版，&lt;code&gt;docker-compose.yml&lt;/code&gt;配置如下:&lt;/p&gt;
@@ -3365,7 +3365,7 @@ db:
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/opt/gitlab&lt;/span&gt;
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./logs:/var/log/gitlab&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-11-06T02:18:35.843102+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-11-13T02:57:26.110955+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
 &lt;h3&gt;1.计数&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有多少种方式走到右下角&lt;/li&gt;

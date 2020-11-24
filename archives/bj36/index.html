@@ -21,19 +21,20 @@
         }
     </script>
     
-<title></title>
+<title>VMware 16安装CentOS 7 配置静态IP - Xuxx的个人博客。</title>
 <meta name="author" content="Xuxx" />
-<meta name="description" content="坚持有效行动，改变自然发生——致自己。" />
-<meta property="og:title" content="" />
-<meta property="og:description" content="坚持有效行动，改变自然发生——致自己。" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="VMware 16安装CentOS 7 配置静态IP - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
 <meta property="og:site_name" content="Xuxx的个人博客。" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="" />
-<meta property="og:image" content="Xuxx的个人博客。" />
-<meta name="twitter:title" content="" />
-<meta name="twitter:description" content="坚持有效行动，改变自然发生——致自己。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj36/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-11-23T11:35:00-00.00" />
+<meta name="twitter:title" content="VMware 16安装CentOS 7 配置静态IP - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -69,27 +70,148 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">VMware 16安装CentOS 7 配置静态IP</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-11-23
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>一.安装VMware 16</h2>
+<p><a href="https://www.ddosi.com/b397/#VMware16%E5%AF%86%E9%92%A5">安装VMware 16</a></p>
+<h2>二.创建虚拟机</h2>
+<ol>
+<li><p>创建新的虚拟机 -&gt; 自定义配置，下一步</p>
+<p><figure class="pswp-item" style="flex: 93.97522522522523" data-width="1669" data-height="888"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/31609bb4fcc8c800490b576b117044b1.png" alt="" /></figure></p>
+</li>
+<li><p>选择虚拟机硬件兼容性 -&gt; 默认，下一步</p>
+</li>
+<li><p>安装客户机操作系统 -&gt; 稍后安装操作系统，下一步</p>
+<p><figure class="pswp-item" style="flex: 57.621247113163975" data-width="499" data-height="433"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f6e42c7054d8b36ab5791931fead5536.png" alt="" /></figure></p>
+</li>
+<li><p>选择客户机操作系统 -&gt; Linux+CentOS7 64 位，下一步</p>
+<p><figure class="pswp-item" style="flex: 57.621247113163975" data-width="499" data-height="433"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3919acacad647fe6aa949de6b408ef5a.png" alt="" /></figure></p>
+</li>
+<li><p>命名虚拟机 -&gt; 按需配置，下一步</p>
+</li>
+<li><p>处理器、内存配置 -&gt; 按需分配，下一步</p>
+</li>
+</ol>
+<ol>
+<li><p>网络类型 -&gt; 选择NAT类型，下一步</p>
+</li>
+<li><p>选择I/O控制器类型、选择磁盘类型 -&gt; 默认，下一步</p>
+</li>
+<li><p>选择磁盘、指定磁盘容量 -&gt; 创建新虚拟磁盘，按需分配磁盘大小，下一步</p>
+</li>
+<li><p>点击完成</p>
+</li>
+</ol>
+<h2>三.安装虚拟机操作系统</h2>
+<ol>
+<li>点击编辑虚拟机设置，选择ISO映像文件</li>
+<li>点击开启此虚拟机，进入安装步骤</li>
+<li>选择安装语言</li>
+<li>点击安装位置，点击选择刚才创建的20g的虚拟硬盘存储，最后点击完成。</li>
+<li>点击开始安装，Centos7正在安装中。</li>
+<li>设置ROOT账户密码，点击完成（提示：密码简单时需要多点），最后点击完成配置。</li>
+<li>重启，由于是安装Minimal版（最小安装），是命令行形式的，不是安装的桌面版的，只能在黑窗口输入命令操作。</li>
+<li>输入用户名/密码连接CentOS 7，输入密码不显示，所以要细心输入，以访出错。</li>
+</ol>
+<p>四.配置网络</p>
+<ol>
+<li><p>确认虚拟机与主机的连接方式，编辑 -&gt; 虚拟网络编辑器
+ 虚拟网络编辑器：去除了DHCP的勾选，然后配置子网和子网掩码。因为使用的子网掩码是 255.255.255.0 ，所以子网IP前两位要与本机的IP一致（win查看ip -&gt; ipconfig ）,第三位随意（别和本机一样），第四位无脑填 0 就行。
+ NAT设置：网关IP 前三位要和子网IP 一样，第四位随意就行。</p>
+</li>
+<li><p>配置Centos 7 静态IP 相关配置文件
+ 配置网卡配置文件：<code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code>
+ 注意这儿的 IPASSR 不是虚拟网络编辑器的子网 IP！！！（吃过大亏(；´д｀)ゞ....）</p>
+<div class="highlight"><pre><span></span><span class="c1">#修改和添加的内容如下：</span>
+...
+<span class="nv">BOOTPROTO</span><span class="o">=</span><span class="s2">&quot;static&quot;</span>
+...
+<span class="nv">ONBOOT</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="c1">#注意这儿的 IP 不是虚拟网络编辑器的子网 IP！！！</span>
+<span class="c1">#就是虚拟网络编辑器中的 子网ip网段（前三位）+ 主机号 </span>
+<span class="nv">IPADDR</span><span class="o">=</span><span class="s2">&quot;192.168.123.128&quot;</span>
+<span class="c1">#子网掩码，也可换成：NETMASK=&quot;255.255.255.0&quot;</span>
+<span class="nv">PREFIX</span><span class="o">=</span><span class="s2">&quot;24&quot;</span>
+<span class="nv">GATEWAY</span><span class="o">=</span><span class="s2">&quot;192.168.123.2&quot;</span>
+<span class="nv">IPV6_PRIVACY</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+<span class="nv">DNS1</span><span class="o">=</span><span class="m">8</span>.8.8.8
+<span class="nv">DNS2</span><span class="o">=</span><span class="m">8</span>.8.4.4
+</pre></div>
+<p>配置域名解析配置文件：<code>vi /etc/resolv.conf</code></p>
+<div class="highlight"><pre><span></span><span class="c1">#Generated by NetworkManager</span>
+nameserver <span class="m">8</span>.8.8.8
+nameserver <span class="m">8</span>.8.4.4
+</pre></div>
+<p>然后就可以重启网络了, 命令：<code>systemctl restart network</code>
+补充 防火墙命令：</p>
+<div class="highlight"><pre><span></span><span class="c1">#关闭防火墙并设置开机不启动</span>
+<span class="c1">#查看防火墙状态：</span>
+systemctl status firewalld.service
+<span class="c1">#关闭：</span>
+systemctl stop firewalld
+<span class="c1">#开启：</span>
+systemctl start firewalld
+<span class="c1">#开机自动关闭：</span>
+systemctl disable firewalld
+<span class="c1">#开机自动启动：</span>
+systemctl <span class="nb">enable</span> firewalld
+</pre></div>
+</li>
+</ol>
+<ol>
+<li>同步修改主机的网络适配器ip
+编辑vmnet8如下：
+完整的配置已经结束。下载 ssh 客户端连接就好了。
+FinalShell：<a href="https://www.hostbuf.com/">https://www.hostbuf.com/</a></li>
+</ol>
 
-<section id="ga-archive_list" class="ga-section" data-title="#Security">
-    <ul>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj22/">Spring Boot整合Security</a></h1>
-            <time class="ga-mono" datetime="2020-05-18T15:10:00-00.00">
-                2020-05-18
-            </time>
-        </li>
-        
-    </ul>
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Vmware/">#Vmware</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/CentOS/">#CentOS</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj35/">动态规划算法</a>
+        <p class="yue">笔记</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
+    
 
 </main>
 

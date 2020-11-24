@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VMware 16安装CentOS 7 配置静态IP
-slug: bj35
+slug: bj36
 date: 2020-11-23 11:35
 status: publish
 author: Xuxx

@@ -15,7 +15,7 @@ excerpt: 笔记
 
 ## 一.安装VMware 16
 
-[安装VMware 16](https://www.ddosi.com/b397/#VMware16%E5%AF%86%E9%92%A5)
+[安装VMware 16](https://blog.csdn.net/zouhuu/article/details/86530787)
 
 ## 二.创建虚拟机
 

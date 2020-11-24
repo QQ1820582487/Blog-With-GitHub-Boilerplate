@@ -1,15 +1,17 @@
+---
 layout: post
 title: VMware 16安装CentOS 7 配置静态IP
 slug: bj35
-date: 2020-09-22 00:05
+date: 2020-11-23 11:35
 status: publish
 author: Xuxx
 categories: 
   - 笔记
 tags: 
-  - Docker
-  - Docker Compose
+  - Vmware
+  - CentOS
 excerpt: 笔记
+---
 
 ## 一.安装VMware 16
 
@@ -58,12 +60,12 @@ excerpt: 笔记
 四.配置网络
 
 1. 确认虚拟机与主机的连接方式，编辑 -> 虚拟网络编辑器
-  虚拟网络编辑器：去除了DHCP的勾选，然后配置子网和子网掩码。因为使用的子网掩码是 255.255.255.0 ，所以子网IP前两位要与本机的IP一致（win查看ip -> ipconfig ）,第三位随意（别和本机一样），第四位无脑填 0 就行。
-  NAT设置：网关IP 前三位要和子网IP 一样，第四位随意就行。
+    虚拟网络编辑器：去除了DHCP的勾选，然后配置子网和子网掩码。因为使用的子网掩码是 255.255.255.0 ，所以子网IP前两位要与本机的IP一致（win查看ip -> ipconfig ）,第三位随意（别和本机一样），第四位无脑填 0 就行。
+    NAT设置：网关IP 前三位要和子网IP 一样，第四位随意就行。
 
 2. 配置Centos 7 静态IP 相关配置文件
-  配置网卡配置文件：`vi /etc/sysconfig/network-scripts/ifcfg-ens33`
-  注意这儿的 IPASSR 不是虚拟网络编辑器的子网 IP！！！（吃过大亏(；´д｀)ゞ....）
+    配置网卡配置文件：`vi /etc/sysconfig/network-scripts/ifcfg-ens33`
+    注意这儿的 IPASSR 不是虚拟网络编辑器的子网 IP！！！（吃过大亏(；´д｀)ゞ....）
 
   ```shell
   #修改和添加的内容如下：

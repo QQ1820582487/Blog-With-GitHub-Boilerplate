@@ -1,282 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-11-13T02:57:26.110898+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj25/</id><title>Spring Boot发送邮件</title><updated>2020-11-13T02:57:26.111178+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.基础知识&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;什么是SMTP？
- SMTP全称为Simple Mail Transfer Protocol（简单邮件传输协议），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP认证要求必须提供账号和密码才能登陆服务器，其设计目的在于避免用户受到垃圾邮件的侵扰。&lt;/li&gt;
-&lt;li&gt;什么是IMAP？
- IMAP全称为Internet Message Access Protocol（互联网邮件访问协议），IMAP允许从邮件服务器上获取邮件的信息、下载邮件等。IMAP与POP类似，都是一种邮件获取协议。&lt;/li&gt;
-&lt;li&gt;什么是POP3？
- POP3全称为Post Office Protocol 3（邮局协议），POP3支持客户端远程管理服务器端的邮件。POP3常用于“离线”邮件处理，即允许客户端下载服务器邮件，然后服务器上的邮件将会被删除。目前很多POP3的邮件服务器只提供下载邮件功能，服务器本身并不删除邮件，这种属于改进版的POP3协议。&lt;/li&gt;
-&lt;li&gt;IMAP和POP3协议有什么不同呢？
- 两者最大的区别在于，IMAP允许双向通信，即在客户端的操作会反馈到服务器上，例如在客户端收取邮件、标记已读等操作，服务器会跟着同步这些操作。而对于POP协议虽然也允许客户端下载服务器邮件，但是在客户端的操作并不会同步到服务器上面的，例如在客户端收取或标记已读邮件，服务器不会同步这些操作。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;2.进阶知识&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;什么是&lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;？
-&lt;code&gt;JavaMailSender&lt;/code&gt;和&lt;code&gt;JavaMailSenderImpl&lt;/code&gt; 是Spring官方提供的集成邮件服务的接口和实现类，以简单高效的设计著称，目前是Java后端发送邮件和集成邮件服务的主流工具。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;如何通过&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;发送邮件？
-非常简单，直接在业务类注入&lt;code&gt;JavaMailSenderImpl&lt;/code&gt;并调用&lt;code&gt;send&lt;/code&gt;方法发送邮件。其中简单邮件可以通过&lt;code&gt;SimpleMailMessage&lt;/code&gt;来发送邮件，而复杂的邮件（例如添加附件）可以借助&lt;code&gt;MimeMessageHelper&lt;/code&gt;来构建&lt;code&gt;MimeMessage&lt;/code&gt;发送邮件。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;3.使用教程&lt;/h2&gt;
-&lt;h3&gt;1.开启邮件服务&lt;/h3&gt;
-&lt;p&gt;登陆使用的邮箱，在设置中打开并勾选POP3/SMTP/IMAP服务，然后会得到一个授权码，这个邮箱和授权码将用作登陆认证。&lt;/p&gt;
-&lt;h3&gt;2.创建Spring Boot项目，引入依赖&lt;/h3&gt;
-&lt;p&gt;依赖&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-mail&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;配置&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;spring.mail.host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;smtp.qq.com&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;465&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1820502...@qq.com&lt;/span&gt;
-&lt;span class="c"&gt;#授权码&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;***...&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.default-encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;UTF-8&lt;/span&gt;
-&lt;span class="c"&gt;#加密连接&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.properties.mail.smtp.socketFactory.class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;javax.net.ssl.SSLSocketFactory&lt;/span&gt;
-&lt;span class="c"&gt;#日志&lt;/span&gt;
-&lt;span class="na"&gt;spring.mail.properties.mail.debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;3.发送邮件&lt;/h3&gt;
-&lt;h4&gt;3.1 发送简单邮件&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
-&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MailApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JavaMailSender&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Test&lt;/span&gt;
-    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;contextLoads&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="c1"&gt;//写邮件&lt;/span&gt;
-        &lt;span class="n"&gt;SimpleMailMessage&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SimpleMailMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSubject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-主题&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-内容：Hello Word&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1820502...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSentDate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-        &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1913312...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="c1"&gt;//message.setCc();//抄送&lt;/span&gt;
-        &lt;span class="c1"&gt;//message.setBcc();//密抄&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//发送邮件&lt;/span&gt;
-        &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;3.2 发送带附件的邮件&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
-&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MailApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JavaMailSender&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Test&lt;/span&gt;
-    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;test1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;MessagingException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;MimeMessage&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createMimeMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-
-        &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt; &lt;span class="n"&gt;messageHelper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//写邮件&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSubject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-主题&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-内容：Hello Word (带附件)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="c1"&gt;//添加附件&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addAttachment&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;D:\\UserData\\Pictures\\QQ\\1.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1820502...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSentDate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1913312...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//发送邮件&lt;/span&gt;
-        &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;3.3发送带图片的邮件&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
-&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MailApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JavaMailSender&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Test&lt;/span&gt;
-    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;test2&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;MessagingException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;MimeMessage&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createMimeMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt; &lt;span class="n"&gt;messageHelper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//写邮件&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSubject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-主题&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-内容：Hello Word(带图片)，这是图1：&amp;lt;img src=&amp;#39;cid:p01&amp;#39;/&amp;gt;，这是图2：&amp;lt;img src=&amp;#39;cid:p02&amp;#39;/&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addInline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;p01&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileSystemResource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;D:\\UserData\\Pictures\\QQ\\1.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addInline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;p02&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileSystemResource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;D:\\UserData\\Pictures\\QQ\\1.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1820502...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSentDate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1913312...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-
-        &lt;span class="c1"&gt;//发送邮件&lt;/span&gt;
-        &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;4.使用模板&lt;/h3&gt;
-&lt;h4&gt;4.1使用Thymeleaf&lt;/h4&gt;
-&lt;p&gt;加入依赖&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-thymeleaf&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;mail.html（放在templates目录下）&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cn&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;xmlns:th&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.thymeleaf.org/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;邮件&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    Hello,&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${name}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;,欢迎加入XXX大家庭
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    您的入职信息如下:
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt; &lt;span class="na"&gt;border&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;职位&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${position}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;职称&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${jobtitle}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;薪资&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${salary}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;部门&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;th:text&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;${department}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;font-size: 24px&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;希望在未来的日子里，携手并进！&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@SpringBootTest&lt;/span&gt;
-&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MailApplicationTests&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;JavaMailSender&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="nd"&gt;@Autowired&lt;/span&gt;
-    &lt;span class="n"&gt;TemplateEngine&lt;/span&gt; &lt;span class="n"&gt;templateEngine&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="c1"&gt;//thymeleaf模板引擎&lt;/span&gt;
-
-    &lt;span class="cm"&gt;/*发送邮件模板 thymeleaf*/&lt;/span&gt;
-    &lt;span class="nd"&gt;@Test&lt;/span&gt;
-    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;test3&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;MessagingException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;MimeMessage&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createMimeMessage&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt; &lt;span class="n"&gt;messageHelper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MimeMessageHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="c1"&gt;//写邮件&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSubject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;测试邮件-主题&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;Context&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Context&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-        &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVariable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xuxx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVariable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;position&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Java开发&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVariable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;jobtitle&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Java开发初级工程师&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVariable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;salary&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;13*6k&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVariable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;department&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;产品开发部&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;templateEngine&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;process&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;mail.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1820502...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSentDate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-        &lt;span class="n"&gt;messageHelper&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1913312...@qq.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="c1"&gt;//发送邮件&lt;/span&gt;
-        &lt;span class="n"&gt;javaMailSender&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;4.2使用Freemarker&lt;/h4&gt;
-&lt;p&gt;加入依赖&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-freemarker&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;mail.ftl（放在templates目录下）&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;cn&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;邮件&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    Hello,${name},欢迎加入XXX大家庭
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    您的入职信息如下:
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt; &lt;span class="na"&gt;border&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;职位&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;${position}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;职称&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;${jobtitle}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;薪资&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;${salary}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;部门&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;${department}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;font-size: 24px&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;希望在未来的日子里，携手并进！&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;pre&gt;&lt;code&gt;@SpringBootTest
-class MailApplicationTests {
-
-    @Autowired
-    JavaMailSender javaMailSender;
-
-    /*发送邮件模板 freemarker*/
-    @Test
-    void test4() throws MessagingException, IOException, TemplateException {
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
-
-        //写邮件
-        messageHelper.setSubject("测试邮件-主题");
-        Configuration configuration = new Configuration(Configuration.VERSION_2_3_29);
-        configuration.setClassLoaderForTemplateLoading(this.getClass().getClassLoader(), "templates");
-        Template template = configuration.getTemplate("mail.ftl");
-        Map&amp;lt;String, Object&amp;gt; map = new HashMap();
-        map.put("name", "xuxx");
-        map.put("position", "Java开发");
-        map.put("jobtitle", "Java开发初级工程师");
-        map.put("salary", "13*6k");
-        map.put("department", "产品开发部");
-        StringWriter out = new StringWriter();
-        template.process(map, out);
-        messageHelper.setText(out.toString(), true);
-        messageHelper.setFrom("1820502...@qq.com");
-        messageHelper.setSentDate(new Date());
-        messageHelper.setTo("1913312...@qq.com");
-        //发送邮件
-        javaMailSender.send(message);
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-</content><link href="/Xuxx_Blogs/archives/bj25/" rel="alternate"/><published>2020-06-03T23:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-11-13T02:57:26.111157+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-11-24T01:21:49.065959+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj27/</id><title>MySQL优化相关</title><updated>2020-11-24T01:21:49.066263+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;MySQL分层逻辑架构&lt;/h1&gt;
 &lt;h3&gt;一. MySQL逻辑分层&lt;/h3&gt;
 &lt;p&gt;首先可以把服务端想象成一个大的容器，里面有四层结构，当一个请求过来后，将会执行这四层，执行一遍后才会返回给想要的结果。&lt;/p&gt;
 &lt;h4&gt;1.连接层&lt;/h4&gt;
@@ -609,10 +332,10 @@ class MailApplicationTests {
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;以上两个语句的执行流程：&lt;/p&gt;
-&lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
+&lt;p&gt;首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据的 student.stuid IN score.stuid 的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。&lt;/p&gt;
 &lt;h3&gt;EXISTS语句：执行student.length次&lt;/h3&gt;
 &lt;p&gt;指定一个子查询，检测行的存在。遍历循环外表，然后看外表中的记录有没有和内表的数据一样的。匹配上就将结果放入结果集中。&lt;/p&gt;
-&lt;p&gt;语法：EXISTS&lt;/p&gt;
+&lt;p&gt;EXISTS 语法：&lt;/p&gt;
 &lt;p&gt;SELECT ... FROM table WHERE EXISTS(subquery)&lt;/p&gt;
 &lt;p&gt;理解：将主查询的数据放到子查询中做条件验证，根据验证结果（TRUE或者FALSE）来决定朱查询的数据结果是否得意保留。相当于从表A和B中取出交集，然后再从A表中取出所在交集的部分数据，当然后面加WHERE条件还可以进一步筛选。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;student&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="k"&gt;EXISTS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;ss&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stuid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -1154,7 +877,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;/ol&gt;
 &lt;h3&gt;一主一从常见配置&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://www.bilibili.com/video/BV12b411K7Zu?p=241"&gt;参考&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-11-13T02:57:26.111137+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj27/" rel="alternate"/><published>2020-08-27T16:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj28/</id><title>图解 Java 内存模型</title><updated>2020-11-24T01:21:49.066240+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;&lt;a href="http://mp.weixin.qq.com/s?__biz=MzUxOTc4NjEyMw==&amp;amp;mid=2247492802&amp;amp;idx=3&amp;amp;sn=20c345eba118d855b950991306af37fe&amp;amp;chksm=f9f6ff26ce817630dbdf18969226aa04db78fc9171b08365ba071074c42afaa5874ec0970cf2&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=09054ZHbGeWMRAhwVgNKdEEl&amp;amp;sharer_sharetime=1599315785410&amp;amp;sharer_shareid=0581665d51df24ce3ec1b889fd40265c#rd"&gt;转自&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;1. 内存模型 &amp;amp; 分区&lt;/h2&gt;
 &lt;p&gt;Java虚拟机在运行Java程序时，会管理着一块内存区域：运行时数据区&lt;/p&gt;
 &lt;p&gt;在运行时数据区里，会根据用途进行划分：&lt;/p&gt;
@@ -1220,7 +943,7 @@ MySQLdumpslow -s r -t 10 /data/MySQL/MySQL-slow.log | more  //另外建议在使
 &lt;h2&gt;8. 总结&lt;/h2&gt;
 &lt;p&gt;本文全面讲解JVM中的内存模型 &amp;amp; 分区，总结如下&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 144.0" data-width="1080" data-height="375"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/10936d10647a2b939c1bd64c8f774d6b.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-11-13T02:57:26.111116+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj28/" rel="alternate"/><published>2020-09-05T21:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj29/</id><title>Liunx基础</title><updated>2020-11-24T01:21:49.066217+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Liunx目录管理&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
 &lt;th&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/th&gt;
@@ -1798,7 +1521,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 开机禁用： systemctl disable firewalld  
 开机启用： systemctl enable firewalld&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href="https://frank-lam.github.io/fullstack-tutorial/#/Linux"&gt;学习指南&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-11-13T02:57:26.111095+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj29/" rel="alternate"/><published>2020-09-15T15:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj30/</id><title>Docker基础</title><updated>2020-11-24T01:21:49.066194+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;Docker概述&lt;/h1&gt;
 &lt;h3&gt;Docker是什么？&lt;/h3&gt;
 &lt;p&gt;Docker是Docker.Lnc公司开源的一个基于LXC技术之上搭建的 Container 容器引擎，源代码托管在Github上，使用 Google 公司的 Go 语言，基于Go语言并遵从Apache2.0协议开源。Docker将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了Docker，就不用担心环境问题。
 总体来说，Docker的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。&lt;/p&gt;
@@ -2045,7 +1768,7 @@ Server:
     https://docs.docker.com/get-started/
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;若能正常输出以上信息，则说明安装成功。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-11-13T02:57:26.111075+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj30/" rel="alternate"/><published>2020-09-16T00:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj31/</id><title>Docker笔记</title><updated>2020-11-24T01:21:49.066170+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;Docker引擎&lt;/h2&gt;
 &lt;p&gt;Docker引擎是一个包含以下主要组件的客户端服务器应用程序。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;—种服务器，它是一种被称为守护进程（deamon）并且长时间运行的程序。&lt;/li&gt;
@@ -2308,7 +2031,7 @@ ed8b228b1e55845241c26e8ede042bae4132700d7334ae44438ce0e60282ff3c
 ...
 Total reclaimed space: &lt;span class="m"&gt;4&lt;/span&gt;.818MB
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-11-13T02:57:26.111053+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj31/" rel="alternate"/><published>2020-09-17T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj32/</id><title>Dockerfile笔记</title><updated>2020-11-24T01:21:49.066146+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;从 &lt;a href="https://yeasy.gitbook.io/docker_practice/image/commit"&gt;docker commit&lt;/a&gt; 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
 &lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
 &lt;p&gt;以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为&lt;code&gt;Dockerfile&lt;/code&gt;&lt;/p&gt;
@@ -2626,7 +2349,7 @@ Connection: keep-alive
 &lt;span class="k"&gt;RUN&lt;/span&gt; pwd
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;pwd&lt;/code&gt; 输出的结果为 &lt;code&gt;/a/b/c&lt;/code&gt;。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-11-13T02:57:26.111031+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj32/" rel="alternate"/><published>2020-09-20T13:30:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-11-24T01:21:49.066123+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
 &lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
@@ -3339,7 +3062,7 @@ db:
       &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_PASS=root&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;RABBITMQ_DEFAULT_USER&lt;/code&gt;  和  &lt;code&gt;RABBITMQ_DEFAULT_PASS&lt;/code&gt; 用来设置超级管理员的账号和密码，如果不设置，默认都是 &lt;code&gt;guest&lt;/code&gt; 。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-11-13T02:57:26.111004+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-11-24T01:21:49.066100+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
 &lt;p&gt;GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。&lt;/p&gt;
 &lt;h2&gt;部署GitLab&lt;/h2&gt;
 &lt;p&gt;使用Docker来安装和运行GitLab中文版，&lt;code&gt;docker-compose.yml&lt;/code&gt;配置如下:&lt;/p&gt;
@@ -3365,7 +3088,7 @@ db:
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/opt/gitlab&lt;/span&gt;
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./logs:/var/log/gitlab&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-11-13T02:57:26.110955+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-11-24T01:21:49.066072+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
 &lt;h3&gt;1.计数&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有多少种方式走到右下角&lt;/li&gt;
@@ -3425,4 +3148,96 @@ db:
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 97.75533108866442" data-width="1742" data-height="891"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4149e997153756e993b24992e972f5d.png" alt="例题2_分析" /&gt;&lt;figcaption&gt;例题2_分析&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;计算顺序&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 108.70083432657925" data-width="1824" data-height="839"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5b42931b6b5fd32d1518816ee1d6b8af.png" alt="例题2_分析" /&gt;&lt;figcaption&gt;例题2_分析&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj35/" rel="alternate"/><published>2020-09-22T03:10:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj35/" rel="alternate"/><published>2020-09-22T03:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>VMware 16安装CentOS 7 配置静态IP</title><updated>2020-11-24T01:21:49.066021+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;一.安装VMware 16&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.ddosi.com/b397/#VMware16%E5%AF%86%E9%92%A5"&gt;安装VMware 16&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;二.创建虚拟机&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建新的虚拟机 -&amp;gt; 自定义配置，下一步&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 93.97522522522523" data-width="1669" data-height="888"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/31609bb4fcc8c800490b576b117044b1.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;选择虚拟机硬件兼容性 -&amp;gt; 默认，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装客户机操作系统 -&amp;gt; 稍后安装操作系统，下一步&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 57.621247113163975" data-width="499" data-height="433"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f6e42c7054d8b36ab5791931fead5536.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;选择客户机操作系统 -&amp;gt; Linux+CentOS7 64 位，下一步&lt;/p&gt;
+&lt;p&gt;&lt;figure class="pswp-item" style="flex: 57.621247113163975" data-width="499" data-height="433"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3919acacad647fe6aa949de6b408ef5a.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;命名虚拟机 -&amp;gt; 按需配置，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;处理器、内存配置 -&amp;gt; 按需分配，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;网络类型 -&amp;gt; 选择NAT类型，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;选择I/O控制器类型、选择磁盘类型 -&amp;gt; 默认，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;选择磁盘、指定磁盘容量 -&amp;gt; 创建新虚拟磁盘，按需分配磁盘大小，下一步&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;点击完成&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;三.安装虚拟机操作系统&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;点击编辑虚拟机设置，选择ISO映像文件&lt;/li&gt;
+&lt;li&gt;点击开启此虚拟机，进入安装步骤&lt;/li&gt;
+&lt;li&gt;选择安装语言&lt;/li&gt;
+&lt;li&gt;点击安装位置，点击选择刚才创建的20g的虚拟硬盘存储，最后点击完成。&lt;/li&gt;
+&lt;li&gt;点击开始安装，Centos7正在安装中。&lt;/li&gt;
+&lt;li&gt;设置ROOT账户密码，点击完成（提示：密码简单时需要多点），最后点击完成配置。&lt;/li&gt;
+&lt;li&gt;重启，由于是安装Minimal版（最小安装），是命令行形式的，不是安装的桌面版的，只能在黑窗口输入命令操作。&lt;/li&gt;
+&lt;li&gt;输入用户名/密码连接CentOS 7，输入密码不显示，所以要细心输入，以访出错。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;四.配置网络&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;确认虚拟机与主机的连接方式，编辑 -&amp;gt; 虚拟网络编辑器
+ 虚拟网络编辑器：去除了DHCP的勾选，然后配置子网和子网掩码。因为使用的子网掩码是 255.255.255.0 ，所以子网IP前两位要与本机的IP一致（win查看ip -&amp;gt; ipconfig ）,第三位随意（别和本机一样），第四位无脑填 0 就行。
+ NAT设置：网关IP 前三位要和子网IP 一样，第四位随意就行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置Centos 7 静态IP 相关配置文件
+ 配置网卡配置文件：&lt;code&gt;vi /etc/sysconfig/network-scripts/ifcfg-ens33&lt;/code&gt;
+ 注意这儿的 IPASSR 不是虚拟网络编辑器的子网 IP！！！（吃过大亏(；´д｀)ゞ....）&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#修改和添加的内容如下：&lt;/span&gt;
+...
+&lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;static&amp;quot;&lt;/span&gt;
+...
+&lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;#注意这儿的 IP 不是虚拟网络编辑器的子网 IP！！！&lt;/span&gt;
+&lt;span class="c1"&gt;#就是虚拟网络编辑器中的 子网ip网段（前三位）+ 主机号 &lt;/span&gt;
+&lt;span class="nv"&gt;IPADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;192.168.123.128&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;#子网掩码，也可换成：NETMASK=&amp;quot;255.255.255.0&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;PREFIX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;24&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;GATEWAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;192.168.123.2&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;IPV6_PRIVACY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;no&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;DNS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;.8.8.8
+&lt;span class="nv"&gt;DNS2&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;.8.4.4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;配置域名解析配置文件：&lt;code&gt;vi /etc/resolv.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#Generated by NetworkManager&lt;/span&gt;
+nameserver &lt;span class="m"&gt;8&lt;/span&gt;.8.8.8
+nameserver &lt;span class="m"&gt;8&lt;/span&gt;.8.4.4
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后就可以重启网络了, 命令：&lt;code&gt;systemctl restart network&lt;/code&gt;
+补充 防火墙命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#关闭防火墙并设置开机不启动&lt;/span&gt;
+&lt;span class="c1"&gt;#查看防火墙状态：&lt;/span&gt;
+systemctl status firewalld.service
+&lt;span class="c1"&gt;#关闭：&lt;/span&gt;
+systemctl stop firewalld
+&lt;span class="c1"&gt;#开启：&lt;/span&gt;
+systemctl start firewalld
+&lt;span class="c1"&gt;#开机自动关闭：&lt;/span&gt;
+systemctl disable firewalld
+&lt;span class="c1"&gt;#开机自动启动：&lt;/span&gt;
+systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; firewalld
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;同步修改主机的网络适配器ip
+编辑vmnet8如下：
+完整的配置已经结束。下载 ssh 客户端连接就好了。
+FinalShell：&lt;a href="https://www.hostbuf.com/"&gt;https://www.hostbuf.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content><link href="/Xuxx_Blogs/archives/bj35/" rel="alternate"/><published>2020-11-23T11:35:00+08:06</published></entry></feed>

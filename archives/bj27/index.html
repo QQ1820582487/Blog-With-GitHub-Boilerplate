@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/fae3f633323e55cb8e82f869e91af5d0.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/39c2abe125266b95342b84df6a55bee3.json"
         }
     </script>
     
@@ -419,10 +419,10 @@
 </pre></div>
 <p><figure class="pswp-item" style="flex: 52.87356321839081" data-width="184" data-height="174"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/13307a1b359144618aeae7c2e57c9a31.png" alt="" /></figure></p>
 <p>以上两个语句的执行流程：</p>
-<p>首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据的student.stuid IN score.stuid的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。</p>
+<p>首先会执行from语句找出student表，然后执行 in 里面的子查询，再然后将查询到的结果和原有的user表做一个笛卡尔积，再根据的 student.stuid IN score.stuid 的条件，将结果进行筛选（既比较stuid列的值是否相等，将不相等的删除）。最后得到符合条件的数据。</p>
 <h3>EXISTS语句：执行student.length次</h3>
 <p>指定一个子查询，检测行的存在。遍历循环外表，然后看外表中的记录有没有和内表的数据一样的。匹配上就将结果放入结果集中。</p>
-<p>语法：EXISTS</p>
+<p>EXISTS 语法：</p>
 <p>SELECT ... FROM table WHERE EXISTS(subquery)</p>
 <p>理解：将主查询的数据放到子查询中做条件验证，根据验证结果（TRUE或者FALSE）来决定朱查询的数据结果是否得意保留。相当于从表A和B中取出交集，然后再从A表中取出所在交集的部分数据，当然后面加WHERE条件还可以进一步筛选。</p>
 <div class="highlight"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">student</span> <span class="n">s</span> <span class="k">where</span> <span class="k">EXISTS</span><span class="p">(</span><span class="k">select</span> <span class="n">stuid</span> <span class="k">from</span> <span class="n">score</span> <span class="n">ss</span> <span class="k">where</span> <span class="n">ss</span><span class="p">.</span><span class="n">stuid</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">stuid</span><span class="p">)</span>

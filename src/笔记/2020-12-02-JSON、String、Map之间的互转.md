@@ -37,7 +37,7 @@ excerpt: 笔记
   
 - Jackson
 
-  ```
+  ```xml
 <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
   <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
@@ -320,7 +320,7 @@ public class User {
 
 > Test.class
 
-```java]
+```java
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;

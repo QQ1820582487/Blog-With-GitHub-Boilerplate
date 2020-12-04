@@ -14,6 +14,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 
     <url>
+        <loc>/Xuxx_Blogs/archives/bj39/</loc>
+        <lastmod>2020-12-04</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
+        <loc>/Xuxx_Blogs/archives/bj38/</loc>
+        <lastmod>2020-12-02</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <url>
         <loc>/Xuxx_Blogs/archives/bj37/</loc>
         <lastmod>2020-12-01</lastmod>
         <changefreq>always</changefreq>

@@ -1,0 +1,603 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/01d86748dcfbeeaab86f59d0c814078d.json"
+        }
+    </script>
+    
+<title>Liunx常用命令大全 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Liunx常用命令大全 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj41/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2020-12-19T22:55:00-00.00" />
+<meta name="twitter:title" content="Liunx常用命令大全 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生——致自己。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Liunx常用命令大全</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2020-12-19
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h3>端口监听查看：</h3>
+<p>ss -tln 查看TCP的listen的端口</p>
+<p>ss -tlnp 查看哪些进程使用了监听端口</p>
+<h3>防火墙</h3>
+<p>systemctl status iptables (或service iptables status) 查看防火墙状态</p>
+<p>systemctl stop iptables(或service iptables stop) 关闭防火墙</p>
+<h3>系统信息</h3>
+<p>curl <a href="https://link.zhihu.com/?target=http%3A//ifconfig.me/">ifconfig.me</a> 查找本机公网IP</p>
+<p>arch 显示机器的处理器架构(1)</p>
+<p>uname -m 显示机器的处理器架构(2)</p>
+<p>uname -r 显示正在使用的内核版本</p>
+<p>dmidecode -q 显示硬件系统部件 - (SMBIOS / DMI)</p>
+<p>hdparm -i /dev/hda 罗列一个磁盘的架构特性</p>
+<p>hdparm -tT /dev/sda 在磁盘上执行测试性读取操作</p>
+<p>cat /proc/cpuinfo 显示CPU info的信息</p>
+<p>cat /proc/interrupts 显示中断</p>
+<p>cat /proc/meminfo 校验内存使用</p>
+<p>cat /proc/swaps 显示哪些swap被使用</p>
+<p>cat /proc/version 显示内核的版本</p>
+<p>cat /proc/net/dev 显示网络适配器及统计</p>
+<p>cat /proc/mounts 显示已加载的文件系统</p>
+<p>lspci -tv 罗列 PCI 设备</p>
+<p>lsusb -tv 显示 USB 设备</p>
+<p>date 显示系统日期</p>
+<p>cal 2007 显示2007年的日历表</p>
+<p>date 041217002007.00 设置日期和时间 - 月日时分年.秒</p>
+<p>clock -w 将时间修改保存到 BIOS</p>
+<h3>ps 命令常用用法（方便查看系统进程）</h3>
+<p>1）ps a 显示现行终端机下的所有程序，包括其他用户的程序。</p>
+<p>2）ps -A 显示所有进程。</p>
+<p>3）ps c 列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。</p>
+<p>4）ps -e 此参数的效果和指定"A"参数相同。</p>
+<p>5）ps e 列出程序时，显示每个程序所使用的环境变量。</p>
+<p>6）ps f 用ASCII字符显示树状结构，表达程序间的相互关系。</p>
+<p>7）ps -H 显示树状结构，表示程序间的相互关系。</p>
+<p>8）ps -N 显示所有的程序，除了执行ps指令终端机下的程序之外。</p>
+<p>9）ps s 采用程序信号的格式显示程序状况。</p>
+<p>10）ps S 列出程序时，包括已中断的子程序资料。</p>
+<p>11）ps -t<终端机编号> 　指定终端机编号，并列出属于该终端机的程序的状况。</p>
+<p>12）ps u 　以用户为主的格式来显示程序状况。</p>
+<p>13）ps x 　显示所有程序，不以终端机来区分。</p>
+<p>常用指令组合 ：ps aux,然后再通过管道使用grep命令过滤查找特定的进程,然后再对特定的进程进行操作。</p>
+<p>ps aux | grep program_filter_word,ps -ef |grep tomcat</p>
+<p>ps -ef|grep java|grep -v grep 显示出所有的java进程，去处掉当前的grep进程。</p>
+<h3>关机 (系统的关机、重启以及登出 )</h3>
+<p>shutdown -h now 关闭系统(1)</p>
+<p>init 0 关闭系统(2)</p>
+<p>telinit 0 关闭系统(3)</p>
+<p>shutdown -h hours:minutes &amp; 按预定时间关闭系统</p>
+<p>shutdown -c 取消按预定时间关闭系统</p>
+<p>shutdown -r now 重启(1)</p>
+<p>reboot 重启(2)</p>
+<p>logout 注销</p>
+<h3>文件和目录</h3>
+<p>cd /home 进入 '/ home' 目录'</p>
+<p>cd .. 返回上一级目录</p>
+<p>cd ../.. 返回上两级目录</p>
+<p>cd 进入个人的主目录</p>
+<p>cd ~user1 进入个人的主目录</p>
+<p>cd - 返回上次所在的目录</p>
+<p>pwd 显示工作路径</p>
+<p>ls 查看目录中的文件</p>
+<p>ls -F 查看目录中的文件</p>
+<p>ls -l 显示文件和目录的详细资料</p>
+<p>ls -a 显示隐藏文件</p>
+<p>ls <em>[0-9]</em> 显示包含数字的文件名和目录名</p>
+<p>tree 显示文件和目录由根目录开始的树形结构(1)</p>
+<p>lstree 显示文件和目录由根目录开始的树形结构(2)</p>
+<p>mkdir dir1 创建一个叫做 'dir1' 的目录'</p>
+<p>mkdir dir1 dir2 同时创建两个目录</p>
+<p>mkdir -p /tmp/dir1/dir2 创建一个目录树</p>
+<p>rm -f file1 删除一个叫做 'file1' 的文件'</p>
+<p>rmdir dir1 删除一个叫做 'dir1' 的目录'</p>
+<p>rm -rf dir1 删除一个叫做 'dir1' 的目录并同时删除其内容</p>
+<p>rm -rf dir1 dir2 同时删除两个目录及它们的内容</p>
+<p>mv dir1 new_dir 重命名/移动 一个目录</p>
+<p>cp file1 file2 复制一个文件</p>
+<p>cp dir/* . 复制一个目录下的所有文件到当前工作目录</p>
+<p>cp -a /tmp/dir1 . 复制一个目录到当前工作目录</p>
+<p>cp -a dir1 dir2 复制一个目录</p>
+<p>ln -s file1 lnk1 创建一个指向文件或目录的软链接</p>
+<p>ln file1 lnk1 创建一个指向文件或目录的物理链接</p>
+<p>touch -t 0712250000 file1 修改一个文件或目录的时间戳 - (YYMMDDhhmm)</p>
+<p>file file1 outputs the mime type of the file as text</p>
+<p>iconv -l 列出已知的编码</p>
+<p>iconv -f fromEncoding -t toEncoding inputFile &gt; outputFile creates a new from the given input file by assuming it is encoded in fromEncoding and converting it to toEncoding.</p>
+<p>find . -maxdepth 1 -name *.jpg -print -exec convert "{}" -resize 80x60 "thumbs/{}" \; batch resize files in the current directory and send them to a thumbnails directory (requires convert from Imagemagick)</p>
+<h3>文件搜索</h3>
+<p>find / -name file1 从 '/' 开始进入根文件系统搜索文件和目录</p>
+<p>find / -user user1 搜索属于用户 'user1' 的文件和目录</p>
+<p>find /home/user1 -name *.bin 在目录 '/ home/user1' 中搜索带有'.bin' 结尾的文件</p>
+<p>find /usr/bin -type f -atime +100 搜索在过去100天内未被使用过的执行文件</p>
+<p>find /usr/bin -type f -mtime -10 搜索在10天内被创建或者修改过的文件</p>
+<p>find / -name *.rpm -exec chmod 755 '{}' \; 搜索以 '.rpm' 结尾的文件并定义其权限</p>
+<p>find / -xdev -name *.rpm 搜索以 '.rpm' 结尾的文件，忽略光驱、捷盘等可移动设备</p>
+<p>locate *.ps 寻找以 '.ps' 结尾的文件 - 先运行 'updatedb' 命令</p>
+<p>whereis halt 显示一个二进制文件、源码或man的位置</p>
+<p>which halt 显示一个二进制文件或可执行文件的完整路径</p>
+<h3>挂载一个文件系统</h3>
+<p>mount /dev/hda2 /mnt/hda2 挂载一个叫做hda2的盘 - 确定目录 '/ mnt/hda2' 已经存在</p>
+<p>umount /dev/hda2 卸载一个叫做hda2的盘 - 先从挂载点 '/ mnt/hda2' 退出</p>
+<p>fuser -km /mnt/hda2 当设备繁忙时强制卸载</p>
+<p>umount -n /mnt/hda2 运行卸载操作而不写入 /etc/mtab 文件- 当文件为只读或当磁盘写满时非常有用</p>
+<p>mount /dev/fd0 /mnt/floppy 挂载一个软盘</p>
+<p>mount /dev/cdrom /mnt/cdrom 挂载一个cdrom或dvdrom</p>
+<p>mount /dev/hdc /mnt/cdrecorder 挂载一个cdrw或dvdrom</p>
+<p>mount /dev/hdb /mnt/cdrecorder 挂载一个cdrw或dvdrom</p>
+<p>mount -o loop file.iso /mnt/cdrom 挂载一个文件或ISO镜像文件</p>
+<p>mount -t vfat /dev/hda5 /mnt/hda5 挂载一个Windows FAT32文件系统</p>
+<p>mount /dev/sda1 /mnt/usbdisk 挂载一个usb 捷盘或闪存设备</p>
+<p>mount -t smbfs -o username=user,password=pass //WinClient/share /mnt/share 挂载一个windows网络共享</p>
+<h3>磁盘空间</h3>
+<p>df -h 显示已经挂载的分区列表</p>
+<p>ls -lSr |more 以尺寸大小排列文件和目录</p>
+<p>du -sh dir1 估算目录 'dir1' 已经使用的磁盘空间'</p>
+<p>du -sk * | sort -rn 以容量大小为依据依次显示文件和目录的大小</p>
+<p>rpm -q -a --qf '%10{SIZE}t%{NAME}n' | sort -k1,1n 以大小为依据依次显示已安装的rpm包所使用的空间 (fedora, redhat类系统)</p>
+<p>dpkg-query -W -f='${Installed-Size;10}t${Package}n' | sort -k1,1n 以大小为依据显示已安装的deb包所使用的空间 (ubuntu, debian类系统)</p>
+<h3>用户和群组</h3>
+<p>groupadd group_name 创建一个新用户组</p>
+<p>groupdel group_name 删除一个用户组</p>
+<p>groupmod -n new_group_name old_group_name 重命名一个用户组</p>
+<p>useradd -c "Name Surname " -g admin -d /home/user1 -s /bin/bash user1 创建一个属于 "admin" 用户组的用户</p>
+<p>useradd user1 创建一个新用户</p>
+<p>userdel -r user1 删除一个用户 ( '-r' 排除主目录)</p>
+<p>usermod -c "User FTP" -g system -d /ftp/user1 -s /bin/nologin user1 修改用户属性</p>
+<p>passwd 修改口令</p>
+<p>passwd user1 修改一个用户的口令 (只允许root执行)</p>
+<p>chage -E 2005-12-31 user1 设置用户口令的失效期限</p>
+<p>pwck 检查 '/etc/passwd' 的文件格式和语法修正以及存在的用户</p>
+<p>grpck 检查 '/etc/passwd' 的文件格式和语法修正以及存在的群组</p>
+<p>newgrp group_name 登陆进一个新的群组以改变新创建文件的预设群组</p>
+<h3>文件的权限 - 使用 "+" 设置权限，使用 "-" 用于取消</h3>
+<p>ls -lh 显示权限</p>
+<p>ls /tmp | pr -T5 -W$COLUMNS 将终端划分成5栏显示</p>
+<p>chmod ugo+rwx directory1 设置目录的所有人(u)、群组(g)以及其他人(o)以读（r ）、写(w)和执行(x)的权限</p>
+<p>chmod go-rwx directory1 删除群组(g)与其他人(o)对目录的读写执行权限</p>
+<p>chown user1 file1 改变一个文件的所有人属性</p>
+<p>chown -R user1 directory1 改变一个目录的所有人属性并同时改变改目录下所有文件的属性</p>
+<p>chgrp group1 file1 改变文件的群组</p>
+<p>chown user1:group1 file1 改变一个文件的所有人和群组属性</p>
+<p>find / -perm -u+s 罗列一个系统中所有使用了SUID控制的文件</p>
+<p>chmod u+s /bin/file1 设置一个二进制文件的 SUID 位 - 运行该文件的用户也被赋予和所有者同样的权限</p>
+<p>chmod u-s /bin/file1 禁用一个二进制文件的 SUID位</p>
+<p>chmod g+s /home/public 设置一个目录的SGID 位 - 类似SUID ，不过这是针对目录的</p>
+<p>chmod g-s /home/public 禁用一个目录的 SGID 位</p>
+<p>chmod o+t /home/public 设置一个文件的 STIKY 位 - 只允许合法所有人删除文件</p>
+<p>chmod o-t /home/public 禁用一个目录的 STIKY 位</p>
+<h3>文件的特殊属性 - 使用 "+" 设置权限，使用 "-" 用于取消</h3>
+<p>chattr +a file1 只允许以追加方式读写文件</p>
+<p>chattr +c file1 允许这个文件能被内核自动压缩/解压</p>
+<p>chattr +d file1 在进行文件系统备份时，dump程序将忽略这个文件</p>
+<p>chattr +i file1 设置成不可变的文件，不能被删除、修改、重命名或者链接</p>
+<p>chattr +s file1 允许一个文件被安全地删除</p>
+<p>chattr +S file1 一旦应用程序对这个文件执行了写操作，使系统立刻把修改的结果写到磁盘</p>
+<p>chattr +u file1 若文件被删除，系统会允许你在以后恢复这个被删除的文件</p>
+<p>lsattr 显示特殊的属性</p>
+<h3>打包和压缩文件</h3>
+<p>bunzip2 file1.bz2 解压一个叫做 'file1.bz2'的文件</p>
+<p>bzip2 file1 压缩一个叫做 'file1' 的文件</p>
+<p>gunzip file1.gz 解压一个叫做 'file1.gz'的文件</p>
+<p>gzip file1 压缩一个叫做 'file1'的文件</p>
+<p>gzip -9 file1 最大程度压缩</p>
+<p>rar a file1.rar test_file 创建一个叫做 'file1.rar' 的包</p>
+<p>rar a file1.rar file1 file2 dir1 同时压缩 'file1', 'file2' 以及目录 'dir1'</p>
+<p>rar x file1.rar 解压rar包</p>
+<p>unrar x file1.rar 解压rar包</p>
+<p>tar -cvf archive.tar file1 创建一个非压缩的 tarball</p>
+<p>tar -cvf archive.tar file1 file2 dir1 创建一个包含了 'file1', 'file2' 以及 'dir1'的档案文件</p>
+<p>tar -tf archive.tar 显示一个包中的内容</p>
+<p>tar -xvf archive.tar 释放一个包</p>
+<p>tar -xvf archive.tar -C /tmp 将压缩包释放到 /tmp目录下</p>
+<p>tar -cvfj archive.tar.bz2 dir1 创建一个bzip2格式的压缩包</p>
+<p>tar -xvfj archive.tar.bz2 解压一个bzip2格式的压缩包</p>
+<p>tar -cvfz archive.tar.gz dir1 创建一个gzip格式的压缩包</p>
+<p>tar -xvfz archive.tar.gz 解压一个gzip格式的压缩包</p>
+<p>zip <a href="https://link.zhihu.com/?target=http%3A//file1.zip/">file1.zip</a> file1 创建一个zip格式的压缩包</p>
+<p>zip -r <a href="https://link.zhihu.com/?target=http%3A//file1.zip/">file1.zip</a> file1 file2 dir1 将几个文件和目录同时压缩成一个zip格式的压缩包</p>
+<p>unzip <a href="https://link.zhihu.com/?target=http%3A//file1.zip/">file1.zip</a> 解压一个zip格式压缩包</p>
+<h3>RPM 包 - （Fedora, Redhat及类似系统）</h3>
+<p>rpm -ivh package.rpm 安装一个rpm包</p>
+<p>rpm -ivh --nodeeps package.rpm 安装一个rpm包而忽略依赖关系警告</p>
+<p>rpm -U package.rpm 更新一个rpm包但不改变其配置文件</p>
+<p>rpm -F package.rpm 更新一个确定已经安装的rpm包</p>
+<p>rpm -e package_name.rpm 删除一个rpm包</p>
+<p>rpm -qa 显示系统中所有已经安装的rpm包</p>
+<p>rpm -qa | grep httpd 显示所有名称中包含 "httpd" 字样的rpm包</p>
+<p>rpm -qi package_name 获取一个已安装包的特殊信息</p>
+<p>rpm -qg "System Environment/Daemons" 显示一个组件的rpm包</p>
+<p>rpm -ql package_name 显示一个已经安装的rpm包提供的文件列表</p>
+<p>rpm -qc package_name 显示一个已经安装的rpm包提供的配置文件列表</p>
+<p>rpm -q package_name --whatrequires 显示与一个rpm包存在依赖关系的列表</p>
+<p>rpm -q package_name --whatprovides 显示一个rpm包所占的体积</p>
+<p>rpm -q package_name --scripts 显示在安装/删除期间所执行的脚本l</p>
+<p>rpm -q package_name --changelog 显示一个rpm包的修改历史</p>
+<p>rpm -qf /etc/httpd/conf/httpd.conf 确认所给的文件由哪个rpm包所提供</p>
+<p>rpm -qp package.rpm -l 显示由一个尚未安装的rpm包提供的文件列表</p>
+<p>rpm --import /media/cdrom/RPM-GPG-KEY 导入公钥数字证书</p>
+<p>rpm --checksig package.rpm 确认一个rpm包的完整性</p>
+<p>rpm -qa gpg-pubkey 确认已安装的所有rpm包的完整性</p>
+<p>rpm -V package_name 检查文件尺寸、 许可、类型、所有者、群组、MD5检查以及最后修改时间</p>
+<p>rpm -Va 检查系统中所有已安装的rpm包- 小心使用</p>
+<p>rpm -Vp package.rpm 确认一个rpm包还未安装</p>
+<p>rpm2cpio package.rpm | cpio --extract --make-directories <em>bin</em> 从一个rpm包运行可执行文件</p>
+<p>rpm -ivh /usr/src/redhat/RPMS/<code>arch</code>/package.rpm 从一个rpm源码安装一个构建好的包</p>
+<p>rpmbuild --rebuild package_name.src.rpm 从一个rpm源码构建一个 rpm 包</p>
+<h3>YUM 软件包升级器 - （Fedora, RedHat及类似系统）</h3>
+<p>yum install package_name 下载并安装一个rpm包</p>
+<p>yum localinstall package_name.rpm 将安装一个rpm包，使用你自己的软件仓库为你解决所有依赖关系</p>
+<p>yum update package_name.rpm 更新当前系统中所有安装的rpm包</p>
+<p>yum update package_name 更新一个rpm包</p>
+<p>yum remove package_name 删除一个rpm包</p>
+<p>yum list 列出当前系统中安装的所有包</p>
+<p>yum search package_name 在rpm仓库中搜寻软件包</p>
+<p>yum clean packages 清理rpm缓存删除下载的包</p>
+<p>yum clean headers 删除所有头文件</p>
+<p>yum clean all 删除所有缓存的包和头文件</p>
+<h3>DEB 包 (Debian, Ubuntu 以及类似系统)</h3>
+<p>dpkg -i package.deb 安装/更新一个 deb 包</p>
+<p>dpkg -r package_name 从系统删除一个 deb 包</p>
+<p>dpkg -l 显示系统中所有已经安装的 deb 包</p>
+<p>dpkg -l | grep httpd 显示所有名称中包含 "httpd" 字样的deb包</p>
+<p>dpkg -s package_name 获得已经安装在系统中一个特殊包的信息</p>
+<p>dpkg -L package_name 显示系统中已经安装的一个deb包所提供的文件列表</p>
+<p>dpkg --contents package.deb 显示尚未安装的一个包所提供的文件列表</p>
+<p>dpkg -S /bin/ping 确认所给的文件由哪个deb包提供</p>
+<h3>APT 软件工具 (Debian, Ubuntu 以及类似系统)</h3>
+<p>apt-get install package_name 安装/更新一个 deb 包</p>
+<p>apt-cdrom install package_name 从光盘安装/更新一个 deb 包</p>
+<p>apt-get update 升级列表中的软件包</p>
+<p>apt-get upgrade 升级所有已安装的软件</p>
+<p>apt-get remove package_name 从系统删除一个deb包</p>
+<p>apt-get check 确认依赖的软件仓库正确</p>
+<p>apt-get clean 从下载的软件包中清理缓存</p>
+<p>apt-cache search searched-package 返回包含所要搜索字符串的软件包名称</p>
+<h3>查看文件内容</h3>
+<p>cat file1 从第一个字节开始正向查看文件的内容</p>
+<p>tac file1 从最后一行开始反向查看一个文件的内容</p>
+<p>more file1 查看一个长文件的内容</p>
+<p>less file1 类似于 'more' 命令，但是它允许在文件中和正向操作一样的反向操作</p>
+<p>head -2 file1 查看一个文件的前两行</p>
+<p>tail -2 file1 查看一个文件的最后两行</p>
+<p>tail -f /var/log/messages 实时查看被添加到一个文件中的内容</p>
+<h3>文本处理</h3>
+<p>cat file1 file2 ... | command &lt;&gt; file1_in.txt_or_file1_out.txt general syntax for text manipulation using PIPE, STDIN and STDOUT</p>
+<p>cat file1 | command( sed, grep, awk, grep, etc...) &gt; result.txt 合并一个文件的详细说明文本，并将简介写入一个新文件中</p>
+<p>cat file1 | command( sed, grep, awk, grep, etc...) &gt;&gt; result.txt 合并一个文件的详细说明文本，并将简介写入一个已有的文件中</p>
+<p>grep Aug /var/log/messages 在文件 '/var/log/messages'中查找关键词"Aug"</p>
+<p>grep ^Aug /var/log/messages 在文件 '/var/log/messages'中查找以"Aug"开始的词汇</p>
+<p>grep [0-9] /var/log/messages 选择 '/var/log/messages' 文件中所有包含数字的行</p>
+<p>grep Aug -R /var/log/* 在目录 '/var/log' 及随后的目录中搜索字符串"Aug"</p>
+<p>sed 's/stringa1/stringa2/g' example.txt 将example.txt文件中的 "string1" 替换成 "string2"</p>
+<p>sed '/^$/d' example.txt 从example.txt文件中删除所有空白行</p>
+<p>sed '/ *#/d; /^$/d' example.txt 从example.txt文件中删除所有注释和空白行</p>
+<p>echo 'esempio' | tr '[:lower:]' '[:upper:]' 合并上下单元格内容</p>
+<p>sed -e '1d' result.txt 从文件example.txt 中排除第一行</p>
+<p>sed -n '/stringa1/p' 查看只包含词汇 "string1"的行</p>
+<p>sed -e 's/ *$//' example.txt 删除每一行最后的空白字符</p>
+<p>sed -e 's/stringa1//g' example.txt 从文档中只删除词汇 "string1" 并保留剩余全部</p>
+<p>sed -n '1,5p;5q' example.txt 查看从第一行到第5行内容</p>
+<p>sed -n '5p;5q' example.txt 查看第5行</p>
+<p>sed -e 's/00*/0/g' example.txt 用单个零替换多个零</p>
+<p>cat -n file1 标示文件的行数</p>
+<p>cat example.txt | awk 'NR%2==1' 删除example.txt文件中的所有偶数行</p>
+<p>echo a b c | awk '{print $1}' 查看一行第一栏</p>
+<p>echo a b c | awk '{print $1,$3}' 查看一行的第一和第三栏</p>
+<p>paste file1 file2 合并两个文件或两栏的内容</p>
+<p>paste -d '+' file1 file2 合并两个文件或两栏的内容，中间用"+"区分</p>
+<p>sort file1 file2 排序两个文件的内容</p>
+<p>sort file1 file2 | uniq 取出两个文件的并集(重复的行只保留一份)</p>
+<p>sort file1 file2 | uniq -u 删除交集，留下其他的行</p>
+<p>sort file1 file2 | uniq -d 取出两个文件的交集(只留下同时存在于两个文件中的文件)</p>
+<p>comm -1 file1 file2 比较两个文件的内容只删除 'file1' 所包含的内容</p>
+<p>comm -2 file1 file2 比较两个文件的内容只删除 'file2' 所包含的内容</p>
+<p>comm -3 file1 file2 比较两个文件的内容只删除两个文件共有的部分</p>
+<h3>字符设置和文件格式转换</h3>
+<p>dos2unix filedos.txt fileunix.txt 将一个文本文件的格式从MSDOS转换成UNIX</p>
+<p>unix2dos fileunix.txt filedos.txt 将一个文本文件的格式从UNIX转换成MSDOS</p>
+<p>recode ..HTML &lt; page.txt &gt; page.html 将一个文本文件转换成html</p>
+<p>recode -l | more 显示所有允许的转换格式</p>
+<h3>文件系统分析</h3>
+<p>badblocks -v /dev/hda1 检查磁盘hda1上的坏磁块</p>
+<p>fsck /dev/hda1 修复/检查hda1磁盘上linux文件系统的完整性</p>
+<p>fsck.ext2 /dev/hda1 修复/检查hda1磁盘上ext2文件系统的完整性</p>
+<p>e2fsck /dev/hda1 修复/检查hda1磁盘上ext2文件系统的完整性</p>
+<p>e2fsck -j /dev/hda1 修复/检查hda1磁盘上ext3文件系统的完整性</p>
+<p>fsck.ext3 /dev/hda1 修复/检查hda1磁盘上ext3文件系统的完整性</p>
+<p>fsck.vfat /dev/hda1 修复/检查hda1磁盘上fat文件系统的完整性</p>
+<p>fsck.msdos /dev/hda1 修复/检查hda1磁盘上dos文件系统的完整性</p>
+<p>dosfsck /dev/hda1 修复/检查hda1磁盘上dos文件系统的完整性</p>
+<h3>初始化一个文件系统</h3>
+<p>mkfs /dev/hda1 在hda1分区创建一个文件系统</p>
+<p>mke2fs /dev/hda1 在hda1分区创建一个linux ext2的文件系统</p>
+<p>mke2fs -j /dev/hda1 在hda1分区创建一个linux ext3(日志型)的文件系统</p>
+<p>mkfs -t vfat 32 -F /dev/hda1 创建一个 FAT32 文件系统</p>
+<p>fdformat -n /dev/fd0 格式化一个软盘</p>
+<p>mkswap /dev/hda3 创建一个swap文件系统</p>
+<h3>SWAP文件系统</h3>
+<p>mkswap /dev/hda3 创建一个swap文件系统</p>
+<p>swapon /dev/hda3 启用一个新的swap文件系统</p>
+<p>swapon /dev/hda2 /dev/hdb3 启用两个swap分区</p>
+<h3>备份</h3>
+<p>dump -0aj -f /tmp/home0.bak /home 制作一个 '/home' 目录的完整备份</p>
+<p>dump -1aj -f /tmp/home0.bak /home 制作一个 '/home' 目录的交互式备份</p>
+<p>restore -if /tmp/home0.bak 还原一个交互式备份</p>
+<p>rsync -rogpav --delete /home /tmp 同步两边的目录</p>
+<p>rsync -rogpav -e ssh --delete /home ip_address:/tmp 通过SSH通道rsync</p>
+<p>rsync -az -e ssh --delete ip_addr:/home/public /home/local 通过ssh和压缩将一个远程目录同步到本地目录</p>
+<p>rsync -az -e ssh --delete /home/local ip_addr:/home/public 通过ssh和压缩将本地目录同步到远程目录</p>
+<p>dd bs=1M if=/dev/hda | gzip | ssh user@ip_addr 'dd of=hda.gz' 通过ssh在远程主机上执行一次备份本地磁盘的操作</p>
+<p>dd if=/dev/sda of=/tmp/file1 备份磁盘内容到一个文件</p>
+<p>tar -Puf backup.tar /home/user 执行一次对 '/home/user' 目录的交互式备份操作</p>
+<p>( cd /tmp/local/ &amp;&amp; tar c . ) | ssh -C user@ip_addr 'cd /home/share/ &amp;&amp; tar x -p' 通过ssh在远程目录中复制一个目录内容</p>
+<p>( tar c /home ) | ssh -C user@ip_addr 'cd /home/backup-home &amp;&amp; tar x -p' 通过ssh在远程目录中复制一个本地目录</p>
+<p>tar cf - . | (cd /tmp/backup ; tar xf - ) 本地将一个目录复制到另一个地方，保留原有权限及链接</p>
+<p>find /home/user1 -name '*.txt' | xargs cp -av --target-directory=/home/backup/ --parents 从一个目录查找并复制所有以 '.txt' 结尾的文件到另一个目录</p>
+<p>find /var/log -name '*.log' | tar cv --files-from=- | bzip2 &gt; log.tar.bz2 查找所有以 '.log' 结尾的文件并做成一个bzip包</p>
+<p>dd if=/dev/hda of=/dev/fd0 bs=512 count=1 做一个将 MBR (Master Boot Record)内容复制到软盘的动作</p>
+<p>dd if=/dev/fd0 of=/dev/hda bs=512 count=1 从已经保存到软盘的备份中恢复MBR内容</p>
+<h3>光盘</h3>
+<p>cdrecord -v gracetime=2 dev=/dev/cdrom -eject blank=fast -force 清空一个可复写的光盘内容</p>
+<p>mkisofs /dev/cdrom &gt; cd.iso 在磁盘上创建一个光盘的iso镜像文件</p>
+<p>mkisofs /dev/cdrom | gzip &gt; cd_iso.gz 在磁盘上创建一个压缩了的光盘iso镜像文件</p>
+<p>mkisofs -J -allow-leading-dots -R -V "Label CD" -iso-level 4 -o ./cd.iso data_cd 创建一个目录的iso镜像文件</p>
+<p>cdrecord -v dev=/dev/cdrom cd.iso 刻录一个ISO镜像文件</p>
+<p>gzip -dc cd_iso.gz | cdrecord dev=/dev/cdrom - 刻录一个压缩了的ISO镜像文件</p>
+<p>mount -o loop cd.iso /mnt/iso 挂载一个ISO镜像文件</p>
+<p>cd-paranoia -B 从一个CD光盘转录音轨到 wav 文件中</p>
+<p>cd-paranoia -- "-3" 从一个CD光盘转录音轨到 wav 文件中（参数-3）</p>
+<p>cdrecord --scanbus 扫描总线以识别scsi通道</p>
+<p>dd if=/dev/hdc | md5sum 校验一个设备的md5sum编码，例如一张 CD</p>
+<h3>网络 - （以太网和WIFI无线）</h3>
+<p>ifconfig eth0 显示一个以太网卡的配置</p>
+<p>ifup eth0 启用一个 'eth0' 网络设备</p>
+<p>ifdown eth0 禁用一个 'eth0' 网络设备</p>
+<p>ifconfig eth0 192.168.1.1 netmask 255.255.255.0 控制IP地址</p>
+<p>ifconfig eth0 promisc 设置 'eth0' 成混杂模式以嗅探数据包 (sniffing)</p>
+<p>dhclient eth0 以dhcp模式启用 'eth0'</p>
+<p>route -n show routing table</p>
+<p>route add -net 0/0 gw IP_Gateway configura default gateway</p>
+<p>route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.1.1 configure static route to reach network '192.168.0.0/16'</p>
+<p>route del 0/0 gw IP_gateway remove static route</p>
+<p>echo "1" &gt; /proc/sys/net/ipv4/ip_forward activate ip routing</p>
+<p>hostname show hostname of system</p>
+<p>host <a href="https://link.zhihu.com/?target=http%3A//www.example.com/">Example Domain</a> lookup hostname to resolve name to ip address and viceversa(1)</p>
+<p>nslookup <a href="https://link.zhihu.com/?target=http%3A//www.example.com/">Example Domain</a> lookup hostname to resolve name to ip address and viceversa(2)</p>
+<p>ip link show show link status of all interfaces</p>
+<p>mii-tool eth0 show link status of 'eth0'</p>
+<p>ethtool eth0 show statistics of network card 'eth0'</p>
+<p>netstat -tup show all active network connections and their PID</p>
+<p>netstat -tupl show all network services listening on the system and their PID</p>
+<p>tcpdump tcp port 80 show all HTTP traffic</p>
+<p>iwlist scan show wireless networks</p>
+<p>iwconfig eth1 show configuration of a wireless network card</p>
+<p>hostname show hostname</p>
+<p>host <a href="https://link.zhihu.com/?target=http%3A//www.example.com/">Example Domain</a> lookup hostname to resolve name to ip address and viceversa</p>
+<p>nslookup <a href="https://link.zhihu.com/?target=http%3A//www.example.com/">Example Domain</a> lookup hostname to resolve name to ip address and viceversa</p>
+<p>whois <a href="https://link.zhihu.com/?target=http%3A//www.example.com/">Example Domain</a> lookup on Whois database</p>
+<h3>JPS工具</h3>
+<p>jps(Java Virtual Machine Process Status Tool)是JDK 1.5提供的一个显示当前所有java进程pid的命令，简单实用，非常适合在linux/unix平台上简单察看当前java进程的一些简单情况。</p>
+<p>我想很多人都是用过unix系统里的ps命令，这个命令主要是用来显示当前系统的进程情况，有哪些进程，及其 id。 jps 也是一样，它的作用是显示当前系统的java进程情况，及其id号。我们可以通过它来查看我们到底启动了几个java进程（因为每一个java程序都会独占一个java虚拟机实例），和他们的进程号（为下面几个程序做准备），并可通过opt来查看这些进程的详细启动参数。</p>
+<p>使用方法：在当前命令行下打 jps(需要JAVA_HOME，没有的话，到改程序的目录下打) 。</p>
+<p>jps存放在JAVA_HOME/bin/jps，使用时为了方便请将JAVA_HOME/bin/加入到Path.</p>
+<p>$&gt; jps</p>
+<p>23991 Jps</p>
+<p>23789 BossMain</p>
+<p>23651 Resin</p>
+<p>比较常用的参数：</p>
+<p>-q 只显示pid，不显示class名称,jar文件名和传递给main 方法的参数</p>
+<p>$&gt; jps -q</p>
+<p>28680</p>
+<p>23789</p>
+<p>23651</p>
+<p>-m 输出传递给main 方法的参数，在嵌入式jvm上可能是null</p>
+<p>$&gt; jps -m</p>
+<p>28715 Jps -m</p>
+<p>23789 BossMain</p>
+<p>23651 Resin -socketwait 32768 -stdout /data/aoxj/resin/log/stdout.log -stderr /data/aoxj/resin/log/stderr.log</p>
+<p>-l 输出应用程序main class的完整package名 或者 应用程序的jar文件完整路径名</p>
+<p>$&gt; jps -l</p>
+<p>28729 sun.tools.jps.Jps</p>
+<p>23789 com.asiainfo.aimc.bossbi.BossMain</p>
+<p>23651 com.caucho.server.resin.Resin</p>
+<p>-v 输出传递给JVM的参数</p>
+<p>$&gt; jps -v</p>
+<p>23789 BossMain</p>
+<p>28802 Jps -Denv.class.path=/data/aoxj/bossbi/twsecurity/java/trustwork140.jar:/data/aoxj/bossbi/twsecurity/java/:/data/aoxj/bossbi/twsecurity/java/twcmcc.jar:/data/aoxj/jdk15/lib/rt.jar:/data/aoxj/jd</p>
+<p>k15/lib/tools.jar -Dapplication.home=/data/aoxj/jdk15 -Xms8m</p>
+<p>23651 Resin -Xss1m -Dresin.home=/data/aoxj/resin -Dserver.root=/data/aoxj/resin -Djava.util.logging.manager=com.caucho.log.LogManagerImpl -</p>
+<p>Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl</p>
+<p>sudo jps看到的进程数量最全</p>
+<p>jps 192.168.0.77</p>
+<p>列出远程服务器192.168.0.77机器所有的jvm实例，采用rmi协议，默认连接端口为1099</p>
+<p>（前提是远程服务器提供jstatd服务）</p>
+<p>注：jps命令有个地方很不好，似乎只能显示当前用户的java进程，要显示其他用户的还是只能用unix/linux的ps命令。</p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Linux/">#Linux</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj40/">POI相关</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2020 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Sat, 19 Dec 2020 15:40:20 +0806</lastBuildDate><pubDate>Sat, 19 Dec 2020 15:40:20 +0806</pubDate><item><title>Dockerfile笔记</title><link>/Xuxx_Blogs/archives/bj32/</link><description>&lt;h2&gt;概述&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Tue, 22 Dec 2020 02:13:34 +0806</lastBuildDate><pubDate>Tue, 22 Dec 2020 02:13:34 +0806</pubDate><item><title>Dockerfile笔记</title><link>/Xuxx_Blogs/archives/bj32/</link><description>&lt;h2&gt;概述&lt;/h2&gt;
 &lt;p&gt;从 &lt;a href="https://yeasy.gitbook.io/docker_practice/image/commit"&gt;docker commit&lt;/a&gt; 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
 &lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
 &lt;p&gt;以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为&lt;code&gt;Dockerfile&lt;/code&gt;&lt;/p&gt;
@@ -1135,8 +1135,6 @@ db:
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;处理器、内存配置 -&amp;gt; 按需分配，下一步&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;
-&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;网络类型 -&amp;gt; 选择NAT类型，下一步&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;选择I/O控制器类型、选择磁盘类型 -&amp;gt; 默认，下一步&lt;/p&gt;
@@ -1201,12 +1199,11 @@ systemctl disable firewalld
 systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; firewalld
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
-&lt;/ol&gt;
-&lt;ol&gt;
-&lt;li&gt;同步修改主机的网络适配器ip
+&lt;li&gt;&lt;p&gt;同步修改主机的网络适配器ip
 编辑vmnet8如下：
 完整的配置已经结束。下载 ssh 客户端连接就好了。
-FinalShell：&lt;a href="https://www.hostbuf.com/"&gt;https://www.hostbuf.com/&lt;/a&gt;&lt;/li&gt;
+FinalShell：&lt;a href="https://www.hostbuf.com/"&gt;https://www.hostbuf.com/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 </description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj36/</guid><pubDate>Mon, 23 Nov 2020 11:35:00 +0806</pubDate></item><item><title>MySql获取最近日期</title><link>/Xuxx_Blogs/archives/bj37/</link><description>&lt;h2&gt;一、 DATE_ADD()函数&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;DATE_ADD()&lt;/strong&gt; 函数向日期添加指定的时间间隔。&lt;/p&gt;

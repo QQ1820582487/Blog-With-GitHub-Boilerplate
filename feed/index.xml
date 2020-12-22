@@ -1,323 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Tue, 22 Dec 2020 02:13:34 +0806</lastBuildDate><pubDate>Tue, 22 Dec 2020 02:13:34 +0806</pubDate><item><title>Dockerfile笔记</title><link>/Xuxx_Blogs/archives/bj32/</link><description>&lt;h2&gt;概述&lt;/h2&gt;
-&lt;p&gt;从 &lt;a href="https://yeasy.gitbook.io/docker_practice/image/commit"&gt;docker commit&lt;/a&gt; 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
-&lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
-&lt;p&gt;以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为&lt;code&gt;Dockerfile&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkdir myshop
-&lt;span class="nb"&gt;cd&lt;/span&gt; myshop
-touch Dockerfile
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其内容为：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;tomcat&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; Hello,Docker! &amp;gt; /usr/local/tomcat/webapps/ROOT/index.jsp
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;FROM-指定基础镜像&lt;/h2&gt;
-&lt;p&gt;所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。而FROM就是指定基础镜像，因此&lt;strong&gt;一个 Dockerfile 中 FROM是必备的指令，并且必须是第一条指令&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;除了选择(在Docker Hub上)现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为&lt;code&gt;scratch&lt;/code&gt;。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。&lt;/p&gt;
-&lt;p&gt;如果你以 &lt;code&gt;scratch&lt;/code&gt; 为基础镜像的话，意味着你不以任何镜像为基础，接下来所写的指令将作为镜像第一层开始存在。&lt;/p&gt;
-&lt;h2&gt;RUN 执行命令&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;RUN&lt;/code&gt; 指令是用来执行命令行命令的。由于命令行的强大能力，&lt;code&gt;RUN&lt;/code&gt; 指令在定制镜像时是最常用的指令之一。其格式有两种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;shell&lt;/em&gt; 格式：&lt;code&gt;RUN &amp;lt;命令&amp;gt;&lt;/code&gt;，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 &lt;code&gt;RUN&lt;/code&gt; 指令就是这种格式。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; Hello,Docker! &amp;gt; /usr/local/tomcat/webapps/ROOT/index.jsp
-&lt;/pre&gt;&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;exec&lt;/em&gt; 格式：&lt;code&gt;RUN ["可执行文件", "参数1", "参数2"]&lt;/code&gt;，这更像是函数调用中的格式。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;既然 &lt;code&gt;RUN&lt;/code&gt; 就像 Shell 脚本一样可以执行命令，那么是否就可以像 Shell 脚本一样把每个命令对应一个 RUN 呢？比如这样：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;debian:stretch&lt;/span&gt;
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get update
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get install -y gcc libc6-dev make wget
-&lt;span class="k"&gt;RUN&lt;/span&gt; wget -O redis.tar.gz &lt;span class="s2"&gt;&amp;quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; mkdir -p /usr/src/redis
-&lt;span class="k"&gt;RUN&lt;/span&gt; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; make -C /usr/src/redis
-&lt;span class="k"&gt;RUN&lt;/span&gt; make -C /usr/src/redis install
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;之前说过，&lt;strong&gt;Dockerfile 中每一个指令都会建立一层&lt;/strong&gt;，&lt;code&gt;RUN&lt;/code&gt; 也不例外。每一个 &lt;code&gt;RUN&lt;/code&gt; 的行为，就和手动建立镜像的过程一样：新建立一层，在其上执行这些命令，执行结束后，&lt;code&gt;commit&lt;/code&gt; 这一层的修改，构成新的镜像。&lt;/p&gt;
-&lt;p&gt;而上面的这种写法，创建了 7 层镜像。这是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。 这是很多初学 Docker 的人常犯的一个错误。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Union FS 是有最大层数限制的，比如 AUFS，曾经是最大不得超过 42 层，现在是不得超过 127 层。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;上面的 &lt;code&gt;Dockerfile&lt;/code&gt; 正确的写法应该是这样：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;debian:stretch&lt;/span&gt;
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt; -x&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nv"&gt;buildDeps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gcc libc6-dev make wget&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get update &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y &lt;span class="nv"&gt;$buildDeps&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; wget -O redis.tar.gz &lt;span class="s2"&gt;&amp;quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; mkdir -p /usr/src/redis &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make -C /usr/src/redis &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make -C /usr/src/redis install &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/* &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm redis.tar.gz &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -r /usr/src/redis &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get purge -y --auto-remove &lt;span class="nv"&gt;$buildDeps&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;首先，之前所有的命令只有一个目的，就是编译、安装 redis 可执行文件。因此没有必要建立很多层，这只是一层的事情。因此，这里没有使用很多个 &lt;code&gt;RUN&lt;/code&gt; 一一对应不同的命令，而是仅仅使用一个 &lt;code&gt;RUN&lt;/code&gt; 指令，并使用 &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; 将各个所需命令串联起来。将之前的 7 层，简化为了 1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每一层该如何构建&lt;/p&gt;
-&lt;p&gt;并且，这里为了格式化还进行了换行。Dockerfile 支持 Shell 类的行尾添加 &lt;code&gt;\&lt;/code&gt; 的命令换行方式，以及行首 &lt;code&gt;#&lt;/code&gt; 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易，这是一个比较好的习惯。&lt;/p&gt;
-&lt;p&gt;此外，还可以看到这一组命令的最后添加了清理工作的命令，删除了为了编译构建所需要的软件，清理了所有下载、展开的文件，并且还清理了 &lt;code&gt;apt&lt;/code&gt; 缓存文件。这是很重要的一步，之前说过，镜像是多层存储，每一层的东西并不会在下一层被删除，会一直跟随着镜像。因此镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉。&lt;/p&gt;
-&lt;h2&gt;构建镜像&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;docker build&lt;/code&gt; 命令进行镜像构建。其语法为：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker build &lt;span class="o"&gt;[&lt;/span&gt;选项&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;上下文路径/URL/-&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在 &lt;code&gt;Dockerfile&lt;/code&gt; 文件所在目录执行：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@localhost myshop&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# docker build -t myshop .&lt;/span&gt;
-Sending build context to Docker daemon  &lt;span class="m"&gt;3&lt;/span&gt;.072kB
-Step &lt;span class="m"&gt;1&lt;/span&gt;/2 : FROM tomcat:latest
- ---&amp;gt; 2eb5a120304e
-Step &lt;span class="m"&gt;2&lt;/span&gt;/2 : COPY index.jsp /usr/local/tomcat/webapps/ROOT
- ---&amp;gt; f44b1d0d1366
-Successfully built f44b1d0d1366
-Successfully tagged myshop:latest
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;镜像构建上下文（Context）&lt;/h2&gt;
-&lt;p&gt;如果注意，会看到 &lt;code&gt;docker build&lt;/code&gt; 命令最后有一个 &lt;code&gt;.&lt;/code&gt;。&lt;code&gt;.&lt;/code&gt; 表示当前目录，而 &lt;code&gt;Dockerfile&lt;/code&gt; 就在当前目录，因此不少初学者以为这个路径是在指定 &lt;code&gt;Dockerfile&lt;/code&gt; 所在路径，这么理解其实是不准确的。如果对应上面的命令格式，你可能会发现，这是在指定 &lt;strong&gt;上下文路径&lt;/strong&gt;。那么什么是上下文呢？&lt;/p&gt;
-&lt;p&gt;当进行镜像构建的时候，并非所有定制都会通过 &lt;code&gt;RUN&lt;/code&gt; 指令完成，经常会需要将一些本地文件复制进镜像，比如通过 &lt;code&gt;COPY&lt;/code&gt; 指令、&lt;code&gt;ADD&lt;/code&gt; 指令等。而 &lt;code&gt;docker build&lt;/code&gt; 命令构建镜像，其实并非在本地构建，而是在服务端，也就是 Docker 引擎中构建的。那么在这种客户端/服务端的架构中，如何才能让服务端获得本地文件呢？&lt;/p&gt;
-&lt;p&gt;这就引入了上下文的概念。当构建的时候，用户会指定构建镜像上下文的路径，&lt;code&gt;docker build&lt;/code&gt; 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。&lt;/p&gt;
-&lt;p&gt;如果在 Dockerfile 中这么写：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;COPY ./package.json /app/&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这并不是要复制执行 &lt;code&gt;docker build&lt;/code&gt; 命令所在的目录下的 &lt;code&gt;package.json&lt;/code&gt;，也不是复制 &lt;code&gt;Dockerfile&lt;/code&gt; 所在目录下的 &lt;code&gt;package.json&lt;/code&gt;，而是复制 &lt;strong&gt;上下文（context）&lt;/strong&gt; 目录下的 &lt;code&gt;package.json&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;其它&lt;/strong&gt; &lt;code&gt;docker build&lt;/code&gt; &lt;strong&gt;的用法&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;直接用 Git repo 进行构建&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker build -t hello-world https://github.com/docker-library/hello-world.git#master:amd64/hello-world&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这行命令指定了构建所需的 Git repo，并且指定分支为 &lt;code&gt;master&lt;/code&gt;，构建目录为 &lt;code&gt;/amd64/hello-world/&lt;/code&gt;，然后 Docker 就会自己去 &lt;code&gt;git clone&lt;/code&gt; 这个项目、切换到指定分支、并进入到指定目录后开始构建。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;用给定的 tar 压缩包构建&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ docker build http://server/context.tar.gz&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果所给出的 URL 不是个 Git repo，而是个 &lt;code&gt;tar&lt;/code&gt; 压缩包，那么 Docker 引擎会下载这个包，并自动解压缩，以其作为上下文，开始构建。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从标准输入中读取 Dockerfile 进行构建&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker build - &amp;lt; Dockerfile&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;或&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cat Dockerfile | docker build -&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果标准输入传入的是文本文件，则将其视为 &lt;code&gt;Dockerfile&lt;/code&gt;，并开始构建。这种形式由于直接从标准输入中读取 Dockerfile 的内容，它没有上下文，因此不可以像其他方法那样可以将本地文件 &lt;code&gt;COPY&lt;/code&gt; 进镜像之类的事情。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;从标准输入中读取上下文压缩包进行构建&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ docker build - &amp;lt; context.tar.gz&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果发现标准输入的文件格式是 &lt;code&gt;gzip&lt;/code&gt;、&lt;code&gt;bzip2&lt;/code&gt; 以及 &lt;code&gt;xz&lt;/code&gt; 的话，将会使其为上下文压缩包，直接将其展开，将里面视为上下文，并开始构建。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Dockerfile 指令详解&lt;/h2&gt;
-&lt;h3&gt;COPY 复制文件&lt;/h3&gt;
-&lt;p&gt;格式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;COPY [--chown=&amp;lt;user&amp;gt;:&amp;lt;group&amp;gt;] &amp;lt;源路径&amp;gt;... &amp;lt;目标路径&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;COPY [--chown=&amp;lt;user&amp;gt;:&amp;lt;group&amp;gt;] ["&amp;lt;源路径1&amp;gt;",... "&amp;lt;目标路径&amp;gt;"]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;和 &lt;code&gt;RUN&lt;/code&gt; 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;COPY&lt;/code&gt; 指令将从构建上下文目录中 &lt;code&gt;&amp;lt;源路径&amp;gt;&lt;/code&gt; 的文件/目录复制到新的一层的镜像内的 &lt;code&gt;&amp;lt;目标路径&amp;gt;&lt;/code&gt; 位置。比如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;COPY package.json /usr/src/app/&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;源路径&amp;gt;&lt;/code&gt; 可以是多个，甚至可以是通配符，其通配符规则要满足 Go 的 &lt;a href="https://golang.org/pkg/path/filepath/#Match"&gt;&lt;code&gt;filepath.Match&lt;/code&gt;&lt;/a&gt; 规则，如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;COPY hom* /mydir/COPY hom?.txt /mydir/&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;目标路径&amp;gt;&lt;/code&gt; 可以是容器内的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 &lt;code&gt;WORKDIR&lt;/code&gt; 指令来指定）。目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。&lt;/p&gt;
-&lt;p&gt;此外，还需要注意一点，使用 &lt;code&gt;COPY&lt;/code&gt; 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。这个特性对于镜像定制很有用。特别是构建相关文件都在使用 Git 进行管理的时候。&lt;/p&gt;
-&lt;p&gt;在使用该指令的时候还可以加上 &lt;code&gt;--chown=&amp;lt;user&amp;gt;:&amp;lt;group&amp;gt;&lt;/code&gt; 选项来改变文件的所属用户及所属组。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;COPY --chown=55:mygroup files* /mydir/
-COPY --chown=bin files* /mydir/
-COPY --chown=1 files* /mydir/
-COPY --chown=10:11 files* /mydir/&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果源路径为文件夹，复制的时候不是直接复制该文件夹，而是将文件夹中的内容复制到目标路径。&lt;/p&gt;
-&lt;h3&gt;ADD 更高级的复制文件&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;ADD&lt;/code&gt; 指令和 &lt;code&gt;COPY&lt;/code&gt; 的格式和性质基本一致。但是在 &lt;code&gt;COPY&lt;/code&gt; 基础上增加了一些功能。&lt;/p&gt;
-&lt;p&gt;比如 &lt;code&gt;&amp;lt;源路径&amp;gt;&lt;/code&gt; 可以是一个 &lt;code&gt;URL&lt;/code&gt;，这种情况下，Docker 引擎会试图去下载这个链接的文件放到 &lt;code&gt;&amp;lt;目标路径&amp;gt;&lt;/code&gt; 去。下载后的文件权限自动设置为 &lt;code&gt;600&lt;/code&gt;，如果这并不是想要的权限，那么还需要增加额外的一层 &lt;code&gt;RUN&lt;/code&gt; 进行权限调整，另外，如果下载的是个压缩包，需要解压缩，也一样还需要额外的一层 &lt;code&gt;RUN&lt;/code&gt; 指令进行解压缩。所以不如直接使用 &lt;code&gt;RUN&lt;/code&gt; 指令，然后使用 &lt;code&gt;wget&lt;/code&gt; 或者 &lt;code&gt;curl&lt;/code&gt; 工具下载，处理权限、解压缩、然后清理无用文件更合理。因此，这个功能其实并不实用，而且不推荐使用。&lt;/p&gt;
-&lt;p&gt;如果 &lt;code&gt;&amp;lt;源路径&amp;gt;&lt;/code&gt; 为一个 &lt;code&gt;tar&lt;/code&gt; 压缩文件的话，压缩格式为 &lt;code&gt;gzip&lt;/code&gt;, &lt;code&gt;bzip2&lt;/code&gt; 以及 &lt;code&gt;xz&lt;/code&gt; 的情况下，&lt;code&gt;ADD&lt;/code&gt; 指令将会自动解压缩这个压缩文件到 &lt;code&gt;&amp;lt;目标路径&amp;gt;&lt;/code&gt; 去。&lt;/p&gt;
-&lt;p&gt;在某些情况下，这个自动解压缩的功能非常有用，比如官方镜像 &lt;code&gt;ubuntu&lt;/code&gt; 中：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;FROM scratchADD ubuntu-xenial-core-cloudimg-amd64-root.tar.gz /...&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;但在某些情况下，如果真的是希望复制个压缩文件进去，而不解压缩，这时就不可以使用 &lt;code&gt;ADD&lt;/code&gt; 命令了。&lt;/p&gt;
-&lt;p&gt;在 Docker 官方的 &lt;a href="https://yeasy.gitbook.io/docker_practice/appendix/best_practices"&gt;Dockerfile 最佳实践文档&lt;/a&gt; 中要求，尽可能的使用 &lt;code&gt;COPY&lt;/code&gt;，因为 &lt;code&gt;COPY&lt;/code&gt; 的语义很明确，就是复制文件而已，而 &lt;code&gt;ADD&lt;/code&gt; 则包含了更复杂的功能，其行为也不一定很清晰。最适合使用 &lt;code&gt;ADD&lt;/code&gt; 的场合，就是所提及的需要自动解压缩的场合。&lt;/p&gt;
-&lt;p&gt;另外需要注意的是，&lt;code&gt;ADD&lt;/code&gt; 指令会令镜像构建缓存失效，从而可能会令镜像构建变得比较缓慢。&lt;/p&gt;
-&lt;p&gt;因此在 &lt;code&gt;COPY&lt;/code&gt; 和 &lt;code&gt;ADD&lt;/code&gt; 指令中选择的时候，可以遵循这样的原则，所有的文件复制均使用 &lt;code&gt;COPY&lt;/code&gt; 指令，仅在需要自动解压缩的场合使用 &lt;code&gt;ADD&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;在使用该指令的时候还可以加上 &lt;code&gt;--chown=&amp;lt;user&amp;gt;:&amp;lt;group&amp;gt;&lt;/code&gt; 选项来改变文件的所属用户及所属组。&lt;/p&gt;
-&lt;h3&gt;CMD 容器启动命令&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;CMD&lt;/code&gt; 指令的格式和 &lt;code&gt;RUN&lt;/code&gt; 相似，也是两种格式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;shell&lt;/code&gt; 格式：&lt;code&gt;CMD &amp;lt;命令&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;exec&lt;/code&gt; 格式：&lt;code&gt;CMD ["可执行文件", "参数1", "参数2"...]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;参数列表格式：&lt;code&gt;CMD ["参数1", "参数2"...]&lt;/code&gt;。在指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令后，用 &lt;code&gt;CMD&lt;/code&gt; 指定具体的参数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;之前介绍容器的时候曾经说过，Docker 不是虚拟机，容器就是进程。既然是进程，那么在启动容器的时候，需要指定所运行的程序及参数。&lt;code&gt;CMD&lt;/code&gt; 指令就是用于指定默认的容器主进程的启动命令的。&lt;/p&gt;
-&lt;p&gt;在运行时可以指定新的命令来替代镜像设置中的这个默认命令，比如，&lt;code&gt;ubuntu&lt;/code&gt; 镜像默认的 &lt;code&gt;CMD&lt;/code&gt; 是 &lt;code&gt;/bin/bash&lt;/code&gt;，如果直接 &lt;code&gt;docker run -it ubuntu&lt;/code&gt; 的话，会直接进入 &lt;code&gt;bash&lt;/code&gt;。也可以在运行时指定运行别的命令，如 &lt;code&gt;docker run -it ubuntu cat /etc/os-release&lt;/code&gt;。这就是用 &lt;code&gt;cat /etc/os-release&lt;/code&gt; 命令替换了默认的 &lt;code&gt;/bin/bash&lt;/code&gt; 命令了，输出了系统版本信息。&lt;/p&gt;
-&lt;p&gt;在指令格式上，一般推荐使用 &lt;code&gt;exec&lt;/code&gt; 格式，这类格式在解析时会被解析为 JSON 数组，因此一定要使用双引号 &lt;code&gt;"&lt;/code&gt;，而不要使用单引号。&lt;/p&gt;
-&lt;p&gt;如果使用 &lt;code&gt;shell&lt;/code&gt; 格式的话，实际的命令会被包装为 &lt;code&gt;sh -c&lt;/code&gt; 的参数的形式进行执行。比如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CMD echo $HOME&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;在实际执行中，会将其变更为：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CMD [ "sh", "-c", "echo $HOME" ]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这就是为什么可以使用环境变量的原因，因为这些环境变量会被 shell 进行解析处理。&lt;/p&gt;
-&lt;p&gt;提到 &lt;code&gt;CMD&lt;/code&gt; 就不得不提容器中应用在前台执行和后台执行的问题。这是初学者常出现的一个混淆。&lt;/p&gt;
-&lt;p&gt;Docker 不是虚拟机，容器中的应用都应该以前台执行，而不是像虚拟机、物理机里面那样，用 &lt;code&gt;systemd&lt;/code&gt; 去启动后台服务，容器内没有后台服务的概念。&lt;/p&gt;
-&lt;p&gt;一些初学者将 &lt;code&gt;CMD&lt;/code&gt; 写为：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CMD service nginx start&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后发现容器执行后就立即退出了。甚至在容器内去使用 &lt;code&gt;systemctl&lt;/code&gt; 命令结果却发现根本执行不了。这就是因为没有搞明白前台、后台的概念，没有区分容器和虚拟机的差异，依旧在以传统虚拟机的角度去理解容器。&lt;/p&gt;
-&lt;p&gt;对于容器而言，其启动程序就是容器应用进程，容器就是为了主进程而存在的，主进程退出，容器就失去了存在的意义，从而退出，其它辅助进程不是它需要关心的东西。&lt;/p&gt;
-&lt;p&gt;而使用 &lt;code&gt;service nginx start&lt;/code&gt; 命令，则是希望 upstart 来以后台守护进程形式启动 &lt;code&gt;nginx&lt;/code&gt; 服务。而刚才说了 &lt;code&gt;CMD service nginx start&lt;/code&gt; 会被理解为 &lt;code&gt;CMD [ "sh", "-c", "service nginx start"]&lt;/code&gt;，因此主进程实际上是 &lt;code&gt;sh&lt;/code&gt;。那么当 &lt;code&gt;service nginx start&lt;/code&gt; 命令结束后，&lt;code&gt;sh&lt;/code&gt; 也就结束了，&lt;code&gt;sh&lt;/code&gt; 作为主进程退出了，自然就会令容器退出。&lt;/p&gt;
-&lt;p&gt;正确的做法是直接执行 &lt;code&gt;nginx&lt;/code&gt; 可执行文件，并且要求以前台形式运行。比如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CMD ["nginx", "-g", "daemon off;"]&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;ENTRYPOINT 入口点&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的格式和 &lt;code&gt;RUN&lt;/code&gt; 指令格式一样，分为 &lt;code&gt;exec&lt;/code&gt; 格式和 &lt;code&gt;shell&lt;/code&gt; 格式。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ENTRYPOINT&lt;/code&gt; 的目的和 &lt;code&gt;CMD&lt;/code&gt; 一样，都是在指定容器启动程序及参数。&lt;code&gt;ENTRYPOINT&lt;/code&gt; 在运行时也可以替代，不过比 &lt;code&gt;CMD&lt;/code&gt; 要略显繁琐，需要通过 &lt;code&gt;docker run&lt;/code&gt; 的参数 &lt;code&gt;--entrypoint&lt;/code&gt; 来指定。&lt;/p&gt;
-&lt;p&gt;当指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 后，&lt;code&gt;CMD&lt;/code&gt; 的含义就发生了改变，不再是直接的运行其命令，而是将 &lt;code&gt;CMD&lt;/code&gt; 的内容作为参数传给 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 指令，换句话说实际执行时，将变为：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;ENTRYPOINT&amp;gt; "&amp;lt;CMD&amp;gt;"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;那么有了 &lt;code&gt;CMD&lt;/code&gt; 后，为什么还要有 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 呢？这种 &lt;code&gt;&amp;lt;ENTRYPOINT&amp;gt; "&amp;lt;CMD&amp;gt;"&lt;/code&gt; 有什么好处么？让来看几个场景。&lt;/p&gt;
-&lt;h4&gt;场景一：让镜像变成像命令一样使用&lt;/h4&gt;
-&lt;p&gt;假设需要一个得知自己当前公网 IP 的镜像，那么可以先用 &lt;code&gt;CMD&lt;/code&gt; 来实现：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;ubuntu:18.04&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get update &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y curl &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/*
-&lt;span class="k"&gt;CMD&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;curl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-s&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;http://myip.ipip.net&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;假如使用 &lt;code&gt;docker build -t myip .&lt;/code&gt; 来构建镜像的话，如果需要查询当前公网 IP，只需要执行：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run myip
-当前 IP：61.148.226.66 来自：北京市 联通
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;嗯，这么看起来好像可以直接把镜像当做命令使用了，不过命令总有参数，如果希望加参数呢？比如从上面的 &lt;code&gt;CMD&lt;/code&gt; 中可以看到实质的命令是 &lt;code&gt;curl&lt;/code&gt;，那么如果希望显示 HTTP 头信息，就需要加上 &lt;code&gt;-i&lt;/code&gt; 参数。那么可以直接加 &lt;code&gt;-i&lt;/code&gt; 参数给 &lt;code&gt;docker run myip&lt;/code&gt; 么？&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run myip -i
-docker: Error response from daemon: invalid header field value &lt;span class="s2"&gt;&amp;quot;oci runtime error: container_linux.go:247: starting container process caused \&amp;quot;exec: \\\&amp;quot;-i\\\&amp;quot;: executable file not found in &lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;&lt;span class="s2"&gt;\&amp;quot;\n&amp;quot;&lt;/span&gt;.
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可以看到可执行文件找不到的报错，&lt;code&gt;executable file not found&lt;/code&gt;。之前说过，跟在镜像名后面的是 &lt;code&gt;command&lt;/code&gt;，运行时会替换 &lt;code&gt;CMD&lt;/code&gt; 的默认值。因此这里的 &lt;code&gt;-i&lt;/code&gt; 替换了原来的 &lt;code&gt;CMD&lt;/code&gt;，而不是添加在原来的 &lt;code&gt;curl -s http://myip.ipip.net&lt;/code&gt; 后面。而 &lt;code&gt;-i&lt;/code&gt; 根本不是命令，所以自然找不到。&lt;/p&gt;
-&lt;p&gt;那么如果希望加入 &lt;code&gt;-i&lt;/code&gt; 这参数，就必须重新完整的输入这个命令：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run myip curl -s http://myip.ipip.net -i
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这显然不是很好的解决方案，而使用 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 就可以解决这个问题。现在重新用 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 来实现这个镜像：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;ubuntu:18.04&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get update &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y curl &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -rf /var/lib/apt/lists/*
-&lt;span class="k"&gt;ENTRYPOINT&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;curl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;-s&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;http://myip.ipip.net&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这次再来尝试直接使用 &lt;code&gt;docker run myip -i&lt;/code&gt;：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run myip
-当前 IP：61.148.226.66 来自：北京市 联通
-
-$ docker run myip -i
-HTTP/1.1 &lt;span class="m"&gt;200&lt;/span&gt; OK
-Server: nginx/1.8.0
-Date: Tue, &lt;span class="m"&gt;22&lt;/span&gt; Nov &lt;span class="m"&gt;2016&lt;/span&gt; &lt;span class="m"&gt;05&lt;/span&gt;:12:40 GMT
-Content-Type: text/html&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nv"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;UTF-8
-Vary: Accept-Encoding
-X-Powered-By: PHP/5.6.24-1~dotdeb+7.1
-X-Cache: MISS from cache-2
-X-Cache-Lookup: MISS from cache-2:80
-X-Cache: MISS from proxy-2_6
-Transfer-Encoding: chunked
-Via: &lt;span class="m"&gt;1&lt;/span&gt;.1 cache-2:80, &lt;span class="m"&gt;1&lt;/span&gt;.1 proxy-2_6:8006
-Connection: keep-alive
-​
-当前 IP：61.148.226.66 来自：北京市 联通
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可以看到，这次成功了。这是因为当存在 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 后，&lt;code&gt;CMD&lt;/code&gt; 的内容将会作为参数传给 &lt;code&gt;ENTRYPOINT&lt;/code&gt;，而这里 &lt;code&gt;-i&lt;/code&gt; 就是新的 &lt;code&gt;CMD&lt;/code&gt;，因此会作为参数传给 &lt;code&gt;curl&lt;/code&gt;，从而达到了预期的效果。&lt;/p&gt;
-&lt;h4&gt;场景二：应用运行前的准备工作&lt;/h4&gt;
-&lt;p&gt;启动容器就是启动主进程，但有些时候，启动主进程前，需要一些准备工作。&lt;/p&gt;
-&lt;p&gt;比如 &lt;code&gt;mysql&lt;/code&gt; 类的数据库，可能需要一些数据库配置、初始化的工作，这些工作要在最终的 mysql 服务器运行之前解决。&lt;/p&gt;
-&lt;p&gt;此外，可能希望避免使用 &lt;code&gt;root&lt;/code&gt; 用户去启动服务，从而提高安全性，而在启动服务前还需要以 &lt;code&gt;root&lt;/code&gt; 身份执行一些必要的准备工作，最后切换到服务用户身份启动服务。或者除了服务外，其它命令依旧可以使用 &lt;code&gt;root&lt;/code&gt; 身份执行，方便调试等。&lt;/p&gt;
-&lt;p&gt;这些准备工作是和容器 &lt;code&gt;CMD&lt;/code&gt; 无关的，无论 &lt;code&gt;CMD&lt;/code&gt; 为什么，都需要事先进行一个预处理的工作。这种情况下，可以写一个脚本，然后放入 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 中去执行，而这个脚本会将接到的参数（也就是 &lt;code&gt;&amp;lt;CMD&amp;gt;&lt;/code&gt;）作为命令，在脚本最后执行。比如官方镜像 &lt;code&gt;redis&lt;/code&gt; 中就是这么做的：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;alpine:3.4&lt;/span&gt;
-...
-&lt;span class="k"&gt;RUN&lt;/span&gt; addgroup -S redis &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; adduser -S -G redis redis
-...
-&lt;span class="k"&gt;ENTRYPOINT&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;docker-entrypoint.sh&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-
-&lt;span class="k"&gt;EXPOSE&lt;/span&gt;&lt;span class="s"&gt; 6379&lt;/span&gt;
-&lt;span class="k"&gt;CMD&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;redis-server&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可以看到其中为了 redis 服务创建了 redis 用户，并在最后指定了 &lt;code&gt;ENTRYPOINT&lt;/code&gt; 为 &lt;code&gt;docker-entrypoint.sh&lt;/code&gt; 脚本。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
-...
-&lt;span class="c1"&gt;# allow the container to be started with `--user`&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;redis-server&amp;#39;&lt;/span&gt; -a &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;id -u&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-    find . &lt;span class="se"&gt;\!&lt;/span&gt; -user redis -exec chown redis &lt;span class="s1"&gt;&amp;#39;{}&amp;#39;&lt;/span&gt; +
-    &lt;span class="nb"&gt;exec&lt;/span&gt; gosu redis &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;fi&lt;/span&gt;
-
-&lt;span class="nb"&gt;exec&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;该脚本的内容就是根据 &lt;code&gt;CMD&lt;/code&gt; 的内容来判断，如果是 &lt;code&gt;redis-server&lt;/code&gt; 的话，则切换到 &lt;code&gt;redis&lt;/code&gt; 用户身份启动服务器，否则依旧使用 &lt;code&gt;root&lt;/code&gt; 身份执行。比如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run -it redis id
-&lt;span class="nv"&gt;uid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;root&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;gid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;root&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;groups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;root&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;ENV 设置环境变量&lt;/h3&gt;
-&lt;p&gt;格式有两种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ENV &amp;lt;key&amp;gt; &amp;lt;value&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ENV &amp;lt;key1&amp;gt;=&amp;lt;value1&amp;gt; &amp;lt;key2&amp;gt;=&amp;lt;value2&amp;gt;...&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这个指令很简单，就是设置环境变量而已，无论是后面的其它指令，如 &lt;code&gt;RUN&lt;/code&gt;，还是运行时的应用，都可以直接使用这里定义的环境变量。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ENV&lt;/span&gt; &lt;span class="nv"&gt;VERSION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.0 &lt;span class="nv"&gt;DEBUG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;on &lt;span class="se"&gt;\&lt;/span&gt;
-    &lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Happy Feet&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这个例子中演示了如何换行，以及对含有空格的值用双引号括起来的办法，这和 Shell 下的行为是一致的。&lt;/p&gt;
-&lt;p&gt;定义了环境变量，那么在后续的指令中，就可以使用这个环境变量。比如在官方 &lt;code&gt;node&lt;/code&gt; 镜像 &lt;code&gt;Dockerfile&lt;/code&gt; 中，就有类似这样的代码：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ENV&lt;/span&gt; NODE_VERSION &lt;span class="m"&gt;7&lt;/span&gt;.2.0
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; curl -SLO &lt;span class="s2"&gt;&amp;quot;https://nodejs.org/dist/v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;/node-v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;-linux-x64.tar.xz&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; curl -SLO &lt;span class="s2"&gt;&amp;quot;https://nodejs.org/dist/v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;/SHASUMS256.txt.asc&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; grep &lt;span class="s2"&gt;&amp;quot; node-v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;-linux-x64.tar.xz\$&amp;quot;&lt;/span&gt; SHASUMS256.txt &lt;span class="p"&gt;|&lt;/span&gt; sha256sum -c - &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; tar -xJf &lt;span class="s2"&gt;&amp;quot;node-v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;-linux-x64.tar.xz&amp;quot;&lt;/span&gt; -C /usr/local --strip-components&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm &lt;span class="s2"&gt;&amp;quot;node-v&lt;/span&gt;&lt;span class="nv"&gt;$NODE_VERSION&lt;/span&gt;&lt;span class="s2"&gt;-linux-x64.tar.xz&amp;quot;&lt;/span&gt; SHASUMS256.txt.asc SHASUMS256.txt &lt;span class="se"&gt;\&lt;/span&gt;
-  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ln -s /usr/local/bin/node /usr/local/bin/nodejs
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在这里先定义了环境变量 &lt;code&gt;NODE_VERSION&lt;/code&gt;，其后的 &lt;code&gt;RUN&lt;/code&gt; 这层里，多次使用 &lt;code&gt;$NODE_VERSION&lt;/code&gt; 来进行操作定制。可以看到，将来升级镜像构建版本的时候，只需要更新 &lt;code&gt;7.2.0&lt;/code&gt; 即可，&lt;code&gt;Dockerfile&lt;/code&gt; 构建维护变得更轻松了。&lt;/p&gt;
-&lt;p&gt;下列指令可以支持环境变量展开： &lt;code&gt;ADD&lt;/code&gt;、&lt;code&gt;COPY&lt;/code&gt;、&lt;code&gt;ENV&lt;/code&gt;、&lt;code&gt;EXPOSE&lt;/code&gt;、&lt;code&gt;FROM&lt;/code&gt;、&lt;code&gt;LABEL&lt;/code&gt;、&lt;code&gt;USER&lt;/code&gt;、&lt;code&gt;WORKDIR&lt;/code&gt;、&lt;code&gt;VOLUME&lt;/code&gt;、&lt;code&gt;STOPSIGNAL&lt;/code&gt;、&lt;code&gt;ONBUILD&lt;/code&gt;、&lt;code&gt;RUN&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;可以从这个指令列表里感觉到，环境变量可以使用的地方很多，很强大。通过环境变量，可以让一份 &lt;code&gt;Dockerfile&lt;/code&gt; 制作更多的镜像，只需使用不同的环境变量即可。&lt;/p&gt;
-&lt;h3&gt;VOLUME 定义匿名卷&lt;/h3&gt;
-&lt;p&gt;格式为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;VOLUME ["&amp;lt;路径1&amp;gt;", "&amp;lt;路径2&amp;gt;"...]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;VOLUME &amp;lt;路径&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;之前说过，容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中，后面的章节会进一步介绍 Docker 卷的概念。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在 &lt;code&gt;Dockerfile&lt;/code&gt; 中，可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;VOLUME&lt;/span&gt;&lt;span class="s"&gt; /data&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这里的 &lt;code&gt;/data&lt;/code&gt; 目录就会在运行时自动挂载为匿名卷，任何向 &lt;code&gt;/data&lt;/code&gt; 中写入的信息都不会记录进容器存储层，从而保证了容器存储层的无状态化。当然，运行时可以覆盖这个挂载设置。比如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker run -d -v mydata:/data xxxx
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在这行命令中，就使用了 &lt;code&gt;mydata&lt;/code&gt; 这个命名卷挂载到了 &lt;code&gt;/data&lt;/code&gt; 这个位置，替代了 &lt;code&gt;Dockerfile&lt;/code&gt; 中定义的匿名卷的挂载配置。&lt;/p&gt;
-&lt;h3&gt;EXPOSE 暴露端口&lt;/h3&gt;
-&lt;p&gt;格式为 &lt;code&gt;EXPOSE &amp;lt;端口1&amp;gt; [&amp;lt;端口2&amp;gt;...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;EXPOSE&lt;/code&gt; 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务。在 Dockerfile 中写入这样的声明有两个好处，一个是帮助镜像使用者理解这个镜像服务的守护端口，以方便配置映射；另一个用处则是在运行时使用随机端口映射时，也就是 &lt;code&gt;docker run -P&lt;/code&gt; 时，会自动随机映射 &lt;code&gt;EXPOSE&lt;/code&gt; 的端口。&lt;/p&gt;
-&lt;p&gt;要将 &lt;code&gt;EXPOSE&lt;/code&gt; 和在运行时使用 &lt;code&gt;-p &amp;lt;宿主端口&amp;gt;:&amp;lt;容器端口&amp;gt;&lt;/code&gt; 区分开来。&lt;code&gt;-p&lt;/code&gt;，是映射宿主端口和容器端口，换句话说，就是将容器的对应端口服务公开给外界访问，而 &lt;code&gt;EXPOSE&lt;/code&gt; 仅仅是声明容器打算使用什么端口而已，并不会自动在宿主进行端口映射。&lt;/p&gt;
-&lt;h3&gt;WORKDIR 指定工作目录&lt;/h3&gt;
-&lt;p&gt;格式为 &lt;code&gt;WORKDIR &amp;lt;工作目录路径&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;使用 &lt;code&gt;WORKDIR&lt;/code&gt; 指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，&lt;code&gt;WORKDIR&lt;/code&gt; 会帮你建立目录。&lt;/p&gt;
-&lt;p&gt;之前提到一些初学者常犯的错误是把 &lt;code&gt;Dockerfile&lt;/code&gt; 等同于 Shell 脚本来书写，这种错误的理解还可能会导致出现下面这样的错误：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /app
-&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt; &amp;gt; world.txt
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;如果将这个 &lt;code&gt;Dockerfile&lt;/code&gt; 进行构建镜像运行后，会发现找不到 &lt;code&gt;/app/world.txt&lt;/code&gt; 文件，或者其内容不是 &lt;code&gt;hello&lt;/code&gt;。原因其实很简单，在 Shell 中，连续两行是同一个进程执行环境，因此前一个命令修改的内存状态，会直接影响后一个命令；而在 &lt;code&gt;Dockerfile&lt;/code&gt; 中，这两行 &lt;code&gt;RUN&lt;/code&gt; 命令的执行环境根本不同，是两个完全不同的容器。这就是对 &lt;code&gt;Dockerfile&lt;/code&gt; 构建分层存储的概念不了解所导致的错误。&lt;/p&gt;
-&lt;p&gt;之前说过每一个 &lt;code&gt;RUN&lt;/code&gt; 都是启动一个容器、执行命令、然后提交存储层文件变更。第一层 &lt;code&gt;RUN cd /app&lt;/code&gt; 的执行仅仅是当前进程的工作目录变更，一个内存上的变化而已，其结果不会造成任何文件变更。而到第二层的时候，启动的是一个全新的容器，跟第一层的容器更完全没关系，自然不可能继承前一层构建过程中的内存变化。&lt;/p&gt;
-&lt;p&gt;因此如果需要改变以后各层的工作目录的位置，那么应该使用 &lt;code&gt;WORKDIR&lt;/code&gt; 指令。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /app&lt;/span&gt;
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt; &amp;gt; world.txt
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;如果你的 &lt;code&gt;WORKDIR&lt;/code&gt; 指令使用的相对路径，那么所切换的路径与之前的 &lt;code&gt;WORKDIR&lt;/code&gt; 有关：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /a&lt;/span&gt;
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; b&lt;/span&gt;
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; c&lt;/span&gt;
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; pwd
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;pwd&lt;/code&gt; 输出的结果为 &lt;code&gt;/a/b/c&lt;/code&gt;。&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj32/</guid><pubDate>Sun, 20 Sep 2020 13:30:00 +0806</pubDate></item><item><title>Docker Compose笔记</title><link>/Xuxx_Blogs/archives/bj33/</link><description>&lt;h2&gt;简介&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Tue, 22 Dec 2020 03:51:17 +0806</lastBuildDate><pubDate>Tue, 22 Dec 2020 03:51:17 +0806</pubDate><item><title>Docker Compose笔记</title><link>/Xuxx_Blogs/archives/bj33/</link><description>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
 &lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
@@ -2232,4 +1914,148 @@ String jsonData = "{\"userid\":\"001\",\"username\":\"张三\",\"usersex\":\"男
 &lt;p&gt;列出远程服务器192.168.0.77机器所有的jvm实例，采用rmi协议，默认连接端口为1099&lt;/p&gt;
 &lt;p&gt;（前提是远程服务器提供jstatd服务）&lt;/p&gt;
 &lt;p&gt;注：jps命令有个地方很不好，似乎只能显示当前用户的java进程，要显示其他用户的还是只能用unix/linux的ps命令。&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj41/</guid><pubDate>Sat, 19 Dec 2020 22:55:00 +0806</pubDate></item></channel></rss>
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj41/</guid><pubDate>Sat, 19 Dec 2020 22:55:00 +0806</pubDate></item><item><title>idea常用快捷键</title><link>/Xuxx_Blogs/archives/bj41/</link><description>&lt;h2&gt;自动代码&lt;/h2&gt;
+&lt;p&gt;Ctrl+Alt+O 优化导入的类和包
+Alt+Insert 生成代码(如get,set方法,构造函数等) 或者右键（Generate）
+fori/sout/psvm + Tab
+Ctrl+Alt+T 生成try catch 或者 Alt+enter
+CTRL+ALT+T 把选中的代码放在 TRY{} IF{} ELSE{} 里
+Ctrl + O 重写方法
+Ctrl + I 实现方法
+Ctr+shift+U 大小写转化
+ALT+回车 导入包,自动修正
+ALT+/ 代码提示
+CTRL+J 自动代码
+Ctrl+Shift+J，整合两行为一行
+CTRL+空格 代码提示
+CTRL+SHIFT+SPACE 自动补全代码
+CTRL+ALT+L 格式化代码
+CTRL+ALT+I 自动缩进
+CTRL+ALT+O 优化导入的类和包
+ALT+INSERT 生成代码(如GET,SET方法,构造函数等)
+CTRL+E 最近更改的代码
+CTRL+ALT+SPACE 类名或接口名提示
+CTRL+P 方法参数提示
+CTRL+Q，可以看到当前方法的声明&lt;/p&gt;
+&lt;p&gt;Shift+F6 重构-重命名 (包、类、方法、变量、甚至注释等)
+Ctrl+Alt+V 提取变量&lt;/p&gt;
+&lt;h2&gt;查询的快捷键&lt;/h2&gt;
+&lt;p&gt;Ctrl＋Shift＋Backspace    可以跳转到上次编辑的地
+CTRL+ALT+ left/right    前后导航编辑过的地方
+ALT+7   靠左窗口显示当前文件的结构
+Ctrl+F12    浮动显示当前文件的结构
+ALT+F7  找到你的函数或者变量或者类的所有引用到的地方（查看用法）
+CTRL+ALT+F7 找到你的函数或者变量或者类的所有引用到的地方
+Ctrl+Shift+Alt+N 查找类中的方法或变量
+双击SHIFT 在项目的所有目录查找文件
+Ctrl+N 查找类
+Ctrl+Shift+N 查找文件
+CTRL+G 定位行
+CTRL+F 在当前窗口查找文本
+CTRL+SHIFT+F 在指定窗口查找文本
+CTRL+R 在 当前窗口替换文本
+CTRL+SHIFT+R 在指定窗口替换文本
+ALT+SHIFT+C 查找修改的文件
+CTRL+E 最近打开的文件
+F3 向下查找关键字出现位置
+SHIFT+F3 向上一个关键字出现位置
+选中文本，按Alt+F3 ，高亮相同文本，F3逐个往下查找相同文本
+F4 查找变量来源&lt;/p&gt;
+&lt;p&gt;CTRL+SHIFT+O 弹出显示查找内容&lt;/p&gt;
+&lt;p&gt;Ctrl+W 选中代码，连续按会有其他效果
+F2 或Shift+F2 高亮错误或警告快速定位
+Ctrl+Up/Down 光标跳转到第一行或最后一行下&lt;/p&gt;
+&lt;p&gt;Ctrl+B 快速打开光标处的类或方法
+CTRL+ALT+B 找所有的子类
+CTRL+SHIFT+B 找变量的类&lt;/p&gt;
+&lt;p&gt;Ctrl+Shift+上下键 上下移动代码
+Ctrl+Alt+ left/right 返回至上次浏览的位置
+Ctrl+X 删除行
+Ctrl+D 复制行
+Ctrl+/ 或 Ctrl+Shift+/ 注释（// 或者/&lt;em&gt;…&lt;/em&gt;/ ）&lt;/p&gt;
+&lt;p&gt;Ctrl+H 显示类结构图
+Ctrl+Q 显示注释文档&lt;/p&gt;
+&lt;p&gt;Alt+F1 查找代码所在位置
+Alt+1 快速打开或隐藏工程面板&lt;/p&gt;
+&lt;p&gt;Alt+ left/right 切换代码视图
+ALT+ ↑/↓ 在方法间快速移动定位
+CTRL+ALT+ left/right 前后导航编辑过的地方
+Ctrl＋Shift＋Backspace可以跳转到上次编辑的地
+Alt+6 查找TODO&lt;/p&gt;
+&lt;h2&gt;其他快捷键&lt;/h2&gt;
+&lt;p&gt;SHIFT+ENTER 另起一行
+CTRL+Z 倒退(撤销)
+CTRL+SHIFT+Z 向前(取消撤销)
+CTRL+ALT+F12 资源管理器打开文件夹
+ALT+F1 查找文件所在目录位置
+SHIFT+ALT+INSERT 竖编辑模式
+CTRL+F4 关闭当前窗口
+Ctrl+Alt+V，可以引入变量。例如：new String(); 自动导入变量定义
+Ctrl+~，快速切换方案（界面外观、代码风格、快捷键映射等菜单）&lt;/p&gt;
+&lt;h2&gt;调试快捷键&lt;/h2&gt;
+&lt;p&gt;其实常用的 就是F8 F7 F9 最值得一提的 就是Drop Frame 可以让运行过的代码从头再来&lt;/p&gt;
+&lt;p&gt;alt+F8 debug时选中查看值
+Alt+Shift+F9，选择 Debug
+Alt+Shift+F10，选择 Run
+Ctrl+Shift+F9，编译
+Ctrl+Shift+F8，查看断点&lt;/p&gt;
+&lt;p&gt;F7，步入
+Shift+F7，智能步入
+Alt+Shift+F7，强制步入
+F8，步过
+Shift+F8，步出
+Alt+Shift+F8，强制步过&lt;/p&gt;
+&lt;p&gt;Alt+F9，运行至光标处
+Ctrl+Alt+F9，强制运行至光标处
+F9，恢复程序
+Alt+F10，定位到断点&lt;/p&gt;
+&lt;h2&gt;重构&lt;/h2&gt;
+&lt;p&gt;Ctrl+Alt+Shift+T，弹出重构菜单
+Shift+F6，重命名
+F6，移动
+F5，复制
+Alt+Delete，安全删除&lt;/p&gt;
+&lt;p&gt;Ctrl+Alt+N，内联&lt;/p&gt;
+&lt;h2&gt;十大Intellij IDEA快捷键&lt;/h2&gt;
+&lt;p&gt;Intellij IDEA中有很多快捷键让人爱不释手，stackoverflow上也有一些有趣的讨论。每个人都有自己的最爱，想排出个理想的榜单还真是困难。
+以前也整理过Intellij的快捷键，这次就按照我日常开发时的使用频率，简单分类列一下我最喜欢的十大快捷-神-键吧。&lt;/p&gt;
+&lt;h3&gt;智能提示:&lt;/h3&gt;
+&lt;p&gt;Intellij首当其冲的当然就是Intelligence智能！基本的代码提示用Ctrl+Space，还有更智能地按类型信息提示Ctrl+Shift+Space，但因为Intellij总是随着我们敲击而自动提示，所以很多时候都不会手动敲这两个快捷键(除非提示框消失了)。用F2/ Shift+F2移动到有错误的代码，Alt+Enter快速修复(即Eclipse中的Quick Fix功能)。当智能提示为我们自动补全方法名时，我们通常要自己补上行尾的反括号和分号，当括号嵌套很多层时会很麻烦，这时我们只需敲Ctrl+Shift+Enter就能自动补全末尾的字符。而且不只是括号，例如敲完if/for时也可以自动补上{}花括号。
+最后要说一点，Intellij能够智能感知Spring、Hibernate等主流框架的配置文件和类，以静制动，在看似“静态”的外表下，智能地扫描理解你的项目是如何构造和配置的。&lt;/p&gt;
+&lt;h3&gt;重构:&lt;/h3&gt;
+&lt;p&gt;Intellij重构是另一完爆Eclipse的功能，其智能程度令人瞠目结舌，比如提取变量时自动检查到所有匹配同时提取成一个变量等。尤其看过《重构-改善既有代码设计》之后，有了Intellij的配合简直是令人大呼过瘾！也正是强大的智能和重构功能，使Intellij下的TDD开发非常顺畅。&lt;/p&gt;
+&lt;p&gt;切入正题，先说一个无敌的重构功能大汇总快捷键Ctrl+Shift+Alt+T，叫做Refactor This。按法有点复杂，但也符合Intellij的风格，很多快捷键都要双手完成，而不像Eclipse不少最有用的快捷键可以潇洒地单手完成(不知道算不算Eclipse的一大优点)，但各位用过Emacs的话就会觉得也没什么了(非Emacs黑)。此外，还有些最常用的重构技巧，因为太常用了，若每次都在Refactor This菜单里选的话效率有些低。比如Shift+F6直接就是改名，Ctrl+Alt+V则是提取变量。&lt;/p&gt;
+&lt;h3&gt;代码生成：&lt;/h3&gt;
+&lt;p&gt;这一点类似Eclipse，虽不是独到之处，但因为日常使用频率极高，所以还是罗列在榜单前面。常用的有fori/sout/psvm+Tab即可生成循环、System.out、main方法等boilerplate样板代码，用Ctrl+J可以查看所有模板。后面“辅助”一节中将会讲到Alt+Insert，在编辑窗口中点击可以生成构造函数、toString、getter/setter、重写父类方法等。这两个技巧实在太常用了，几乎每天都要生成一堆main、System.out和getter/setter。&lt;/p&gt;
+&lt;p&gt;另外，Intellij IDEA 13中加入了后缀自动补全功能(Postfix Completion)，比模板生成更加灵活和强大。例如要输入for(User user : users)只需输入user.for+Tab。再比如，要输入Date birthday = user.getBirthday();只需输入user.getBirthday().var+Tab即可。&lt;/p&gt;
+&lt;h3&gt;编辑：&lt;/h3&gt;
+&lt;p&gt;编辑中不得不说的一大神键就是能够自动按语法选中代码的Ctrl+W以及反向的Ctrl+Shift+W了。此外，Ctrl+Left/Right移动光标到前/后单词，Ctrl+[/]移动到前/后代码块，这些类Vim风格的光标移动也是一大亮点。以上Ctrl+Left/Right/[]加上Shift的话就能选中跳跃范围内的代码。Alt+Forward/Backward移动到前/后方法。还有些非常普通的像Ctrl+Y删除行、Ctrl+D复制行、Ctrl+&lt;/p&gt;
+&lt;h3&gt;查找打开：&lt;/h3&gt;
+&lt;p&gt;类似Eclipse，Intellij的Ctrl+N/Ctrl+Shift+N可以打开类或资源，但Intellij更加智能一些，我们输入的任何字符都将看作模糊匹配，省却了Eclipse中还有输入*的麻烦。最新版本的IDEA还加入了Search Everywhere功能，只需按Shift+Shift即可在一个弹出框中搜索任何东西，包括类、资源、配置项、方法等等。&lt;/p&gt;
+&lt;p&gt;类的继承关系则可用Ctrl+H打开类层次窗口，在继承层次上跳转则用Ctrl+B/Ctrl+Alt+B分别对应父类或父方法定义和子类或子方法实现，查看当前类的所有方法用Ctrl+F12。&lt;/p&gt;
+&lt;p&gt;要找类或方法的使用也很简单，Alt+F7。要查找文本的出现位置就用Ctrl+F/Ctrl+Shift+F在当前窗口或全工程中查找，再配合F3/Shift+F3前后移动到下一匹配处。&lt;/p&gt;
+&lt;p&gt;Intellij更加智能的又一佐证是在任意菜单或显示窗口，都可以直接输入你要找的单词，Intellij就会自动为你过滤。&lt;/p&gt;
+&lt;h3&gt;其他辅助：&lt;/h3&gt;
+&lt;p&gt;以上这些神键配上一些辅助快捷键，即可让你的双手90%以上的时间摆脱鼠标，专注于键盘仿佛在进行钢琴表演。这些不起眼却是至关重要的最后一块拼图有：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命令：Ctrl+Shift+A 可以查找所有Intellij的命令，并且每个命令后面还有其快捷键。所以它不仅是一大神键，也是查找学习快捷键的工具。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;新建：Alt+Insert可以新建类、方法等任何东西。&lt;/p&gt;
+&lt;p&gt;格式化代码：格式化import列表Ctrl+Alt+O，格式化代码Ctrl+Alt+L。&lt;/p&gt;
+&lt;p&gt;切换窗口：Alt+Num，常用的有1-项目结构，3-搜索结果，4/5-运行调试。Ctrl+Tab切换标签页，Ctrl+E/Ctrl+Shift+E打开最近打开过的或编辑过的文件。&lt;/p&gt;
+&lt;p&gt;单元测试：Ctrl+Alt+T创建单元测试用例。&lt;/p&gt;
+&lt;p&gt;运行：Alt+Shift+F10运行程序，Shift+F9启动调试，Ctrl+F2停止。&lt;/p&gt;
+&lt;p&gt;调试：F7/F8/F9 分别对应Step into，Step over，Continue。&lt;/p&gt;
+&lt;p&gt;此外还有些我自定义的，例如水平分屏Ctrl+|等，和一些神奇的小功能Ctrl+Shift+V粘贴很早以前拷贝过的，Alt+Shift+Insert进入到列模式进行按列选中。&lt;/p&gt;
+&lt;p&gt;Top #10切来切去：Ctrl+Tab&lt;/p&gt;
+&lt;p&gt;Top #9选你所想：Ctrl+W&lt;/p&gt;
+&lt;p&gt;Top #8代码生成：Template/Postfix +Tab&lt;/p&gt;
+&lt;p&gt;Top #7发号施令：Ctrl+Shift+A&lt;/p&gt;
+&lt;p&gt;Top #6无处藏身：Shift+Shift&lt;/p&gt;
+&lt;p&gt;Top #5自动完成：Ctrl+Shift+Enter&lt;/p&gt;
+&lt;p&gt;Top #4创造万物：Alt+Insert&lt;/p&gt;
+&lt;p&gt;太难割舍，前三名并列吧！&lt;/p&gt;
+&lt;p&gt;Top #1智能补全：Ctrl+Shift+Space&lt;/p&gt;
+&lt;p&gt;Top #1自我修复：Alt+Enter&lt;/p&gt;
+&lt;p&gt;Top #1重构一切：Ctrl+Shift+Alt+T&lt;/p&gt;
+&lt;p&gt;CTRL+ALT+ left/right 前后导航编辑过的地方
+Ctrl＋Shift＋Backspace可以跳转到上次编辑的地&lt;/p&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj41/</guid><pubDate>Tue, 22 Dec 2020 11:45:00 +0806</pubDate></item></channel></rss>

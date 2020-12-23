@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-12-22T03:51:17.910594+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-12-22T03:51:17.910893+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx的个人博客。</title><updated>2020-12-23T07:03:44.702862+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生——致自己。</subtitle><entry><id>/Xuxx_Blogs/archives/bj33/</id><title>Docker Compose笔记</title><updated>2020-12-23T07:03:44.703124+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
 &lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
@@ -712,7 +712,7 @@ db:
       &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_PASS=root&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;RABBITMQ_DEFAULT_USER&lt;/code&gt;  和  &lt;code&gt;RABBITMQ_DEFAULT_PASS&lt;/code&gt; 用来设置超级管理员的账号和密码，如果不设置，默认都是 &lt;code&gt;guest&lt;/code&gt; 。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-12-22T03:51:17.910875+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj33/" rel="alternate"/><published>2020-09-21T01:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj34/</id><title>Docker Compose部署GitLab</title><updated>2020-12-23T07:03:44.703104+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
 &lt;p&gt;GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。&lt;/p&gt;
 &lt;h2&gt;部署GitLab&lt;/h2&gt;
 &lt;p&gt;使用Docker来安装和运行GitLab中文版，&lt;code&gt;docker-compose.yml&lt;/code&gt;配置如下:&lt;/p&gt;
@@ -738,7 +738,7 @@ db:
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/opt/gitlab&lt;/span&gt;
         &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./logs:/var/log/gitlab&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-12-22T03:51:17.910857+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj34/" rel="alternate"/><published>2020-09-22T00:05:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj35/</id><title>动态规划算法</title><updated>2020-12-23T07:03:44.703085+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;动态规划题目特点&lt;/h2&gt;
 &lt;h3&gt;1.计数&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;有多少种方式走到右下角&lt;/li&gt;
@@ -798,7 +798,7 @@ db:
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 97.75533108866442" data-width="1742" data-height="891"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4149e997153756e993b24992e972f5d.png" alt="例题2_分析" /&gt;&lt;figcaption&gt;例题2_分析&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;计算顺序&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 108.70083432657925" data-width="1824" data-height="839"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5b42931b6b5fd32d1518816ee1d6b8af.png" alt="例题2_分析" /&gt;&lt;figcaption&gt;例题2_分析&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj35/" rel="alternate"/><published>2020-09-22T03:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj36/</id><title>VMware 16安装CentOS 7 配置静态IP</title><updated>2020-12-22T03:51:17.910839+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;一.安装VMware 16&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj35/" rel="alternate"/><published>2020-09-22T03:10:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj36/</id><title>VMware 16安装CentOS 7 配置静态IP</title><updated>2020-12-23T07:03:44.703065+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;一.安装VMware 16&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://blog.csdn.net/zouhuu/article/details/86530787"&gt;安装VMware 16&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;二.创建虚拟机&lt;/h2&gt;
 &lt;ol&gt;
@@ -887,7 +887,7 @@ systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; firewalld
 FinalShell：&lt;a href="https://www.hostbuf.com/"&gt;https://www.hostbuf.com/&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="/Xuxx_Blogs/archives/bj36/" rel="alternate"/><published>2020-11-23T11:35:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj37/</id><title>MySql获取最近日期</title><updated>2020-12-22T03:51:17.910821+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;一、 DATE_ADD()函数&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj36/" rel="alternate"/><published>2020-11-23T11:35:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj37/</id><title>MySql获取最近日期</title><updated>2020-12-23T07:03:44.703045+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;一、 DATE_ADD()函数&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;DATE_ADD()&lt;/strong&gt; 函数向日期添加指定的时间间隔。&lt;/p&gt;
 &lt;h3&gt;&lt;strong&gt;语法&lt;/strong&gt;&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;DATE_ADD&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;INTERVAL&lt;/span&gt; &lt;span class="n"&gt;expr&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -977,7 +977,7 @@ FinalShell：&lt;a href="https://www.hostbuf.com/"&gt;https://www.hostbuf.com/&l
 &lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;（日期）字段名2&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="nf"&gt;DATE_SUB&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;curdate&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="k"&gt;INTERVAL&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="k"&gt;DAY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="k"&gt;dual&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
 &lt;span class="k"&gt;GROUP&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;字段名1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj37/" rel="alternate"/><published>2020-12-01T12:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj38/</id><title>JSON、String、Map之间的互转</title><updated>2020-12-22T03:51:17.910802+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.使用前置&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj37/" rel="alternate"/><published>2020-12-01T12:50:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj38/</id><title>JSON、String、Map之间的互转</title><updated>2020-12-23T07:03:44.703025+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1.使用前置&lt;/h2&gt;
 &lt;p&gt;本次演示使用三个常用的工具类,每个工具类对应的依赖如下&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;FastJson&lt;/p&gt;
@@ -1454,7 +1454,7 @@ String jsonData = "{\"userid\":\"001\",\"username\":\"张三\",\"usersex\":\"男
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj38/" rel="alternate"/><published>2020-12-02T12:48:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj39/</id><title>SQL语言分类</title><updated>2020-12-22T03:51:17.910784+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;SQL语言共分为五大类：&lt;/p&gt;
+</content><link href="/Xuxx_Blogs/archives/bj38/" rel="alternate"/><published>2020-12-02T12:48:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj39/</id><title>SQL语言分类</title><updated>2020-12-23T07:03:44.703005+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;p&gt;SQL语言共分为五大类：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;数据查询语言 DQL(Data Query Language)&lt;/li&gt;
 &lt;li&gt;数据操纵语言DML(Data Manipulation Language)&lt;/li&gt;
@@ -1497,7 +1497,7 @@ String jsonData = "{\"userid\":\"001\",\"username\":\"张三\",\"usersex\":\"男
 &lt;li&gt;COMMIT：提交事务&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;注：还有其他的分类方式~~~&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj39/" rel="alternate"/><published>2020-12-04T12:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj40/</id><title>POI相关</title><updated>2020-12-22T03:51:17.910745+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;使用apache poi将单元格内容的一部分设置为下划线？&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj39/" rel="alternate"/><published>2020-12-04T12:53:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj40/</id><title>POI相关</title><updated>2020-12-23T07:03:44.702984+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;使用apache poi将单元格内容的一部分设置为下划线？&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://poi.apache.org/components/spreadsheet/quick-guide.htm"&gt;POI 官方文档&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;解决方案:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;differentFontTypeInSameCell&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
@@ -1519,7 +1519,7 @@ String jsonData = "{\"userid\":\"001\",\"username\":\"张三\",\"usersex\":\"男
     &lt;span class="n"&gt;cell&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setCellValue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;richString&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj40/" rel="alternate"/><published>2020-12-09T12:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj41/</id><title>Liunx常用命令大全</title><updated>2020-12-22T03:51:17.910722+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;端口监听查看：&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj40/" rel="alternate"/><published>2020-12-09T12:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj41/</id><title>Liunx常用命令大全</title><updated>2020-12-23T07:03:44.702959+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;端口监听查看：&lt;/h3&gt;
 &lt;p&gt;ss -tln 查看TCP的listen的端口&lt;/p&gt;
 &lt;p&gt;ss -tlnp 查看哪些进程使用了监听端口&lt;/p&gt;
 &lt;h3&gt;防火墙&lt;/h3&gt;
@@ -1914,7 +1914,7 @@ String jsonData = "{\"userid\":\"001\",\"username\":\"张三\",\"usersex\":\"男
 &lt;p&gt;列出远程服务器192.168.0.77机器所有的jvm实例，采用rmi协议，默认连接端口为1099&lt;/p&gt;
 &lt;p&gt;（前提是远程服务器提供jstatd服务）&lt;/p&gt;
 &lt;p&gt;注：jps命令有个地方很不好，似乎只能显示当前用户的java进程，要显示其他用户的还是只能用unix/linux的ps命令。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj41/" rel="alternate"/><published>2020-12-19T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj41/</id><title>idea常用快捷键</title><updated>2020-12-22T03:51:17.910644+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;自动代码&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj41/" rel="alternate"/><published>2020-12-19T22:55:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj42/</id><title>idea常用快捷键</title><updated>2020-12-23T07:03:44.702914+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;自动代码&lt;/h2&gt;
 &lt;p&gt;Ctrl+Alt+O 优化导入的类和包
 Alt+Insert 生成代码(如get,set方法,构造函数等) 或者右键（Generate）
 fori/sout/psvm + Tab
@@ -2058,4 +2058,4 @@ Alt+Delete，安全删除&lt;/p&gt;
 &lt;p&gt;Top #1重构一切：Ctrl+Shift+Alt+T&lt;/p&gt;
 &lt;p&gt;CTRL+ALT+ left/right 前后导航编辑过的地方
 Ctrl＋Shift＋Backspace可以跳转到上次编辑的地&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj41/" rel="alternate"/><published>2020-12-22T11:45:00+08:06</published></entry></feed>
+</content><link href="/Xuxx_Blogs/archives/bj42/" rel="alternate"/><published>2020-12-22T11:45:00+08:06</published></entry></feed>

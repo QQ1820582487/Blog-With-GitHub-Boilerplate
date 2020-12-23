@@ -34,7 +34,7 @@ excerpt: 笔记
 
 6. 标注有`@Configuration(proxyBeanMethods = false)`，注意：此值默认是true哦，需要显示改为false才算是Lite模式
 
-注：自Spring5.2（对应Spring Boot 2.2.0）开始，内置的几乎所有的`@Configuration`配置类都被修改为了`@Configuration(proxyBeanMethods = false)`，目的何为？答：以此来降低启动时间，为Cloud Native继续做准备。
+注：自Spring5.2（对应Spring Boot 2.2.0）开始，`内置的`几乎所有的`@Configuration`配置类都被修改为了`@Configuration(proxyBeanMethods = false)`，目的何为？答：以此来降低启动时间，为Cloud Native继续做准备。
 
 ### 优缺点
 
@@ -283,6 +283,15 @@ User{name='A哥-lite2', age=18}
 - 该模式下，配置类内部**可以通过方法调用**来处理依赖，并且能够保证是同一个实例，都指向IoC内的那个单例
 - 该模式下，@Bean方法不能被`private/final`等进行修饰（很简单，因为方法需要被重写嘛，所以不能私有和final。defualt/protected/public都可以哦），否则启动报错。
 
+## 使用建议
+
+了解了Spring配置类的Full模式和Lite模式，那么在工作中该如何使用呢？
+
+这里A哥给出使用建议，仅供参考：
+
+- 如果是在公司的业务功能/服务上做开发，使用Full模式
+
+- 如果你是个容器开发者，或者你在开发中间件、通用组件等，那么使用Lite模式是一种更被推荐的方式，它对Cloud Native更为友好
 
 
 [原文](https://mp.weixin.qq.com/s?__biz=MzI0MTUwOTgyOQ==&mid=2247484035&idx=1&sn=a3a1a3f88e93e448e1e86980f686fd2b&chksm=e90b3629de7cbf3faac46d433bf4f37f5f7057b5f9fd47fb80c1fbf6a7f8cf2479cdcfab46e4&scene=178&cur_album_id=1608175058340888581#rd)

@@ -1,718 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 07:49:21 +0806</lastBuildDate><pubDate>Wed, 23 Dec 2020 07:49:21 +0806</pubDate><item><title>Docker Compose笔记</title><link>/Xuxx_Blogs/archives/bj33/</link><description>&lt;h2&gt;简介&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。从功能上看，跟 &lt;code&gt;OpenStack&lt;/code&gt; 中的 &lt;code&gt;Heat&lt;/code&gt; 十分类似。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 定位是 「定义和运行多个 Docker 容器的应用（Defining and running multi-container Docker applications）」，其前身是开源项目 Fig。&lt;/p&gt;
-&lt;p&gt;通过第一部分中的介绍，知道使用一个 &lt;code&gt;Dockerfile&lt;/code&gt; 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器，甚至还包括负载均衡容器等。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 恰好满足了这样的需求。它允许用户通过一个单独的 &lt;code&gt;docker-compose.yml&lt;/code&gt; 模板文件（YAML 格式）来定义一组相关联的应用容器为一个项目（project）。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 中有两个重要的概念：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;服务 (service)：一个应用的容器，实际上可以包括若干运行相同镜像的容器实例。&lt;/li&gt;
-&lt;li&gt;项目 (project)：由一组关联的应用容器组成的一个完整业务单元，在 &lt;code&gt;docker-compose.yml&lt;/code&gt; 文件中定义。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 的默认管理对象是项目，通过子命令对项目中的一组容器进行便捷地生命周期管理。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 项目由 Python 编写，实现上调用了 Docker 服务提供的 API 来对容器进行管理。因此，只要所操作的平台支持 Docker API，就可以在其上利用 &lt;code&gt;Compose&lt;/code&gt; 来进行编排管理。&lt;/p&gt;
-&lt;h2&gt;安装与卸载&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 支持 Linux、macOS、Windows 10 三大平台。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Compose&lt;/code&gt; 可以通过 Python 的包管理工具 &lt;code&gt;pip&lt;/code&gt; 进行安装，也可以直接下载编译好的二进制文件使用，甚至能够直接在 Docker 容器中运行。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Docker Desktop for Mac/Windows&lt;/code&gt; 自带 &lt;code&gt;docker-compose&lt;/code&gt; 二进制文件，安装 Docker 之后可以直接使用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ docker-compose --versiondocker-compose version 1.25.5, build 4667896b&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Linux 系统请使用以下介绍的方法安装。&lt;/p&gt;
-&lt;h3&gt;二进制包安装&lt;/h3&gt;
-&lt;p&gt;在 Linux 上的也安装十分简单，从 &lt;a href="https://github.com/docker/compose/releases"&gt;官方 GitHub Release&lt;/a&gt; 处直接下载编译好的二进制文件即可。&lt;/p&gt;
-&lt;p&gt;例如，在 Linux 64 位系统上直接下载对应的二进制包。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-&lt;span class="sb"&gt;`&lt;/span&gt;uname -s&lt;span class="sb"&gt;`&lt;/span&gt;-&lt;span class="sb"&gt;`&lt;/span&gt;uname -m&lt;span class="sb"&gt;`&lt;/span&gt; &amp;gt; /usr/local/bin/docker-compose
-
-$ sudo chmod +x /usr/local/bin/docker-compose
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;PIP 安装&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;注：&lt;/em&gt; &lt;code&gt;x86_64&lt;/code&gt; 架构的 Linux 建议按照上边的方法下载二进制包进行安装，如果您计算机的架构是 &lt;code&gt;ARM&lt;/code&gt; (例如，树莓派)，再使用 &lt;code&gt;pip&lt;/code&gt; 安装。&lt;/p&gt;
-&lt;p&gt;这种方式是将 Compose 当作一个 Python 应用来从 pip 源中安装。&lt;/p&gt;
-&lt;p&gt;执行安装命令：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install -U docker-compose
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可以看到类似如下输出，说明安装成功。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Collecting docker-compose
-  Downloading docker-compose-1.25.5.tar.gz &lt;span class="o"&gt;(&lt;/span&gt;149kB&lt;span class="o"&gt;)&lt;/span&gt;: 149kB downloaded
-...
-Successfully installed docker-compose cached-property requests texttable websocket-client docker-py dockerpty six enum34 backports.ssl-match-hostname ipaddress
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;bash 补全命令&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -L https://raw.githubusercontent.com/docker/compose/1.25.5/contrib/completion/bash/docker-compose &amp;gt; /etc/bash_completion.d/docker-compose
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;卸载&lt;/h3&gt;
-&lt;p&gt;如果是二进制包方式安装的，删除二进制文件即可。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo rm /usr/local/bin/docker-compose
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;如果是通过 &lt;code&gt;pip&lt;/code&gt; 安装的，则执行如下命令即可删除。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip uninstall docker-compose
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;使用&lt;/h2&gt;
-&lt;h3&gt;术语&lt;/h3&gt;
-&lt;p&gt;首先介绍几个术语。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;服务 (&lt;code&gt;service&lt;/code&gt;)：一个应用容器，实际上可以运行多个相同镜像的实例。&lt;/li&gt;
-&lt;li&gt;项目 (&lt;code&gt;project&lt;/code&gt;)：由一组关联的应用容器组成的一个完整业务单元。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;可见，一个项目可以由多个服务（容器）关联而成，&lt;code&gt;Compose&lt;/code&gt; 面向项目进行管理。&lt;/p&gt;
-&lt;h3&gt;场景&lt;/h3&gt;
-&lt;p&gt;最常见的项目是 web 网站，该项目应该包含 web 应用和缓存。&lt;/p&gt;
-&lt;p&gt;下面用 &lt;code&gt;Python&lt;/code&gt; 来建立一个能够记录页面访问次数的 web 网站。&lt;/p&gt;
-&lt;h4&gt;web 应用&lt;/h4&gt;
-&lt;p&gt;新建文件夹，在该目录中编写 &lt;code&gt;app.py&lt;/code&gt; 文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Redis&lt;/span&gt;
-
-&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;redis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Redis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;redis&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;6379&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="n"&gt;count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;hits&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello World! 该页面已被访问 &lt;/span&gt;&lt;span class="si"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt; 次。&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;0.0.0.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;Dockerfile&lt;/h4&gt;
-&lt;p&gt;编写 &lt;code&gt;Dockerfile&lt;/code&gt; 文件，内容为&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;python:3.6-alpine&lt;/span&gt;
-&lt;span class="k"&gt;ADD&lt;/span&gt; . /code
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /code&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; pip install redis flask
-&lt;span class="k"&gt;CMD&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;python&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;app.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;docker-compose.yml&lt;/h4&gt;
-&lt;p&gt;编写 &lt;code&gt;docker-compose.yml&lt;/code&gt; 文件，这个是 Compose 使用的主模板文件。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;3&amp;#39;&lt;/span&gt;
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="nt"&gt;web&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;.&lt;/span&gt;
-    &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-     &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;5000:5000&amp;quot;&lt;/span&gt;
-  &lt;span class="nt"&gt;redis&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;redis:alpine&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h4&gt;运行 compose 项目&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker-compose up
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;此时访问本地 &lt;code&gt;5000&lt;/code&gt; 端口，每次刷新页面，计数就会加 1。&lt;/p&gt;
-&lt;h2&gt;命令说明&lt;/h2&gt;
-&lt;h3&gt;命令对象与格式&lt;/h3&gt;
-&lt;p&gt;对于 Compose 来说，大部分命令的对象既可以是项目本身，也可以指定为项目中的服务或者容器。如果没有特别的说明，命令对象将是项目，这意味着项目中所有的服务都会受到命令影响。&lt;/p&gt;
-&lt;p&gt;执行 &lt;code&gt;docker-compose [COMMAND] --help&lt;/code&gt; 或者 &lt;code&gt;docker-compose help [COMMAND]&lt;/code&gt; 可以查看具体某个命令的使用格式。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker-compose&lt;/code&gt; 命令的基本的使用格式是&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;docker-compose &lt;span class="o"&gt;[&lt;/span&gt;-f&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;arg&amp;gt;...&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;COMMAND&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;ARGS...&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;命令选项&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-f, --file FILE&lt;/code&gt; 指定使用的 Compose 模板文件，默认为 &lt;code&gt;docker-compose.yml&lt;/code&gt;，可以多次指定。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p, --project-name NAME&lt;/code&gt; 指定项目名称，默认将使用所在目录名称作为项目名。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--x-networking&lt;/code&gt; 使用 Docker 的可拔插网络后端特性&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--x-network-driver DRIVER&lt;/code&gt; 指定网络后端的驱动，默认为 &lt;code&gt;bridge&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--verbose&lt;/code&gt; 输出更多调试信息。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-v, --version&lt;/code&gt; 打印版本并退出。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;命令使用说明&lt;/h3&gt;
-&lt;h4&gt;build&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose build [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;构建（重新构建）项目中的服务容器。&lt;/p&gt;
-&lt;p&gt;服务容器一旦构建后，将会带上一个标记名，例如对于 web 项目中的一个 db 容器，可能是 web_db。&lt;/p&gt;
-&lt;p&gt;可以随时在项目目录下运行 &lt;code&gt;docker-compose build&lt;/code&gt; 来重新构建服务。&lt;/p&gt;
-&lt;p&gt;选项包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--force-rm&lt;/code&gt; 删除构建过程中的临时容器。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-cache&lt;/code&gt; 构建镜像过程中不使用 cache（这将加长构建过程）。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--pull&lt;/code&gt; 始终尝试通过 pull 来获取更新版本的镜像。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;config&lt;/h4&gt;
-&lt;p&gt;验证 Compose 文件格式是否正确，若正确则显示配置，若格式错误显示错误原因。&lt;/p&gt;
-&lt;h4&gt;down&lt;/h4&gt;
-&lt;p&gt;此命令将会停止 &lt;code&gt;up&lt;/code&gt; 命令所启动的容器，并移除网络&lt;/p&gt;
-&lt;h4&gt;exec&lt;/h4&gt;
-&lt;p&gt;进入指定的容器。&lt;/p&gt;
-&lt;h4&gt;help&lt;/h4&gt;
-&lt;p&gt;获得一个命令的帮助。&lt;/p&gt;
-&lt;h4&gt;images&lt;/h4&gt;
-&lt;p&gt;列出 Compose 文件中包含的镜像。&lt;/p&gt;
-&lt;h4&gt;kill&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose kill [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;通过发送 &lt;code&gt;SIGKILL(终止进程)&lt;/code&gt; 信号来强制停止服务容器。&lt;/p&gt;
-&lt;p&gt;支持通过 &lt;code&gt;-s&lt;/code&gt; 参数来指定发送的信号，例如通过如下指令发送 &lt;code&gt;SIGINT&lt;/code&gt; 信号。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ docker-compose kill -s SIGINT&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;logs&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose logs [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;查看服务容器的输出。默认情况下，docker-compose 将对不同的服务输出使用不同的颜色来区分。可以通过 &lt;code&gt;--no-color&lt;/code&gt; 来关闭颜色。&lt;/p&gt;
-&lt;p&gt;该命令在调试问题的时候十分有用。&lt;/p&gt;
-&lt;h4&gt;pause&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose pause [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;暂停一个服务容器。&lt;/p&gt;
-&lt;h4&gt;port&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose port [options] SERVICE PRIVATE_PORT&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;打印某个容器端口所映射的公共端口。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--protocol=proto&lt;/code&gt; 指定端口协议，tcp（默认值）或者 udp。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--index=index&lt;/code&gt; 如果同一服务存在多个容器，指定命令对象容器的序号（默认为 1）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;ps&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose ps [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;列出项目中目前的所有容器。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-q&lt;/code&gt; 只打印容器的 ID 信息。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;pull&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose pull [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;拉取服务依赖的镜像。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--ignore-pull-failures&lt;/code&gt; 忽略拉取镜像过程中的错误。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;push&lt;/h4&gt;
-&lt;p&gt;推送服务依赖的镜像到 Docker 镜像仓库。&lt;/p&gt;
-&lt;h4&gt;restart&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose restart [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;重启项目中的服务。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-t, --timeout TIMEOUT&lt;/code&gt; 指定重启前停止容器的超时（默认为 10 秒）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;rm&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose rm [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;删除所有（停止状态的）服务容器。推荐先执行 &lt;code&gt;docker-compose stop&lt;/code&gt; 命令来停止容器。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-f, --force&lt;/code&gt; 强制直接删除，包括非停止状态的容器。一般尽量不要使用该选项。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-v&lt;/code&gt; 删除容器所挂载的数据卷。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;run&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose run [options] [-p PORT...] [-e KEY=VAL...] SERVICE [COMMAND] [ARGS...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;在指定服务上执行一个命令。&lt;/p&gt;
-&lt;p&gt;例如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker-compose run ubuntu ping docker.com
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;将会启动一个 ubuntu 服务容器，并执行 &lt;code&gt;ping docker.com&lt;/code&gt; 命令。&lt;/p&gt;
-&lt;p&gt;默认情况下，如果存在关联，则所有关联的服务将会自动被启动，除非这些服务已经在运行中。&lt;/p&gt;
-&lt;p&gt;该命令类似启动容器后运行指定的命令，相关卷、链接等等都将会按照配置自动创建。&lt;/p&gt;
-&lt;p&gt;两个不同点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;给定命令将会覆盖原有的自动运行命令；&lt;/li&gt;
-&lt;li&gt;不会自动创建端口，以避免冲突。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果不希望自动启动关联的容器，可以使用 &lt;code&gt;--no-deps&lt;/code&gt; 选项，例如&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker-compose run --no-deps web python manage.py shell
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;将不会启动 web 容器所关联的其它容器。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-d&lt;/code&gt; 后台运行容器。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--name NAME&lt;/code&gt; 为容器指定一个名字。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--entrypoint CMD&lt;/code&gt; 覆盖默认的容器启动指令。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-e KEY=VAL&lt;/code&gt; 设置环境变量值，可多次使用选项来设置多个环境变量。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-u, --user=""&lt;/code&gt; 指定运行容器的用户名或者 uid。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-deps&lt;/code&gt; 不自动启动关联的服务容器。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--rm&lt;/code&gt; 运行命令后自动删除容器，&lt;code&gt;d&lt;/code&gt; 模式下将忽略。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p, --publish=[]&lt;/code&gt; 映射容器端口到本地主机。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--service-ports&lt;/code&gt; 配置服务端口并映射到本地主机。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-T&lt;/code&gt; 不分配伪 tty，意味着依赖 tty 的指令将无法运行。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;scale&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose scale [options] [SERVICE=NUM...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;设置指定服务运行的容器个数。&lt;/p&gt;
-&lt;p&gt;通过 &lt;code&gt;service=num&lt;/code&gt; 的参数来设置数量。例如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker-compose scale &lt;span class="nv"&gt;web&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;将启动 3 个容器运行 web 服务，2 个容器运行 db 服务。&lt;/p&gt;
-&lt;p&gt;一般的，当指定数目多于该服务当前实际运行容器，将新创建并启动容器；反之，将停止容器。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-t, --timeout TIMEOUT&lt;/code&gt; 停止容器时候的超时（默认为 10 秒）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;start&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose start [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;启动已经存在的服务容器。&lt;/p&gt;
-&lt;h4&gt;stop&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose stop [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;停止已经处于运行状态的容器，但不删除它。通过 &lt;code&gt;docker-compose start&lt;/code&gt; 可以再次启动这些容器。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-t, --timeout TIMEOUT&lt;/code&gt; 停止容器时候的超时（默认为 10 秒）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;top&lt;/h4&gt;
-&lt;p&gt;查看各个服务容器内运行的进程。&lt;/p&gt;
-&lt;h4&gt;unpause&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose unpause [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;恢复处于暂停状态中的服务。&lt;/p&gt;
-&lt;h4&gt;up&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose up [options] [SERVICE...]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;该命令十分强大，它将尝试自动完成包括构建镜像，（重新）创建服务，启动服务，并关联服务相关容器的一系列操作。&lt;/p&gt;
-&lt;p&gt;链接的服务都将会被自动启动，除非已经处于运行状态。&lt;/p&gt;
-&lt;p&gt;可以说，大部分时候都可以直接通过该命令来启动一个项目。&lt;/p&gt;
-&lt;p&gt;默认情况，&lt;code&gt;docker-compose up&lt;/code&gt; 启动的容器都在前台，控制台将会同时打印所有容器的输出信息，可以很方便进行调试。&lt;/p&gt;
-&lt;p&gt;当通过 &lt;code&gt;Ctrl-C&lt;/code&gt; 停止命令时，所有容器将会停止。&lt;/p&gt;
-&lt;p&gt;如果使用 &lt;code&gt;docker-compose up -d&lt;/code&gt;，将会在后台启动并运行所有的容器。一般推荐生产环境下使用该选项。&lt;/p&gt;
-&lt;p&gt;默认情况，如果服务容器已经存在，&lt;code&gt;docker-compose up&lt;/code&gt; 将会尝试停止容器，然后重新创建（保持使用 &lt;code&gt;volumes-from&lt;/code&gt; 挂载的卷），以保证新启动的服务匹配 &lt;code&gt;docker-compose.yml&lt;/code&gt; 文件的最新内容。如果用户不希望容器被停止并重新创建，可以使用 &lt;code&gt;docker-compose up --no-recreate&lt;/code&gt;。这样将只会启动处于停止状态的容器，而忽略已经运行的服务。如果用户只想重新部署某个服务，可以使用 &lt;code&gt;docker-compose up --no-deps -d &amp;lt;SERVICE_NAME&amp;gt;&lt;/code&gt; 来重新创建服务并后台停止旧服务，启动新服务，并不会影响到其所依赖的服务。&lt;/p&gt;
-&lt;p&gt;选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-d&lt;/code&gt; 在后台运行服务容器。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-color&lt;/code&gt; 不使用颜色来区分不同的服务的控制台输出。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-deps&lt;/code&gt; 不启动服务所链接的容器。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--force-recreate&lt;/code&gt; 强制重新创建容器，不能与 &lt;code&gt;--no-recreate&lt;/code&gt; 同时使用。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-recreate&lt;/code&gt; 如果容器已经存在了，则不重新创建，不能与 &lt;code&gt;--force-recreate&lt;/code&gt; 同时使用。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--no-build&lt;/code&gt; 不自动构建缺失的服务镜像。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-t, --timeout TIMEOUT&lt;/code&gt; 停止容器时候的超时（默认为 10 秒）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;version&lt;/h4&gt;
-&lt;p&gt;格式为 &lt;code&gt;docker-compose version&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;打印版本信息。&lt;/p&gt;
-&lt;h2&gt;Compose 模板文件&lt;/h2&gt;
-&lt;p&gt;模板文件是使用 &lt;code&gt;Compose&lt;/code&gt; 的核心，涉及到的指令关键字也比较多。但这里面大部分指令跟 &lt;code&gt;docker run&lt;/code&gt; 相关参数的含义都是类似的。&lt;/p&gt;
-&lt;p&gt;默认的模板文件名称为 &lt;code&gt;docker-compose.yml&lt;/code&gt;，格式为 YAML 格式。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: "3"
-
-services:
-  webapp:
-    image: examples/web
-    ports:
-      - "80:80"
-    volumes:
-      - "/data"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;注意每个服务都必须通过 &lt;code&gt;image&lt;/code&gt; 指令指定镜像或 &lt;code&gt;build&lt;/code&gt; 指令（需要 Dockerfile）等来自动构建生成镜像。&lt;/p&gt;
-&lt;p&gt;如果使用 &lt;code&gt;build&lt;/code&gt; 指令，在 &lt;code&gt;Dockerfile&lt;/code&gt; 中设置的选项(例如：&lt;code&gt;CMD&lt;/code&gt;, &lt;code&gt;EXPOSE&lt;/code&gt;, &lt;code&gt;VOLUME&lt;/code&gt;, &lt;code&gt;ENV&lt;/code&gt; 等) 将会自动被获取，无需在 &lt;code&gt;docker-compose.yml&lt;/code&gt; 中重复设置。&lt;/p&gt;
-&lt;p&gt;下面分别介绍各个指令的用法。&lt;/p&gt;
-&lt;h4&gt;&lt;code&gt;build&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定 &lt;code&gt;Dockerfile&lt;/code&gt; 所在文件夹的路径（可以是绝对路径，或者相对 docker-compose.yml 文件的路径）。 &lt;code&gt;Compose&lt;/code&gt; 将会利用它自动构建这个镜像，然后使用这个镜像。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: '3'
-services:
-  webapp:
-    build: ./dir&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;你也可以使用 &lt;code&gt;context&lt;/code&gt; 指令指定 &lt;code&gt;Dockerfile&lt;/code&gt; 所在文件夹的路径。&lt;/p&gt;
-&lt;p&gt;使用 &lt;code&gt;dockerfile&lt;/code&gt; 指令指定 &lt;code&gt;Dockerfile&lt;/code&gt; 文件名。&lt;/p&gt;
-&lt;p&gt;使用 &lt;code&gt;arg&lt;/code&gt; 指令指定构建镜像时的变量。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: '3'
-services:
-  webapp:
-    build:
-      context: ./dir
-      dockerfile: Dockerfile-alternate
-      args:
-        buildno: 1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;使用 &lt;code&gt;cache_from&lt;/code&gt; 指定构建镜像的缓存&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;build:
-  context: .
-  cache_from:
-    - alpine:latest
-    - corp/web_app:3.14&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;cap_add, cap_drop&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定容器的内核能力（capacity）分配。&lt;/p&gt;
-&lt;p&gt;例如，让容器拥有所有能力可以指定为：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cap_add:
-  - ALL&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;去掉 NET_ADMIN 能力可以指定为：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cap_drop:
-  - NET_ADMIN&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;command&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;覆盖容器启动后默认执行的命令。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;command: echo "hello world"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;cgroup_parent&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定父 &lt;code&gt;cgroup&lt;/code&gt; 组，意味着将继承该组的资源限制。&lt;/p&gt;
-&lt;p&gt;例如，创建了一个 cgroup 组名称为 &lt;code&gt;cgroups_1&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cgroup_parent: cgroups_1&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;container_name&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定容器名称。默认将会使用 &lt;code&gt;项目名称_服务名称_序号&lt;/code&gt; 这样的格式。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;container_name: docker-web-container&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;&lt;p&gt;注意: 指定容器名称后，该服务将无法进行扩展（scale），因为 Docker 不允许多个容器具有相同的名称。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4&gt;&lt;code&gt;devices&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定设备映射关系。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;devices:
-  - "/dev/ttyUSB1:/dev/ttyUSB0"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;depends_on&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;解决容器的依赖、启动先后的问题。以下例子中会先启动 &lt;code&gt;redis&lt;/code&gt; &lt;code&gt;db&lt;/code&gt; 再启动 &lt;code&gt;web&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: '3'
-
-services:
-  web:
-    build: .
-    depends_on:
-      - db
-      - redis
-
-  redis:
-    image: redis
-
-  db:
-    image: postgres&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;&lt;p&gt;注意：&lt;code&gt;web&lt;/code&gt; 服务不会等待 &lt;code&gt;redis&lt;/code&gt; &lt;code&gt;db&lt;/code&gt; 「完全启动」之后才启动。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4&gt;&lt;code&gt;dns&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;自定义 &lt;code&gt;DNS&lt;/code&gt; 服务器。可以是一个值，也可以是一个列表。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;dns: 8.8.8.8
-
-dns:
-  - 8.8.8.8
-  - 114.114.114.114&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;dns_search&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;配置 &lt;code&gt;DNS&lt;/code&gt; 搜索域。可以是一个值，也可以是一个列表。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;dns_search: example.com
-
-dns_search:
-  - domain1.example.com
-  - domain2.example.com&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;tmpfs&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;挂载一个 tmpfs 文件系统到容器。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;tmpfs: /run
-tmpfs:
-  - /run
-  - /tmp&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;env_file&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;从文件中获取环境变量，可以为单独的文件路径或列表。&lt;/p&gt;
-&lt;p&gt;如果通过 &lt;code&gt;docker-compose -f FILE&lt;/code&gt; 方式来指定 Compose 模板文件，则 &lt;code&gt;env_file&lt;/code&gt; 中变量的路径会基于模板文件路径。&lt;/p&gt;
-&lt;p&gt;如果有变量名称与 &lt;code&gt;environment&lt;/code&gt; 指令冲突，则按照惯例，以后者为准。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;env_file: .env
-
-env_file:
-  - ./common.env
-  - ./apps/web.env
-  - /opt/secrets.env&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;环境变量文件中每一行必须符合格式，支持 &lt;code&gt;#&lt;/code&gt; 开头的注释行。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# common.env: Set development environment
-PROG_ENV=development&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;environment&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;设置环境变量。你可以使用数组或字典两种格式。&lt;/p&gt;
-&lt;p&gt;只给定名称的变量会自动获取运行 Compose 主机上对应变量的值，可以用来防止泄露不必要的数据。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;environment:
-  RACK_ENV: development
-  SESSION_SECRET:
-
-environment:
-  - RACK_ENV=development
-  - SESSION_SECRET&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果变量名称或者值中用到 &lt;code&gt;true|false，yes|no&lt;/code&gt; 等表达 &lt;a href="https://yaml.org/type/bool.html"&gt;布尔&lt;/a&gt; 含义的词汇，最好放到引号里，避免 YAML 自动解析某些内容为对应的布尔语义。这些特定词汇，包括&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|FALSE|on|On|ON|off|Off|OFF&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;expose&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;暴露端口，但不映射到宿主机，只被连接的服务访问。&lt;/p&gt;
-&lt;p&gt;仅可以指定内部端口为参数&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;expose:
- - "3000"
- - "8000"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;external_links&lt;/code&gt;&lt;/h4&gt;
-&lt;blockquote&gt;&lt;p&gt;注意：不建议使用该指令。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;链接到 &lt;code&gt;docker-compose.yml&lt;/code&gt; 外部的容器，甚至并非 &lt;code&gt;Compose&lt;/code&gt; 管理的外部容器。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;external_links:
- - redis_1
- - project_db_1:mysql
- - project_db_1:postgresql&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;extra_hosts&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;类似 Docker 中的 &lt;code&gt;--add-host&lt;/code&gt; 参数，指定额外的 host 名称映射信息。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;extra_hosts:
- - "googledns:8.8.8.8"
- - "dockerhub:52.1.157.61"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;会在启动后的服务容器中 &lt;code&gt;/etc/hosts&lt;/code&gt; 文件中添加如下两条条目。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;8.8.8.8 googledns
-52.1.157.61 dockerhub&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;healthcheck&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;通过命令检查容器是否健康运行。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;healthcheck:
-  test: ["CMD", "curl", "-f", "http://localhost"]
-  interval: 1m30s
-  timeout: 10s
-  retries: 3&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;image&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定为镜像名称或镜像 ID。如果镜像在本地不存在，&lt;code&gt;Compose&lt;/code&gt; 将会尝试拉取这个镜像。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;image: ubuntu
-image: orchardup/postgresql
-image: a4bc65fd&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;labels&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;为容器添加 Docker 元数据（metadata）信息。例如可以为容器添加辅助说明信息。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;labels:
-  com.startupteam.description: "webapp for a startup team"
-  com.startupteam.department: "devops department"
-  com.startupteam.release: "rc3 for v1.0"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;links&lt;/code&gt;&lt;/h4&gt;
-&lt;blockquote&gt;&lt;p&gt;注意：不推荐使用该指令。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4&gt;&lt;code&gt;logging&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;配置日志选项。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;logging:
-  driver: syslog
-  options:
-    syslog-address: "tcp://192.168.0.42:123"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;目前支持三种日志驱动类型。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;driver: "json-file"
-driver: "syslog"
-driver: "none"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;options&lt;/code&gt; 配置日志驱动的相关参数。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;options:
-  max-size: "200k"
-  max-file: "10"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;network_mode&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;设置网络模式。使用和 &lt;code&gt;docker run&lt;/code&gt; 的 &lt;code&gt;--network&lt;/code&gt; 参数一样的值。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;network_mode: "bridge"
-network_mode: "host"
-network_mode: "none"
-network_mode: "service:[service name]"
-network_mode: "container:[container name/id]"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;networks&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;配置容器连接的网络。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: "3"
-services:
-
-  some-service:
-    networks:
-     - some-network
-     - other-network
-
-networks:
-  some-network:
-  other-network:&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;pid&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;跟主机系统共享进程命名空间。打开该选项的容器之间，以及容器和宿主机系统之间可以通过进程 ID 来相互访问和操作。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pid: "host"&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;ports&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;暴露端口信息。&lt;/p&gt;
-&lt;p&gt;使用宿主端口：容器端口 &lt;code&gt;(HOST:CONTAINER)&lt;/code&gt; 格式，或者仅仅指定容器的端口（宿主将会随机选择端口）都可以。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ports:
- - "3000"
- - "8000:8000"
- - "49100:22"
- - "127.0.0.1:8001:8001"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;注意：当使用&lt;/em&gt; &lt;em&gt;HOST:CONTAINER&lt;/em&gt; &lt;em&gt;格式来映射端口时，如果你使用的容器端口小于 60 并且没放到引号里，可能会得到错误结果，因为&lt;/em&gt; &lt;em&gt;YAML&lt;/em&gt; &lt;em&gt;会自动解析&lt;/em&gt; &lt;em&gt;xx:yy&lt;/em&gt; &lt;em&gt;这种数字格式为 60 进制。为避免出现这种问题，建议数字串都采用引号包括起来的字符串格式。&lt;/em&gt;&lt;/p&gt;
-&lt;h4&gt;&lt;code&gt;secrets&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;存储敏感数据，例如 &lt;code&gt;mysql&lt;/code&gt; 服务密码。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: "3.1"
-services:
-
-mysql:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
-  secrets:
-    - db_root_password
-    - my_other_secret
-
-secrets:
-  my_secret:
-    file: ./my_secret.txt
-  my_other_secret:
-    external: true&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;security_opt&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定容器模板标签（label）机制的默认属性（用户、角色、类型、级别等）。例如配置标签的用户名和角色名。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;security_opt:
-    - label:user:USER
-    - label:role:ROLE&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;stop_signal&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;设置另一个信号来停止容器。在默认情况下使用的是 SIGTERM 停止容器。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;stop_signal: SIGUSR1&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;sysctls&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;配置容器内核参数。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sysctls:
-  net.core.somaxconn: 1024
-  net.ipv4.tcp_syncookies: 0
-
-sysctls:
-  - net.core.somaxconn=1024
-  - net.ipv4.tcp_syncookies=0&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;ulimits&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;指定容器的 ulimits 限制值。&lt;/p&gt;
-&lt;p&gt;例如，指定最大进程数为 65535，指定文件句柄数为 20000（软限制，应用可以随时修改，不能超过硬限制） 和 40000（系统硬限制，只能 root 用户提高）。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ulimits:
-    nproc: 65535
-    nofile:
-      soft: 20000
-      hard: 40000&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&lt;code&gt;volumes&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;数据卷所挂载路径设置。可以设置为宿主机路径(&lt;code&gt;HOST:CONTAINER&lt;/code&gt;)或者数据卷名称(&lt;code&gt;VOLUME:CONTAINER&lt;/code&gt;)，并且可以设置访问模式 （&lt;code&gt;HOST:CONTAINER:ro&lt;/code&gt;）。&lt;/p&gt;
-&lt;p&gt;该指令中路径支持相对路径。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;volumes:
- - /var/lib/mysql
- - cache/:/tmp/cache
- - ~/configs:/etc/configs/:ro&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果路径为数据卷名称，必须在文件中配置数据卷。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: "3"
-
-services:
-  my_src:
-    image: mysql:8.0
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-volumes:
-  mysql_data:&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;其它指令&lt;/h4&gt;
-&lt;p&gt;此外，还有包括 &lt;code&gt;domainname, entrypoint, hostname, ipc, mac_address, privileged, read_only, shm_size, restart, stdin_open, tty, user, working_dir&lt;/code&gt; 等指令，基本跟 &lt;code&gt;docker run&lt;/code&gt; 中对应参数的功能一致。&lt;/p&gt;
-&lt;p&gt;指定服务容器启动后执行的入口文件。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;entrypoint: /code/entrypoint.sh&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;指定容器中运行应用的用户名。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;user: nginx&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;指定容器中工作目录。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;working_dir: /code&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;指定容器中搜索域名、主机名、mac 地址等。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;domainname: your_website.comhostname: testmac_address: 08-00-27-00-0C-0A&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;允许容器中运行一些特权命令。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;privileged: true&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;指定容器退出后的重启策略为始终重启。该命令对保持服务始终运行十分有效，在生产环境中推荐配置为 &lt;code&gt;always&lt;/code&gt; 或者 &lt;code&gt;unless-stopped&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;restart: always&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以只读模式挂载容器的 root 文件系统，意味着不能对容器内容进行修改。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;read_only: true&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;打开标准输入，可以接受外部输入。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;stdin_open: true&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;模拟一个伪终端。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;tty: true&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;读取变量&lt;/h4&gt;
-&lt;p&gt;Compose 模板文件支持动态读取主机的系统环境变量和当前目录下的 &lt;code&gt;.env&lt;/code&gt; 文件中的变量。&lt;/p&gt;
-&lt;p&gt;例如，下面的 Compose 文件将从运行它的环境中读取变量 &lt;code&gt;${MONGO_VERSION}&lt;/code&gt; 的值，并写入执行的指令中。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;version: "3"
-services:
-
-db:
-  image: "mongo:${MONGO_VERSION}"&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果执行 &lt;code&gt;MONGO_VERSION=3.2 docker-compose up&lt;/code&gt; 则会启动一个 &lt;code&gt;mongo:3.2&lt;/code&gt; 镜像的容器；如果执行 &lt;code&gt;MONGO_VERSION=2.8 docker-compose up&lt;/code&gt; 则会启动一个 &lt;code&gt;mongo:2.8&lt;/code&gt; 镜像的容器。&lt;/p&gt;
-&lt;p&gt;若当前目录存在 &lt;code&gt;.env&lt;/code&gt; 文件，执行 &lt;code&gt;docker-compose&lt;/code&gt; 命令时将从该文件中读取变量。&lt;/p&gt;
-&lt;p&gt;在当前目录新建 &lt;code&gt;.env&lt;/code&gt; 文件并写入以下内容。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# 支持 # 号注释MONGO_VERSION=3.6&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;执行 &lt;code&gt;docker-compose up&lt;/code&gt; 则会启动一个 &lt;code&gt;mongo:3.6&lt;/code&gt; 镜像的容器。&lt;/p&gt;
-&lt;h2&gt;Docker Compose部署应用程序&lt;/h2&gt;
-&lt;h3&gt;部署Tomcat&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;3.1&amp;#39;&lt;/span&gt;
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
-    &lt;span class="nt"&gt;tomcat&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="nt"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;always&lt;/span&gt;
-        &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tomcat&lt;/span&gt;
-        &lt;span class="nt"&gt;container_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tomcat&lt;/span&gt;
-        &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8080:8080&lt;/span&gt;
-        &lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./webapps:/usr/local/tomcat/webapps&lt;/span&gt;
-        &lt;span class="nt"&gt;environment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="c1"&gt;#时区&lt;/span&gt;
-          &lt;span class="nt"&gt;TZ&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Asia/Shanghai&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;部署MySQL_1&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;3.1&amp;#39;&lt;/span&gt;
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
-    &lt;span class="nt"&gt;db&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mysql&lt;/span&gt;
-        &lt;span class="nt"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;always&lt;/span&gt;
-        &lt;span class="nt"&gt;environment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="nt"&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;123456&lt;/span&gt;
-        &lt;span class="nt"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-            &lt;span class="c1"&gt;#默认的身份验证插件&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--default-authentication-plugin=mysql_native_password&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;#字符集&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--character-set-server=utf8mb4&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;#字符集编码规则&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--collation-server=utf8mb4_general_ci&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;#数据行更新时，timestamp类型字段不更新为当前时间&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--explicit_defaults_for_timestamp=true&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;#表名小写,不区分大小写&lt;/span&gt;
-            &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--lower_case_table_names=1&lt;/span&gt;
-        &lt;span class="nt"&gt;container_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;tomcat&lt;/span&gt;
-        &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;3306:3306&lt;/span&gt;
-        &lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/lib/mysql/data&lt;/span&gt;
-    &lt;span class="c1"&gt;#MySQL 的Web客户端&lt;/span&gt;
-    &lt;span class="nt"&gt;adminer&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;adminer&lt;/span&gt;
-        &lt;span class="nt"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;always&lt;/span&gt;
-        &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-          &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;8080:8080&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;部署MySQL_2&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.1&amp;quot;&lt;/span&gt;
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
- &lt;span class="nt"&gt;db&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="nt"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;always&lt;/span&gt;
-  &lt;span class="nt"&gt;container_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mysql&lt;/span&gt;
-  &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;mysql&lt;/span&gt;
-  &lt;span class="nt"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
-   &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--lower_case_table_names=1&lt;/span&gt;
-   &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--character-set-server=utf8mb4&lt;/span&gt;
-   &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--collation-server=utf8mb4_unicode_ci&lt;/span&gt;
-   &lt;span class="l l-Scalar l-Scalar-Plain"&gt;--explicit_defaults_for_timestamp=true&lt;/span&gt;
-  &lt;span class="nt"&gt;environment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-   &lt;span class="nt"&gt;TZ&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;Asia/Shanghai&lt;/span&gt;
-   &lt;span class="nt"&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;root@123456&lt;/span&gt;
-  &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;3306:3306&lt;/span&gt;
-  &lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./mysql/data:/var/lib/mysql&lt;/span&gt;
-   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./mysql/config:/etc/mysql/conf.d&lt;/span&gt;
-   &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./mysql/log:/var/log/mysql&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;h3&gt;部署RabbitMQ&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;3&amp;#39;&lt;/span&gt;
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="nt"&gt;rabbitmq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rabbitmq:3.8.3-management&lt;/span&gt;
-    &lt;span class="nt"&gt;container_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;rabbitmq&lt;/span&gt;
-    &lt;span class="nt"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;always&lt;/span&gt;
-    &lt;span class="nt"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;myRabbitmq&lt;/span&gt;
-    &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;15672:15672&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;5672:5672&lt;/span&gt;
-    &lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;./data:/var/lib/rabbitmq&lt;/span&gt;
-    &lt;span class="nt"&gt;environment&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_USER=root&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;RABBITMQ_DEFAULT_PASS=root&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;RABBITMQ_DEFAULT_USER&lt;/code&gt;  和  &lt;code&gt;RABBITMQ_DEFAULT_PASS&lt;/code&gt; 用来设置超级管理员的账号和密码，如果不设置，默认都是 &lt;code&gt;guest&lt;/code&gt; 。&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj33/</guid><pubDate>Mon, 21 Sep 2020 01:10:00 +0806</pubDate></item><item><title>Docker Compose部署GitLab</title><link>/Xuxx_Blogs/archives/bj34/</link><description>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link><description>坚持有效行动，改变自然发生——致自己。</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>${static_prefix}logo.png</url><title>Xuxx的个人博客。</title><link>/Xuxx_Blogs/</link></image><language>zh-CN</language><lastBuildDate>Tue, 29 Dec 2020 14:13:23 +0806</lastBuildDate><pubDate>Tue, 29 Dec 2020 14:13:23 +0806</pubDate><item><title>Docker Compose部署GitLab</title><link>/Xuxx_Blogs/archives/bj34/</link><description>&lt;h2&gt;什么是GitLab&lt;/h2&gt;
 &lt;p&gt;GitLab是利用 Ruby on Rails 的一个开源的版本管理系统，实现一个自托管的Git项目仓库，可通过Web界面进行访问公开的或者私人项目。它拥有与 Github 类似的功能，能够浏览源代码，管理缺陷和注释。可以管理团队对仓库的访问，它非常易于浏览提交过的版本并提供一个文件历史库。团队成员可以利用内置的简单聊天程序(Wall)进行交流。它还提供一个代码片段收集功能可以轻松实现代码复用，便于日后有需要的时候进行查找。&lt;/p&gt;
 &lt;h2&gt;部署GitLab&lt;/h2&gt;
 &lt;p&gt;使用Docker来安装和运行GitLab中文版，&lt;code&gt;docker-compose.yml&lt;/code&gt;配置如下:&lt;/p&gt;
@@ -2058,4 +1345,213 @@ Alt+Delete，安全删除&lt;/p&gt;
 &lt;p&gt;Top #1重构一切：Ctrl+Shift+Alt+T&lt;/p&gt;
 &lt;p&gt;CTRL+ALT+ left/right 前后导航编辑过的地方
 Ctrl＋Shift＋Backspace可以跳转到上次编辑的地&lt;/p&gt;
-</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj42/</guid><pubDate>Tue, 22 Dec 2020 11:45:00 +0806</pubDate></item></channel></rss>
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj42/</guid><pubDate>Tue, 22 Dec 2020 11:45:00 +0806</pubDate></item><item><title>Java使用Selenium实现简单爬虫</title><link>/Xuxx_Blogs/archives/bj44/</link><description>&lt;h2&gt;序言&lt;/h2&gt;
+&lt;p&gt;最近工作时接到一个处理数据的任务，给我的数据只有13项，但是项目中需要的数据有18项，所以缺少的数据需要手工去查询（别问我为什么？我也不知道，反正工作就是这样要求了，横竖都得干）。我需要处理接近5000条,一条一条查确实有点太枯燥了（自己手动查了200多条~），于是心一横，整个程序来帮我干活吧。但是我毕竟没有接触过爬虫，于是在一顿Google后，我选择了&lt;code&gt;Selenium&lt;/code&gt;，别问，问就是简单好上手。&lt;/p&gt;
+&lt;h2&gt;1.Selenium&lt;/h2&gt;
+&lt;p&gt;因为对自动化测试卓越体验的追求，众多自动化测试工具应运而生，Selenium就是其中最出色的一款。&lt;/p&gt;
+&lt;p&gt;Selenium 是一个用于Web应用程序测试的工具。他是一款浏览器仿真程序 可以像真正的用户在操作一样操作浏览器。&lt;/p&gt;
+&lt;p&gt;Selenium支持全部主流的浏览器，支持主流的编程语言，包括：Java、Python、C#、PHP、Ruby、JavaScript等，基于标准的 WebDriver 语法规范，同时支持所有基于web 的管理任务自动化。&lt;/p&gt;
+&lt;p&gt;Selenium由多个软件工具组成。每个工具都有一个特定的角色。主要包含以下工具：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Selenium IDE Selenium IDE（集成开发环境）是一个构建测试脚本的原型工具&lt;/li&gt;
+&lt;li&gt;Selenium RC 是Selenium的远程控制(又称Selenium1.0)&lt;/li&gt;
+&lt;li&gt;Selenium Grid 可以测试集分布在多个环境中并行运行测试用例。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;2.Java中集成Selenium&lt;/h2&gt;
+&lt;p&gt;Selenium支持主流的编程语言，包括：Java、Python、C#、PHP、Ruby、JavaScript；&lt;/p&gt;
+&lt;h3&gt;2.1 maven添加依赖&lt;/h3&gt;
+&lt;p&gt;在java中使用Selenium很简单，你只需要添加如下依赖：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.Seleniumhq.Selenium&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;Selenium-java&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;3.141.59&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;lt;!-- 以下非必要 --&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.google.guava&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;guava&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;23.0&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.google.code.gson&lt;span class="nt"&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;gson&lt;span class="nt"&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.8.2&lt;span class="nt"&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;注：&lt;a href="https://juejin.cn/post/6844903463537623048"&gt;guava介绍&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h3&gt;2.2 添加浏览器驱动&lt;/h3&gt;
+&lt;p&gt;当Selenium升级到3.0之后，对不同的浏览器驱动进行了规范。如果想使用Selenium驱动不同的浏览器，必须单独下载并设置不同的浏览器驱动。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Firefox浏览器驱动：&lt;a href="https://github.com/mozilla/geckodriver/releases"&gt;geckodriver&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Chrome浏览器驱动：&lt;a href="https://npm.taobao.org/mirrors/chromedriver"&gt;chromedriver&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;IE浏览器驱动：&lt;a href="http://Selenium-release.storage.googleapis.com/index.html"&gt;IEDriverServer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Edge浏览器驱动：&lt;a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver"&gt;MicrosoftWebDriver&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Opera浏览器驱动：&lt;a href="https://github.com/operasoftware/operachromiumdriver/releases"&gt;operadriver&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;PhantomJS浏览器驱动：&lt;a href="http://phantomjs.org/"&gt;phantomjs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在java中使用不同浏览器：
+首先配置驱动属性，指定驱动文件路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;webdriver.chrome.driver&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;E:\\chromedriver.exe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;获取WebDriver并打开一个新的浏览器窗口&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WebDriver driver = new ChromeDriver();    //Chrome浏览器
+WebDriver driver = new FirefoxDriver();   //Firefox浏览器
+WebDriver driver = new EdgeDriver();      //Edge浏览器
+WebDriver driver = new InternetExplorerDriver();  // Internet Explorer浏览器
+WebDriver driver = new OperaDriver();     //Opera浏览器
+WebDriver driver = new PhantomJSDriver();   //PhantomJS&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;注：可以在linux中使用无窗口模式，后续会讲到&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;简单样例&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Itest&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;InterruptedException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;webdriver.chrome.driver&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;E:\\chromedriver.exe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;WebDriver&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ChromeDriver&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.baidu.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.2 Selenium元素定位&lt;/h3&gt;
+&lt;h4&gt;2.2.1 定位元素&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;driver.findElement(By.id("元素id"))&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.name("元素name"))&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.className("元素className"))&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.tagName("元素tagName"))&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.linkText("文本"))&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.cssSelector("css选择器")) （注意空格）&lt;/li&gt;
+&lt;li&gt;driver.findElement(By.xpath("xpath表达式"))&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;2.2.2 获取元素列表&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElements&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.for.list td&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;获取到的元素列表为 List&lt;WebElement&gt; 对象，不建议直接循环来获取 元素对象，而是从根中重新获取，以避免获取元素失败&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;heads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElements&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.for.list td&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;heads&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;href&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElements&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.for.list td&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;2.2.3 下拉框选择&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt; &lt;span class="n"&gt;el&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;xpath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;//select&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="n"&gt;Select&lt;/span&gt; &lt;span class="n"&gt;sel&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;el&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;selectByValue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;20&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.3 设置元素等待&lt;/h3&gt;
+&lt;p&gt;WebDriver提供了两种类型的等待：显式等待和隐式等待。&lt;/p&gt;
+&lt;h4&gt;2.3.1 显式等待&lt;/h4&gt;
+&lt;p&gt;显式等待， 针对某个元素等待&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;WebDriverWait&lt;/span&gt; &lt;span class="n"&gt;wait&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;WebDriverWait&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;until&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ExpectedConditions&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;presenceOfElementLocated&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;cssSelector&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.for.list&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;2.3.1 显式等待&lt;/h4&gt;
+&lt;p&gt;隐式等待， 针对某个元素等待&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;manage&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;timeouts&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;pageLoadTimeout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TimeUnit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;SECONDS&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.4 WebElement常用方法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;clear() 清除文本&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sendKeys(*value) 模拟按键输入&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;click() 单击元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;username&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;用户名&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;password&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="n"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;密码&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;findElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;commit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;click&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.5 键鼠操作&lt;/h3&gt;
+&lt;h4&gt;2.5.1 Actions 键鼠操作&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;contextClick() 右击&lt;/li&gt;
+&lt;li&gt;clickAndHold() 鼠标点击并控制&lt;/li&gt;
+&lt;li&gt;doubleClick() 双击&lt;/li&gt;
+&lt;li&gt;dragAndDrop() 拖动&lt;/li&gt;
+&lt;li&gt;release() 释放鼠标&lt;/li&gt;
+&lt;li&gt;perform() 执行所有Actions中存储的行为&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 新建一个action   &lt;/span&gt;
+&lt;span class="n"&gt;Actions&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Actions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;   
+&lt;span class="c1"&gt;// 鼠标左键单击&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;click&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// 鼠标左键双击&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;doubleClick&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// 鼠标左键按下&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;clickAndHold&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// 鼠标移动到元素&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;moveToElement&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// 元素右键点击&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;contextClick&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WebElement&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// 将目标元素拖拽到指定的元素上&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dragAndDrop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;webElement1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;webElement2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dragAndDrop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;webElement&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;xOffset&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;yOffset&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="n"&gt;Actions&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Actions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;keyDown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//按下control键&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;keyUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="c1"&gt;//松开control键&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;keyDown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;keyDown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ALT&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;keyDown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;A&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;keyUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;keyUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ALT&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;keyUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;A&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTROL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ALT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;A&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;perform&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.5.2 元素sendKeys()&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BACK_SPACE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;//回格键（BackSpace）&lt;/span&gt;
+&lt;span class="n"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;SPACE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;//空格键(Space)&lt;/span&gt;
+&lt;span class="n"&gt;sendKeys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Keys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;TAB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;//制表键(Tab)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;2.6 窗口控制&lt;/h3&gt;
+&lt;h4&gt;2.6.1 窗口切换&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;使用 driver.getWindowHandles() 获取所有窗口&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用 driver.switchTo().window(hand) 切换窗口&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;handles&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getWindowHandles&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;hand&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;handles&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;StringUtils&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mainHand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hand&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;switchTo&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;window&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hand&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;3 linux无窗口模式&lt;/h2&gt;
+&lt;h3&gt;3.1 linux安装chrome浏览器&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm 
+yum install -y google-chrome-stable_current_x86_64.rpm
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.2 下载对应版本的driver&lt;/h3&gt;
+&lt;p&gt;查询当前浏览器版本&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;google-chrome --version
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.3 设置Selenium无头模式&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;设置无头模式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setHeadless&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;配置头信息&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addArguments&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--no-sandbox&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addArguments&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;--disable-dev-shm-usage&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;需要配置浏览器窗口大小，来确保元素可以检索&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;WebDriverWait&lt;/span&gt; &lt;span class="n"&gt;wait&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;WebDriverWait&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;Dimension&lt;/span&gt; &lt;span class="n"&gt;dimension&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Dimension&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1920&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1080&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;manage&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;window&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dimension&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;若遇到如下提示&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;The driver is not executable: /opt/code/news/chromedriver&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;运行如下命令即可：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chmod &lt;span class="m"&gt;775&lt;/span&gt; ./chromedriver
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;3.4 设置完成，启动运行&lt;/h3&gt;
+</description><author>xuxx3319@gmail.com (Xuxx)</author><guid isPermaLink="true">/Xuxx_Blogs/archives/bj44/</guid><pubDate>Tue, 29 Dec 2020 21:25:00 +0806</pubDate></item></channel></rss>

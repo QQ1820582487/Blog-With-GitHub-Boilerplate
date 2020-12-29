@@ -64,6 +64,8 @@ Selenium支持主流的编程语言，包括：Java、Python、C#、PHP、Ruby�
 
 当Selenium升级到3.0之后，对不同的浏览器驱动进行了规范。如果想使用Selenium驱动不同的浏览器，必须单独下载并设置不同的浏览器驱动。
 
+*注：IE11，需要在IE浏览器中把保护模式取消掉，Internet、本地Internet、受信任的站点、受限制的站点中的启动保护模式勾选全部取消并保存设置（其余浏览器的设置请自行百度）。*
+
 - Firefox浏览器驱动：[geckodriver](https://github.com/mozilla/geckodriver/releases)
 - Chrome浏览器驱动：[chromedriver](https://npm.taobao.org/mirrors/chromedriver)
 - IE浏览器驱动：[IEDriverServer](http://Selenium-release.storage.googleapis.com/index.html)
@@ -290,3 +292,9 @@ chmod 775 ./chromedriver
 ```
 
 ### 3.4 设置完成，启动运行
+
+参考：
+
+[Java使用Selenium实现自动化测试以及全功能爬虫](https://www.ytooo.top/e8a89aa3.html)
+
+[Selenium教程](https://www.cnblogs.com/yogouo/category/1601782.html)

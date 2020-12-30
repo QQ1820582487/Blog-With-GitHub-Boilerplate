@@ -158,7 +158,7 @@ WebDriverWait wait = new WebDriverWait(driver,10,1);
 wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".for.list")));
 ```
 
-#### 2.3.1 显式等待
+#### 2.3.2 隐式等待
 
 隐式等待， 针对某个元素等待
 

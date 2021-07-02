@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/3b555c347ce354992d590a30680dd754.json"
+        }
+    </script>
+    
+<title>Java8 Stream梳理 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Java8 Stream梳理 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj45/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2021-03-30T11:25:00-00.00" />
+<meta name="twitter:title" content="Java8 Stream梳理 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Java8 Stream梳理</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2021-03-30
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>1. Streams API 面面观</h2>
+<h3>1.1 Streams API 能做什么</h3>
+<p>Streams API 是对 java 中集合对象功能的增强，他可以让集合的操作变得更加便利、高效</p>
+<p>他会自动通过并发执行的方式优化大批量数据集合的聚合操作，同时，结合另一个 java8 的新特性 -- Lambda 表达式，可以极大地提升编程效率，增加代码可读性</p>
+<p>基于 jvm 底层的硬件优化，streams api 可以十分方便的利用多核性能，达到并发编程的效果，传统的并发编程往往因为其复杂性十分容易出错，但使用 streams api 则无需担心这个问题</p>
+<h3>1.2 Stream 是什么</h3>
+<p>stream 顾名思义，就是“流”，这个名字突出了集合对象流式处理的含义</p>
+<p>说到“流式处理”，读者朋友们肯定并不陌生，在 java 中，迭代器就是一种通用的流式处理手段，stream 可以看成是迭代器的高级版本，他不保存数据，他只负责执行预定的算法和计算过程，因此 stream 很像是迭代器的函数式编程版本</p>
+<p>和迭代器一样，stream 也是对集合单向遍历一次，并且不可以回头往复，但不同的是，stream 支持了这个过程的自动并发执行，并且将遍历过程变得更加简洁易读</p>
+<h3>1.3 Stream 的构成</h3>
+<p>一个流的使用通常包括三个基本步骤：</p>
+<ol>
+<li>获取数据源</li>
+<li>数据转换 -- Intermediate</li>
+<li>执行操作 -- Terminal</li>
+</ol>
+<p>其中，数据转换操作是以数据源为输入，进行一些操作后返回一个新的流进行接下来操作，数据转换操作可以多次进行，从而让整个流变成一个流管道：</p>
+<p><a href="https://techlog.cn/article/list/images/a9efdb2578feee17ee5b6d6842c5e3d6.png"><figure class="pswp-item" style="flex: 58.29207920792079" data-width="471" data-height="404"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/518fe666e5d184e029dfa4ed0de99526.png" alt="" /></figure></a></p>
+<p>最终，一个流只能有一个 terminal 执行操作，作为流的终结，他生成一个结果或一个 side effect</p>
+<p>事实上，真正触发流的遍历操作的就是 terminal 操作的执行</p>
+<p>除此以外，如果流的输入是一个无限大的集合，那么还必须具有 <code>short-circuiting</code> 操作，他有两个作用：</p>
+<ol>
+<li>对于一个 intermediate 操作，如果它接受的是一个无限大（infinite/unbounded）的 Stream，但返回一个有限的新 Stream</li>
+<li>对于一个 terminal 操作，如果它接受的是一个无限大的 Stream，但能在有限的时间计算出结果 </li>
+</ol>
+<h2>2. 流的创建</h2>
+<p>流的创建方式有很多种：</p>
+<h3>2.1 从 Collection 和数组创建流</h3>
+<ol>
+<li>Collection.stream()</li>
+<li>Collection.parallelStream()</li>
+<li>Arrays.stream(T array)</li>
+<li>Stream.of(T array)</li>
+</ol>
+<ul>
+<li>额外一提，java8 除了通用的 Stream 外，还为基本数值类型提供了 IntStream、LongStream、DoubleStream 三种包装类型可供使用</li>
+</ul>
+<h3>2.2 通过 BufferedReader 读取</h3>
+<ul>
+<li>java.io.BufferedReader.lines()</li>
+</ul>
+<h3>2.3 通过静态工厂生成流</h3>
+<ol>
+<li>java.util.stream.IntStream.range()</li>
+<li>java.nio.file.Files.walk()</li>
+</ol>
+<h3>2.4 其他创建方式</h3>
+<ol>
+<li>自定义构建 -- java.util.Spliterator</li>
+<li>随机数流 -- Random.ints()</li>
+<li>位操作流 -- BitSet.stream()</li>
+<li>字符流 -- Pattern.splitAsStream(java.lang.CharSequence)</li>
+<li>jar 文件内容流 -- JarFile.stream()</li>
+</ol>
+<h2>3. 流的操作</h2>
+<p>上面已经提到，流共有三种操作：</p>
+<ol>
+<li>Intermediate 操作</li>
+<li>Short-Circuiting 操作</li>
+<li>Terminal 操作</li>
+</ol>
+<p>下面就来一一介绍一下这三大类操作中具体的那些操作</p>
+<h3>3.1 Intermediate 操作</h3>
+<p>Intermediate 操作的输入是已经创建好的流，输出是进行转换后的流，主要有以下操作：</p>
+<ul>
+<li><p>map -- 将输入流转换为另一个流</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Map</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * map，可以看到 map 操作符要求输入一个Function的函数是接口实例，功能是将T类型转换成R类型的。</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="c1">//转成单词的长度 int</span>
+                <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="p">.</span><span class="na">length</span><span class="p">())</span>
+                <span class="c1">//输出</span>
+                <span class="c1">//.forEach(e -&gt; System.out.println(e));</span>
+                <span class="c1">//方法引用</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>mapToInt/mapToLong -- 将转换结果的原始数值自动包装，转换后生成一个 IntStream/LongStream</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MapToInt</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * mapToInt 将数据流中得元素转成Int，这限定了转换的类型Int，最终产生的流为IntStream，及结果只能转化成int。</span>
+<span class="cm">     * mapToLong、mapToDouble与 mapToInt 类似</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="c1">//转成int</span>
+                <span class="p">.</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">String</span><span class="p">::</span><span class="n">length</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="c1">//转成long ,本质上是int 但是存在类型自动转换</span>
+                <span class="p">.</span><span class="na">mapToLong</span><span class="p">(</span><span class="n">String</span><span class="p">::</span><span class="n">length</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="c1">//转成Double ，自动类型转换成Double</span>
+                <span class="p">.</span><span class="na">mapToDouble</span><span class="p">(</span><span class="n">String</span><span class="p">::</span><span class="n">length</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>flatMap -- 转换后生成多于原集合数量的新元素流</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlatMap</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * flatmap 作用就是将元素拍平拍扁 ，将拍扁的元素重新组成Stream，并将这些Stream 串行合并成一条Stream</span>
+<span class="cm">     * flatmapToInt、flatmapToLong、flatmapToDouble 跟flatMap 都类似的，只是类型被限定了</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;a-b-c-d&quot;</span><span class="p">,</span> <span class="s">&quot;e-f-i-g-h&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">flatMap</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">)))</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>filter -- 过滤只保留符合条件的元素</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Filter</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * filter 对某些元素进行过滤，不符合筛选条件的将无法进入流的下游</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//过滤小于5的</span>
+                <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>distinct -- 去重</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Distinct</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * distinct 将根据equals 方法进行判断，如果要对自己自定义的bean去重，则需要重写equals方法，但是这不是唯一的方法。</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//去重</span>
+                <span class="p">.</span><span class="na">distinct</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>sorted -- 排序</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sorted</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * sorted 排序 底层依赖Comparable 实现，也可以提供自定义比较器</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">sorted</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+        <span class="c1">//这里使用自定义比较，当然User可以实现Comparable 接口</span>
+        <span class="n">User</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+        <span class="n">User</span> <span class="n">y</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+        <span class="n">User</span> <span class="n">w</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">sorted</span><span class="p">((</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e1</span><span class="p">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="n">e2</span><span class="p">.</span><span class="na">age</span> <span class="o">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">e1</span><span class="p">.</span><span class="na">age</span> <span class="o">==</span> <span class="n">e2</span><span class="p">.</span><span class="na">age</span> <span class="o">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">()));</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>peek -- 执行一个无返回的操作，不影响原来的流</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Peek</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * peek 挑选 ，将元素挑选出来，可以理解为提前消费</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">User</span> <span class="n">w</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="n">User</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+        <span class="n">User</span> <span class="n">y</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="c1">//重新设置名字 变成 年龄+名字</span>
+                <span class="p">.</span><span class="na">peek</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getAge</span><span class="p">()</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">()));</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>limit -- 保留流的前 N 个元素，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Limit</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * limit 限制元素的个数，只需传入 long 类型 表示限制的最大数</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+                <span class="c1">//限制三个</span>
+                <span class="p">.</span><span class="na">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="c1">//将输出 前三个 1，2，3</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>skip -- 跳过流的前 N 个元素</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Skip</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * skip 跳过 元素</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+                <span class="c1">//跳过前四个</span>
+                <span class="p">.</span><span class="na">skip</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+                <span class="c1">//输出的结果应该只有5，6，7，8，9</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>parallel -- 让流并行化</p>
+</li>
+<li><p>sequential -- 让流串行化</p>
+</li>
+<li><p>unordered -- 删除流的有序标记，不强制让流有序</p>
+</li>
+</ul>
+<h3>3.2 Terminal 操作</h3>
+<p>在一系列 Intermediate 操作之后，一定需要一个终极操作，来对流中的数据做最终的处理，这个“终极操作”就是 Terminal 操作，它包括：</p>
+<ul>
+<li><p>forEach -- 对流中每个元素执行相同的操作</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ForEach</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * forEach 对每个数据遍历迭代</span>
+<span class="cm">     * forEachOrdered 适用用于并行流的情况下进行迭代，能保证迭代的有序性</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//让流并行化  || sequential -- 让流串行化 || unordered -- 删除流的有序标记，不强制让流有序</span>
+                <span class="p">.</span><span class="na">parallel</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">forEachOrdered</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">);</span>
+                <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>forEachOrdered -- 对流中每个元素有序地执行相同的操作</p>
+</li>
+<li><p>toArray -- 将流转换为数组返回</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ToArray</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * toArray 转成数组，可以提供自定义数组生成器</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">toArray</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">Object</span> <span class="n">object</span> <span class="p">:</span> <span class="n">objects</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">object</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>reduce -- 将流中所有数据汇总执行一个操作，返回一个值</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Reduce</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * reduce 是一个规约操作，所有的元素归约成一个，比如对所有元素求和，相乘等。</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//.reduce(0, (e1, e2) -&gt; e1 + e2);</span>
+                <span class="p">.</span><span class="na">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Integer</span><span class="p">::</span><span class="n">sum</span><span class="p">);</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>collect -- 将流中所有参数汇总为一个集合并返回</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Collect</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * collect 收集，使用系统提供的收集器可以将最终的数据流收集到List，Set，Map等容器中。</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="c1">//set 容器</span>
+                <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toSet</span><span class="p">())</span>
+                <span class="c1">//forEach不仅仅是是Stream中的操作符还是各种集合中得一个语法糖</span>
+                <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+
+        <span class="c1">//收集的结果就是set</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">stringSet</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toSet</span><span class="p">());</span>
+        <span class="c1">//set的语法糖forEach</span>
+        <span class="n">stringSet</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>min -- 求流中数据最小值</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Min</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * min 最小的一个，传入比较器，也可能没有(如果数据流为空)</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">integerOptional</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//.min((e1, e2) -&gt; e1.compareTo(e2));</span>
+                <span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">Integer</span><span class="p">::</span><span class="n">compareTo</span><span class="p">);</span>
+        <span class="n">integerOptional</span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>max -- 求流中数据最大值</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Max</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * max 元素中最大的，需要传入比较器，也可能没有(如果数据流为空)</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">integerOptional</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="c1">//.max((e1, e2) -&gt; e1.compareTo(e2));</span>
+                <span class="p">.</span><span class="na">max</span><span class="p">(</span><span class="n">Integer</span><span class="p">::</span><span class="n">compareTo</span><span class="p">);</span>
+        <span class="n">integerOptional</span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>count -- 计算流中的数据量</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Count</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * count 统计数据流中的元素个数，返回的是long 类型</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">count</span><span class="p">();</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>anyMatch -- 有任何元素命中规则则返回 true，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+</li>
+<li><p>allMatch -- 全部元素均命中规则时返回 true，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+</li>
+<li><p>noneMatch -- 全部元素均未命中规则时返回 true，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NoneMatch</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * noneMatch 数据流中得没有一个元素与条件匹配的</span>
+<span class="cm">     * allMatch和anyMatch一个是全匹配，一个是任意匹配，和noneMatch类似</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;aa&quot;</span><span class="p">,</span> <span class="s">&quot;bb&quot;</span><span class="p">,</span> <span class="s">&quot;cc&quot;</span><span class="p">,</span> <span class="s">&quot;aa&quot;</span><span class="p">)</span>
+                <span class="c1">//这里的作用是是判断数据流中 一个都没有与 &quot;aa&quot; 相等元素 ，但是流中存在 &quot;aa&quot; ，所以最终结果应该是false</span>
+                <span class="p">.</span><span class="na">noneMatch</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&quot;aa&quot;</span><span class="p">));</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>findFirst -- 返回首个命中规则的元素，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FindFirst</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * findFirst 获取流中的第一个元素</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">stringOptional</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">findFirst</span><span class="p">();</span>
+        <span class="n">stringOptional</span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>findAny -- 返回所有命中规则的元素，可以用于无限元素的流，作为 Short-circuiting 操作</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FindAny</span> <span class="p">{</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * findAny 获取流中任意一个元素</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">stringOptional</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;waltermaleon&quot;</span><span class="p">,</span> <span class="s">&quot;grape&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">parallel</span><span class="p">()</span>
+                <span class="c1">//在并行流下每次返回的结果可能一样也可能不一样</span>
+                <span class="p">.</span><span class="na">findAny</span><span class="p">();</span>
+        <span class="n">stringOptional</span><span class="p">.</span><span class="na">ifPresent</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">::</span><span class="n">println</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>iterator -- 返回由流数据构造的迭代器</p>
+</li>
+</ul>
+<h3>3.3 Short-circuiting 操作</h3>
+<p>当你要处理无限数据的集合时，通过 short circuiting 操作让程序能够在有限的时间内返回显然是非常必要的</p>
+<p>包括上述已经标记过可以用作 Short-circuiting 操作的：</p>
+<ul>
+<li>anyMatch</li>
+<li>allMatch</li>
+<li>noneMatch</li>
+<li>findFirst</li>
+<li>findAny</li>
+<li>limit</li>
+</ul>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Java/">#Java</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj44/">Java使用Selenium实现简单爬虫</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

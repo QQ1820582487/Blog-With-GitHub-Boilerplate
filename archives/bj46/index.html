@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx的个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx的个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/73b61b58a698e60bd0b9a4961779c892.json"
+        }
+    </script>
+    
+<title>HashMap底层结构与实现原理之——put、get方法 - Xuxx的个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="HashMap底层结构与实现原理之——put、get方法 - Xuxx的个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx的个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj46/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2021-07-29T17:25:00-00.00" />
+<meta name="twitter:title" content="HashMap底层结构与实现原理之——put、get方法 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx的个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx的个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">HashMap底层结构与实现原理之——put、get方法</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2021-07-29
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h2>简介</h2>
+<p>本文内容基于JDK8。</p>
+<p><figure class="pswp-item" style="flex: 109.45378151260505" data-width="521" data-height="238"><img src="https://pic2.zhimg.com/80/v2-b4e452ab1a45e58bc4295b3521095d8d_720w.jpg" alt="img" /><figcaption>img</figcaption></figure></p>
+<p>HashMap在java.util包下，它实现了Map接口，实现了Map接口的全部方法。其中最常使用的两个方法为put和get方法。</p>
+<p>我们知道，HashMap是用于存储key-value键值对的集合，而key-value键值对结构是基于Map中的Entry接口实现的，所以每一个键值对也可以称为Entry。这些键值对存放在HashMap的一个数组中，这个数组是HashMap的核心部分，数组的每个位置也被称为桶。当然，HashMap的底层结构不止是数组这么简单。</p>
+<p>在JDK8之前，HashMap的底层结构是数组+链表的结构，数组的每一个位置存放的是一条链表。从JDK8开始，HashMap的底层结构却变成了数组+链表+红黑树的结构，基本结构如下图所示。</p>
+<p><figure class="pswp-item" style="flex: 42.20398593200469" data-width="720" data-height="853"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cd7bfbe7fc10631ae66d9ee94ec07160.png" alt="JDK8的HashMap底层结构" /><figcaption>JDK8的HashMap底层结构</figcaption></figure></p>
+<h2>属性</h2>
+<p>先来看看HashMap中的一些重要属性。</p>
+<p><strong>常量：</strong></p>
+<p>1.<strong>DEFAULT_INITIAL_CAPACITY：</strong>默认初始化容量，可以存储元素(Entry)的数量，值为16；</p>
+<p>2.<strong>MAXIMUM_CAPACITY</strong>：最大容量，允许设置的最大存储数量，值为2^30；</p>
+<p>3.<strong>DEFAULT_LOAD_FACTOR</strong>：默认负载因子，用于控制扩容的阈值，值为0.75；</p>
+<p>4.<strong>TREEIFY_THRESHOLD</strong>：链表结构转为红黑树树的阈值，为8，即当链表结构长度达到8时，进行结构转化；</p>
+<p>5.<strong>UNTREEIFY_THRESHOLD</strong>：树结构转为链表的阈值，为6，即当树的节点数达到6时，转化为链表；</p>
+<p>6.<strong>MIN_TREEIFY_CAPACITY</strong>：最小树形化容量阈值，为64，即当HashMap中的元素总数大于64时，才允许将链表转换成红黑树，否则，若桶内元素太多时，则直接扩容，而不是树形化。</p>
+<p><strong>变量：</strong></p>
+<p>1.<strong>size</strong>：HashMap中的元素个数；</p>
+<p>2.<strong>table</strong>：Node类型数组，存放元素的容器；</p>
+<p>3.<strong>entrySet</strong>：Entry类型的Set集合；</p>
+<p>4.<strong>threshold</strong>：HashMap的扩容阈值；</p>
+<p>5.<strong>loadFactor</strong>：HashMap负载因子。</p>
+<p><strong>数据结构：</strong></p>
+<p><strong>Map.Entry&lt;K,V&gt;</strong>：是Map接口下的一个内部接口，提供了一些getKey、getValue、setValue等方法。</p>
+<p><strong>Node&lt;K,V&gt;</strong>：是HashMap下的一个静态内部类，实现了MapEntry接口，是链表的节点类。主要包括两个常量和两个变量：</p>
+<p>1.<strong>hash</strong>：常量，key的hash值，在构造方法中赋值；</p>
+<p>2.<strong>key</strong>：常量，存储的键值对中的键，在构造方法中赋值；</p>
+<p>3.<strong>value</strong>：变量，存储的键值对中的值；</p>
+<p>4.<strong>next</strong>：Node类型，表示连接的下一个节点。</p>
+<p><strong>TreeNode&lt;K,V&gt;：</strong>链表转为红黑树时的节点数据类型，是HashMap的静态内部类。</p>
+<p>以上是HashMap中一些常用的属性和数据结构，我们通过put和get方法来看一下这些属性是使用的。</p>
+<h2>PUT方法</h2>
+<p>先来看看源码：</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">V</span> <span class="nf">put</span><span class="p">(</span><span class="n">K</span> <span class="n">key</span><span class="p">,</span> <span class="n">V</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">putVal</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span><span class="err">·········································</span><span class="n">①</span>
+<span class="p">}</span>
+<span class="kd">final</span> <span class="n">V</span> <span class="nf">putVal</span><span class="p">(</span><span class="kt">int</span> <span class="n">hash</span><span class="p">,</span> <span class="n">K</span> <span class="n">key</span><span class="p">,</span> <span class="n">V</span> <span class="n">value</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">onlyIfAbsent</span><span class="p">,</span>
+               <span class="kt">boolean</span> <span class="n">evict</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;[]</span> <span class="n">tab</span><span class="p">;</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">tab</span> <span class="o">=</span> <span class="n">table</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">tab</span><span class="p">.</span><span class="na">length</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">tab</span> <span class="o">=</span> <span class="n">resize</span><span class="p">()).</span><span class="na">length</span><span class="p">;</span><span class="err">···························································</span><span class="n">②</span>
+    <span class="nf">if</span> <span class="p">((</span><span class="n">p</span> <span class="o">=</span> <span class="n">tab</span><span class="o">[</span><span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">hash</span><span class="o">]</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span><span class="err">·················································</span><span class="n">③</span>
+        <span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span><span class="err">··············································</span><span class="n">④</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">K</span> <span class="n">k</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span>
+            <span class="p">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="na">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">k</span><span class="p">))))</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span><span class="err">·············································································</span><span class="n">⑤</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">p</span> <span class="k">instanceof</span> <span class="n">TreeNode</span><span class="p">)</span><span class="err">························································</span><span class="n">⑥</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="p">((</span><span class="n">TreeNode</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">p</span><span class="p">).</span><span class="na">putTreeVal</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">tab</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span><span class="err">····················</span><span class="n">⑦</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">binCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">binCount</span><span class="p">)</span> <span class="p">{</span><span class="err">·············································</span><span class="n">⑧</span>
+                <span class="nf">if</span> <span class="p">((</span><span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">p</span><span class="p">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span><span class="c1">//生成新节点，插入链表尾部</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">binCount</span> <span class="o">&gt;=</span> <span class="n">TREEIFY_THRESHOLD</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">// -1 for 1st</span>
+                        <span class="n">treeifyBin</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">hash</span><span class="p">);</span><span class="err">·················································</span><span class="n">⑨</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span>
+                    <span class="p">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="na">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">k</span><span class="p">))))</span><span class="c1">//发现相同key的节点，跳出循环</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// existing mapping for key</span>
+            <span class="n">V</span> <span class="n">oldValue</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">onlyIfAbsent</span> <span class="o">||</span> <span class="n">oldValue</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+                <span class="n">e</span><span class="p">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span><span class="err">·····························································</span><span class="n">⑤</span><span class="c1">//新值覆盖旧值</span>
+            <span class="n">afterNodeAccess</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">oldValue</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="o">++</span><span class="n">modCount</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">++</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="n">resize</span><span class="p">();</span><span class="err">············································································</span><span class="n">⑩</span>
+    <span class="nf">afterNodeInsertion</span><span class="p">(</span><span class="n">evict</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>我将源码的重要部分做上了标记，通过一张流程图来帮助我们更好的了解put方法的流程：</p>
+<p><figure class="pswp-item" style="flex: 41.00227790432802" data-width="720" data-height="878"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2c6fe9b3ac297be8add12449bbc6b930.png" alt="HashMap的put方法执行过程" /><figcaption>HashMap的put方法执行过程</figcaption></figure></p>
+<p><strong>put流程解读：</strong></p>
+<p><strong>简述：</strong></p>
+<p><strong>1.计算key的hash值，找到对应的数组位置，取出该位置的元素；</strong></p>
+<p><strong>2.该元素如果为null，则直接插入Node节点。如果不为null，遍历当前的链表或红黑树；</strong></p>
+<p><strong>3.如果有某一个节点的hash、key和要put的hash、key相同，则由插入节点替换该节点；</strong></p>
+<p><strong>4.如果遍历结束发现没有相同的key，则生成Node或TreeNode插入末尾；</strong></p>
+<p><strong>5.将size++，判断当前size是否超过阈值，如果超过还需进行扩容处理。</strong></p>
+<p><strong>详细过程(序号与流程图对应)：</strong></p>
+<p><strong>①hash(Object key)方法：根据key值计算hash值。</strong></p>
+<p><strong>计算方法：(h = key.hashCode()) ^ (h &gt;&gt;&gt; 16)</strong></p>
+<p>这一过程主要是通过调用底层实现的<strong>hashCode()方法，生成一个int类型的值，然后与该值的无符号右移16位的结果取异或，最终得到一个hash值。</strong></p>
+<p>什么意思呢？</p>
+<p>一个int类型的值是二进制32位的。我们假设经过hashCode()方法计算得到一个32位的int类型的值:</p>
+<p>0110 1101 0011 0001 0001 0011 0011 0100</p>
+<p>对这个值进行无符号右移16位可以得到:</p>
+<p>0000 0000 0000 0000 0110 1101 0011 0001</p>
+<p>两者取异或，即当两者同位值不同时，结果为1，可以得到:</p>
+<p>0110 1101 0011 0001 0001 1110 0000 0101</p>
+<p>这就是最终得到的hash值。</p>
+<p><strong>②如果HashMap中的数组tab为空，我们需要通过resize()方法对数组进行扩容</strong>，如何扩容我们后面再说。</p>
+<p><strong>③如果HashMap中的数组tab不为空，则将①中得到的hash值与当前数组长度减1做&amp;运算。</strong></p>
+<p>我们假设当前HashMap的数组长度为16，减去1即为15，转为二进制为1111，高位补0得到:</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1111</p>
+<p>与hash值做&amp;运算可以得到:</p>
+<p>0000 0000 0000 0000 0000 0000 0000 0101</p>
+<p>可以得到数组的位置为第5位。</p>
+<p><figure class="pswp-item" style="flex: 79.82261640798227" data-width="720" data-height="451"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c238e4ae522a615bf188ca09ca4b2c03.png" alt="数组位置计算过程" /><figcaption>数组位置计算过程</figcaption></figure></p>
+<p><strong>④我们将②中得到的数组位置的元素取出，判断该位置的元素是否为空。如果为空，那么直接将hash、key、value封装成链表节点类型，插入当前的数组位置。</strong></p>
+<p><strong>⑤如果该位置元素不为空，则要将该元素的hash、key与我们要插入的hash、key作比较是否相同，如果相同，则用我们要插入的value覆盖当前位置的value值即可。</strong></p>
+<p><strong>⑥如果key的比较结果不同，</strong>此时需要将我们要插入的值连接在当前数组位置上存在的链表或红黑树上了。所以我们<strong>要判断当前数组位置上的数据结构是红黑树还是链表。</strong></p>
+<p>⑦首先判断该位置的节点是否为红黑树节点，如果是，则<strong>以红黑树的方式插入当前节点</strong>。</p>
+<p>⑧如果不是，则要<strong>以链表的方式准备插入</strong>。首先遍历当前链表，如果有某个节点的key与插入的key相同，则覆盖该节点；如果没有相同key的节点，则在链表尾部插入新节点。</p>
+<p><strong>⑨如果插入后链表长度&gt;=8，则需将链表转换为红黑树结构。</strong></p>
+<p><strong>⑩如果此时HashMap的元素总数大于threshold时，会触发扩容，resize()</strong>，扩容结束后，整个put的过程也随之结束。如果元素总数不大于threshold时，put过程直接结束。</p>
+<h2>GET方法</h2>
+<p>源码：</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">V</span> <span class="nf">get</span><span class="p">(</span><span class="n">Object</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">e</span> <span class="o">=</span> <span class="n">getNode</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">key</span><span class="p">))</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="n">e</span><span class="p">.</span><span class="na">value</span><span class="p">;</span><span class="err">··············</span><span class="n">①</span>
+<span class="p">}</span>
+
+<span class="kd">final</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">getNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">hash</span><span class="p">,</span> <span class="n">Object</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;[]</span> <span class="n">tab</span><span class="p">;</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">first</span><span class="p">,</span> <span class="n">e</span><span class="p">;</span> <span class="kt">int</span> <span class="n">n</span><span class="p">;</span> <span class="n">K</span> <span class="n">k</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">tab</span> <span class="o">=</span> <span class="n">table</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">tab</span><span class="p">.</span><span class="na">length</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span><span class="err">························</span><span class="n">②</span>
+        <span class="p">(</span><span class="n">first</span> <span class="o">=</span> <span class="n">tab</span><span class="o">[</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">hash</span><span class="o">]</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span><span class="err">································</span><span class="n">③④</span>
+        <span class="nf">if</span> <span class="p">(</span><span class="n">first</span><span class="p">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span> <span class="c1">// always check first node</span>
+            <span class="p">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">first</span><span class="p">.</span><span class="na">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">k</span><span class="p">))))</span><span class="err">·········</span><span class="n">⑤</span>
+            <span class="k">return</span> <span class="n">first</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">e</span> <span class="o">=</span> <span class="n">first</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">first</span> <span class="k">instanceof</span> <span class="n">TreeNode</span><span class="p">)</span><span class="err">······································</span><span class="n">⑥</span>
+                <span class="nf">return</span> <span class="p">((</span><span class="n">TreeNode</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="n">V</span><span class="o">&gt;</span><span class="p">)</span><span class="n">first</span><span class="p">).</span><span class="na">getTreeNode</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span><span class="err">···········</span><span class="n">⑦</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span>
+                    <span class="p">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="na">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">k</span><span class="p">))))</span><span class="err">·····</span><span class="n">⑧</span>
+                    <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="na">next</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>我们同样将源码的重要部分做上了标记，通过一张流程图来帮助我们更好的了解get方法的流程：</p>
+<p><figure class="pswp-item" style="flex: 29.580936729663105" data-width="720" data-height="1217"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/51e1396871ff694a5fe61002cf0aefae.png" alt="HashMap的get方法执行过程" /><figcaption>HashMap的get方法执行过程</figcaption></figure></p>
+<p>get流程解读：</p>
+<p>get方法的流程要比put方法的流程简单许多。</p>
+<p>①第一步和put方法一样，获取key的hash值；</p>
+<p>②判断数组table是否为空；</p>
+<p>③如果数组为空，直接返回null；如果数组不为空，则将hash值与数组长度减1做&运算确定数组位置;</p>
+<p>④取出该位置的节点判断是否为空，如果为空，直接返回null，结束查找；</p>
+<p>⑤如果不为空，判断当前节点的hash、key与待查找的hash、key是否相等，如果相等返回该节点Value，查找结束；如果不相同则判断当前节点的后继节点是否存在，不存在则直接返回null，结束查找；</p>
+<p>⑥若存在则需判断节点类型属于链表节点还是红黑树节点；</p>
+<p>⑦如果是红黑树节点则调用红黑树查找方法；</p>
+<p>⑧如果是链表节点，则整条遍历链表，找到key和hash值相同的节点则返回Value，没有找到则返回null。</p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Java/">#Java</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj45/">Java8 Stream梳理</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx的个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

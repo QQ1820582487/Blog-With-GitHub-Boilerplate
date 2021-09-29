@@ -460,7 +460,7 @@
 <p><strong>相当于A.id等B表里面的，相当于从部门表获得对应的id。</strong></p>
 <p><strong>当B表的数据集必须小于A表的数据集时，用in优于exists。</strong>
 反之</p>
-<div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">A</span> <span class="n">where</span> <span class="n">exists</span> <span class="p">(</span><span class="n">select</span> <span class="mi">1</span> <span class="n">from</span> <span class="n">B</span> <span class="n">where</span> <span class="n">B</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">id</span><span class="p">);</span> 
+<div class="highlight"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">exists</span><span class="w"> </span><span class="p">(</span><span class="n">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">id</span><span class="p">);</span><span class="w"> </span>
 <span class="cp"># 这里的select 1并不绝对，可以写为select &#39;X&#39;或者&#39;A&#39;,&#39;B&#39;,&#39;C&#39;都可以，只要是常量就可以。</span>
 </pre></div>
 <p>等价于：</p>

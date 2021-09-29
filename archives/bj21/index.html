@@ -249,7 +249,7 @@ public class GreetingController {
 
         <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/hello&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
+                <span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
         <span class="p">});</span>
 
         <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
@@ -258,12 +258,12 @@ public class GreetingController {
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span> <span class="p">{</span>
                 <span class="k">return</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
             <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
             <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
                 <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/topic/greetings&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
                 <span class="p">})</span>
             <span class="p">});</span>
         <span class="p">}</span>
@@ -452,18 +452,18 @@ public class GreetingController {
 
         <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/chat&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;to&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#to&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
+                <span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;to&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#to&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
         <span class="p">});</span>
 
         <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
         <span class="kd">function</span> <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
             <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
             <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
                 <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/user/queue/chat&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span><span class="c1">//点对点需要加前缀</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
                 <span class="p">})</span>
             <span class="p">});</span>
         <span class="p">}</span>
@@ -479,7 +479,7 @@ public class GreetingController {
         <span class="p">}</span>
 
         <span class="kd">function</span> <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="k">from</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="kr">from</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">})</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>

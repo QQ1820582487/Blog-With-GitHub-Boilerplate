@@ -260,7 +260,7 @@
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="kd">function</span> <span class="nx">uploadFile</span><span class="p">()</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#file&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="c1">//files是文件数组</span>
-        <span class="kd">var</span> <span class="nx">formData</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span><span class="c1">//html5</span>
+        <span class="kd">var</span> <span class="nx">formData</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">FormData</span><span class="p">();</span><span class="c1">//html5</span>
         <span class="nx">formData</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
             <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;post&quot;</span><span class="p">,</span>

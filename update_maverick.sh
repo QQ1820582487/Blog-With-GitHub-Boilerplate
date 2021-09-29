@@ -1,5 +1,7 @@
 #！/bin/sh
 
+cd /Users/xuxx/Documents/Xuxx_Blogs
+
 cd Maverick
 git pull --rebase
 

@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -112,110 +112,110 @@
 <h3>2.创建Spring Boot项目，引入依赖</h3>
 <p>依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-mail<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-mail<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <p>配置</p>
 <div class="highlight"><pre><span></span><span class="na">spring.mail.host</span><span class="o">=</span><span class="s">smtp.qq.com</span>
 <span class="na">spring.mail.port</span><span class="o">=</span><span class="s">465</span>
 <span class="na">spring.mail.username</span><span class="o">=</span><span class="s">1820502...@qq.com</span>
-<span class="c">#授权码</span>
+<span class="c1">#授权码</span>
 <span class="na">spring.mail.password</span><span class="o">=</span><span class="s">***...</span>
 <span class="na">spring.mail.default-encoding</span><span class="o">=</span><span class="s">UTF-8</span>
-<span class="c">#加密连接</span>
+<span class="c1">#加密连接</span>
 <span class="na">spring.mail.properties.mail.smtp.socketFactory.class</span><span class="o">=</span><span class="s">javax.net.ssl.SSLSocketFactory</span>
-<span class="c">#日志</span>
+<span class="c1">#日志</span>
 <span class="na">spring.mail.properties.mail.debug</span><span class="o">=</span><span class="s">true</span>
 </pre></div>
 <h3>3.发送邮件</h3>
 <h4>3.1 发送简单邮件</h4>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JavaMailSender</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">//写邮件</span>
-        <span class="n">SimpleMailMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleMailMessage</span><span class="p">();</span>
-        <span class="n">message</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
-        <span class="n">message</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word&quot;</span><span class="p">);</span>
-        <span class="n">message</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
-        <span class="n">message</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">message</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
-        <span class="c1">//message.setCc();//抄送</span>
-        <span class="c1">//message.setBcc();//密抄</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//写邮件</span>
+<span class="w">        </span><span class="n">SimpleMailMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleMailMessage</span><span class="p">();</span>
+<span class="w">        </span><span class="n">message</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">message</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">message</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">message</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">message</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//message.setCc();//抄送</span>
+<span class="w">        </span><span class="c1">//message.setBcc();//密抄</span>
 
-        <span class="c1">//发送邮件</span>
-        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">//发送邮件</span>
+<span class="w">        </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h4>3.2 发送带附件的邮件</h4>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JavaMailSender</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">test1</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
-        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">test1</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">MessagingException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MimeMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
 
-        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="w">        </span><span class="n">MimeMessageHelper</span><span class="w"> </span><span class="n">messageHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-        <span class="c1">//写邮件</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word (带附件)&quot;</span><span class="p">);</span>
-        <span class="c1">//添加附件</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addAttachment</span><span class="p">(</span><span class="s">&quot;1.jpg&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">));</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//写邮件</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word (带附件)&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//添加附件</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">addAttachment</span><span class="p">(</span><span class="s">&quot;1.jpg&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
 
-        <span class="c1">//发送邮件</span>
-        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">//发送邮件</span>
+<span class="w">        </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h4>3.3发送带图片的邮件</h4>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JavaMailSender</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">test2</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
-        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
-        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">test2</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">MessagingException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MimeMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+<span class="w">        </span><span class="n">MimeMessageHelper</span><span class="w"> </span><span class="n">messageHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-        <span class="c1">//写邮件</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word(带图片)，这是图1：&lt;img src=&#39;cid:p01&#39;/&gt;，这是图2：&lt;img src=&#39;cid:p02&#39;/&gt;&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p01&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p02&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//写邮件</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&quot;测试邮件-内容：Hello Word(带图片)，这是图1：&lt;img src=&#39;cid:p01&#39;/&gt;，这是图2：&lt;img src=&#39;cid:p02&#39;/&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p01&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">addInline</span><span class="p">(</span><span class="s">&quot;p02&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileSystemResource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;D:\\UserData\\Pictures\\QQ\\1.jpg&quot;</span><span class="p">)));</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
 
-        <span class="c1">//发送邮件</span>
-        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">//发送邮件</span>
+<span class="w">        </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>4.使用模板</h3>
 <h4>4.1使用Thymeleaf</h4>
 <p>加入依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <p>mail.html（放在templates目录下）</p>
@@ -255,42 +255,42 @@
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">MailApplicationTests</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MailApplicationTests</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JavaMailSender</span> <span class="n">javaMailSender</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JavaMailSender</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">;</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">TemplateEngine</span> <span class="n">templateEngine</span><span class="p">;</span><span class="c1">//thymeleaf模板引擎</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">TemplateEngine</span><span class="w"> </span><span class="n">templateEngine</span><span class="p">;</span><span class="c1">//thymeleaf模板引擎</span>
 
-    <span class="cm">/*发送邮件模板 thymeleaf*/</span>
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">test3</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">MessagingException</span> <span class="p">{</span>
-        <span class="n">MimeMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
-        <span class="n">MimeMessageHelper</span> <span class="n">messageHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span>
-        <span class="c1">//写邮件</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
-        <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Context</span><span class="p">();</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;position&quot;</span><span class="p">,</span> <span class="s">&quot;Java开发&quot;</span><span class="p">);</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;jobtitle&quot;</span><span class="p">,</span> <span class="s">&quot;Java开发初级工程师&quot;</span><span class="p">);</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;salary&quot;</span><span class="p">,</span> <span class="s">&quot;13*6k&quot;</span><span class="p">);</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;department&quot;</span><span class="p">,</span> <span class="s">&quot;产品开发部&quot;</span><span class="p">);</span>
-        <span class="n">String</span> <span class="n">process</span> <span class="o">=</span> <span class="n">templateEngine</span><span class="p">.</span><span class="na">process</span><span class="p">(</span><span class="s">&quot;mail.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="n">process</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
-        <span class="c1">//发送邮件</span>
-        <span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="cm">/*发送邮件模板 thymeleaf*/</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">test3</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">MessagingException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MimeMessage</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">createMimeMessage</span><span class="p">();</span>
+<span class="w">        </span><span class="n">MimeMessageHelper</span><span class="w"> </span><span class="n">messageHelper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MimeMessageHelper</span><span class="p">(</span><span class="n">message</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">//写邮件</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSubject</span><span class="p">(</span><span class="s">&quot;测试邮件-主题&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Context</span><span class="p">();</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;position&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Java开发&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;jobtitle&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Java开发初级工程师&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;salary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;13*6k&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setVariable</span><span class="p">(</span><span class="s">&quot;department&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;产品开发部&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">templateEngine</span><span class="p">.</span><span class="na">process</span><span class="p">(</span><span class="s">&quot;mail.html&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="n">process</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setFrom</span><span class="p">(</span><span class="s">&quot;1820502...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setSentDate</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">messageHelper</span><span class="p">.</span><span class="na">setTo</span><span class="p">(</span><span class="s">&quot;1913312...@qq.com&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//发送邮件</span>
+<span class="w">        </span><span class="n">javaMailSender</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h4>4.2使用Freemarker</h4>
 <p>加入依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <p>mail.ftl（放在templates目录下）</p>
@@ -407,7 +407,7 @@ class MailApplicationTests {
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

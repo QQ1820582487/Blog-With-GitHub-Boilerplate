@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -164,40 +164,40 @@
 <p><strong>环境：虚拟机装的Centos7，linux 3.10 内核</strong></p>
 <ol>
 <li><p>root账户登录，查看内核版本如下</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># uname -a</span>
-Linux localhost.localdomain <span class="m">3</span>.10.0-1062.12.1.el7.x86_64 <span class="c1">#1 SMP Tue Feb 4 23:02:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># uname -a</span>
+Linux<span class="w"> </span>localhost.localdomain<span class="w"> </span><span class="m">3</span>.10.0-1062.12.1.el7.x86_64<span class="w"> </span><span class="c1">#1 SMP Tue Feb 4 23:02:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
 </pre></div>
 </li>
 <li><p>把 yum 包更新到最新(非必须，方便小白)</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum update</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># yum update</span>
 已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: centos.ustc.edu.cn
- * extras: mirrors.aliyun.com
- * updates: mirrors.cn99.com
-base                                                                                                  <span class="p">|</span> <span class="m">3</span>.6 kB  <span class="m">00</span>:00:00     
-extras                                                                                                <span class="p">|</span> <span class="m">3</span>.4 kB  <span class="m">00</span>:00:00     
-updates                                                                                               <span class="p">|</span> <span class="m">3</span>.4 kB  <span class="m">00</span>:00:00     
+Loading<span class="w"> </span>mirror<span class="w"> </span>speeds<span class="w"> </span>from<span class="w"> </span>cached<span class="w"> </span>hostfile
+<span class="w"> </span>*<span class="w"> </span>base:<span class="w"> </span>centos.ustc.edu.cn
+<span class="w"> </span>*<span class="w"> </span>extras:<span class="w"> </span>mirrors.aliyun.com
+<span class="w"> </span>*<span class="w"> </span>updates:<span class="w"> </span>mirrors.cn99.com
+base<span class="w">                                                                                                  </span><span class="p">|</span><span class="w"> </span><span class="m">3</span>.6<span class="w"> </span>kB<span class="w">  </span><span class="m">00</span>:00:00<span class="w">     </span>
+extras<span class="w">                                                                                                </span><span class="p">|</span><span class="w"> </span><span class="m">3</span>.4<span class="w"> </span>kB<span class="w">  </span><span class="m">00</span>:00:00<span class="w">     </span>
+updates<span class="w">                                                                                               </span><span class="p">|</span><span class="w"> </span><span class="m">3</span>.4<span class="w"> </span>kB<span class="w">  </span><span class="m">00</span>:00:00<span class="w">     </span>
 正在解决依赖关系
---&gt; 正在检查事务
----&gt; 软件包 NetworkManager.x86_64.1.1.12.0-6.el7 将被 升级
----&gt; 软件包 NetworkManager.x86_64.1.1.12.0-10.el7_6 将被 更新
+--&gt;<span class="w"> </span>正在检查事务
+---&gt;<span class="w"> </span>软件包<span class="w"> </span>NetworkManager.x86_64.1.1.12.0-6.el7<span class="w"> </span>将被<span class="w"> </span>升级
+---&gt;<span class="w"> </span>软件包<span class="w"> </span>NetworkManager.x86_64.1.1.12.0-10.el7_6<span class="w"> </span>将被<span class="w"> </span>更新
 <span class="c1">##（期间要选择确认，输入 y 即可）</span>
 </pre></div>
 </li>
 <li><p>装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum install -y yum-utils device-mapper-persistent-data lvm2</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># yum install -y yum-utils device-mapper-persistent-data lvm2</span>
 已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: centos.ustc.edu.cn
- * extras: mirrors.aliyun.com
- * updates: mirrors.cn99.com
-软件包 device-mapper-persistent-data-0.7.3-3.el7.x86_64 已安装并且是最新版本
-软件包 <span class="m">7</span>:lvm2-2.02.180-10.el7_6.8.x86_64 已安装并且是最新版本
+Loading<span class="w"> </span>mirror<span class="w"> </span>speeds<span class="w"> </span>from<span class="w"> </span>cached<span class="w"> </span>hostfile
+<span class="w"> </span>*<span class="w"> </span>base:<span class="w"> </span>centos.ustc.edu.cn
+<span class="w"> </span>*<span class="w"> </span>extras:<span class="w"> </span>mirrors.aliyun.com
+<span class="w"> </span>*<span class="w"> </span>updates:<span class="w"> </span>mirrors.cn99.com
+软件包<span class="w"> </span>device-mapper-persistent-data-0.7.3-3.el7.x86_64<span class="w"> </span>已安装并且是最新版本
+软件包<span class="w"> </span><span class="m">7</span>:lvm2-2.02.180-10.el7_6.8.x86_64<span class="w"> </span>已安装并且是最新版本
 正在解决依赖关系
---&gt; 正在检查事务
----&gt; 软件包 yum-utils.noarch.0.1.1.31-50.el7 将被 安装
---&gt; 正在处理依赖关系 python-kitchen，它被软件包 yum-utils-1.1.31-50.el7.noarch 需要
+--&gt;<span class="w"> </span>正在检查事务
+---&gt;<span class="w"> </span>软件包<span class="w"> </span>yum-utils.noarch.0.1.1.31-50.el7<span class="w"> </span>将被<span class="w"> </span>安装
+--&gt;<span class="w"> </span>正在处理依赖关系<span class="w"> </span>python-kitchen，它被软件包<span class="w"> </span>yum-utils-1.1.31-50.el7.noarch<span class="w"> </span>需要
 ...
 ...
 </pre></div>
@@ -206,131 +206,131 @@ Loading mirror speeds from cached hostfile
 <li><p>设置 yum 源（选择其中一个）</p>
 <p>yum-config-manager --add-repo <a href="http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）">http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）</a></p>
 <p>yum-config-manager --add-repo <a href="http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）">http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）</a></p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum-config-manager --add-repo </span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># yum-config-manager --add-repo </span>
 https://download.docker.com/linux/centos/docker-ce.repo
 已加载插件：fastestmirror
-adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
-grabbing file https://download.docker.com/linux/centos/docker-ce.repo to 
+adding<span class="w"> </span>repo<span class="w"> </span>from:<span class="w"> </span>https://download.docker.com/linux/centos/docker-ce.repo
+grabbing<span class="w"> </span>file<span class="w"> </span>https://download.docker.com/linux/centos/docker-ce.repo<span class="w"> </span>to<span class="w"> </span>
 /etc/yum.repos.d/docker-ce.repo
-repo saved to /etc/yum.repos.d/docker-ce.repo
+repo<span class="w"> </span>saved<span class="w"> </span>to<span class="w"> </span>/etc/yum.repos.d/docker-ce.repo
 </pre></div>
 </li>
 <li><p>可以查看所有仓库中所有docker版本，并选择特定版本安装</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum list docker-ce --showduplicates | sort -r</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># yum list docker-ce --showduplicates | sort -r</span>
 已加载插件：fastestmirror
 可安装的软件包
- * updates: mirrors.cn99.com
-Loading mirror speeds from cached hostfile
- * extras: mirrors.aliyun.com
-docker-ce.x86_64            <span class="m">3</span>:19.03.2-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:19.03.1-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:19.03.0-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.8-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.7-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.6-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.5-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.4-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.3-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.2-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.1-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">3</span>:18.09.0-3.el7                     docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.06.3.ce-3.el7                    docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.06.2.ce-3.el7                    docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.06.1.ce-3.el7                    docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.06.0.ce-3.el7                    docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.03.1.ce-1.el7.centos             docker-ce-stable
-docker-ce.x86_64            <span class="m">18</span>.03.0.ce-1.el7.centos             docker-ce-stable
-docker-ce.x86_64            <span class="m">17</span>.12.1.ce-1.el7.centos             docker-ce-stable
+<span class="w"> </span>*<span class="w"> </span>updates:<span class="w"> </span>mirrors.cn99.com
+Loading<span class="w"> </span>mirror<span class="w"> </span>speeds<span class="w"> </span>from<span class="w"> </span>cached<span class="w"> </span>hostfile
+<span class="w"> </span>*<span class="w"> </span>extras:<span class="w"> </span>mirrors.aliyun.com
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:19.03.2-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:19.03.1-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:19.03.0-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.8-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.7-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.6-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.5-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.4-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.3-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.2-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.1-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">3</span>:18.09.0-3.el7<span class="w">                     </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.06.3.ce-3.el7<span class="w">                    </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.06.2.ce-3.el7<span class="w">                    </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.06.1.ce-3.el7<span class="w">                    </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.06.0.ce-3.el7<span class="w">                    </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.03.1.ce-1.el7.centos<span class="w">             </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">18</span>.03.0.ce-1.el7.centos<span class="w">             </span>docker-ce-stable
+docker-ce.x86_64<span class="w">            </span><span class="m">17</span>.12.1.ce-1.el7.centos<span class="w">             </span>docker-ce-stable
 </pre></div>
 </li>
 <li><p>安装Docker，命令：<code>yum install docker-ce-版本号</code>，我选的是<code>docker-ce-18.03.1.ce</code>，如下</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># yum install docker-ce-18.03.1.ce</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># yum install docker-ce-18.03.1.ce</span>
 已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: centos.ustc.edu.cn
- * extras: mirrors.aliyun.com
- * updates: mirrors.cn99.com
+Loading<span class="w"> </span>mirror<span class="w"> </span>speeds<span class="w"> </span>from<span class="w"> </span>cached<span class="w"> </span>hostfile
+<span class="w"> </span>*<span class="w"> </span>base:<span class="w"> </span>centos.ustc.edu.cn
+<span class="w"> </span>*<span class="w"> </span>extras:<span class="w"> </span>mirrors.aliyun.com
+<span class="w"> </span>*<span class="w"> </span>updates:<span class="w"> </span>mirrors.cn99.com
 正在解决依赖关系
---&gt; 正在检查事务
----&gt; 软件包 docker-ce.x86_64.0.18.03.1.ce-1.el7.centos 将被 安装
+--&gt;<span class="w"> </span>正在检查事务
+---&gt;<span class="w"> </span>软件包<span class="w"> </span>docker-ce.x86_64.0.18.03.1.ce-1.el7.centos<span class="w"> </span>将被<span class="w"> </span>安装
 <span class="c1">##（期间要选择确认，输入 y 即可）</span>
 </pre></div>
 <p>[可选]配置阿里云镜像加速</p>
 <p><figure class="pswp-item" style="flex: 104.68920392584515" data-width="1920" data-height="917"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0a7b0d2480e8e35788102af644e7a97e.png" alt="" /></figure></p>
-<div class="highlight"><pre><span></span>sudo mkdir -p /etc/docker
-sudo tee /etc/docker/daemon.json <span class="s">&lt;&lt;-&#39;EOF&#39;</span>
+<div class="highlight"><pre><span></span>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/docker
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/docker/daemon.json<span class="w"> </span><span class="s">&lt;&lt;-&#39;EOF&#39;</span>
 <span class="s">{</span>
 <span class="s">  &quot;registry-mirrors&quot;: [&quot;https://*****.mirror.aliyuncs.com&quot;]</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
-sudo systemctl daemon-reload
-sudo systemctl restart docker
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
 </pre></div>
 </li>
 <li><p>启动Docker，命令：systemctl start docker，然后加入开机启动，如下</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># systemctl start docker</span>
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># systemctl enable  docker</span>
-Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker version</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl start docker</span>
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># systemctl enable  docker</span>
+Created<span class="w"> </span>symlink<span class="w"> </span>from<span class="w"> </span>/etc/systemd/system/multi-user.target.wants/docker.service<span class="w"> </span>to<span class="w"> </span>/usr/lib/systemd/system/docker.service.
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker version</span>
 Client:
- Version:      <span class="m">18</span>.03.1-ce
- API version:  <span class="m">1</span>.37
- Go version:   go1.9.5
- Git commit:   9ee9f40
- Built:        Thu Apr <span class="m">26</span> <span class="m">07</span>:20:16 <span class="m">2018</span>
- OS/Arch:      linux/amd64
- Experimental: <span class="nb">false</span>
- Orchestrator: swarm
+<span class="w"> </span>Version:<span class="w">      </span><span class="m">18</span>.03.1-ce
+<span class="w"> </span>API<span class="w"> </span>version:<span class="w">  </span><span class="m">1</span>.37
+<span class="w"> </span>Go<span class="w"> </span>version:<span class="w">   </span>go1.9.5
+<span class="w"> </span>Git<span class="w"> </span>commit:<span class="w">   </span>9ee9f40
+<span class="w"> </span>Built:<span class="w">        </span>Thu<span class="w"> </span>Apr<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">07</span>:20:16<span class="w"> </span><span class="m">2018</span>
+<span class="w"> </span>OS/Arch:<span class="w">      </span>linux/amd64
+<span class="w"> </span>Experimental:<span class="w"> </span><span class="nb">false</span>
+<span class="w"> </span>Orchestrator:<span class="w"> </span>swarm
 
 Server:
- Engine:
-  Version:      <span class="m">18</span>.03.1-ce
-  API version:  <span class="m">1</span>.37 <span class="o">(</span>minimum version <span class="m">1</span>.12<span class="o">)</span>
-  Go version:   go1.9.5
-  Git commit:   9ee9f40
-  Built:        Thu Apr <span class="m">26</span> <span class="m">07</span>:23:58 <span class="m">2018</span>
-  OS/Arch:      linux/amd64
-  Experimental: <span class="nb">false</span>
+<span class="w"> </span>Engine:
+<span class="w">  </span>Version:<span class="w">      </span><span class="m">18</span>.03.1-ce
+<span class="w">  </span>API<span class="w"> </span>version:<span class="w">  </span><span class="m">1</span>.37<span class="w"> </span><span class="o">(</span>minimum<span class="w"> </span>version<span class="w"> </span><span class="m">1</span>.12<span class="o">)</span>
+<span class="w">  </span>Go<span class="w"> </span>version:<span class="w">   </span>go1.9.5
+<span class="w">  </span>Git<span class="w"> </span>commit:<span class="w">   </span>9ee9f40
+<span class="w">  </span>Built:<span class="w">        </span>Thu<span class="w"> </span>Apr<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">07</span>:23:58<span class="w"> </span><span class="m">2018</span>
+<span class="w">  </span>OS/Arch:<span class="w">      </span>linux/amd64
+<span class="w">  </span>Experimental:<span class="w"> </span><span class="nb">false</span>
 </pre></div>
 </li>
 </ol>
 <p><strong>补充</strong>：</p>
 <p>默认情况下，<code>docker</code> 命令会使用 <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a> 与 Docker 引擎通讯。而只有 <code>root</code> 用户和 <code>docker</code> 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 <code>root</code> 用户。因此，更好地做法是将需要使用 <code>docker</code> 的用户加入 <code>docker</code> 用户组。</p>
 <p>建立 <code>docker</code> 组：</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># sudo groupadd docker</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>/<span class="o">]</span><span class="c1"># sudo groupadd docker</span>
 </pre></div>
 <p>将当前用户加入 <code>docker</code> 组：</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># sudo usermod -aG docker $USER</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>/<span class="o">]</span><span class="c1"># sudo usermod -aG docker $USER</span>
 </pre></div>
 <p>退出当前终端并重新登录，进行如下测试。</p>
 <p><strong>测试 Docker 是否安装正确</strong>：</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># docker run hello-world</span>
-   Unable to find image <span class="s1">&#39;hello-world:latest&#39;</span> locally
-   latest: Pulling from library/hello-world
-   0e03bdcc26d7: Pull <span class="nb">complete</span> 
-   Digest: sha256:4cf9c47f86df71d48364001ede3a4fcd85ae80ce02ebad74156906caff5378bc
-   Status: Downloaded newer image <span class="k">for</span> hello-world:latest
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>/<span class="o">]</span><span class="c1"># docker run hello-world</span>
+<span class="w">   </span>Unable<span class="w"> </span>to<span class="w"> </span>find<span class="w"> </span>image<span class="w"> </span><span class="s1">&#39;hello-world:latest&#39;</span><span class="w"> </span>locally
+<span class="w">   </span>latest:<span class="w"> </span>Pulling<span class="w"> </span>from<span class="w"> </span>library/hello-world
+<span class="w">   </span>0e03bdcc26d7:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span><span class="w"> </span>
+<span class="w">   </span>Digest:<span class="w"> </span>sha256:4cf9c47f86df71d48364001ede3a4fcd85ae80ce02ebad74156906caff5378bc
+<span class="w">   </span>Status:<span class="w"> </span>Downloaded<span class="w"> </span>newer<span class="w"> </span>image<span class="w"> </span><span class="k">for</span><span class="w"> </span>hello-world:latest
 
-   Hello from Docker!             --&gt; 出现这句话代表Docker安装没有问题
-   This message shows that your installation appears to be working correctly.
+<span class="w">   </span>Hello<span class="w"> </span>from<span class="w"> </span>Docker!<span class="w">             </span>--&gt;<span class="w"> </span>出现这句话代表Docker安装没有问题
+<span class="w">   </span>This<span class="w"> </span>message<span class="w"> </span>shows<span class="w"> </span>that<span class="w"> </span>your<span class="w"> </span>installation<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>working<span class="w"> </span>correctly.
 
-   To generate this message, Docker took the following steps:
-    <span class="m">1</span>. The Docker client contacted the Docker daemon.
-    <span class="m">2</span>. The Docker daemon pulled the <span class="s2">&quot;hello-world&quot;</span> image from the Docker Hub.
-       <span class="o">(</span>amd64<span class="o">)</span>
-    <span class="m">3</span>. The Docker daemon created a new container from that image which runs the
-       executable that produces the output you are currently reading.
-    <span class="m">4</span>. The Docker daemon streamed that output to the Docker client, which sent it
-       to your terminal.
+<span class="w">   </span>To<span class="w"> </span>generate<span class="w"> </span>this<span class="w"> </span>message,<span class="w"> </span>Docker<span class="w"> </span>took<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>steps:
+<span class="w">    </span><span class="m">1</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>client<span class="w"> </span>contacted<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>daemon.
+<span class="w">    </span><span class="m">2</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>pulled<span class="w"> </span>the<span class="w"> </span><span class="s2">&quot;hello-world&quot;</span><span class="w"> </span>image<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>Hub.
+<span class="w">       </span><span class="o">(</span>amd64<span class="o">)</span>
+<span class="w">    </span><span class="m">3</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>created<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>container<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>image<span class="w"> </span>which<span class="w"> </span>runs<span class="w"> </span>the
+<span class="w">       </span>executable<span class="w"> </span>that<span class="w"> </span>produces<span class="w"> </span>the<span class="w"> </span>output<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>currently<span class="w"> </span>reading.
+<span class="w">    </span><span class="m">4</span>.<span class="w"> </span>The<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>streamed<span class="w"> </span>that<span class="w"> </span>output<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>client,<span class="w"> </span>which<span class="w"> </span>sent<span class="w"> </span>it
+<span class="w">       </span>to<span class="w"> </span>your<span class="w"> </span>terminal.
 
-   To try something more ambitious, you can run an Ubuntu container with:
-    $ docker run -it ubuntu bash
+<span class="w">   </span>To<span class="w"> </span>try<span class="w"> </span>something<span class="w"> </span>more<span class="w"> </span>ambitious,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>run<span class="w"> </span>an<span class="w"> </span>Ubuntu<span class="w"> </span>container<span class="w"> </span>with:
+<span class="w">    </span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>bash
 
-   Share images, automate workflows, and more with a free Docker ID:
-    https://hub.docker.com/
+<span class="w">   </span>Share<span class="w"> </span>images,<span class="w"> </span>automate<span class="w"> </span>workflows,<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>free<span class="w"> </span>Docker<span class="w"> </span>ID:
+<span class="w">    </span>https://hub.docker.com/
 
-   For more examples and ideas, visit:
-    https://docs.docker.com/get-started/
+<span class="w">   </span>For<span class="w"> </span>more<span class="w"> </span>examples<span class="w"> </span>and<span class="w"> </span>ideas,<span class="w"> </span>visit:
+<span class="w">    </span>https://docs.docker.com/get-started/
 </pre></div>
 <p>若能正常输出以上信息，则说明安装成功。</p>
 
@@ -373,7 +373,7 @@ Server:
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

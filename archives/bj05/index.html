@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -106,65 +106,65 @@
 <h1>2. Jackson</h1>
 <h2>1.1 引入web依赖</h2>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <h2>1.2 编写bean</h2>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
-    <span class="c1">//set/get/toString略</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//set/get/toString略</span>
 <span class="p">}</span>
 </pre></div>
 <h2>1.3 编写controller</h2>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span><span class="c1">// @Controller + @ResponseBody</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUaer</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">();</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-            <span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">users</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUaer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">();</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h2>1.4 测试，查看结果</h2>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <h2>3. 配置Jackson</h2>
 <h3>1.问题 - 单独配置 Jackson</h3>
 <p>修改bean</p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
-    <span class="nd">@JsonFormat</span><span class="p">(</span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">)</span>
-    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthday</span><span class="p">;</span>
-    <span class="c1">//set/get/toString略</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@JsonFormat</span><span class="p">(</span><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">birthday</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//set/get/toString略</span>
 <span class="p">}</span>
 </pre></div>
 <p>访问结果</p>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-12-30&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2019-12-30&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <h3>2.解决 - Jackson的全局配置</h3>
@@ -172,29 +172,29 @@
 <h4>2.1 配置<code>MappingJackson2HttpMessageConverter</code></h4>
 <p>新建配置类<code>WebMvcConfig.java</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebMvcConfig</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">MappingJackson2HttpMessageConverter</span> <span class="nf">jackson2HttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">MappingJackson2HttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MappingJackson2HttpMessageConverter</span><span class="p">();</span>
-        <span class="c1">//配置Jackson         此处可配置很多东西</span>
-        <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">();</span>
-        <span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">MappingJackson2HttpMessageConverter</span><span class="w"> </span><span class="nf">jackson2HttpMessageConverter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">MappingJackson2HttpMessageConverter</span><span class="w"> </span><span class="n">converter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MappingJackson2HttpMessageConverter</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//配置Jackson         此处可配置很多东西</span>
+<span class="w">        </span><span class="n">ObjectMapper</span><span class="w"> </span><span class="n">mapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectMapper</span><span class="p">();</span>
+<span class="w">        </span><span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">));</span>
 
-        <span class="c1">//将配置好的Jackson注入回MappingJackson2HttpMessageConverter</span>
-        <span class="n">converter</span><span class="p">.</span><span class="na">setObjectMapper</span><span class="p">(</span><span class="n">mapper</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">//将配置好的Jackson注入回MappingJackson2HttpMessageConverter</span>
+<span class="w">        </span><span class="n">converter</span><span class="p">.</span><span class="na">setObjectMapper</span><span class="p">(</span><span class="n">mapper</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">converter</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>再次测试，结果为</p>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019年12月31日&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2019年12月31日&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <p>上面可以看到此时我只需要配置 <code>ObjectMapper</code>，与<code>MappingJackson2HttpMessageConverter</code>没太大关系（当然，它有它的用处，例如这些：<figure class="pswp-item" style="flex: 143.5344827586207" data-width="999" data-height="348"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7c46e733c02954bac878e05d3a654d4e.png" alt="" /></figure>）</p>
@@ -204,23 +204,23 @@
 <h4>2.2 直接配置<code>ObjectMapper</code></h4>
 <p>注释上一步的配置，修改配置类为</p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
-   <span class="nd">@Bean</span>
-    <span class="n">ObjectMapper</span> <span class="nf">objectMapper</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="p">();</span>
-        <span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">));</span>
-        <span class="k">return</span> <span class="n">mapper</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebMvcConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">ObjectMapper</span><span class="w"> </span><span class="nf">objectMapper</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ObjectMapper</span><span class="w"> </span><span class="n">mapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectMapper</span><span class="p">();</span>
+<span class="w">        </span><span class="n">mapper</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mapper</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>再次测试，结果为</p>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019/12/31&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2019/12/31&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <h1>3. Gson</h1>
@@ -232,60 +232,60 @@
 <h3>1. 配置依赖</h3>
 <h4>1.1 排除默认的Jackson</h4>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="c">&lt;!--排除默认的Jackson--&gt;</span>
-        <span class="nt">&lt;exclusions&gt;</span>
-            <span class="nt">&lt;exclusion&gt;</span>
-                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-                <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-json<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;/exclusion&gt;</span>
-        <span class="nt">&lt;/exclusions&gt;</span>
+<span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!--排除默认的Jackson--&gt;</span>
+<span class="w">        </span><span class="nt">&lt;exclusions&gt;</span>
+<span class="w">            </span><span class="nt">&lt;exclusion&gt;</span>
+<span class="w">                </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">                </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-json<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/exclusion&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/exclusions&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <h4>1.2 引入Gson依赖</h4>
-<div class="highlight"><pre><span></span><span class="c">&lt;!--Gson--&gt;</span>
+<div class="highlight"><pre><span></span><span class="cm">&lt;!--Gson--&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <h3>2. Bean</h3>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthday</span><span class="p">;</span>
-    <span class="c1">//set/get/toString略</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">birthday</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//set/get/toString略</span>
 <span class="p">}</span>
 </pre></div>
 <h3>3. Controller</h3>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span><span class="c1">// @Controller + @ResponseBody</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUaer</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">();</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-            <span class="n">user</span><span class="p">.</span><span class="na">setBirthday</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-            <span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">users</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUaer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">();</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="s">&quot;Xuxx&gt;&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setAddress</span><span class="p">(</span><span class="s">&quot;中国&gt;&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="n">user</span><span class="p">.</span><span class="na">setBirthday</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">            </span><span class="n">users</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>4.测试结果</h3>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;Dec 31, 2019 3:37:48 AM&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dec 31, 2019 3:37:48 AM&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <h2>2. Gson配置</h2>
@@ -293,80 +293,80 @@
 <h4>1.1 创建配置类 WebMvcConfig</h4>
 <p>与配置Jackson类似</p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebMvcConfig</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">GsonHttpMessageConverter</span> <span class="nf">gsonHttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">GsonHttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GsonHttpMessageConverter</span><span class="p">();</span>
-        <span class="n">converter</span><span class="p">.</span><span class="na">setGson</span><span class="p">(</span><span class="k">new</span> <span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">());</span>
-        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">GsonHttpMessageConverter</span><span class="w"> </span><span class="nf">gsonHttpMessageConverter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GsonHttpMessageConverter</span><span class="w"> </span><span class="n">converter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GsonHttpMessageConverter</span><span class="p">();</span>
+<span class="w">        </span><span class="n">converter</span><span class="p">.</span><span class="na">setGson</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">converter</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="p">}</span>
 </pre></div>
 <h4>1.2 测试结果</h4>
 <div class="highlight"><pre><span></span>[
-  {
-    &quot;id&quot;: 0,
-    &quot;username&quot;: &quot;Xuxx&gt;&gt;0&quot;,
-    &quot;address&quot;: &quot;中国&gt;&gt;0&quot;,
-    &quot;birthday&quot;: &quot;2019-12-31&quot;
-  },...
+<span class="w">  </span>{
+<span class="w">    </span>&quot;id&quot;:<span class="w"> </span>0,
+<span class="w">    </span>&quot;username&quot;:<span class="w"> </span>&quot;Xuxx&gt;&gt;0&quot;,
+<span class="w">    </span>&quot;address&quot;:<span class="w"> </span>&quot;中国&gt;&gt;0&quot;,
+<span class="w">    </span>&quot;birthday&quot;:<span class="w"> </span>&quot;2019-12-31&quot;
+<span class="w">  </span>},...
 ]
 </pre></div>
 <h3>2.直接配置Gson</h3>
 <h4>2.1 配置类</h4>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
-    <span class="nd">@Bean</span>
-    <span class="n">Gson</span> <span class="nf">gson</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebMvcConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">Gson</span><span class="w"> </span><span class="nf">gson</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GsonBuilder</span><span class="p">().</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="p">).</span><span class="na">create</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h4>2.2 测试</h4>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2019年12月31日&quot;</span>
-  <span class="p">},</span><span class="err">...</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2019年12月31日&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">...</span>
 <span class="p">]</span>
 </pre></div>
 <h1>4. Fastjson</h1>
 <h2>1. 依赖</h2>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.2.49<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.2.49<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <p>Bean和Controller都与上例相同</p>
 <h2>2.配置类</h2>
 <p><strong><code>Fastjson</code>必须自己手动提供HttpMessageConverter</strong></p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebMvcConfig</span> <span class="p">{</span>
-    <span class="cm">/*Fastjson配置*/</span>
-    <span class="nd">@Bean</span>
-    <span class="c1">//Fastjson必须自己手动提供HttpMessageConverter</span>
-    <span class="n">FastJsonHttpMessageConverter</span> <span class="nf">fastJsonHttpMessageConverter</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">FastJsonHttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastJsonHttpMessageConverter</span><span class="p">();</span>
-        <span class="n">converter</span><span class="p">.</span><span class="na">setDefaultCharset</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">));</span><span class="c1">//默认编码时中文乱码</span>
-        <span class="n">FastJsonConfig</span> <span class="n">fastJsonConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastJsonConfig</span><span class="p">();</span>
-        <span class="n">fastJsonConfig</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">);</span><span class="c1">//设置日期格式</span>
-        <span class="n">converter</span><span class="p">.</span><span class="na">setFastJsonConfig</span><span class="p">(</span><span class="n">fastJsonConfig</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">converter</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebMvcConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/*Fastjson配置*/</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="c1">//Fastjson必须自己手动提供HttpMessageConverter</span>
+<span class="w">    </span><span class="n">FastJsonHttpMessageConverter</span><span class="w"> </span><span class="nf">fastJsonHttpMessageConverter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FastJsonHttpMessageConverter</span><span class="w"> </span><span class="n">converter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastJsonHttpMessageConverter</span><span class="p">();</span>
+<span class="w">        </span><span class="n">converter</span><span class="p">.</span><span class="na">setDefaultCharset</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">));</span><span class="c1">//默认编码时中文乱码</span>
+<span class="w">        </span><span class="n">FastJsonConfig</span><span class="w"> </span><span class="n">fastJsonConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastJsonConfig</span><span class="p">();</span>
+<span class="w">        </span><span class="n">fastJsonConfig</span><span class="p">.</span><span class="na">setDateFormat</span><span class="p">(</span><span class="s">&quot;yyyy/MM/dd&quot;</span><span class="p">);</span><span class="c1">//设置日期格式</span>
+<span class="w">        </span><span class="n">converter</span><span class="p">.</span><span class="na">setFastJsonConfig</span><span class="p">(</span><span class="n">fastJsonConfig</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">converter</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <h2>3.测试结果</h2>
 <div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;birthday&quot;</span><span class="p">:</span> <span class="s2">&quot;2020/01/02&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span>
-  <span class="p">},</span><span class="err">..</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;中国&gt;&gt;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;birthday&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2020/01/02&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Xuxx&gt;&gt;0&quot;</span>
+<span class="w">  </span><span class="p">},</span><span class="err">..</span>
 <span class="p">]</span>
 </pre></div>
 
@@ -413,7 +413,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

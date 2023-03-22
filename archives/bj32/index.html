@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -90,13 +90,13 @@
 <p>从 <a href="https://yeasy.gitbook.io/docker_practice/image/commit">docker commit</a> 的学习中，可以了解到，镜像的定制实际上就是定制每一层所添加的配置、文件。如果可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p>
 <p>Dockerfile 是一个文本文件，其内包含了一条条的指令(Instruction)，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p>
 <p>以 tomcat 镜像为例，这次使用 Dockerfile 来定制。在一个空白目录中，建立一个文本文件，并命名为<code>Dockerfile</code></p>
-<div class="highlight"><pre><span></span>mkdir myshop
-<span class="nb">cd</span> myshop
-touch Dockerfile
+<div class="highlight"><pre><span></span>mkdir<span class="w"> </span>myshop
+<span class="nb">cd</span><span class="w"> </span>myshop
+touch<span class="w"> </span>Dockerfile
 </pre></div>
 <p>其内容为：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">tomcat</span>
-<span class="k">RUN</span> <span class="nb">echo</span> Hello,Docker! &gt; /usr/local/tomcat/webapps/ROOT/index.jsp
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">tomcat</span>
+<span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>Hello,Docker!<span class="w"> </span>&gt;<span class="w"> </span>/usr/local/tomcat/webapps/ROOT/index.jsp
 </pre></div>
 <h2>FROM-指定基础镜像</h2>
 <p>所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。而FROM就是指定基础镜像，因此<strong>一个 Dockerfile 中 FROM是必备的指令，并且必须是第一条指令</strong>。</p>
@@ -107,57 +107,57 @@ touch Dockerfile
 <ul>
 <li><em>shell</em> 格式：<code>RUN &lt;命令&gt;</code>，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 <code>RUN</code> 指令就是这种格式。</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="k">RUN</span> <span class="nb">echo</span> Hello,Docker! &gt; /usr/local/tomcat/webapps/ROOT/index.jsp
+<div class="highlight"><pre><span></span><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>Hello,Docker!<span class="w"> </span>&gt;<span class="w"> </span>/usr/local/tomcat/webapps/ROOT/index.jsp
 </pre></div>
 <ul>
 <li><em>exec</em> 格式：<code>RUN ["可执行文件", "参数1", "参数2"]</code>，这更像是函数调用中的格式。</li>
 </ul>
 <p>既然 <code>RUN</code> 就像 Shell 脚本一样可以执行命令，那么是否就可以像 Shell 脚本一样把每个命令对应一个 RUN 呢？比如这样：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">debian:stretch</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">debian:stretch</span>
 
-<span class="k">RUN</span> apt-get update
-<span class="k">RUN</span> apt-get install -y gcc libc6-dev make wget
-<span class="k">RUN</span> wget -O redis.tar.gz <span class="s2">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span>
-<span class="k">RUN</span> mkdir -p /usr/src/redis
-<span class="k">RUN</span> tar -xzf redis.tar.gz -C /usr/src/redis --strip-components<span class="o">=</span><span class="m">1</span>
-<span class="k">RUN</span> make -C /usr/src/redis
-<span class="k">RUN</span> make -C /usr/src/redis install
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gcc<span class="w"> </span>libc6-dev<span class="w"> </span>make<span class="w"> </span>wget
+<span class="k">RUN</span><span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>redis.tar.gz<span class="w"> </span><span class="s2">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span>
+<span class="k">RUN</span><span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/usr/src/redis
+<span class="k">RUN</span><span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>redis.tar.gz<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis<span class="w"> </span>--strip-components<span class="o">=</span><span class="m">1</span>
+<span class="k">RUN</span><span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis
+<span class="k">RUN</span><span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis<span class="w"> </span>install
 </pre></div>
 <p>之前说过，<strong>Dockerfile 中每一个指令都会建立一层</strong>，<code>RUN</code> 也不例外。每一个 <code>RUN</code> 的行为，就和手动建立镜像的过程一样：新建立一层，在其上执行这些命令，执行结束后，<code>commit</code> 这一层的修改，构成新的镜像。</p>
 <p>而上面的这种写法，创建了 7 层镜像。这是完全没有意义的，而且很多运行时不需要的东西，都被装进了镜像里，比如编译环境、更新的软件包等等。结果就是产生非常臃肿、非常多层的镜像，不仅仅增加了构建部署的时间，也很容易出错。 这是很多初学 Docker 的人常犯的一个错误。</p>
 <p><em>Union FS 是有最大层数限制的，比如 AUFS，曾经是最大不得超过 42 层，现在是不得超过 127 层。</em></p>
 <p>上面的 <code>Dockerfile</code> 正确的写法应该是这样：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">debian:stretch</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">debian:stretch</span>
 
-<span class="k">RUN</span> <span class="nb">set</span> -x<span class="p">;</span> <span class="nv">buildDeps</span><span class="o">=</span><span class="s1">&#39;gcc libc6-dev make wget&#39;</span> <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> apt-get update <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> apt-get install -y <span class="nv">$buildDeps</span> <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> wget -O redis.tar.gz <span class="s2">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span> <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> mkdir -p /usr/src/redis <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> tar -xzf redis.tar.gz -C /usr/src/redis --strip-components<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> make -C /usr/src/redis <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> make -C /usr/src/redis install <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/* <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> rm redis.tar.gz <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> rm -r /usr/src/redis <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> apt-get purge -y --auto-remove <span class="nv">$buildDeps</span>
+<span class="k">RUN</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>-x<span class="p">;</span><span class="w"> </span><span class="nv">buildDeps</span><span class="o">=</span><span class="s1">&#39;gcc libc6-dev make wget&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="nv">$buildDeps</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>redis.tar.gz<span class="w"> </span><span class="s2">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/usr/src/redis<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>redis.tar.gz<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis<span class="w"> </span>--strip-components<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>/usr/src/redis<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>redis.tar.gz<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>/usr/src/redis<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>--auto-remove<span class="w"> </span><span class="nv">$buildDeps</span>
 </pre></div>
 <p>首先，之前所有的命令只有一个目的，就是编译、安装 redis 可执行文件。因此没有必要建立很多层，这只是一层的事情。因此，这里没有使用很多个 <code>RUN</code> 一一对应不同的命令，而是仅仅使用一个 <code>RUN</code> 指令，并使用 <code>&amp;&amp;</code> 将各个所需命令串联起来。将之前的 7 层，简化为了 1 层。在撰写 Dockerfile 的时候，要经常提醒自己，这并不是在写 Shell 脚本，而是在定义每一层该如何构建</p>
 <p>并且，这里为了格式化还进行了换行。Dockerfile 支持 Shell 类的行尾添加 <code>\</code> 的命令换行方式，以及行首 <code>#</code> 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易，这是一个比较好的习惯。</p>
 <p>此外，还可以看到这一组命令的最后添加了清理工作的命令，删除了为了编译构建所需要的软件，清理了所有下载、展开的文件，并且还清理了 <code>apt</code> 缓存文件。这是很重要的一步，之前说过，镜像是多层存储，每一层的东西并不会在下一层被删除，会一直跟随着镜像。因此镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉。</p>
 <h2>构建镜像</h2>
 <p><code>docker build</code> 命令进行镜像构建。其语法为：</p>
-<div class="highlight"><pre><span></span>docker build <span class="o">[</span>选项<span class="o">]</span> &lt;上下文路径/URL/-&gt;
+<div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span><span class="o">[</span>选项<span class="o">]</span><span class="w"> </span>&lt;上下文路径/URL/-&gt;
 </pre></div>
 <p>在 <code>Dockerfile</code> 文件所在目录执行：</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost myshop<span class="o">]</span><span class="c1"># docker build -t myshop .</span>
-Sending build context to Docker daemon  <span class="m">3</span>.072kB
-Step <span class="m">1</span>/2 : FROM tomcat:latest
- ---&gt; 2eb5a120304e
-Step <span class="m">2</span>/2 : COPY index.jsp /usr/local/tomcat/webapps/ROOT
- ---&gt; f44b1d0d1366
-Successfully built f44b1d0d1366
-Successfully tagged myshop:latest
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>myshop<span class="o">]</span><span class="c1"># docker build -t myshop .</span>
+Sending<span class="w"> </span>build<span class="w"> </span>context<span class="w"> </span>to<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w">  </span><span class="m">3</span>.072kB
+Step<span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>:<span class="w"> </span>FROM<span class="w"> </span>tomcat:latest
+<span class="w"> </span>---&gt;<span class="w"> </span>2eb5a120304e
+Step<span class="w"> </span><span class="m">2</span>/2<span class="w"> </span>:<span class="w"> </span>COPY<span class="w"> </span>index.jsp<span class="w"> </span>/usr/local/tomcat/webapps/ROOT
+<span class="w"> </span>---&gt;<span class="w"> </span>f44b1d0d1366
+Successfully<span class="w"> </span>built<span class="w"> </span>f44b1d0d1366
+Successfully<span class="w"> </span>tagged<span class="w"> </span>myshop:latest
 </pre></div>
 <h2>镜像构建上下文（Context）</h2>
 <p>如果注意，会看到 <code>docker build</code> 命令最后有一个 <code>.</code>。<code>.</code> 表示当前目录，而 <code>Dockerfile</code> 就在当前目录，因此不少初学者以为这个路径是在指定 <code>Dockerfile</code> 所在路径，这么理解其实是不准确的。如果对应上面的命令格式，你可能会发现，这是在指定 <strong>上下文路径</strong>。那么什么是上下文呢？</p>
@@ -265,50 +265,50 @@ COPY --chown=10:11 files* /mydir/</code></pre>
 <p>那么有了 <code>CMD</code> 后，为什么还要有 <code>ENTRYPOINT</code> 呢？这种 <code>&lt;ENTRYPOINT&gt; "&lt;CMD&gt;"</code> 有什么好处么？让来看几个场景。</p>
 <h4>场景一：让镜像变成像命令一样使用</h4>
 <p>假设需要一个得知自己当前公网 IP 的镜像，那么可以先用 <code>CMD</code> 来实现：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">ubuntu:18.04</span>
-<span class="k">RUN</span> apt-get update <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> apt-get install -y curl <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
-<span class="k">CMD</span> <span class="p">[</span> <span class="s2">&quot;curl&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;http://myip.ipip.net&quot;</span> <span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:18.04</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;curl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://myip.ipip.net&quot;</span><span class="w"> </span><span class="p">]</span>
 </pre></div>
 <p>假如使用 <code>docker build -t myip .</code> 来构建镜像的话，如果需要查询当前公网 IP，只需要执行：</p>
-<div class="highlight"><pre><span></span>$ docker run myip
-当前 IP：61.148.226.66 来自：北京市 联通
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>myip
+当前<span class="w"> </span>IP：61.148.226.66<span class="w"> </span>来自：北京市<span class="w"> </span>联通
 </pre></div>
 <p>嗯，这么看起来好像可以直接把镜像当做命令使用了，不过命令总有参数，如果希望加参数呢？比如从上面的 <code>CMD</code> 中可以看到实质的命令是 <code>curl</code>，那么如果希望显示 HTTP 头信息，就需要加上 <code>-i</code> 参数。那么可以直接加 <code>-i</code> 参数给 <code>docker run myip</code> 么？</p>
-<div class="highlight"><pre><span></span>$ docker run myip -i
-docker: Error response from daemon: invalid header field value <span class="s2">&quot;oci runtime error: container_linux.go:247: starting container process caused \&quot;exec: \\\&quot;-i\\\&quot;: executable file not found in </span><span class="nv">$PATH</span><span class="s2">\&quot;\n&quot;</span>.
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>myip<span class="w"> </span>-i
+docker:<span class="w"> </span>Error<span class="w"> </span>response<span class="w"> </span>from<span class="w"> </span>daemon:<span class="w"> </span>invalid<span class="w"> </span>header<span class="w"> </span>field<span class="w"> </span>value<span class="w"> </span><span class="s2">&quot;oci runtime error: container_linux.go:247: starting container process caused \&quot;exec: \\\&quot;-i\\\&quot;: executable file not found in </span><span class="nv">$PATH</span><span class="s2">\&quot;\n&quot;</span>.
 </pre></div>
 <p>可以看到可执行文件找不到的报错，<code>executable file not found</code>。之前说过，跟在镜像名后面的是 <code>command</code>，运行时会替换 <code>CMD</code> 的默认值。因此这里的 <code>-i</code> 替换了原来的 <code>CMD</code>，而不是添加在原来的 <code>curl -s http://myip.ipip.net</code> 后面。而 <code>-i</code> 根本不是命令，所以自然找不到。</p>
 <p>那么如果希望加入 <code>-i</code> 这参数，就必须重新完整的输入这个命令：</p>
-<div class="highlight"><pre><span></span>$ docker run myip curl -s http://myip.ipip.net -i
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>myip<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://myip.ipip.net<span class="w"> </span>-i
 </pre></div>
 <p>这显然不是很好的解决方案，而使用 <code>ENTRYPOINT</code> 就可以解决这个问题。现在重新用 <code>ENTRYPOINT</code> 来实现这个镜像：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">ubuntu:18.04</span>
-<span class="k">RUN</span> apt-get update <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> apt-get install -y curl <span class="se">\</span>
-    <span class="o">&amp;&amp;</span> rm -rf /var/lib/apt/lists/*
-<span class="k">ENTRYPOINT</span> <span class="p">[</span> <span class="s2">&quot;curl&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;http://myip.ipip.net&quot;</span> <span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:18.04</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+<span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;curl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://myip.ipip.net&quot;</span><span class="w"> </span><span class="p">]</span>
 </pre></div>
 <p>这次再来尝试直接使用 <code>docker run myip -i</code>：</p>
-<div class="highlight"><pre><span></span>$ docker run myip
-当前 IP：61.148.226.66 来自：北京市 联通
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>myip
+当前<span class="w"> </span>IP：61.148.226.66<span class="w"> </span>来自：北京市<span class="w"> </span>联通
 
-$ docker run myip -i
-HTTP/1.1 <span class="m">200</span> OK
-Server: nginx/1.8.0
-Date: Tue, <span class="m">22</span> Nov <span class="m">2016</span> <span class="m">05</span>:12:40 GMT
-Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
-Vary: Accept-Encoding
-X-Powered-By: PHP/5.6.24-1~dotdeb+7.1
-X-Cache: MISS from cache-2
-X-Cache-Lookup: MISS from cache-2:80
-X-Cache: MISS from proxy-2_6
-Transfer-Encoding: chunked
-Via: <span class="m">1</span>.1 cache-2:80, <span class="m">1</span>.1 proxy-2_6:8006
-Connection: keep-alive
+$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>myip<span class="w"> </span>-i
+HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+Server:<span class="w"> </span>nginx/1.8.0
+Date:<span class="w"> </span>Tue,<span class="w"> </span><span class="m">22</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2016</span><span class="w"> </span><span class="m">05</span>:12:40<span class="w"> </span>GMT
+Content-Type:<span class="w"> </span>text/html<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+Vary:<span class="w"> </span>Accept-Encoding
+X-Powered-By:<span class="w"> </span>PHP/5.6.24-1~dotdeb+7.1
+X-Cache:<span class="w"> </span>MISS<span class="w"> </span>from<span class="w"> </span>cache-2
+X-Cache-Lookup:<span class="w"> </span>MISS<span class="w"> </span>from<span class="w"> </span>cache-2:80
+X-Cache:<span class="w"> </span>MISS<span class="w"> </span>from<span class="w"> </span>proxy-2_6
+Transfer-Encoding:<span class="w"> </span>chunked
+Via:<span class="w"> </span><span class="m">1</span>.1<span class="w"> </span>cache-2:80,<span class="w"> </span><span class="m">1</span>.1<span class="w"> </span>proxy-2_6:8006
+Connection:<span class="w"> </span>keep-alive
 ​
-当前 IP：61.148.226.66 来自：北京市 联通
+当前<span class="w"> </span>IP：61.148.226.66<span class="w"> </span>来自：北京市<span class="w"> </span>联通
 </pre></div>
 <p>可以看到，这次成功了。这是因为当存在 <code>ENTRYPOINT</code> 后，<code>CMD</code> 的内容将会作为参数传给 <code>ENTRYPOINT</code>，而这里 <code>-i</code> 就是新的 <code>CMD</code>，因此会作为参数传给 <code>curl</code>，从而达到了预期的效果。</p>
 <h4>场景二：应用运行前的准备工作</h4>
@@ -316,29 +316,29 @@ Connection: keep-alive
 <p>比如 <code>mysql</code> 类的数据库，可能需要一些数据库配置、初始化的工作，这些工作要在最终的 mysql 服务器运行之前解决。</p>
 <p>此外，可能希望避免使用 <code>root</code> 用户去启动服务，从而提高安全性，而在启动服务前还需要以 <code>root</code> 身份执行一些必要的准备工作，最后切换到服务用户身份启动服务。或者除了服务外，其它命令依旧可以使用 <code>root</code> 身份执行，方便调试等。</p>
 <p>这些准备工作是和容器 <code>CMD</code> 无关的，无论 <code>CMD</code> 为什么，都需要事先进行一个预处理的工作。这种情况下，可以写一个脚本，然后放入 <code>ENTRYPOINT</code> 中去执行，而这个脚本会将接到的参数（也就是 <code>&lt;CMD&gt;</code>）作为命令，在脚本最后执行。比如官方镜像 <code>redis</code> 中就是这么做的：</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">alpine:3.4</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.4</span>
 ...
-<span class="k">RUN</span> addgroup -S redis <span class="o">&amp;&amp;</span> adduser -S -G redis redis
+<span class="k">RUN</span><span class="w"> </span>addgroup<span class="w"> </span>-S<span class="w"> </span>redis<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>adduser<span class="w"> </span>-S<span class="w"> </span>-G<span class="w"> </span>redis<span class="w"> </span>redis
 ...
-<span class="k">ENTRYPOINT</span> <span class="p">[</span><span class="s2">&quot;docker-entrypoint.sh&quot;</span><span class="p">]</span>
+<span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;docker-entrypoint.sh&quot;</span><span class="p">]</span>
 
-<span class="k">EXPOSE</span><span class="s"> 6379</span>
-<span class="k">CMD</span> <span class="p">[</span> <span class="s2">&quot;redis-server&quot;</span> <span class="p">]</span>
+<span class="k">EXPOSE</span><span class="w"> </span><span class="s">6379</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;redis-server&quot;</span><span class="w"> </span><span class="p">]</span>
 </pre></div>
 <p>可以看到其中为了 redis 服务创建了 redis 用户，并在最后指定了 <code>ENTRYPOINT</code> 为 <code>docker-entrypoint.sh</code> 脚本。</p>
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 ...
 <span class="c1"># allow the container to be started with `--user`</span>
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s1">&#39;redis-server&#39;</span> -a <span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    find . <span class="se">\!</span> -user redis -exec chown redis <span class="s1">&#39;{}&#39;</span> +
-    <span class="nb">exec</span> gosu redis <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;redis-server&#39;</span><span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>find<span class="w"> </span>.<span class="w"> </span><span class="se">\!</span><span class="w"> </span>-user<span class="w"> </span>redis<span class="w"> </span>-exec<span class="w"> </span>chown<span class="w"> </span>redis<span class="w"> </span><span class="s1">&#39;{}&#39;</span><span class="w"> </span>+
+<span class="w">    </span><span class="nb">exec</span><span class="w"> </span>gosu<span class="w"> </span>redis<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 <span class="k">fi</span>
 
-<span class="nb">exec</span> <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 </pre></div>
 <p>该脚本的内容就是根据 <code>CMD</code> 的内容来判断，如果是 <code>redis-server</code> 的话，则切换到 <code>redis</code> 用户身份启动服务器，否则依旧使用 <code>root</code> 身份执行。比如：</p>
-<div class="highlight"><pre><span></span>$ docker run -it redis id
-<span class="nv">uid</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>redis<span class="w"> </span>id
+<span class="nv">uid</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span><span class="w"> </span><span class="nv">gid</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span><span class="w"> </span><span class="nv">groups</span><span class="o">=</span><span class="m">0</span><span class="o">(</span>root<span class="o">)</span>
 </pre></div>
 <h3>ENV 设置环境变量</h3>
 <p>格式有两种：</p>
@@ -347,20 +347,20 @@ Connection: keep-alive
 <li><code>ENV &lt;key1&gt;=&lt;value1&gt; &lt;key2&gt;=&lt;value2&gt;...</code></li>
 </ul>
 <p>这个指令很简单，就是设置环境变量而已，无论是后面的其它指令，如 <code>RUN</code>，还是运行时的应用，都可以直接使用这里定义的环境变量。</p>
-<div class="highlight"><pre><span></span><span class="k">ENV</span> <span class="nv">VERSION</span><span class="o">=</span><span class="m">1</span>.0 <span class="nv">DEBUG</span><span class="o">=</span>on <span class="se">\</span>
-    <span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;Happy Feet&quot;</span>
+<div class="highlight"><pre><span></span><span class="k">ENV</span><span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="m">1</span>.0<span class="w"> </span><span class="nv">DEBUG</span><span class="o">=</span>on<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;Happy Feet&quot;</span>
 </pre></div>
 <p>这个例子中演示了如何换行，以及对含有空格的值用双引号括起来的办法，这和 Shell 下的行为是一致的。</p>
 <p>定义了环境变量，那么在后续的指令中，就可以使用这个环境变量。比如在官方 <code>node</code> 镜像 <code>Dockerfile</code> 中，就有类似这样的代码：</p>
-<div class="highlight"><pre><span></span><span class="k">ENV</span> NODE_VERSION <span class="m">7</span>.2.0
+<div class="highlight"><pre><span></span><span class="k">ENV</span><span class="w"> </span>NODE_VERSION<span class="w"> </span><span class="m">7</span>.2.0
 
-<span class="k">RUN</span> curl -SLO <span class="s2">&quot;https://nodejs.org/dist/v</span><span class="nv">$NODE_VERSION</span><span class="s2">/node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span> <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> curl -SLO <span class="s2">&quot;https://nodejs.org/dist/v</span><span class="nv">$NODE_VERSION</span><span class="s2">/SHASUMS256.txt.asc&quot;</span> <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> grep <span class="s2">&quot; node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz\$&quot;</span> SHASUMS256.txt <span class="p">|</span> sha256sum -c - <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> tar -xJf <span class="s2">&quot;node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span> -C /usr/local --strip-components<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> rm <span class="s2">&quot;node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span> SHASUMS256.txt.asc SHASUMS256.txt <span class="se">\</span>
-  <span class="o">&amp;&amp;</span> ln -s /usr/local/bin/node /usr/local/bin/nodejs
+<span class="k">RUN</span><span class="w"> </span>curl<span class="w"> </span>-SLO<span class="w"> </span><span class="s2">&quot;https://nodejs.org/dist/v</span><span class="nv">$NODE_VERSION</span><span class="s2">/node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-SLO<span class="w"> </span><span class="s2">&quot;https://nodejs.org/dist/v</span><span class="nv">$NODE_VERSION</span><span class="s2">/SHASUMS256.txt.asc&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>gpg<span class="w"> </span>--batch<span class="w"> </span>--decrypt<span class="w"> </span>--output<span class="w"> </span>SHASUMS256.txt<span class="w"> </span>SHASUMS256.txt.asc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot; node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz\$&quot;</span><span class="w"> </span>SHASUMS256.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sha256sum<span class="w"> </span>-c<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xJf<span class="w"> </span><span class="s2">&quot;node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span><span class="w"> </span>-C<span class="w"> </span>/usr/local<span class="w"> </span>--strip-components<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;node-v</span><span class="nv">$NODE_VERSION</span><span class="s2">-linux-x64.tar.xz&quot;</span><span class="w"> </span>SHASUMS256.txt.asc<span class="w"> </span>SHASUMS256.txt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/usr/local/bin/node<span class="w"> </span>/usr/local/bin/nodejs
 </pre></div>
 <p>在这里先定义了环境变量 <code>NODE_VERSION</code>，其后的 <code>RUN</code> 这层里，多次使用 <code>$NODE_VERSION</code> 来进行操作定制。可以看到，将来升级镜像构建版本的时候，只需要更新 <code>7.2.0</code> 即可，<code>Dockerfile</code> 构建维护变得更轻松了。</p>
 <p>下列指令可以支持环境变量展开： <code>ADD</code>、<code>COPY</code>、<code>ENV</code>、<code>EXPOSE</code>、<code>FROM</code>、<code>LABEL</code>、<code>USER</code>、<code>WORKDIR</code>、<code>VOLUME</code>、<code>STOPSIGNAL</code>、<code>ONBUILD</code>、<code>RUN</code>。</p>
@@ -372,10 +372,10 @@ Connection: keep-alive
 <li><code>VOLUME &lt;路径&gt;</code></li>
 </ul>
 <p>之前说过，容器运行时应该尽量保持容器存储层不发生写操作，对于数据库类需要保存动态数据的应用，其数据库文件应该保存于卷(volume)中，后面的章节会进一步介绍 Docker 卷的概念。为了防止运行时用户忘记将动态文件所保存目录挂载为卷，在 <code>Dockerfile</code> 中，可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。</p>
-<div class="highlight"><pre><span></span><span class="k">VOLUME</span><span class="s"> /data</span>
+<div class="highlight"><pre><span></span><span class="k">VOLUME</span><span class="w"> </span><span class="s">/data</span>
 </pre></div>
 <p>这里的 <code>/data</code> 目录就会在运行时自动挂载为匿名卷，任何向 <code>/data</code> 中写入的信息都不会记录进容器存储层，从而保证了容器存储层的无状态化。当然，运行时可以覆盖这个挂载设置。比如：</p>
-<div class="highlight"><pre><span></span>docker run -d -v mydata:/data xxxx
+<div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>mydata:/data<span class="w"> </span>xxxx
 </pre></div>
 <p>在这行命令中，就使用了 <code>mydata</code> 这个命名卷挂载到了 <code>/data</code> 这个位置，替代了 <code>Dockerfile</code> 中定义的匿名卷的挂载配置。</p>
 <h3>EXPOSE 暴露端口</h3>
@@ -386,22 +386,22 @@ Connection: keep-alive
 <p>格式为 <code>WORKDIR &lt;工作目录路径&gt;</code>。</p>
 <p>使用 <code>WORKDIR</code> 指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，<code>WORKDIR</code> 会帮你建立目录。</p>
 <p>之前提到一些初学者常犯的错误是把 <code>Dockerfile</code> 等同于 Shell 脚本来书写，这种错误的理解还可能会导致出现下面这样的错误：</p>
-<div class="highlight"><pre><span></span><span class="k">RUN</span> <span class="nb">cd</span> /app
-<span class="k">RUN</span> <span class="nb">echo</span> <span class="s2">&quot;hello&quot;</span> &gt; world.txt
+<div class="highlight"><pre><span></span><span class="k">RUN</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/app
+<span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>world.txt
 </pre></div>
 <p>如果将这个 <code>Dockerfile</code> 进行构建镜像运行后，会发现找不到 <code>/app/world.txt</code> 文件，或者其内容不是 <code>hello</code>。原因其实很简单，在 Shell 中，连续两行是同一个进程执行环境，因此前一个命令修改的内存状态，会直接影响后一个命令；而在 <code>Dockerfile</code> 中，这两行 <code>RUN</code> 命令的执行环境根本不同，是两个完全不同的容器。这就是对 <code>Dockerfile</code> 构建分层存储的概念不了解所导致的错误。</p>
 <p>之前说过每一个 <code>RUN</code> 都是启动一个容器、执行命令、然后提交存储层文件变更。第一层 <code>RUN cd /app</code> 的执行仅仅是当前进程的工作目录变更，一个内存上的变化而已，其结果不会造成任何文件变更。而到第二层的时候，启动的是一个全新的容器，跟第一层的容器更完全没关系，自然不可能继承前一层构建过程中的内存变化。</p>
 <p>因此如果需要改变以后各层的工作目录的位置，那么应该使用 <code>WORKDIR</code> 指令。</p>
-<div class="highlight"><pre><span></span><span class="k">WORKDIR</span><span class="s"> /app</span>
+<div class="highlight"><pre><span></span><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
 
-<span class="k">RUN</span> <span class="nb">echo</span> <span class="s2">&quot;hello&quot;</span> &gt; world.txt
+<span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>world.txt
 </pre></div>
 <p>如果你的 <code>WORKDIR</code> 指令使用的相对路径，那么所切换的路径与之前的 <code>WORKDIR</code> 有关：</p>
-<div class="highlight"><pre><span></span><span class="k">WORKDIR</span><span class="s"> /a</span>
-<span class="k">WORKDIR</span><span class="s"> b</span>
-<span class="k">WORKDIR</span><span class="s"> c</span>
+<div class="highlight"><pre><span></span><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/a</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">b</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">c</span>
 
-<span class="k">RUN</span> pwd
+<span class="k">RUN</span><span class="w"> </span>pwd
 </pre></div>
 <p><code>pwd</code> 输出的结果为 <code>/a/b/c</code>。</p>
 
@@ -448,7 +448,7 @@ Connection: keep-alive
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

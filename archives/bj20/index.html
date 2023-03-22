@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -90,61 +90,61 @@
 <ol>
 <li><p>依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-rest<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-rest<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
-    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </li>
 <li><p>配置</p>
 <div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
-  <span class="nt">datasource</span><span class="p">:</span>
-    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
-    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
+<span class="w">  </span><span class="nt">datasource</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jdbc:mysql://127.0.0.1:3306/jpa?useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.zaxxer.hikari.HikariDataSource</span>
 
-  <span class="nt">jpa</span><span class="p">:</span>
-    <span class="nt">database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span> <span class="c1">#连接数据库类型</span>
-    <span class="nt">database-platform</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">org.hibernate.dialect.MySQL57Dialect</span> <span class="c1">#配置默认引擎</span>
-    <span class="nt">hibernate</span><span class="p">:</span>
-      <span class="nt">ddl-auto</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">update</span>
-    <span class="nt">show-sql</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">jpa</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span><span class="w"> </span><span class="c1">#连接数据库类型</span>
+<span class="w">    </span><span class="nt">database-platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">org.hibernate.dialect.MySQL57Dialect</span><span class="w"> </span><span class="c1">#配置默认引擎</span>
+<span class="w">    </span><span class="nt">hibernate</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ddl-auto</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
+<span class="w">    </span><span class="nt">show-sql</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </li>
 </ol>
 <ol>
 <li><p>实体类</p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;user_jpa&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="nd">@Id</span>
-    <span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">age</span><span class="p">;</span>
+<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;user_jpa&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Id</span>
+<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 <li><p>dao</p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserDao</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 </li>
@@ -175,8 +175,8 @@
 <h2>2.进阶版</h2>
 <h3>1.自定义查询方法</h3>
 <p>修改dao</p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserDao</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p>重启项目，访问<code>http://localhost:8080/users/search</code></p>
@@ -193,9 +193,9 @@
 </li>
 <li>rel:在生成到此资源的链接时要使用的rel值。</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserDao</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;byname&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 162.92906178489702" data-width="1424" data-height="437"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/da930afbf97b7a86fb1537bab0b0eac5.png" alt="" /></figure></p>
@@ -208,10 +208,10 @@
 <li>itemResourceRel ：表示将返回的 JSON 集合中的单个<code>(例:)uesr</code> 的 <strong>key</strong>。</li>
 <li>exported:是否暴露，默认为true</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="nd">@RepositoryRestResource</span><span class="p">(</span><span class="n">collectionResourceRel</span> <span class="o">=</span> <span class="s">&quot;userlist&quot;</span><span class="p">,</span> <span class="n">itemResourceRel</span> <span class="o">=</span> <span class="s">&quot;u&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;byname&quot;</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="s">&quot;findByName&quot;</span><span class="p">)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">name</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="nd">@RepositoryRestResource</span><span class="p">(</span><span class="n">collectionResourceRel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;userlist&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">itemResourceRel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;u&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserDao</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">User</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@RestResource</span><span class="p">(</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;byname&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;findByName&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findByNameContaining</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p><figure class="pswp-item" style="flex: 140.81632653061226" data-width="1380" data-height="490"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4ae6ff01a78415d6db817eb004c4b20.png" alt="" /></figure></p>
@@ -220,24 +220,24 @@
 <li><strong>配置文件</strong></li>
 </ol>
 <div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
-  <span class="nt">data</span><span class="p">:</span>
-    <span class="nt">rest</span><span class="p">:</span>
-      <span class="c1">#添加统一前缀</span>
-      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
+<span class="w">  </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rest</span><span class="p">:</span>
+<span class="w">      </span><span class="c1">#添加统一前缀</span>
+<span class="w">      </span><span class="nt">base-path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api</span>
 </pre></div>
 <p>配置后<code>http://localhost:8080/users</code>--&gt;<code>http://localhost:8080/api/users</code></p>
 <div class="highlight"><pre><span></span><span class="c1">#rest 配置</span>
-  <span class="nt">data</span><span class="p">:</span>
-    <span class="nt">rest</span><span class="p">:</span>
-      <span class="c1">#添加统一前缀</span>
-      <span class="nt">base-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">api</span>
-      <span class="c1">#是否在创建实体后返回记录，默认为true</span>
-      <span class="nt">return-body-on-create</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-      <span class="c1">#是否在更新实体后返回记录，默认为true</span>
-      <span class="nt">return-body-on-update</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-      <span class="c1">#每页的默认大小，默认20</span>
-      <span class="nt">default-page-size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-      <span class="l l-Scalar l-Scalar-Plain">......</span>
+<span class="w">  </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rest</span><span class="p">:</span>
+<span class="w">      </span><span class="c1">#添加统一前缀</span>
+<span class="w">      </span><span class="nt">base-path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api</span>
+<span class="w">      </span><span class="c1">#是否在创建实体后返回记录，默认为true</span>
+<span class="w">      </span><span class="nt">return-body-on-create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="c1">#是否在更新实体后返回记录，默认为true</span>
+<span class="w">      </span><span class="nt">return-body-on-update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="c1">#每页的默认大小，默认20</span>
+<span class="w">      </span><span class="nt">default-page-size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">......</span>
 </pre></div>
 <ol>
 <li><strong>编写配置类</strong>（优先级更高）</li>
@@ -246,11 +246,11 @@
 <span class="cm"> * rest的配置类</span>
 <span class="cm"> */</span>
 <span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestConfig</span> <span class="kd">implements</span> <span class="n">RepositoryRestConfigurer</span> <span class="p">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureRepositoryRestConfiguration</span><span class="p">(</span><span class="n">RepositoryRestConfiguration</span> <span class="n">config</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">config</span><span class="p">.</span><span class="na">setBasePath</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">).</span><span class="na">setDefaultPageSize</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="c1">//链式编程，可以配置多个</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RestConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">RepositoryRestConfigurer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configureRepositoryRestConfiguration</span><span class="p">(</span><span class="n">RepositoryRestConfiguration</span><span class="w"> </span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setBasePath</span><span class="p">(</span><span class="s">&quot;api&quot;</span><span class="p">).</span><span class="na">setDefaultPageSize</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span><span class="c1">//链式编程，可以配置多个</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>4.配置 CORS（解决跨域请求问题）</h3>
@@ -305,7 +305,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

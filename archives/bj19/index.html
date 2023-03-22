@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -181,45 +181,45 @@ JPA</li>
 <p>其他方法的与此类似，这里不再赘述。</p>
 <h2>2.使用JPA</h2>
 <h3>1.简单使用</h3>
-<div class="highlight"><pre><span></span><span class="c">&lt;!--依赖--&gt;</span>
+<div class="highlight"><pre><span></span><span class="cm">&lt;!--依赖--&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
-    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
-<div class="highlight"><pre><span></span><span class="c"># 配置数据库连接池及数据库驱动</span>
+<div class="highlight"><pre><span></span><span class="c1"># 配置数据库连接池及数据库驱动</span>
 <span class="na">spring.datasource.type</span><span class="o">=</span><span class="s">com.zaxxer.hikari.HikariDataSource</span>
 <span class="na">spring.datasource.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.password</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.url</span><span class="o">=</span><span class="s">jdbc:mysql://localhost:3306/test?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 
-<span class="c">#jpa</span>
+<span class="c1">#jpa</span>
 <span class="na">spring.jpa.database</span><span class="o">=</span><span class="s">mysql</span>
 <span class="na">spring.jpa.database-platform</span><span class="o">=</span><span class="s">mysql</span>
-<span class="c"># 生成方式 update 运行时在数据库生成表，若有更新则去更新数据</span>
+<span class="c1"># 生成方式 update 运行时在数据库生成表，若有更新则去更新数据</span>
 <span class="na">spring.jpa.hibernate.ddl-auto</span><span class="o">=</span><span class="s">update</span>
-<span class="c"># 控制台展示 JPA 框架生成的sql语句</span>
+<span class="c1"># 控制台展示 JPA 框架生成的sql语句</span>
 <span class="na">spring.jpa.show-sql</span><span class="o">=</span><span class="s">true</span>
-<span class="c"># 使用JPA 创建表时，默认使用的存储引擎是MyISAM，通过指定数据库版本，可以使用InnoDB</span>
+<span class="c1"># 使用JPA 创建表时，默认使用的存储引擎是MyISAM，通过指定数据库版本，可以使用InnoDB</span>
 <span class="na">spring.jpa.properties.hibernate.dialect</span><span class="o">=</span><span class="s">org.hibernate.dialect.MySQL57Dialect</span>
 
-<span class="c">##是否自动生成dd</span>
-<span class="c">#spring.jpa.generate-ddl=true</span>
-<span class="c"># 格式化sql语句</span>
-<span class="c">#spring.jpa.properties.hibernate-format_sql=true</span>
-<span class="c"># 解决 hibernate multiple merge 问题</span>
-<span class="c">#spring.jpa.properties.hibernate.event.merge.entity_copy_observer = allow</span>
+<span class="c1">##是否自动生成dd</span>
+<span class="c1">#spring.jpa.generate-ddl=true</span>
+<span class="c1"># 格式化sql语句</span>
+<span class="c1">#spring.jpa.properties.hibernate-format_sql=true</span>
+<span class="c1"># 解决 hibernate multiple merge 问题</span>
+<span class="c1">#spring.jpa.properties.hibernate.event.merge.entity_copy_observer = allow</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
 <span class="cm"> * @author Xuxx3309</span>
@@ -228,17 +228,17 @@ JPA</li>
 <span class="cm"> */</span>
 <span class="nd">@Data</span>
 <span class="c1">//默认情况下类名即表名</span>
-<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;t_book&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="p">{</span>
-    <span class="c1">//标注主键字段</span>
-    <span class="nd">@Id</span>
-    <span class="c1">//主键自增</span>
-    <span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
-    <span class="c1">//@Column(name = &quot;id&quot;, length = 50, nullable = false)</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="c1">//@Column(name = &quot;name&quot;, length = 50, nullable = false)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">author</span><span class="p">;</span>
+<span class="nd">@Entity</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t_book&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//标注主键字段</span>
+<span class="w">    </span><span class="nd">@Id</span>
+<span class="w">    </span><span class="c1">//主键自增</span>
+<span class="w">    </span><span class="nd">@GeneratedValue</span><span class="p">(</span><span class="n">strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerationType</span><span class="p">.</span><span class="na">IDENTITY</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@Column(name = &quot;id&quot;, length = 50, nullable = false)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//@Column(name = &quot;name&quot;, length = 50, nullable = false)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">author</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
@@ -246,103 +246,103 @@ JPA</li>
 <span class="cm"> * @Description</span>
 <span class="cm"> * @create 2020-05-15 0:51</span>
 <span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookDao</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BookDao</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <p>补充：</p>
 <p>与继承 Repository 接口等价的一种方式是在持久层接口上使用 @RepositoryDefinition 注解，并为其指定 domainClass 和 idClass 属性。像下面这样：</p>
-<div class="highlight"><pre><span></span><span class="nd">@RepositoryDefinition</span><span class="p">(</span><span class="n">domainClass</span> <span class="o">=</span> <span class="n">Book</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">idClass</span> <span class="o">=</span> <span class="n">Inetger</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookDao</span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="nd">@RepositoryDefinition</span><span class="p">(</span><span class="n">domainClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Book</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">idClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Inetger</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BookDao</span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="c1">//测试JPA中自带的方法</span>
 
 <span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">JpaApplicationTests</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">BookDao</span> <span class="n">bookDao</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">JpaApplicationTests</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">BookDao</span><span class="w"> </span><span class="n">bookDao</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">testSave</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="p">();</span>
-        <span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
-        <span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;Xuxx&quot;</span><span class="p">);</span>
-        <span class="n">Book</span> <span class="n">save_book</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">save_book</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">testSave</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Book</span><span class="p">();</span>
+<span class="w">        </span><span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;Xuxx&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="n">save_book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">save_book</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testUpdate</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="p">();</span>
-        <span class="n">book</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
-        <span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">);</span>
-        <span class="c1">//saveAndFlush:数据库中有（根据id判断）就更新，没有就添加</span>
-        <span class="n">Book</span> <span class="n">saveAndFlush</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">saveAndFlush</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">saveAndFlush</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testUpdate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Book</span><span class="p">();</span>
+<span class="w">        </span><span class="n">book</span><span class="p">.</span><span class="na">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">book</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="s">&quot;JAVA开发指南&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">book</span><span class="p">.</span><span class="na">setAuthor</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//saveAndFlush:数据库中有（根据id判断）就更新，没有就添加</span>
+<span class="w">        </span><span class="n">Book</span><span class="w"> </span><span class="n">saveAndFlush</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">saveAndFlush</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">saveAndFlush</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testDaelete</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">bookDao</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testDaelete</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">bookDao</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind1</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">book1</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book1</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testFind1</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">book1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">findById</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book1</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
 
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">books</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">books</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 排序</span>
 <span class="cm">     */</span>
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind2</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Sort</span> <span class="n">sort</span> <span class="o">=</span> <span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">);</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">sort</span><span class="p">);</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">books</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testFind2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Sort</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">sort</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">books</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 分页</span>
 <span class="cm">     */</span>
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind3</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">//of参数：1.第几页（从0开始） 2.每页几条</span>
-        <span class="n">Pageable</span> <span class="n">pageable</span> <span class="o">=</span> <span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-        <span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">page</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getTotalElements</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总页数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getTotalPages</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页数（从0开始）：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getNumber</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;每页记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getSize</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页中存在的记录数：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getNumberOfElements</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是首页：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">isFirst</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是尾页页：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">isLast</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;查询结果：&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">.</span><span class="na">getContent</span><span class="p">());</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">page</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testFind3</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//of参数：1.第几页（从0开始） 2.每页几条</span>
+<span class="w">        </span><span class="n">Pageable</span><span class="w"> </span><span class="n">pageable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总记录数：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getTotalElements</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;总页数：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getTotalPages</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页数（从0开始）：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getNumber</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;每页记录数：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getSize</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;当前页中存在的记录数：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getNumberOfElements</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是首页：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">isFirst</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;是否是尾页页：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">isLast</span><span class="p">());</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;查询结果：&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">page</span><span class="p">.</span><span class="na">getContent</span><span class="p">());</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 排序+分页</span>
 <span class="cm">     */</span>
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFind4</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Sort</span> <span class="n">sort</span> <span class="o">=</span> <span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">);</span>
-        <span class="n">Pageable</span> <span class="n">pageable</span> <span class="o">=</span> <span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sort</span><span class="p">);</span>
-        <span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">page</span> <span class="o">=</span> <span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">Book</span> <span class="n">book</span> <span class="p">:</span> <span class="n">page</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testFind4</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Sort</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sort</span><span class="p">.</span><span class="na">by</span><span class="p">(</span><span class="n">Sort</span><span class="p">.</span><span class="na">Direction</span><span class="p">.</span><span class="na">DESC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Pageable</span><span class="w"> </span><span class="n">pageable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PageRequest</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">sort</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Page</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">(</span><span class="n">pageable</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">page</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>2.关键字自定义查询方法</h3>
@@ -432,35 +432,35 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <li>进行多个 Repository 操作时，也应该使它们在同一个事务中处理，按照分层架构的思想，这部分属于业务逻辑层，因此，需要在Service 层实现对多个 Repository 的调用，并在相应的方法上声明事务。</li>
 </ol>
 <h3>3. Spring Boot整合JPA多数据源</h3>
-<div class="highlight"><pre><span></span><span class="c">&lt;!--依赖--&gt;</span>
+<div class="highlight"><pre><span></span><span class="cm">&lt;!--依赖--&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
-    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
-<div class="highlight"><pre><span></span><span class="c"># 配置数据库连接池及数据库驱动</span>
+<div class="highlight"><pre><span></span><span class="c1"># 配置数据库连接池及数据库驱动</span>
 <span class="na">spring.datasource.one.type</span><span class="o">=</span><span class="s">com.zaxxer.hikari.HikariDataSource</span>
 <span class="na">spring.datasource.one.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.one.password</span><span class="o">=</span><span class="s">root</span>
-<span class="c">#使用Hikari的话要讲url换成jdbcurl，Druid直接使用url</span>
+<span class="c1">#使用Hikari的话要讲url换成jdbcurl，Druid直接使用url</span>
 <span class="na">spring.datasource.one.jdbcurl</span><span class="o">=</span><span class="s">jdbc:mysql://localhost:3306/test?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 
 <span class="na">spring.datasource.two.type</span><span class="o">=</span><span class="s">com.zaxxer.hikari.HikariDataSource</span>
 <span class="na">spring.datasource.two.username</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.two.password</span><span class="o">=</span><span class="s">root</span>
 <span class="na">spring.datasource.two.jdbcurl</span><span class="o">=</span><span class="s">jdbc:mysql://localhost:3306/test2?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
-<span class="c">#与单数据源不同的是 在jpa后都要加上properties</span>
+<span class="c1">#与单数据源不同的是 在jpa后都要加上properties</span>
 <span class="na">spring.jpa.properties.database</span><span class="o">=</span><span class="s">mysql</span>
 <span class="na">spring.jpa.properties.database-platform</span><span class="o">=</span><span class="s">mysql</span>
 <span class="na">spring.jpa.properties.hibernate.ddl-auto</span><span class="o">=</span><span class="s">update</span>
@@ -473,23 +473,23 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <span class="cm"> * @create 2020-05-16 0:30</span>
 <span class="cm"> */</span>
 <span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSourceConfig</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DataSourceConfig</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Bean</span>
-    <span class="nd">@Primary</span><span class="c1">//优先考虑被注解的对象注入</span>
-    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.one&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="nf">dsOne</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">//此处使用Hikari</span>
-        <span class="k">return</span> <span class="n">DataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">type</span><span class="p">(</span><span class="n">HikariDataSource</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
-        <span class="c1">//使用Druid DataSource</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="nd">@Primary</span><span class="c1">//优先考虑被注解的对象注入</span>
+<span class="w">    </span><span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spring.datasource.one&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">dsOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//此处使用Hikari</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">type</span><span class="p">(</span><span class="n">HikariDataSource</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//使用Druid DataSource</span>
 <span class="c1">//        return DruidDataSourceBuilder.create().build();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Bean</span>
-    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.two&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="nf">dsTwo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">DataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">type</span><span class="p">(</span><span class="n">HikariDataSource</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spring.datasource.two&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">dsTwo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">type</span><span class="p">(</span><span class="n">HikariDataSource</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
@@ -498,37 +498,37 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <span class="cm"> * @create 2020-05-16 0:39</span>
 <span class="cm"> */</span>
 <span class="nd">@Configuration</span>
-<span class="nd">@EnableJpaRepositories</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.jpa2.dao1&quot;</span><span class="p">,</span>
-        <span class="n">entityManagerFactoryRef</span> <span class="o">=</span> <span class="s">&quot;localContainerEntityManagerFactoryBeanOne&quot;</span><span class="p">,</span>
-        <span class="n">transactionManagerRef</span> <span class="o">=</span> <span class="s">&quot;platformTransactionManagerOne&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JpaConfigOne</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="n">dsOne</span><span class="p">;</span>
+<span class="nd">@EnableJpaRepositories</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx.jpa2.dao1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">entityManagerFactoryRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;localContainerEntityManagerFactoryBeanOne&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">transactionManagerRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;platformTransactionManagerOne&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JpaConfigOne</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dsOne</span><span class="p">;</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JpaProperties</span> <span class="n">jpaProperties</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JpaProperties</span><span class="w"> </span><span class="n">jpaProperties</span><span class="p">;</span>
 
-    <span class="nd">@Bean</span>
-    <span class="nd">@Primary</span>
-    <span class="n">LocalContainerEntityManagerFactoryBean</span> <span class="nf">localContainerEntityManagerFactoryBeanOne</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span> <span class="n">builder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="na">dataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">properties</span><span class="p">(</span><span class="n">jpaProperties</span><span class="p">.</span><span class="na">getProperties</span><span class="p">())</span>
-                <span class="p">.</span><span class="na">persistenceUnit</span><span class="p">(</span><span class="s">&quot;pu1&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">packages</span><span class="p">(</span><span class="s">&quot;com.xuxx.jpa2.bean&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="nd">@Primary</span>
+<span class="w">    </span><span class="n">LocalContainerEntityManagerFactoryBean</span><span class="w"> </span><span class="nf">localContainerEntityManagerFactoryBeanOne</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">dataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">properties</span><span class="p">(</span><span class="n">jpaProperties</span><span class="p">.</span><span class="na">getProperties</span><span class="p">())</span>
+<span class="w">                </span><span class="p">.</span><span class="na">persistenceUnit</span><span class="p">(</span><span class="s">&quot;pu1&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">packages</span><span class="p">(</span><span class="s">&quot;com.xuxx.jpa2.bean&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * PlatformTransactionManager是JpaTransactionManager的顶层父类</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param builder</span>
 <span class="cm">     * @return</span>
 <span class="cm">     */</span>
-    <span class="nd">@Bean</span>
-    <span class="n">PlatformTransactionManager</span> <span class="nf">platformTransactionManagerOne</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span> <span class="n">builder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">JpaTransactionManager</span><span class="p">(</span><span class="n">localContainerEntityManagerFactoryBeanOne</span><span class="p">((</span><span class="n">builder</span><span class="p">)).</span><span class="na">getObject</span><span class="p">());</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">PlatformTransactionManager</span><span class="w"> </span><span class="nf">platformTransactionManagerOne</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JpaTransactionManager</span><span class="p">(</span><span class="n">localContainerEntityManagerFactoryBeanOne</span><span class="p">((</span><span class="n">builder</span><span class="p">)).</span><span class="na">getObject</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
@@ -537,30 +537,30 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <span class="cm"> * @create 2020-05-16 0:39</span>
 <span class="cm"> */</span>
 <span class="nd">@Configuration</span>
-<span class="nd">@EnableJpaRepositories</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.jpa2.dao2&quot;</span><span class="p">,</span>
-        <span class="n">entityManagerFactoryRef</span> <span class="o">=</span> <span class="s">&quot;localContainerEntityManagerFactoryBeanTwo&quot;</span><span class="p">,</span>
-        <span class="n">transactionManagerRef</span> <span class="o">=</span> <span class="s">&quot;platformTransactionManagerTwo&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JpaConfigTwo</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="n">dsOne</span><span class="p">;</span>
+<span class="nd">@EnableJpaRepositories</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx.jpa2.dao2&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">entityManagerFactoryRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;localContainerEntityManagerFactoryBeanTwo&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">transactionManagerRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;platformTransactionManagerTwo&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JpaConfigTwo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dsOne</span><span class="p">;</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">JpaProperties</span> <span class="n">jpaProperties</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">JpaProperties</span><span class="w"> </span><span class="n">jpaProperties</span><span class="p">;</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">LocalContainerEntityManagerFactoryBean</span> <span class="nf">localContainerEntityManagerFactoryBeanTwo</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span> <span class="n">builder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="na">dataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">properties</span><span class="p">(</span><span class="n">jpaProperties</span><span class="p">.</span><span class="na">getProperties</span><span class="p">())</span>
-                <span class="p">.</span><span class="na">persistenceUnit</span><span class="p">(</span><span class="s">&quot;pu1&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">packages</span><span class="p">(</span><span class="s">&quot;com.xuxx.jpa2.bean&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">LocalContainerEntityManagerFactoryBean</span><span class="w"> </span><span class="nf">localContainerEntityManagerFactoryBeanTwo</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">dataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">properties</span><span class="p">(</span><span class="n">jpaProperties</span><span class="p">.</span><span class="na">getProperties</span><span class="p">())</span>
+<span class="w">                </span><span class="p">.</span><span class="na">persistenceUnit</span><span class="p">(</span><span class="s">&quot;pu1&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">packages</span><span class="p">(</span><span class="s">&quot;com.xuxx.jpa2.bean&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">PlatformTransactionManager</span> <span class="nf">platformTransactionManagerTwo</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span> <span class="n">builder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">JpaTransactionManager</span><span class="p">(</span><span class="n">localContainerEntityManagerFactoryBeanTwo</span><span class="p">((</span><span class="n">builder</span><span class="p">)).</span><span class="na">getObject</span><span class="p">());</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">PlatformTransactionManager</span><span class="w"> </span><span class="nf">platformTransactionManagerTwo</span><span class="p">(</span><span class="n">EntityManagerFactoryBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JpaTransactionManager</span><span class="p">(</span><span class="n">localContainerEntityManagerFactoryBeanTwo</span><span class="p">((</span><span class="n">builder</span><span class="p">)).</span><span class="na">getObject</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
@@ -568,7 +568,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <span class="cm"> * @Description</span>
 <span class="cm"> * @create 2020-05-16 1:46</span>
 <span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookDao1</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BookDao1</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
@@ -576,24 +576,24 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
 <span class="cm"> * @Description</span>
 <span class="cm"> * @create 2020-05-16 1:47</span>
 <span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BookDao2</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BookDao2</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">Book</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">Jpa2ApplicationTests</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">BookDao1</span> <span class="n">bookDao1</span><span class="p">;</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">BookDao2</span> <span class="n">bookDao2</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">Jpa2ApplicationTests</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">BookDao1</span><span class="w"> </span><span class="n">bookDao1</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">BookDao2</span><span class="w"> </span><span class="n">bookDao2</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">dao1All</span> <span class="o">=</span> <span class="n">bookDao1</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">dao1All</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;-------------&quot;</span><span class="p">);</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">dao2All</span> <span class="o">=</span> <span class="n">bookDao2</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">dao2All</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">test</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dao1All</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao1</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">dao1All</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;-------------&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dao2All</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bookDao2</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">dao2All</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>测试：</p>
@@ -669,7 +669,7 @@ int updateUserById(@Param("age") Long age, @Param("id") Long id);</code></pre>
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -91,103 +91,103 @@
 <h3>回顾</h3>
 <div class="highlight"><pre><span></span><span class="nd">@Controller</span>
 <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/user&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileUploadControll</span> <span class="p">{</span>
-    <span class="cm">/**</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileUploadControll</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 传统文件上传</span>
 <span class="cm">     *</span>
 <span class="cm">     * @return</span>
 <span class="cm">     */</span>
-    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload01&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">fileupload01</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload01方法执行了---传统文件上传&quot;</span><span class="p">);</span>
-        <span class="c1">//使用fileupload组件完成文件上传</span>
-        <span class="c1">//指定上传位置（路径）</span>
-        <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/uploads/&quot;</span><span class="p">);</span>
-        <span class="c1">//判断该路径是否存在</span>
-        <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-        <span class="c1">//如果不存在</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-            <span class="c1">//创建该文件夹</span>
-            <span class="n">file</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="c1">//解析request对象，获取上传的文件项            磁盘文件项目工厂</span>
-        <span class="n">DiskFileItemFactory</span> <span class="n">fileItemFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DiskFileItemFactory</span><span class="p">();</span>
-        <span class="n">ServletFileUpload</span> <span class="n">upload</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServletFileUpload</span><span class="p">(</span><span class="n">fileItemFactory</span><span class="p">);</span>
-        <span class="c1">//解析request</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">FileItem</span><span class="o">&gt;</span> <span class="n">fileItems</span> <span class="o">=</span> <span class="n">upload</span><span class="p">.</span><span class="na">parseRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-        <span class="c1">//遍历</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">FileItem</span> <span class="n">fileItem</span> <span class="p">:</span> <span class="n">fileItems</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">//进行判断，当前的fileItem对象是否是上传文件项</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">fileItem</span><span class="p">.</span><span class="na">isFormField</span><span class="p">())</span> <span class="p">{</span>
-                <span class="c1">//是普通表单项</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="c1">//是上传文件项</span>
-                <span class="c1">//获取文件上传名称</span>
-                <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">fileItem</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
-                <span class="c1">//把文件名称设置为唯一的</span>
-                <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
-                <span class="n">fileName</span> <span class="o">=</span> <span class="n">uuid</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">fileName</span><span class="p">;</span>
-                <span class="c1">//完成上传</span>
-                <span class="n">fileItem</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fileName</span><span class="p">));</span>
-                <span class="c1">//删除临时文件</span>
-                <span class="n">fileItem</span><span class="p">.</span><span class="na">delete</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload01&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">fileupload01</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload01方法执行了---传统文件上传&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//使用fileupload组件完成文件上传</span>
+<span class="w">        </span><span class="c1">//指定上传位置（路径）</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/uploads/&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//判断该路径是否存在</span>
+<span class="w">        </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//如果不存在</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//创建该文件夹</span>
+<span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">//解析request对象，获取上传的文件项            磁盘文件项目工厂</span>
+<span class="w">        </span><span class="n">DiskFileItemFactory</span><span class="w"> </span><span class="n">fileItemFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DiskFileItemFactory</span><span class="p">();</span>
+<span class="w">        </span><span class="n">ServletFileUpload</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ServletFileUpload</span><span class="p">(</span><span class="n">fileItemFactory</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//解析request</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">FileItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fileItems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upload</span><span class="p">.</span><span class="na">parseRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//遍历</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">FileItem</span><span class="w"> </span><span class="n">fileItem</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">fileItems</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//进行判断，当前的fileItem对象是否是上传文件项</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fileItem</span><span class="p">.</span><span class="na">isFormField</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">//是普通表单项</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">//是上传文件项</span>
+<span class="w">                </span><span class="c1">//获取文件上传名称</span>
+<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">fileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileItem</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
+<span class="w">                </span><span class="c1">//把文件名称设置为唯一的</span>
+<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="n">fileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fileName</span><span class="p">;</span>
+<span class="w">                </span><span class="c1">//完成上传</span>
+<span class="w">                </span><span class="n">fileItem</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">fileName</span><span class="p">));</span>
+<span class="w">                </span><span class="c1">//删除临时文件</span>
+<span class="w">                </span><span class="n">fileItem</span><span class="p">.</span><span class="na">delete</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * springmvc文件上传</span>
 <span class="cm">     * 需要commons-fileupload和commons-io依赖</span>
 <span class="cm">     * @param request</span>
 <span class="cm">     * @return</span>
 <span class="cm">     */</span>
-    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload02&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">fileupload02</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">MultipartFile</span> <span class="n">upload</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload02方法执行了---springmvc文件上传&quot;</span><span class="p">);</span>
-        <span class="c1">//指定上传位置（路径）</span>
-        <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/uploads/&quot;</span><span class="p">);</span>
-        <span class="c1">//判断该路径是否存在</span>
-        <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-        <span class="c1">//如果不存在</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-            <span class="c1">//创建该文件夹</span>
-            <span class="n">file</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
-        <span class="p">}</span>
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload02&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">fileupload02</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">MultipartFile</span><span class="w"> </span><span class="n">upload</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload02方法执行了---springmvc文件上传&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//指定上传位置（路径）</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/uploads/&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//判断该路径是否存在</span>
+<span class="w">        </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//如果不存在</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//创建该文件夹</span>
+<span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
 
-        <span class="c1">//获取文件上传名称</span>
-        <span class="n">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">upload</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
-        <span class="c1">//把文件名称设置为唯一的</span>
-        <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">uuid</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">;</span>
-        <span class="c1">//完成上传</span>
-        <span class="n">upload</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">));</span>
-        <span class="k">return</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">//获取文件上传名称</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upload</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//把文件名称设置为唯一的</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">filename</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">//完成上传</span>
+<span class="w">        </span><span class="n">upload</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * springmvc跨服务器上传</span>
 <span class="cm">     * 需要额外的两个依赖:jersey-core和jersey-client</span>
 <span class="cm">     */</span>
-    <span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload03&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">fileupload03</span><span class="p">(</span><span class="n">MultipartFile</span> <span class="n">upload</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload03方法执行了---springmvc跨服务器上传&quot;</span><span class="p">);</span>
-        <span class="c1">//设置要上传的文件服务器的路径</span>
-        <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;http://localhost:8081/fileupload/uploads/&quot;</span><span class="p">;</span>
-        <span class="c1">//获取上传的文件名称</span>
-        <span class="n">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">upload</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
-        <span class="c1">//把文件名称设置为唯一</span>
-        <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">uuid</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">;</span>
-        <span class="c1">// 创建客户端的对象</span>
-        <span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-        <span class="c1">// 和图片服务器进行连接</span>
-        <span class="n">WebResource</span> <span class="n">webResource</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">resource</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">);</span>
-        <span class="c1">// 上传文件</span>
-        <span class="n">webResource</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">upload</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
-        <span class="k">return</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/fileupload03&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">fileupload03</span><span class="p">(</span><span class="n">MultipartFile</span><span class="w"> </span><span class="n">upload</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;fileupload03方法执行了---springmvc跨服务器上传&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//设置要上传的文件服务器的路径</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://localhost:8081/fileupload/uploads/&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">//获取上传的文件名称</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upload</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//把文件名称设置为唯一</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">().</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uuid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">filename</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// 创建客户端的对象</span>
+<span class="w">        </span><span class="n">Client</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Client</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// 和图片服务器进行连接</span>
+<span class="w">        </span><span class="n">WebResource</span><span class="w"> </span><span class="n">webResource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">resource</span><span class="p">(</span><span class="n">path</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">filename</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 上传文件</span>
+<span class="w">        </span><span class="n">webResource</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">upload</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>1. 使用form表单上传单个文件</h3>
@@ -208,36 +208,36 @@
 </pre></div>
 <h4>1.2 编写Controller</h4>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileUploadController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileUploadController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="c1">//按日期分类</span>
-    <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//按日期分类</span>
+<span class="w">    </span><span class="n">SimpleDateFormat</span><span class="w"> </span><span class="n">sdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 上传单个文件，返回上传文件的URL</span>
 <span class="cm">     */</span>
-    <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/upload&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">upload</span><span class="p">(</span><span class="n">MultipartFile</span> <span class="n">file</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">String</span> <span class="n">format</span> <span class="o">=</span> <span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">String</span> <span class="n">realpath</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">format</span><span class="p">;</span>
-        <span class="n">File</span> <span class="n">folder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="c1">//防止文件重名</span>
-        <span class="n">String</span> <span class="n">oldName</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
-        <span class="n">String</span> <span class="n">newName</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span> <span class="o">+</span> <span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="c1">//保存上传的文件到指定位置</span>
-            <span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">newName</span><span class="p">));</span>
-            <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;://&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;/img&quot;</span> <span class="o">+</span> <span class="n">format</span> <span class="o">+</span> <span class="n">newName</span><span class="p">;</span>
-            <span class="c1">//  http://localhost:8080/img/2020/01/05/d0a64514-b990-4bf6-8297-563f66ca3530.jpg</span>
-            <span class="k">return</span> <span class="n">url</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="s">&quot;error&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/upload&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">upload</span><span class="p">(</span><span class="n">MultipartFile</span><span class="w"> </span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">realpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="p">;</span>
+<span class="w">        </span><span class="n">File</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">//防止文件重名</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">oldName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">newName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//保存上传的文件到指定位置</span>
+<span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="w"> </span><span class="n">newName</span><span class="p">));</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/img&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">newName</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">//  http://localhost:8080/img/2020/01/05/d0a64514-b990-4bf6-8297-563f66ca3530.jpg</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">url</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;error&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>2. 使用ajax上传单个文件</h3>
@@ -258,57 +258,57 @@
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;file&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;上传&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;uploadFile()&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="kd">function</span> <span class="nx">uploadFile</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#file&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="c1">//files是文件数组</span>
-        <span class="kd">var</span> <span class="nx">formData</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">FormData</span><span class="p">();</span><span class="c1">//html5</span>
-        <span class="nx">formData</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span>
-        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;post&quot;</span><span class="p">,</span>
-            <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/upload&quot;</span><span class="p">,</span>
-            <span class="nx">processData</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span><span class="c1">//是否要上传的数据处理为对象</span>
-            <span class="nx">contentType</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span><span class="c1">//可能破坏分隔符，不让jquery设置请求头</span>
-            <span class="nx">data</span><span class="o">:</span> <span class="nx">formData</span><span class="p">,</span>
-            <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#result&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">uploadFile</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#file&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">].</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="c1">//files是文件数组</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">formData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">FormData</span><span class="p">();</span><span class="c1">//html5</span>
+<span class="w">        </span><span class="nx">formData</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">file</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;post&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/upload&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">processData</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="c1">//是否要上传的数据处理为对象</span>
+<span class="w">            </span><span class="nx">contentType</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="c1">//可能破坏分隔符，不让jquery设置请求头</span>
+<span class="w">            </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">formData</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#result&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 <h4>2.2 编写Controller</h4>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileUploadController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileUploadController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="c1">//按日期分类</span>
-    <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//按日期分类</span>
+<span class="w">    </span><span class="n">SimpleDateFormat</span><span class="w"> </span><span class="n">sdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 上传单个文件，返回上传文件的URL</span>
 <span class="cm">     */</span>
-    <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/upload&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">upload</span><span class="p">(</span><span class="n">MultipartFile</span> <span class="n">file</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">String</span> <span class="n">format</span> <span class="o">=</span> <span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">String</span> <span class="n">realpath</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">format</span><span class="p">;</span>
-        <span class="n">File</span> <span class="n">folder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="c1">//防止文件重名</span>
-        <span class="n">String</span> <span class="n">oldName</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
-        <span class="n">String</span> <span class="n">newName</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span> <span class="o">+</span> <span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="c1">//保存上传的文件到指定位置</span>
-            <span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">newName</span><span class="p">));</span>
-            <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;://&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;/img&quot;</span> <span class="o">+</span> <span class="n">format</span> <span class="o">+</span> <span class="n">newName</span><span class="p">;</span>
-            <span class="c1">//  http://localhost:8080/img/2020/01/05/d0a64514-b990-4bf6-8297-563f66ca3530.jpg</span>
-            <span class="k">return</span> <span class="n">url</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="s">&quot;error&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/upload&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">upload</span><span class="p">(</span><span class="n">MultipartFile</span><span class="w"> </span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">realpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="p">;</span>
+<span class="w">        </span><span class="n">File</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">//防止文件重名</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">oldName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">newName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//保存上传的文件到指定位置</span>
+<span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="w"> </span><span class="n">newName</span><span class="p">));</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/img&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">newName</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">//  http://localhost:8080/img/2020/01/05/d0a64514-b990-4bf6-8297-563f66ca3530.jpg</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">url</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;error&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>3. 多文件上传</h3>
@@ -322,7 +322,7 @@
 <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/uploads&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span> <span class="na">enctype</span><span class="o">=</span><span class="s">&quot;multipart/form-data&quot;</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">multiple</span><span class="p">&gt;</span><span class="c">&lt;!--multiple表示可以选择多个文件--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">multiple</span><span class="p">&gt;</span><span class="cm">&lt;!--multiple表示可以选择多个文件--&gt;</span>
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;提交&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
@@ -331,38 +331,38 @@
 <p>如果使用 ajax ,可以向 FormData 多 append 几个文件（name属性不要相同），然后在 Controller 中使用多个 MultipartFile 来接收。</p>
 <h4>3.2 编写Controller</h4>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileUploadController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileUploadController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">SimpleDateFormat</span><span class="w"> </span><span class="n">sdf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleDateFormat</span><span class="p">(</span><span class="s">&quot;/yyyy/MM/dd/&quot;</span><span class="p">);</span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * 上传多个文件</span>
 <span class="cm">     * @param files</span>
 <span class="cm">     * @param request</span>
 <span class="cm">     * @return</span>
 <span class="cm">     */</span>
-    <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/uploads&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">uploads</span><span class="p">(</span><span class="n">MultipartFile</span><span class="o">[]</span> <span class="n">files</span><span class="p">,</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">String</span> <span class="n">format</span> <span class="o">=</span> <span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
-        <span class="n">String</span> <span class="n">realpath</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">format</span><span class="p">;</span>
-        <span class="n">File</span> <span class="n">folder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-            <span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">MultipartFile</span> <span class="n">file</span> <span class="p">:</span> <span class="n">files</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">String</span> <span class="n">oldName</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
-            <span class="n">String</span> <span class="n">newName</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span> <span class="o">+</span> <span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">newName</span><span class="p">));</span>
-                <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;://&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;/img&quot;</span> <span class="o">+</span> <span class="n">format</span> <span class="o">+</span> <span class="n">newName</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-        <span class="k">return</span> <span class="s">&quot;success&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/uploads&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">uploads</span><span class="p">(</span><span class="n">MultipartFile</span><span class="o">[]</span><span class="w"> </span><span class="n">files</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sdf</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Date</span><span class="p">());</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">realpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">().</span><span class="na">getRealPath</span><span class="p">(</span><span class="s">&quot;/img&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="p">;</span>
+<span class="w">        </span><span class="n">File</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">realpath</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">folder</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">folder</span><span class="p">.</span><span class="na">mkdirs</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">MultipartFile</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">files</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">oldName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="na">getOriginalFilename</span><span class="p">();</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">newName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oldName</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">oldName</span><span class="p">.</span><span class="na">lastIndexOf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">));</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">file</span><span class="p">.</span><span class="na">transferTo</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="w"> </span><span class="n">newName</span><span class="p">));</span>
+<span class="w">                </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getScheme</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServerPort</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/img&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">newName</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;success&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -409,7 +409,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

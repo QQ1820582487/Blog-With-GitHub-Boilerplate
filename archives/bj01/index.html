@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -89,23 +89,23 @@
                 <h3>1.创建工程</h3>
 <p>1.添加spring-webmvc依赖</p>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
-         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+<span class="nt">&lt;project</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+<span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-    <span class="nt">&lt;groupId&gt;</span>com.xuxx<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>java_ssm<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-    <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.xuxx<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>java_ssm<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
 
-    <span class="nt">&lt;dependencies&gt;</span>
-        <span class="nt">&lt;dependency&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
-            <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>5.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
-        <span class="nt">&lt;/dependency&gt;</span>
-    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependencies&gt;</span>
+<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;version&gt;</span>5.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependencies&gt;</span>
 
 <span class="nt">&lt;/project&gt;</span>
 </pre></div>
@@ -114,73 +114,73 @@
 <h3>2.创建配置文件</h3>
 <h5>1.spring</h5>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
-       <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-       <span class="na">xmlns:context=</span><span class="s">&quot;http://www.springframework.org/schema/context&quot;</span>
-       <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.springframework.org/schema/beans</span>
+<span class="nt">&lt;beans</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
+<span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="w">       </span><span class="na">xmlns:context=</span><span class="s">&quot;http://www.springframework.org/schema/context&quot;</span>
+<span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.springframework.org/schema/beans</span>
 <span class="s">       http://www.springframework.org/schema/beans/spring-beans.xsd</span>
 <span class="s">       http://www.springframework.org/schema/context</span>
 <span class="s">       https://www.springframework.org/schema/context/spring-context.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="c">&lt;!--开启包扫描 排除加了@Controller的类--&gt;</span>
-    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">&quot;com.xuxx&quot;</span> <span class="na">use-default-filters=</span><span class="s">&quot;true&quot;</span> <span class="nt">&gt;</span>
-        <span class="nt">&lt;context:exclude-filter</span> <span class="na">type=</span><span class="s">&quot;annotation&quot;</span> <span class="na">expression=</span><span class="s">&quot;org.springframework.stereotype.Controller&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/context:component-scan&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--开启包扫描 排除加了@Controller的类--&gt;</span>
+<span class="w">    </span><span class="nt">&lt;context:component-scan</span><span class="w"> </span><span class="na">base-package=</span><span class="s">&quot;com.xuxx&quot;</span><span class="w"> </span><span class="na">use-default-filters=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;context:exclude-filter</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;annotation&quot;</span><span class="w"> </span><span class="na">expression=</span><span class="s">&quot;org.springframework.stereotype.Controller&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/context:component-scan&gt;</span>
 <span class="nt">&lt;/beans&gt;</span>
 </pre></div>
 <h5>2.spring-mvc</h5>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;beans....</span>
-<span class="err">&lt;!--开启包扫描</span> <span class="err">只扫描带有@Controller的类--</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">&quot;com.xuxx&quot;</span> <span class="na">use-default-filters=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;context:include-filter</span> <span class="na">type=</span><span class="s">&quot;annotation&quot;</span> <span class="na">expression=</span><span class="s">&quot;org.springframework.stereotype.Controller&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/context:component-scan&gt;</span>
+<span class="err">&lt;!--开启包扫描</span><span class="w"> </span><span class="err">只扫描带有@Controller的类--</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;context:component-scan</span><span class="w"> </span><span class="na">base-package=</span><span class="s">&quot;com.xuxx&quot;</span><span class="w"> </span><span class="na">use-default-filters=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;context:include-filter</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;annotation&quot;</span><span class="w"> </span><span class="na">expression=</span><span class="s">&quot;org.springframework.stereotype.Controller&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/context:component-scan&gt;</span>
 
-    <span class="c">&lt;!--开启mvc driven--&gt;</span>
-    <span class="nt">&lt;mvc:annotation-driven/&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--开启mvc driven--&gt;</span>
+<span class="w">    </span><span class="nt">&lt;mvc:annotation-driven/&gt;</span>
 <span class="nt">&lt;/beans&gt;</span>
 </pre></div>
 <h5>3.web.xml（简易版）</h5>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
-         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span>
-         <span class="na">version=</span><span class="s">&quot;4.0&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!--spring的配置--&gt;</span>
-    <span class="c">&lt;!--加载spring配置文件的路径--&gt;</span>
-    <span class="nt">&lt;context-param&gt;</span>
-        <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-        <span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
-    <span class="nt">&lt;/context-param&gt;</span>
-    <span class="c">&lt;!--启动Web容器时，自动装配ApplicationContext.xml的配置信息--&gt;</span>
-    <span class="nt">&lt;listener&gt;</span>
-        <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
-    <span class="nt">&lt;/listener&gt;</span>
+<span class="nt">&lt;web-app</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span>
+<span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span>
+<span class="w">         </span><span class="na">version=</span><span class="s">&quot;4.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--spring的配置--&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--加载spring配置文件的路径--&gt;</span>
+<span class="w">    </span><span class="nt">&lt;context-param&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/context-param&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!--启动Web容器时，自动装配ApplicationContext.xml的配置信息--&gt;</span>
+<span class="w">    </span><span class="nt">&lt;listener&gt;</span>
+<span class="w">        </span><span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/listener&gt;</span>
 
-    <span class="c">&lt;!--spring Mvc的配置--&gt;</span>
-    <span class="nt">&lt;servlet&gt;</span>
-        <span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
-        <span class="c">&lt;!--前端控制器，用于控制所有请求--&gt;</span>
-        <span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
-        <span class="nt">&lt;init-param&gt;</span>
-            <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-            <span class="nt">&lt;param-value&gt;</span>classpath:spring-mvc.xml<span class="nt">&lt;/param-value&gt;</span>
-        <span class="nt">&lt;/init-param&gt;</span>
-    <span class="nt">&lt;/servlet&gt;</span>
-    <span class="nt">&lt;servlet-mapping&gt;</span>
-        <span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
-        <span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
-        <span class="c">&lt;!--关于 &lt;url-pattern&gt;&lt;/url-pattern&gt;有三种配置方式:</span>
-<span class="c">         (1)&lt;url-pattern&gt; / &lt;/url-pattern&gt; ，  /：配置/的话，url不会拦截诸如：jsp，html ， .action的请求，使用该模式的话，那么      spring-mvc.xml中配置name不能有扩展名 ，如下：</span>
-<span class="c">         &lt;bean name=&quot;/userController&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（正确）                     </span>
-<span class="c">         &lt;bean name=&quot;/userController.action&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（错误）</span>
+<span class="w">    </span><span class="cm">&lt;!--spring Mvc的配置--&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet&gt;</span>
+<span class="w">        </span><span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!--前端控制器，用于控制所有请求--&gt;</span>
+<span class="w">        </span><span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="w">        </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">            </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">            </span><span class="nt">&lt;param-value&gt;</span>classpath:spring-mvc.xml<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/servlet&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-mapping&gt;</span>
+<span class="w">        </span><span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">        </span><span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!--关于 &lt;url-pattern&gt;&lt;/url-pattern&gt;有三种配置方式:</span>
+<span class="cm">         (1)&lt;url-pattern&gt; / &lt;/url-pattern&gt; ，  /：配置/的话，url不会拦截诸如：jsp，html ， .action的请求，使用该模式的话，那么      spring-mvc.xml中配置name不能有扩展名 ，如下：</span>
+<span class="cm">         &lt;bean name=&quot;/userController&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（正确）                     </span>
+<span class="cm">         &lt;bean name=&quot;/userController.action&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（错误）</span>
 
-<span class="c">         (2)&lt;url-pattern&gt; / *&lt;/url-pattern&gt;  ， /*，因为这个url会拦截所有请求，包括：.jsp  .html  .action .do .css</span>
-<span class="c">             如果访问以上的资源会报404错误 ，所以配置时，不要用/*， 这个一般是过滤器，配置时候才用的。</span>
+<span class="cm">         (2)&lt;url-pattern&gt; / *&lt;/url-pattern&gt;  ， /*，因为这个url会拦截所有请求，包括：.jsp  .html  .action .do .css</span>
+<span class="cm">             如果访问以上的资源会报404错误 ，所以配置时，不要用/*， 这个一般是过滤器，配置时候才用的。</span>
 
-<span class="c">         (3)&lt;url-pattern&gt; *.action&lt;/url-pattern&gt;   不会拦截诸如 .jsp .html 等资源请求，只会拦截.action请求，所有在spring-mvc.xml中配       置name的时候必须要有扩展名，如下：                           &lt;bean name=&quot;/userController&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（错误）                          </span>
-<span class="c">          &lt;bean name=&quot;/userController.action&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（正确）   --&gt;</span>
-    <span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="cm">         (3)&lt;url-pattern&gt; *.action&lt;/url-pattern&gt;   不会拦截诸如 .jsp .html 等资源请求，只会拦截.action请求，所有在spring-mvc.xml中配       置name的时候必须要有扩展名，如下：                           &lt;bean name=&quot;/userController&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（错误）                          </span>
+<span class="cm">          &lt;bean name=&quot;/userController.action&quot; class=&quot;com.neusoft.springmvc.controller.UserController&quot;&gt;&lt;/bean&gt;（正确）   --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/servlet-mapping&gt;</span>
 
 <span class="nt">&lt;/web-app&gt;</span>
 </pre></div>
@@ -188,104 +188,104 @@
 <div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE web-app PUBLIC</span>
 <span class="cp"> &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;</span>
 <span class="cp"> &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot; &gt;</span>
-<span class="c">&lt;!--注意版本↑↑↑--&gt;</span>
- 
+<span class="cm">&lt;!--注意版本↑↑↑--&gt;</span>
+<span class="w"> </span>
 <span class="nt">&lt;web-app&gt;</span>
-  <span class="nt">&lt;display-name&gt;</span>Archetype Created Web Application<span class="nt">&lt;/display-name&gt;</span>
- 
-  <span class="c">&lt;!--welcome pages--&gt;</span>
-  <span class="nt">&lt;welcome-file-list&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>index.jsp<span class="nt">&lt;/welcome-file&gt;</span>
-  <span class="nt">&lt;/welcome-file-list&gt;</span>
- 
-  <span class="c">&lt;!--applicationContext.xml是全局的，应用于多个serverlet，配合listener一起使用--&gt;</span>
-  <span class="c">&lt;!-- 如果是监听多个文件，可用‘，’隔开 --&gt;</span>
- 
-  <span class="nt">&lt;context-param&gt;</span>
-    <span class="nt">&lt;description&gt;</span>配置Spring配置文件路径<span class="nt">&lt;/description&gt;</span>
-    <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
- 
-    <span class="nt">&lt;param-value&gt;</span>classpath:spring/applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
-  <span class="nt">&lt;/context-param&gt;</span>
- 
-  <span class="c">&lt;!-- 定义SPRING监听器，加载spring --&gt;</span>
-  <span class="nt">&lt;listener&gt;</span>
-    <span class="nt">&lt;listener-class&gt;</span>
-      org.springframework.web.context.request.RequestContextListener
-    <span class="nt">&lt;/listener-class&gt;</span>
-  <span class="nt">&lt;/listener&gt;</span>
- 
-  <span class="nt">&lt;listener&gt;</span>
-    <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
-  <span class="nt">&lt;/listener&gt;</span>
- 
-  <span class="c">&lt;!--log4j配置文件加载--&gt;</span>
-  <span class="nt">&lt;context-param&gt;</span>
-    <span class="nt">&lt;param-name&gt;</span>log4jConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-    <span class="nt">&lt;param-value&gt;</span>classpath:log4j.properties<span class="nt">&lt;/param-value&gt;</span>
-  <span class="nt">&lt;/context-param&gt;</span>
-  <span class="c">&lt;!--启动一个watchdog线程每1800秒扫描一下log4j配置文件的变化--&gt;</span>
-  <span class="nt">&lt;context-param&gt;</span>
-    <span class="nt">&lt;param-name&gt;</span>log4jRefreshInterval<span class="nt">&lt;/param-name&gt;</span>
-    <span class="nt">&lt;param-value&gt;</span>1800000<span class="nt">&lt;/param-value&gt;</span>
-  <span class="nt">&lt;/context-param&gt;</span>
-  <span class="nt">&lt;context-param&gt;</span>
-    <span class="nt">&lt;param-name/&gt;</span>
-    <span class="nt">&lt;param-value/&gt;</span>
-  <span class="nt">&lt;/context-param&gt;</span>
- 
-  <span class="c">&lt;!-- 配置Spring字符编码过滤器 --&gt;</span>
-  <span class="nt">&lt;filter&gt;</span>
-    <span class="nt">&lt;filter-name&gt;</span>encodingFilter<span class="nt">&lt;/filter-name&gt;</span>
-    <span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
-    <span class="nt">&lt;init-param&gt;</span>
-      <span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
-      <span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
-    <span class="nt">&lt;/init-param&gt;</span>
-    <span class="nt">&lt;init-param&gt;</span>
-      <span class="nt">&lt;param-name&gt;</span>forceEncoding<span class="nt">&lt;/param-name&gt;</span>
-      <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
-    <span class="nt">&lt;/init-param&gt;</span>
-  <span class="nt">&lt;/filter&gt;</span>
-  <span class="nt">&lt;filter-mapping&gt;</span>
-    <span class="nt">&lt;filter-name&gt;</span>encodingFilter<span class="nt">&lt;/filter-name&gt;</span>
-    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
-  <span class="nt">&lt;/filter-mapping&gt;</span>
- 
-  <span class="c">&lt;!-- Spring MVC 核心控制器 DispatcherServlet 配置开始 --&gt;</span>
-  <span class="c">&lt;!--配置springmvc DispatcherServlet--&gt;</span>
-  <span class="nt">&lt;servlet&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
-    <span class="nt">&lt;init-param&gt;</span>
-      <span class="c">&lt;!--Sources标注的文件夹下需要新建一个spring文件夹--&gt;</span>
-      <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-      <span class="c">&lt;!-- 如果是监听多个文件，可用‘，’隔开 --&gt;</span>
-      <span class="nt">&lt;param-value&gt;</span>classpath:spring/spring-mvc.xml<span class="nt">&lt;/param-value&gt;</span>
-    <span class="nt">&lt;/init-param&gt;</span>
-    <span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
-    <span class="nt">&lt;async-supported&gt;</span>true<span class="nt">&lt;/async-supported&gt;</span>
-  <span class="nt">&lt;/servlet&gt;</span>
- 
-  <span class="c">&lt;!-- 拦截设置 --&gt;</span>
-  <span class="nt">&lt;servlet-mapping&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="c">&lt;!-- 此处可以可以配置成*.do，对应struts的后缀习惯 --&gt;</span>
-    <span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
-  <span class="nt">&lt;/servlet-mapping&gt;</span>
-  <span class="c">&lt;!-- Spring MVC 核心配置结束 --&gt;</span>
- 
-  <span class="c">&lt;!-- 激活Tomcat的defaultServlet来处理静态文件 --&gt;</span>
-  <span class="nt">&lt;servlet-mapping&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>default<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;url-pattern&gt;</span>/static/*<span class="nt">&lt;/url-pattern&gt;</span>
-  <span class="nt">&lt;/servlet-mapping&gt;</span>
- 
-  <span class="c">&lt;!-- session 时间 --&gt;</span>
-  <span class="nt">&lt;session-config&gt;</span>
-    <span class="nt">&lt;session-timeout&gt;</span>30<span class="nt">&lt;/session-timeout&gt;</span>
-  <span class="nt">&lt;/session-config&gt;</span>
- 
+<span class="w">  </span><span class="nt">&lt;display-name&gt;</span>Archetype<span class="w"> </span>Created<span class="w"> </span>Web<span class="w"> </span>Application<span class="nt">&lt;/display-name&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!--welcome pages--&gt;</span>
+<span class="w">  </span><span class="nt">&lt;welcome-file-list&gt;</span>
+<span class="w">    </span><span class="nt">&lt;welcome-file&gt;</span>index.jsp<span class="nt">&lt;/welcome-file&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/welcome-file-list&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!--applicationContext.xml是全局的，应用于多个serverlet，配合listener一起使用--&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- 如果是监听多个文件，可用‘，’隔开 --&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="nt">&lt;context-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;description&gt;</span>配置Spring配置文件路径<span class="nt">&lt;/description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w"> </span>
+<span class="w">    </span><span class="nt">&lt;param-value&gt;</span>classpath:spring/applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/context-param&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- 定义SPRING监听器，加载spring --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;listener&gt;</span>
+<span class="w">    </span><span class="nt">&lt;listener-class&gt;</span>
+<span class="w">      </span>org.springframework.web.context.request.RequestContextListener
+<span class="w">    </span><span class="nt">&lt;/listener-class&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/listener&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="nt">&lt;listener&gt;</span>
+<span class="w">    </span><span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/listener&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!--log4j配置文件加载--&gt;</span>
+<span class="w">  </span><span class="nt">&lt;context-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-name&gt;</span>log4jConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-value&gt;</span>classpath:log4j.properties<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/context-param&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!--启动一个watchdog线程每1800秒扫描一下log4j配置文件的变化--&gt;</span>
+<span class="w">  </span><span class="nt">&lt;context-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-name&gt;</span>log4jRefreshInterval<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-value&gt;</span>1800000<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/context-param&gt;</span>
+<span class="w">  </span><span class="nt">&lt;context-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-name/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;param-value/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/context-param&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- 配置Spring字符编码过滤器 --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;filter&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>encodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-name&gt;</span>forceEncoding<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/filter&gt;</span>
+<span class="w">  </span><span class="nt">&lt;filter-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;filter-name&gt;</span>encodingFilter<span class="nt">&lt;/filter-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/filter-mapping&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- Spring MVC 核心控制器 DispatcherServlet 配置开始 --&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!--配置springmvc DispatcherServlet--&gt;</span>
+<span class="w">  </span><span class="nt">&lt;servlet&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="w">    </span><span class="nt">&lt;init-param&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!--Sources标注的文件夹下需要新建一个spring文件夹--&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- 如果是监听多个文件，可用‘，’隔开 --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;param-value&gt;</span>classpath:spring/spring-mvc.xml<span class="nt">&lt;/param-value&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/init-param&gt;</span>
+<span class="w">    </span><span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+<span class="w">    </span><span class="nt">&lt;async-supported&gt;</span>true<span class="nt">&lt;/async-supported&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/servlet&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- 拦截设置 --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;servlet-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>springMVC<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- 此处可以可以配置成*.do，对应struts的后缀习惯 --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- Spring MVC 核心配置结束 --&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- 激活Tomcat的defaultServlet来处理静态文件 --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;servlet-mapping&gt;</span>
+<span class="w">    </span><span class="nt">&lt;servlet-name&gt;</span>default<span class="nt">&lt;/servlet-name&gt;</span>
+<span class="w">    </span><span class="nt">&lt;url-pattern&gt;</span>/static/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="cm">&lt;!-- session 时间 --&gt;</span>
+<span class="w">  </span><span class="nt">&lt;session-config&gt;</span>
+<span class="w">    </span><span class="nt">&lt;session-timeout&gt;</span>30<span class="nt">&lt;/session-timeout&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/session-config&gt;</span>
+<span class="w"> </span>
 <span class="nt">&lt;/web-app&gt;</span>
 </pre></div>
 <h3>3.测试web-mvc环境</h3>
@@ -294,23 +294,23 @@
 <p>2.新建controller和service</p>
 <p>controller</p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">HelloService</span> <span class="n">helloService</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">HelloService</span><span class="w"> </span><span class="n">helloService</span><span class="p">;</span>
 
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
-    <span class="c1">//@GetMapping(value = &quot;/hello&quot;,produces = &quot;text/html;charset=utf-8&quot;) 可以简单解决中文乱码</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">helloService</span><span class="p">.</span><span class="na">sayHello</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@GetMapping(value = &quot;/hello&quot;,produces = &quot;text/html;charset=utf-8&quot;) 可以简单解决中文乱码</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">helloService</span><span class="p">.</span><span class="na">sayHello</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>service</p>
 <div class="highlight"><pre><span></span><span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloService</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>3.访问,成功</p>
@@ -359,7 +359,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

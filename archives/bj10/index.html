@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -100,17 +100,17 @@
 <p><figure class="pswp-item" style="flex: 363.9846743295019" data-width="1900" data-height="261"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d289e0f84813f280f11ed6011b8dbdad.png" alt="" /></figure>
 解决：</p>
 <div class="highlight"><pre><span></span><span class="nd">@ControllerAdvice</span><span class="c1">//@Controller的增强</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyCustomException</span> <span class="p">{</span>
-    <span class="c1">//配置要拦截的异常</span>
-    <span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-    <span class="c1">//其中的参数与Controller的参数相似</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myexception</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span> <span class="n">exception</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;text/html:charset=utf-8&quot;</span><span class="p">);</span>
-        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
-        <span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;上传文件大小超出限制，请重试&quot;</span><span class="p">);</span>
-        <span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
-        <span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyCustomException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//配置要拦截的异常</span>
+<span class="w">    </span><span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//其中的参数与Controller的参数相似</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">myexception</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="w"> </span><span class="n">exception</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">response</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="s">&quot;text/html:charset=utf-8&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PrintWriter</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">getWriter</span><span class="p">();</span>
+<span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;上传文件大小超出限制，请重试&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+<span class="w">        </span><span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>此时再出现上面的错误时，前端便会显示指定的内容</p>
@@ -121,8 +121,8 @@
 <li>引入thymeleaf依赖</li>
 </ol>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-   <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-   <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">   </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">   </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <ol>
@@ -143,13 +143,13 @@
 <li>编写自定义异常处理类</li>
 </ol>
 <div class="highlight"><pre><span></span><span class="nd">@ControllerAdvice</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyCustomException</span> <span class="p">{</span>
-    <span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">myexception</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span> <span class="n">e</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
-        <span class="n">ModelAndView</span> <span class="n">mv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">(</span><span class="s">&quot;myerror&quot;</span><span class="p">);</span>
-        <span class="n">mv</span><span class="p">.</span><span class="na">addObject</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span> <span class="s">&quot;上传文件大小超出限制&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">mv</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyCustomException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">myexception</span><span class="p">(</span><span class="n">MaxUploadSizeExceededException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">mv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ModelAndView</span><span class="p">(</span><span class="s">&quot;myerror&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">mv</span><span class="p">.</span><span class="na">addObject</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;上传文件大小超出限制&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mv</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <ol>
@@ -161,34 +161,34 @@
 <ol>
 <li><p>编写预设全局数据类</p>
 <div class="highlight"><pre><span></span><span class="nd">@ControllerAdvice</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GlobalData</span> <span class="p">{</span>
-    <span class="nd">@ModelAttribute</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;info&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">mydata</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
-        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;addr&quot;</span><span class="p">,</span> <span class="s">&quot;四川&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">GlobalData</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@ModelAttribute</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;info&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">mydata</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;四川&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>在这个类中，使用了@ModelAttribute注解，此注解将方法返回值添加到Model对象，要使用存入的数据时，可以从Model对象中取出。</p>
 </li>
 <li><p>使用预设全局数据</p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="n">Model</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="na">asMap</span><span class="p">();</span>
-        <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">keySet</span> <span class="o">=</span> <span class="n">map</span><span class="p">.</span><span class="na">keySet</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">kay</span> <span class="p">:</span> <span class="n">keySet</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">kay</span> <span class="o">+</span> <span class="s">&quot; : &quot;</span> <span class="o">+</span> <span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">kay</span><span class="p">));</span>
-        <span class="p">}</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">asMap</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">keySet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">keySet</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">kay</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">keySet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">kay</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; : &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">kay</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>控制台输出</p>
-<div class="highlight"><pre><span></span><span class="n">info</span> <span class="p">:</span> <span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="n">xuxx</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="n">四川</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="n">info</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="n">xuxx</span><span class="p">,</span><span class="w"> </span><span class="n">addr</span><span class="o">=</span><span class="n">四川</span><span class="p">}</span>
 </pre></div>
 <p>补充：</p>
 <p>@ModelAttribute注解</p>
@@ -206,31 +206,31 @@
 <li><p><strong>问题演示</strong></p>
 <p>编写实体类</p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">Double</span> <span class="n">price</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Book</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Auther</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Auther</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <p>编写Controller</p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookController</span> <span class="p">{</span>
-    <span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/book&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addbook</span><span class="p">(</span><span class="n">Book</span> <span class="n">book</span><span class="p">,</span><span class="n">Auther</span> <span class="n">auther</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">auther</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BookController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;/book&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addbook</span><span class="p">(</span><span class="n">Book</span><span class="w"> </span><span class="n">book</span><span class="p">,</span><span class="n">Auther</span><span class="w"> </span><span class="n">auther</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">book</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">auther</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>发送请求<figure class="pswp-item" style="flex: 170.6153846153846" data-width="1109" data-height="325"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/da45419a5cac3b6f7fb3567053088584.png" alt="" /></figure></p>
 <p>控制台：</p>
-<div class="highlight"><pre><span></span><span class="n">Book</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="p">,</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="mf">100.0</span><span class="p">}</span>
-<span class="n">Auther</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="p">,</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">21</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="n">Book</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="p">,</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="o">=</span><span class="mf">100.0</span><span class="p">}</span>
+<span class="n">Auther</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="p">,</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="o">=</span><span class="mi">21</span><span class="p">}</span>
 </pre></div>
 <p>这是由于两个对象属性名相同<strong>(此处只是为了演示问题，实际开发时要注意)</strong>导致的。</p>
 </li>
@@ -268,8 +268,8 @@ public class GlobalData {
 <p>发送请求</p>
 <p><figure class="pswp-item" style="flex: 169.93865030674846" data-width="1108" data-height="326"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/138757f62a371e69798649ac73fd751e.png" alt="" /></figure></p>
 <p>控制台：</p>
-<div class="highlight"><pre><span></span><span class="n">Book</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="mf">100.0</span><span class="p">}</span>
-   <span class="n">Auther</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">21</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="n">Book</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">书名</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="o">=</span><span class="mf">100.0</span><span class="p">}</span>
+<span class="w">   </span><span class="n">Auther</span><span class="p">{</span><span class="n">name</span><span class="o">=</span><span class="err">&#39;</span><span class="n">作者名</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="o">=</span><span class="mi">21</span><span class="p">}</span>
 </pre></div>
 
             </div>
@@ -319,7 +319,7 @@ public class GlobalData {
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

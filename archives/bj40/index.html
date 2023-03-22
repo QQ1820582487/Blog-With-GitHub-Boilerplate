@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -89,23 +89,23 @@
                 <h2>使用apache poi将单元格内容的一部分设置为下划线？</h2>
 <p><a href="http://poi.apache.org/components/spreadsheet/quick-guide.htm">POI 官方文档</a></p>
 <p>解决方案:</p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">differentFontTypeInSameCell</span><span class="p">(){</span>
-    <span class="n">Workbook</span> <span class="n">wb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="p">();</span>
-    <span class="n">Sheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="na">createSheet</span><span class="p">(</span><span class="s">&quot;TestSheet&quot;</span><span class="p">);</span>
-    <span class="n">Cell</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="na">createRow</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">createCell</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="n">Font</span> <span class="n">underlineFont</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
-    <span class="n">underlineFont</span><span class="p">.</span><span class="na">setUnderline</span><span class="p">(</span><span class="n">HSSFFont</span><span class="p">.</span><span class="na">U_DOUBLE</span><span class="p">);</span>
-    <span class="n">Font</span> <span class="n">boldFont</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
-    <span class="n">boldFont</span><span class="p">.</span><span class="na">setBoldweight</span><span class="p">(</span><span class="n">Font</span><span class="p">.</span><span class="na">BOLDWEIGHT_BOLD</span><span class="p">);</span>
-    <span class="n">Font</span> <span class="n">italicFont</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
-    <span class="n">italicFont</span><span class="p">.</span><span class="na">setItalic</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-    <span class="n">CellStyle</span> <span class="n">style</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="na">createCellStyle</span><span class="p">();</span>
-    <span class="n">style</span><span class="p">.</span><span class="na">setFont</span><span class="p">(</span><span class="n">underlineFont</span><span class="p">);</span>
-    <span class="n">cell</span><span class="p">.</span><span class="na">setCellStyle</span><span class="p">(</span><span class="n">style</span><span class="p">);</span>
-    <span class="n">RichTextString</span> <span class="n">richString</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFRichTextString</span><span class="p">(</span><span class="s">&quot;Underline, Bold, Italic&quot;</span><span class="p">);</span>
-    <span class="n">richString</span><span class="p">.</span><span class="na">applyFont</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">boldFont</span><span class="p">);</span>
-    <span class="n">richString</span><span class="p">.</span><span class="na">applyFont</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="n">italicFont</span><span class="p">);</span>
-    <span class="n">cell</span><span class="p">.</span><span class="na">setCellValue</span><span class="p">(</span><span class="n">richString</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">differentFontTypeInSameCell</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">Workbook</span><span class="w"> </span><span class="n">wb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HSSFWorkbook</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Sheet</span><span class="w"> </span><span class="n">sheet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wb</span><span class="p">.</span><span class="na">createSheet</span><span class="p">(</span><span class="s">&quot;TestSheet&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Cell</span><span class="w"> </span><span class="n">cell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sheet</span><span class="p">.</span><span class="na">createRow</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">createCell</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Font</span><span class="w"> </span><span class="n">underlineFont</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
+<span class="w">    </span><span class="n">underlineFont</span><span class="p">.</span><span class="na">setUnderline</span><span class="p">(</span><span class="n">HSSFFont</span><span class="p">.</span><span class="na">U_DOUBLE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Font</span><span class="w"> </span><span class="n">boldFont</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
+<span class="w">    </span><span class="n">boldFont</span><span class="p">.</span><span class="na">setBoldweight</span><span class="p">(</span><span class="n">Font</span><span class="p">.</span><span class="na">BOLDWEIGHT_BOLD</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Font</span><span class="w"> </span><span class="n">italicFont</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wb</span><span class="p">.</span><span class="na">createFont</span><span class="p">();</span>
+<span class="w">    </span><span class="n">italicFont</span><span class="p">.</span><span class="na">setItalic</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="n">CellStyle</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wb</span><span class="p">.</span><span class="na">createCellStyle</span><span class="p">();</span>
+<span class="w">    </span><span class="n">style</span><span class="p">.</span><span class="na">setFont</span><span class="p">(</span><span class="n">underlineFont</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cell</span><span class="p">.</span><span class="na">setCellStyle</span><span class="p">(</span><span class="n">style</span><span class="p">);</span>
+<span class="w">    </span><span class="n">RichTextString</span><span class="w"> </span><span class="n">richString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HSSFRichTextString</span><span class="p">(</span><span class="s">&quot;Underline, Bold, Italic&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">richString</span><span class="p">.</span><span class="na">applyFont</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">boldFont</span><span class="p">);</span>
+<span class="w">    </span><span class="n">richString</span><span class="p">.</span><span class="na">applyFont</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="n">italicFont</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cell</span><span class="p">.</span><span class="na">setCellValue</span><span class="p">(</span><span class="n">richString</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -148,7 +148,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

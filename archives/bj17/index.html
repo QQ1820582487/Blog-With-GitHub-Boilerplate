@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -116,18 +116,18 @@
 <h3>3.写代码</h3>
 <p><code>User</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>UserMapper</code></p>
 <div class="highlight"><pre><span></span><span class="c1">//单个Mapper可以直接加@Mapper，也可以在启动类上加//@MapperScan(basePackages = &quot;com.xuxx.mybatis.mapper&quot;)</span>
 <span class="nd">@Mapper</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserMapper</span><span class="w"> </span><span class="p">{</span>
 <span class="c1">//    @Select(&quot;select * from user &quot;)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>Mapper.xml</code></p>
@@ -135,10 +135,10 @@
 <span class="cp">&lt;!DOCTYPE mapper</span>
 <span class="cp">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span>
 <span class="cp">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
-<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">&quot;com.xuxx.mybatis.mapper.UserMapper&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">&quot;getAllUsers&quot;</span> <span class="na">resultType=</span><span class="s">&quot;com.xuxx.mybatis.bean.User&quot;</span><span class="nt">&gt;</span>
-        select * from user
-    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;mapper</span><span class="w"> </span><span class="na">namespace=</span><span class="s">&quot;com.xuxx.mybatis.mapper.UserMapper&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;select</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;getAllUsers&quot;</span><span class="w"> </span><span class="na">resultType=</span><span class="s">&quot;com.xuxx.mybatis.bean.User&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>select<span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span>user
+<span class="w">    </span><span class="nt">&lt;/select&gt;</span>
 <span class="nt">&lt;/mapper&gt;</span>
 </pre></div>
 <p>补充：</p>
@@ -149,39 +149,39 @@
 </li>
 <li><p>在<code>pom.xml</code>文件中配置不忽略需要的xml文件</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;build&gt;</span>
-    ....
-<span class="c">&lt;!--让maven不忽略Mapper.xml--&gt;</span>
-        <span class="nt">&lt;resources&gt;</span>
-            <span class="nt">&lt;resource&gt;</span>
-                <span class="nt">&lt;directory&gt;</span>src/main/java<span class="nt">&lt;/directory&gt;</span>
-                <span class="nt">&lt;includes&gt;</span>
-                    <span class="nt">&lt;include&gt;</span>**/*.xml<span class="nt">&lt;/include&gt;</span>
-                <span class="nt">&lt;/includes&gt;</span>
-            <span class="nt">&lt;/resource&gt;</span>
-            <span class="nt">&lt;resource&gt;</span>
-                <span class="nt">&lt;directory&gt;</span>src/main/resources<span class="nt">&lt;/directory&gt;</span>
-            <span class="nt">&lt;/resource&gt;</span>
-        <span class="nt">&lt;/resources&gt;</span>
+<span class="w">    </span>....
+<span class="cm">&lt;!--让maven不忽略Mapper.xml--&gt;</span>
+<span class="w">        </span><span class="nt">&lt;resources&gt;</span>
+<span class="w">            </span><span class="nt">&lt;resource&gt;</span>
+<span class="w">                </span><span class="nt">&lt;directory&gt;</span>src/main/java<span class="nt">&lt;/directory&gt;</span>
+<span class="w">                </span><span class="nt">&lt;includes&gt;</span>
+<span class="w">                    </span><span class="nt">&lt;include&gt;</span>**/*.xml<span class="nt">&lt;/include&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/includes&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/resource&gt;</span>
+<span class="w">            </span><span class="nt">&lt;resource&gt;</span>
+<span class="w">                </span><span class="nt">&lt;directory&gt;</span>src/main/resources<span class="nt">&lt;/directory&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/resource&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/resources&gt;</span>
 </pre></div>
 </li>
 <li><p>在<code>resources</code>目录下创建自定义目录，并在<code>application.properties</code>中配置</p>
-<div class="highlight"><pre><span></span><span class="c">#将Mapper.xml文件放在resources目录的mapper下，再指定mapper.xml位置</span>
+<div class="highlight"><pre><span></span><span class="c1">#将Mapper.xml文件放在resources目录的mapper下，再指定mapper.xml位置</span>
 <span class="na">mybatis.mapper-locations</span><span class="o">=</span><span class="s">classpath:mapper/*.xml</span>
 </pre></div>
 </li>
 </ol>
 <p><strong>测试</strong></p>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">MybatisApplicationTests</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MybatisApplicationTests</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Autowired</span>
-    <span class="n">UserMapper</span> <span class="n">userMapper</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">UserMapper</span><span class="w"> </span><span class="n">userMapper</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userMapper</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userMapper</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">users</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p><strong>结果</strong></p>
@@ -190,26 +190,26 @@
 <h2>2.配置多数据源</h2>
 <h3>1.依赖</h3>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>druid-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.1.20<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>druid-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.1.20<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
-    <span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>mysql<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mysql-connector-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>5.1.27<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <h3>2.配置多数据源</h3>
-<div class="highlight"><pre><span></span><span class="c">#配置多数据源</span>
+<div class="highlight"><pre><span></span><span class="c1">#配置多数据源</span>
 <span class="na">spring.datasource.one.type</span><span class="o">=</span><span class="s">com.alibaba.druid.pool.DruidDataSource</span>
 <span class="na">spring.datasource.one.url</span><span class="o">=</span><span class="s">jdbc:mysql:///test?useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
 <span class="na">spring.datasource.one.username</span><span class="o">=</span><span class="s">root</span>
@@ -223,109 +223,109 @@
 <h3>3.写代码</h3>
 <p><code>DataSourceConfig</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSourceConfig</span> <span class="p">{</span>
-    <span class="nd">@Bean</span>
-    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.one&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="nf">dsOne</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DataSourceConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spring.datasource.one&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">dsOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Bean</span>
-    <span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;spring.datasource.two&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="nf">dsTwo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spring.datasource.two&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">dsTwo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DruidDataSourceBuilder</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">build</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>MybatisConfigOne</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.mybatis2.mapper1&quot;</span><span class="p">,</span> <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactoryOne&quot;</span>
-        <span class="p">,</span> <span class="n">sqlSessionTemplateRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionTemplateOne&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MybatisConfigOne</span> <span class="p">{</span>
-    <span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="n">dsOne</span><span class="p">;</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx.mybatis2.mapper1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sqlSessionFactoryRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sqlSessionFactoryOne&quot;</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">sqlSessionTemplateRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sqlSessionTemplateOne&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MybatisConfigOne</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dsOne&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dsOne</span><span class="p">;</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactoryOne</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">SqlSessionFactoryBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">);</span>
-            <span class="k">return</span> <span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="nf">sqlSessionFactoryOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">SqlSessionFactoryBean</span><span class="w"> </span><span class="n">bean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsOne</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">SqlSessionTemplate</span> <span class="nf">sqlSessionTemplateOne</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryOne</span><span class="p">());</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">SqlSessionTemplate</span><span class="w"> </span><span class="nf">sqlSessionTemplateOne</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryOne</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>MybatisConfigTwo</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx.mybatis2.mapper2&quot;</span><span class="p">,</span> <span class="n">sqlSessionFactoryRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionFactoryTwo&quot;</span>
-        <span class="p">,</span> <span class="n">sqlSessionTemplateRef</span> <span class="o">=</span> <span class="s">&quot;sqlSessionTemplateTwo&quot;</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MybatisConfigTwo</span> <span class="p">{</span>
-    <span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;dsTwo&quot;</span><span class="p">)</span>
-    <span class="n">DataSource</span> <span class="n">dsTwo</span><span class="p">;</span>
+<span class="nd">@MapperScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx.mybatis2.mapper2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sqlSessionFactoryRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sqlSessionFactoryTwo&quot;</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">sqlSessionTemplateRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;sqlSessionTemplateTwo&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MybatisConfigTwo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dsTwo&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dsTwo</span><span class="p">;</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">SqlSessionFactory</span> <span class="nf">sqlSessionFactoryTwo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">SqlSessionFactoryBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsTwo</span><span class="p">);</span>
-            <span class="k">return</span> <span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="nf">sqlSessionFactoryTwo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">SqlSessionFactoryBean</span><span class="w"> </span><span class="n">bean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">bean</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dsTwo</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">bean</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Bean</span>
-    <span class="n">SqlSessionTemplate</span> <span class="nf">sqlSessionTemplateTwo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryTwo</span><span class="p">());</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">SqlSessionTemplate</span><span class="w"> </span><span class="nf">sqlSessionTemplateTwo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">sqlSessionFactoryTwo</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>到此，多数据源就配置好了，使用数据源1就在包mapper1下，使用数据源2就在包mapper2下。</p>
 <p>测试一下</p>
 <p><code>User</code></p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>com\xuxx\mybatis2\mapper1\UserMapper1.java</code></p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper1</span> <span class="p">{</span>
-    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserMapper1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 <p><code>com\xuxx\mybatis2\mapper2\UserMapper2.java</code></p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserMapper2</span> <span class="p">{</span>
-    <span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getAllUsers</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserMapper2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select * from user &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAllUsers</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 <p>测试类</p>
 <div class="highlight"><pre><span></span><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="nc">Mybatis2ApplicationTests</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">UserMapper1</span> <span class="n">userMapper1</span><span class="p">;</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">UserMapper2</span> <span class="n">userMapper2</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">Mybatis2ApplicationTests</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">UserMapper1</span><span class="w"> </span><span class="n">userMapper1</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">UserMapper2</span><span class="w"> </span><span class="n">userMapper2</span><span class="p">;</span>
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">contextLoads</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users1</span> <span class="o">=</span> <span class="n">userMapper1</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user1：&quot;</span><span class="o">+</span><span class="n">users1</span><span class="p">);</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">users2</span> <span class="o">=</span> <span class="n">userMapper2</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user2：&quot;</span><span class="o">+</span><span class="n">users2</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userMapper1</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user1：&quot;</span><span class="o">+</span><span class="n">users1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userMapper2</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;user2：&quot;</span><span class="o">+</span><span class="n">users2</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="p">}</span>
 </pre></div>
@@ -381,7 +381,7 @@ user2：[User(id=1, username=zhangsan, address=四川2), User(id=2, username=lis
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

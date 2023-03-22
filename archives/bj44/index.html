@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -103,20 +103,20 @@
 <h3>2.1 maven添加依赖</h3>
 <p>在java中使用Selenium很简单，你只需要添加如下依赖：</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.Seleniumhq.Selenium<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>Selenium-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.141.59<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.Seleniumhq.Selenium<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>Selenium-java<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>3.141.59<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
-<span class="c">&lt;!-- 以下非必要 --&gt;</span>
+<span class="cm">&lt;!-- 以下非必要 --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.google.guava<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>guava<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>23.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.google.guava<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>guava<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>23.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.8.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.google.code.gson<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>gson<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>2.8.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <p><em>注：<a href="https://juejin.cn/post/6844903463537623048">guava介绍</a></em></p>
@@ -133,7 +133,7 @@
 </ul>
 <p>在java中使用不同浏览器：
 首先配置驱动属性，指定驱动文件路径</p>
-<div class="highlight"><pre><span></span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span> <span class="s">&quot;E:\\chromedriver.exe&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E:\\chromedriver.exe&quot;</span><span class="p">);</span>
 </pre></div>
 <p>获取WebDriver并打开一个新的浏览器窗口</p>
 
@@ -145,15 +145,15 @@ WebDriver driver = new OperaDriver();     //Opera浏览器
 WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <p><em>注：可以在linux中使用无窗口模式，后续会讲到</em></p>
 <p>简单样例</p>
-<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Itest</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span> <span class="s">&quot;E:\\chromedriver.exe&quot;</span><span class="p">);</span>
-        <span class="n">WebDriver</span> <span class="n">driver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ChromeDriver</span><span class="p">();</span>
-        <span class="n">driver</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Itest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E:\\chromedriver.exe&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">WebDriver</span><span class="w"> </span><span class="n">driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChromeDriver</span><span class="p">();</span>
+<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com&quot;</span><span class="p">);</span>
 
-        <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
-        <span class="n">driver</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>2.2 Selenium元素定位</h3>
@@ -172,27 +172,27 @@ WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <div class="highlight"><pre><span></span><span class="n">driver</span><span class="p">.</span><span class="na">findElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list td&quot;</span><span class="p">));</span>
 </pre></div>
 <p>获取到的元素列表为 List<WebElement> 对象，不建议直接循环来获取 元素对象，而是从根中重新获取，以避免获取元素失败</p>
-<div class="highlight"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">WebElement</span><span class="o">&gt;</span> <span class="n">heads</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="na">findElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list td&quot;</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">WebElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">heads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list td&quot;</span><span class="p">));</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">heads</span><span class="p">.</span><span class="na">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">String</span> <span class="n">href</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="na">findElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list td&quot;</span><span class="p">)).</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="na">getText</span><span class="p">();</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">heads</span><span class="p">.</span><span class="na">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list td&quot;</span><span class="p">)).</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="na">getText</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 <h4>2.2.3 下拉框选择</h4>
-<div class="highlight"><pre><span></span><span class="n">WebElement</span> <span class="n">el</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">xpath</span><span class="p">(</span><span class="s">&quot;//select&quot;</span><span class="p">));</span>
-<span class="n">Select</span> <span class="n">sel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Select</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">WebElement</span><span class="w"> </span><span class="n">el</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">xpath</span><span class="p">(</span><span class="s">&quot;//select&quot;</span><span class="p">));</span>
+<span class="n">Select</span><span class="w"> </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Select</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
 <span class="n">sel</span><span class="p">.</span><span class="na">selectByValue</span><span class="p">(</span><span class="s">&quot;20&quot;</span><span class="p">);</span>
 </pre></div>
 <h3>2.3 设置元素等待</h3>
 <p>WebDriver提供了两种类型的等待：显式等待和隐式等待。</p>
 <h4>2.3.1 显式等待</h4>
 <p>显式等待， 针对某个元素等待</p>
-<div class="highlight"><pre><span></span><span class="n">WebDriverWait</span> <span class="n">wait</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">WebDriverWait</span><span class="w"> </span><span class="n">wait</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <span class="n">wait</span><span class="p">.</span><span class="na">until</span><span class="p">(</span><span class="n">ExpectedConditions</span><span class="p">.</span><span class="na">presenceOfElementLocated</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">cssSelector</span><span class="p">(</span><span class="s">&quot;.for.list&quot;</span><span class="p">)));</span>
 </pre></div>
 <h4>2.3.2 隐式等待</h4>
 <p>隐式等待， 针对某个元素等待</p>
-<div class="highlight"><pre><span></span><span class="n">driver</span><span class="p">.</span><span class="na">manage</span><span class="p">().</span><span class="na">timeouts</span><span class="p">().</span><span class="na">pageLoadTimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">driver</span><span class="p">.</span><span class="na">manage</span><span class="p">().</span><span class="na">timeouts</span><span class="p">().</span><span class="na">pageLoadTimeout</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span>
 </pre></div>
 <h3>2.4 WebElement常用方法</h3>
 <ul>
@@ -217,7 +217,7 @@ WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <li>perform() 执行所有Actions中存储的行为</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="c1">// 新建一个action   </span>
-<span class="n">Actions</span> <span class="n">action</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Actions</span><span class="p">(</span><span class="n">driver</span><span class="p">);</span>   
+<span class="n">Actions</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Actions</span><span class="p">(</span><span class="n">driver</span><span class="p">);</span><span class="w">   </span>
 <span class="c1">// 鼠标左键单击</span>
 <span class="n">action</span><span class="p">.</span><span class="na">click</span><span class="p">().</span><span class="na">perform</span><span class="p">();</span>
 <span class="c1">// 鼠标左键双击</span>
@@ -230,19 +230,19 @@ WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <span class="n">action</span><span class="p">.</span><span class="na">contextClick</span><span class="p">(</span><span class="n">WebElement</span><span class="p">).</span><span class="na">perform</span><span class="p">();</span>
 <span class="c1">// 将目标元素拖拽到指定的元素上</span>
 <span class="n">action</span><span class="p">.</span><span class="na">dragAndDrop</span><span class="p">(</span><span class="n">webElement1</span><span class="p">,</span><span class="n">webElement2</span><span class="p">);</span>
-<span class="n">action</span><span class="p">.</span><span class="na">dragAndDrop</span><span class="p">(</span><span class="n">webElement</span><span class="p">,</span> <span class="n">xOffset</span><span class="p">,</span> <span class="n">yOffset</span><span class="p">);</span>
+<span class="n">action</span><span class="p">.</span><span class="na">dragAndDrop</span><span class="p">(</span><span class="n">webElement</span><span class="p">,</span><span class="w"> </span><span class="n">xOffset</span><span class="p">,</span><span class="w"> </span><span class="n">yOffset</span><span class="p">);</span>
 
-<span class="n">Actions</span> <span class="n">action</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Actions</span><span class="p">(</span><span class="n">driver</span><span class="p">);</span>
+<span class="n">Actions</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Actions</span><span class="p">(</span><span class="n">driver</span><span class="p">);</span>
 <span class="n">action</span><span class="p">.</span><span class="na">keyDown</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">);</span><span class="c1">//按下control键</span>
 <span class="n">action</span><span class="p">.</span><span class="na">keyUp</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">);</span><span class="c1">//松开control键</span>
 <span class="n">action</span><span class="p">.</span><span class="na">keyDown</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">).</span><span class="na">keyDown</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">ALT</span><span class="p">).</span><span class="na">keyDown</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">).</span><span class="na">keyUp</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">).</span><span class="na">keyUp</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">ALT</span><span class="p">).</span><span class="na">keyUp</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">).</span><span class="na">perform</span><span class="p">();</span>
 <span class="n">action</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="o">+</span><span class="s">&quot;a&quot;</span><span class="p">).</span><span class="na">perform</span><span class="p">();</span>
-<span class="n">action</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">,</span> <span class="n">Keys</span><span class="p">.</span><span class="na">ALT</span><span class="p">,</span> <span class="s">&quot;A&quot;</span><span class="p">).</span><span class="na">perform</span><span class="p">();</span>
+<span class="n">action</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">CONTROL</span><span class="p">,</span><span class="w"> </span><span class="n">Keys</span><span class="p">.</span><span class="na">ALT</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="p">).</span><span class="na">perform</span><span class="p">();</span>
 </pre></div>
 <h3>2.5.2 元素sendKeys()</h3>
-<div class="highlight"><pre><span></span><span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">BACK_SPACE</span><span class="p">)</span> <span class="c1">//回格键（BackSpace）</span>
-<span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">SPACE</span><span class="p">)</span> <span class="c1">//空格键(Space)</span>
-<span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">TAB</span><span class="p">)</span> <span class="c1">//制表键(Tab)</span>
+<div class="highlight"><pre><span></span><span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">BACK_SPACE</span><span class="p">)</span><span class="w"> </span><span class="c1">//回格键（BackSpace）</span>
+<span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">SPACE</span><span class="p">)</span><span class="w"> </span><span class="c1">//空格键(Space)</span>
+<span class="n">sendKeys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="na">TAB</span><span class="p">)</span><span class="w"> </span><span class="c1">//制表键(Tab)</span>
 </pre></div>
 <h3>2.6 窗口控制</h3>
 <h4>2.6.1 窗口切换</h4>
@@ -252,21 +252,21 @@ WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <li><p>使用 driver.switchTo().window(hand) 切换窗口</p>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">handles</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="na">getWindowHandles</span><span class="p">();</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hand</span> <span class="p">:</span> <span class="n">handles</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">mainHand</span><span class="p">,</span> <span class="n">hand</span><span class="p">))</span> <span class="p">{</span>
-        <span class="n">driver</span><span class="p">.</span><span class="na">switchTo</span><span class="p">().</span><span class="na">window</span><span class="p">(</span><span class="n">hand</span><span class="p">);</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">handles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">getWindowHandles</span><span class="p">();</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">handles</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">StringUtils</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">mainHand</span><span class="p">,</span><span class="w"> </span><span class="n">hand</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">driver</span><span class="p">.</span><span class="na">switchTo</span><span class="p">().</span><span class="na">window</span><span class="p">(</span><span class="n">hand</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h2>3 linux无窗口模式</h2>
 <h3>3.1 linux安装chrome浏览器</h3>
-<div class="highlight"><pre><span></span>wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm 
-yum install -y google-chrome-stable_current_x86_64.rpm
+<div class="highlight"><pre><span></span>wget<span class="w"> </span>https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm<span class="w"> </span>
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>google-chrome-stable_current_x86_64.rpm
 </pre></div>
 <h3>3.2 下载对应版本的driver</h3>
 <p>查询当前浏览器版本</p>
-<div class="highlight"><pre><span></span>google-chrome --version
+<div class="highlight"><pre><span></span>google-chrome<span class="w"> </span>--version
 </pre></div>
 <h3>3.3 设置Selenium无头模式</h3>
 <ol>
@@ -283,8 +283,8 @@ yum install -y google-chrome-stable_current_x86_64.rpm
 <ol>
 <li>需要配置浏览器窗口大小，来确保元素可以检索</li>
 </ol>
-<div class="highlight"><pre><span></span><span class="n">WebDriverWait</span> <span class="n">wait</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
-<span class="n">Dimension</span> <span class="n">dimension</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dimension</span><span class="p">(</span><span class="mi">1920</span><span class="p">,</span> <span class="mi">1080</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="n">WebDriverWait</span><span class="w"> </span><span class="n">wait</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">);</span>
+<span class="n">Dimension</span><span class="w"> </span><span class="n">dimension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dimension</span><span class="p">(</span><span class="mi">1920</span><span class="p">,</span><span class="w"> </span><span class="mi">1080</span><span class="p">);</span>
 <span class="n">driver</span><span class="p">.</span><span class="na">manage</span><span class="p">().</span><span class="na">window</span><span class="p">().</span><span class="na">setSize</span><span class="p">(</span><span class="n">dimension</span><span class="p">);</span>
 </pre></div>
 <ol>
@@ -293,7 +293,7 @@ yum install -y google-chrome-stable_current_x86_64.rpm
 
 <pre><code>The driver is not executable: /opt/code/news/chromedriver</code></pre>
 <p>运行如下命令即可：</p>
-<div class="highlight"><pre><span></span>chmod <span class="m">775</span> ./chromedriver
+<div class="highlight"><pre><span></span>chmod<span class="w"> </span><span class="m">775</span><span class="w"> </span>./chromedriver
 </pre></div>
 <h3>3.4 设置完成，启动运行</h3>
 <p>参考：</p>
@@ -325,7 +325,7 @@ yum install -y google-chrome-stable_current_x86_64.rpm
 
 
     <div class="prev">
-        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj42/">idea常用快捷键</a>
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj43/">Spring Bean注入的Lite模式和Full模式</a>
         <p class="yue">笔记</p>
     </div>
 
@@ -343,7 +343,7 @@ yum install -y google-chrome-stable_current_x86_64.rpm
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

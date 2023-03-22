@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -89,133 +89,133 @@
                 <h3>1.创建工程</h3>
 <p>添加spring-webmvc依赖</p>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
-         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+<span class="nt">&lt;project</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+<span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-    <span class="nt">&lt;groupId&gt;</span>com.xuxx<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>java_ssm<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-    <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.xuxx<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>java_ssm<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
 
-    <span class="nt">&lt;dependencies&gt;</span>
-        <span class="nt">&lt;dependency&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
-            <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>5.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
-        <span class="nt">&lt;/dependency&gt;</span>
-    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependencies&gt;</span>
+<span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;version&gt;</span>5.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dependencies&gt;</span>
 
 <span class="nt">&lt;/project&gt;</span>
 </pre></div>
 <h3>2.创建java配置类</h3>
 <h5>1. Spring配置类</h5>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.controller</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.controller</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.FilterType</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.FilterType</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
 
 <span class="nd">@Configuration</span>
-<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="n">excludeFilters</span> <span class="o">=</span> <span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringConfig</span> <span class="p">{</span>
+<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="n">excludeFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringConfig</span><span class="w"> </span><span class="p">{</span>
 
 <span class="p">}</span>
 </pre></div>
 <h5>2.SpringMvc配置类</h5>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.controller</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.controller</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.FilterType</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.FilterType</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
 
 <span class="nd">@Configuration</span>
-<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="n">includeFilters</span> <span class="o">=</span> <span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringMvcConfig</span> <span class="p">{</span>
+<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="n">includeFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringMvcConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <h5>3.web.xml 配置类</h5>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.controller</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.controller</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.web.WebApplicationInitializer</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.context.support.AnnotationConfigWebApplicationContext</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.DispatcherServlet</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.WebApplicationInitializer</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.support.AnnotationConfigWebApplicationContext</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.DispatcherServlet</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.ServletRegistration</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.ServletException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.ServletRegistration</span><span class="p">;</span>
 
 <span class="cm">/**</span>
 <span class="cm"> * web.xml 配置类</span>
 <span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebInit</span> <span class="kd">implements</span> <span class="n">WebApplicationInitializer</span> <span class="p">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStartup</span><span class="p">(</span><span class="n">javax</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">ServletContext</span> <span class="n">servletContext</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">ServletException</span> <span class="p">{</span>
-        <span class="n">AnnotationConfigWebApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotationConfigWebApplicationContext</span><span class="p">();</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">setServletContext</span><span class="p">(</span><span class="n">servletContext</span><span class="p">);</span>
-        <span class="n">context</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">SpringMvcConfig</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebInit</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebApplicationInitializer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">onStartup</span><span class="p">(</span><span class="n">javax</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">ServletContext</span><span class="w"> </span><span class="n">servletContext</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">AnnotationConfigWebApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AnnotationConfigWebApplicationContext</span><span class="p">();</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">setServletContext</span><span class="p">(</span><span class="n">servletContext</span><span class="p">);</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">SpringMvcConfig</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
 
-        <span class="n">ServletRegistration</span><span class="p">.</span><span class="na">Dynamic</span> <span class="n">springmvc</span> <span class="o">=</span> <span class="n">servletContext</span><span class="p">.</span><span class="na">addServlet</span><span class="p">(</span><span class="s">&quot;springmvc&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">DispatcherServlet</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
-        <span class="n">springmvc</span><span class="p">.</span><span class="na">addMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
-        <span class="n">springmvc</span><span class="p">.</span><span class="na">setLoadOnStartup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="n">ServletRegistration</span><span class="p">.</span><span class="na">Dynamic</span><span class="w"> </span><span class="n">springmvc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servletContext</span><span class="p">.</span><span class="na">addServlet</span><span class="p">(</span><span class="s">&quot;springmvc&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DispatcherServlet</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
+<span class="w">        </span><span class="n">springmvc</span><span class="p">.</span><span class="na">addMapping</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">springmvc</span><span class="p">.</span><span class="na">setLoadOnStartup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h3>3.测试</h3>
 <h5>1.未注入service</h5>
 <p>1.controller</p>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.controller</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.controller</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
 
 <span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="s">&quot;hello 期末考试&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hello 期末考试&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>此时没问题</p>
 <p>但是</p>
 <h5>2.注入service</h5>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
-    <span class="nd">@Autowired</span>
-    <span class="n">HelloService</span> <span class="n">helloService</span><span class="p">;</span>
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="c1">//        return &quot;hello 期末考试&quot;;</span>
-        <span class="k">return</span> <span class="n">helloService</span><span class="p">.</span><span class="na">sayHello</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="n">HelloService</span><span class="w"> </span><span class="n">helloService</span><span class="p">;</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//        return &quot;hello 期末考试&quot;;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">helloService</span><span class="p">.</span><span class="na">sayHello</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="nd">@Service</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloService</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="s">&quot;Hello 期末考试&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello 期末考试&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>执行报错</p>
-<div class="highlight"><pre><span></span><span class="mi">29</span><span class="o">-</span><span class="n">Dec</span><span class="o">-</span><span class="mi">2019</span> <span class="mo">05</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mf">12.457</span> <span class="n">严重</span> <span class="o">[</span><span class="n">RMI</span> <span class="n">TCP</span> <span class="nf">Connection</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="mf">127.0.0.1</span><span class="o">]</span> <span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">FrameworkServlet</span><span class="p">.</span><span class="na">initServletBean</span> <span class="n">Context</span> <span class="n">initialization</span> <span class="n">failed</span>
-    <span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">UnsatisfiedDependencyException</span><span class="p">:</span> <span class="n">Error</span> <span class="n">creating</span> <span class="n">bean</span> <span class="n">with</span> <span class="n">name</span> <span class="err">&#39;</span><span class="n">helloController</span><span class="err">&#39;</span><span class="p">:</span> <span class="n">Unsatisfied</span> <span class="n">dependency</span> <span class="n">expressed</span> <span class="n">through</span> <span class="n">field</span> <span class="err">&#39;</span><span class="n">helloService</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">nested</span> <span class="n">exception</span> <span class="n">is</span> <span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">NoSuchBeanDefinitionException</span><span class="p">:</span> <span class="n">No</span> <span class="n">qualifying</span> <span class="n">bean</span> <span class="n">of</span> <span class="n">type</span> <span class="err">&#39;</span><span class="n">com</span><span class="p">.</span><span class="na">xuxx</span><span class="p">.</span><span class="na">service</span><span class="p">.</span><span class="na">HelloService</span><span class="err">&#39;</span> <span class="n">available</span><span class="p">:</span> <span class="n">expected</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">1</span> <span class="n">bean</span> <span class="n">which</span> <span class="n">qualifies</span> <span class="n">as</span> <span class="n">autowire</span> <span class="n">candidate</span><span class="p">.</span> <span class="n">Dependency</span> <span class="n">annotations</span><span class="p">:</span> <span class="p">{</span><span class="nd">@org.springframework.beans.factory.annotation.Autowired</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">true</span><span class="p">)}</span>
+<div class="highlight"><pre><span></span><span class="mi">29</span><span class="o">-</span><span class="n">Dec</span><span class="o">-</span><span class="mi">2019</span><span class="w"> </span><span class="mo">05</span><span class="p">:</span><span class="mo">01</span><span class="p">:</span><span class="mf">12.457</span><span class="w"> </span><span class="n">严重</span><span class="w"> </span><span class="o">[</span><span class="n">RMI</span><span class="w"> </span><span class="n">TCP</span><span class="w"> </span><span class="nf">Connection</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="mf">127.0.0.1</span><span class="o">]</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">servlet</span><span class="p">.</span><span class="na">FrameworkServlet</span><span class="p">.</span><span class="na">initServletBean</span><span class="w"> </span><span class="n">Context</span><span class="w"> </span><span class="n">initialization</span><span class="w"> </span><span class="n">failed</span>
+<span class="w">    </span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">UnsatisfiedDependencyException</span><span class="p">:</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">creating</span><span class="w"> </span><span class="n">bean</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="err">&#39;</span><span class="n">helloController</span><span class="err">&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">Unsatisfied</span><span class="w"> </span><span class="n">dependency</span><span class="w"> </span><span class="n">expressed</span><span class="w"> </span><span class="n">through</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="err">&#39;</span><span class="n">helloService</span><span class="err">&#39;</span><span class="p">;</span><span class="w"> </span><span class="n">nested</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">beans</span><span class="p">.</span><span class="na">factory</span><span class="p">.</span><span class="na">NoSuchBeanDefinitionException</span><span class="p">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">qualifying</span><span class="w"> </span><span class="n">bean</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="err">&#39;</span><span class="n">com</span><span class="p">.</span><span class="na">xuxx</span><span class="p">.</span><span class="na">service</span><span class="p">.</span><span class="na">HelloService</span><span class="err">&#39;</span><span class="w"> </span><span class="n">available</span><span class="p">:</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">least</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">bean</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">qualifies</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">autowire</span><span class="w"> </span><span class="n">candidate</span><span class="p">.</span><span class="w"> </span><span class="n">Dependency</span><span class="w"> </span><span class="n">annotations</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nd">@org.springframework.beans.factory.annotation.Autowired</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">true</span><span class="p">)}</span>
 </pre></div>
 <p>原因是service没有注入进来，此时只加载了springmvc的配置类，还需要加载spring的配置类</p>
 <div class="highlight"><pre><span></span><span class="cm">/**</span>
 <span class="cm"> * spring mvc配置类</span>
 <span class="cm"> */</span>
 <span class="nd">@Configuration</span>
-<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="n">includeFilters</span> <span class="o">=</span> <span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">),</span>
-                <span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringMvcConfig</span> <span class="p">{</span>
+<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="n">useDefaultFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="n">includeFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">),</span>
+<span class="w">                </span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Configuration</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringMvcConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="p">}</span>
 </pre></div>
 <p>此时在运行就没问题了（注：<strong>开发中直接全部注入就行，不用再单独配置@ComponentScan.Filter</strong>）</p>
@@ -237,44 +237,44 @@
 </pre></div>
 <h6>1.2修改SpringMvc配置类,继承WebMvcConfigurationSupport</h6>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
-<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span> <span class="n">useDefaultFilters</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="n">includeFilters</span> <span class="o">=</span> <span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringMvcConfig</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurationSupport</span> <span class="p">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">addResourceHandlers</span><span class="p">(</span><span class="n">ResourceHandlerRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>    
-        <span class="n">registry</span><span class="p">.</span><span class="na">addResourceHandler</span><span class="p">(</span><span class="s">&quot;/static/**&quot;</span><span class="p">).</span><span class="na">addResourceLocations</span><span class="p">(</span><span class="s">&quot;classpath:/static/&quot;</span><span class="p">);</span>
+<span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.xuxx&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">useDefaultFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="n">includeFilters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Controller</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="nd">@ComponentScan.Filter</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterType</span><span class="p">.</span><span class="na">ANNOTATION</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Configuration</span><span class="p">.</span><span class="na">class</span><span class="p">)})</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringMvcConfig</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">WebMvcConfigurationSupport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addResourceHandlers</span><span class="p">(</span><span class="n">ResourceHandlerRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">    </span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addResourceHandler</span><span class="p">(</span><span class="s">&quot;/static/**&quot;</span><span class="p">).</span><span class="na">addResourceLocations</span><span class="p">(</span><span class="s">&quot;classpath:/static/&quot;</span><span class="p">);</span>
 
-    <span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>1.3访问静态资源,成功</p>
 <p><figure class="pswp-item" style="flex: 127.19298245614036" data-width="580" data-height="228"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6eccf5bec6bd1eff413bf97cfdbdc502.png" alt="" /></figure></p>
 <h4>2.配置拦截器</h4>
 <h6>2.1自定义拦截器，继承<code>HandlerInterceptor</code>，重新其方法</h6>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.interceptor</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.interceptor</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.HandlerInterceptor</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.HandlerInterceptor</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.servlet.http.HttpServletResponse</span><span class="p">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyInterceptor</span> <span class="kd">implements</span> <span class="n">HandlerInterceptor</span> <span class="p">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;preHandle方法执行了&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyInterceptor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HandlerInterceptor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;preHandle方法执行了&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">,</span> <span class="n">ModelAndView</span> <span class="n">modelAndView</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;postHandle方法执行了&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">,</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">modelAndView</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;postHandle方法执行了&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="p">,</span> <span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;afterCompletion方法执行了&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterCompletion</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">,</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;afterCompletion方法执行了&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h6>2.2配置</h6>
@@ -282,45 +282,45 @@
 <span class="cm"> * spring mvc配置类</span>
 <span class="cm"> */</span>
 <span class="p">....</span>
-    <span class="nd">@Bean</span>
-    <span class="n">MyInterceptor</span> <span class="nf">myInterceptor</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MyInterceptor</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">MyInterceptor</span><span class="w"> </span><span class="nf">myInterceptor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyInterceptor</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="n">myInterceptor</span><span class="p">()).</span><span class="na">addPathPatterns</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="n">myInterceptor</span><span class="p">()).</span><span class="na">addPathPatterns</span><span class="p">(</span><span class="s">&quot;/**&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <h6>2.3访问任意路径</h6>
 <p><figure class="pswp-item" style="flex: 232.41206030150755" data-width="925" data-height="199"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4701e9c20a6d44b2b8a3dd1cf2eefb5d.png" alt="" /></figure></p>
 <h4>3.配置fastjson</h4>
 <h5>3.1添加fastjson 依赖</h5>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
-            <span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>1.2.62<span class="nt">&lt;/version&gt;</span>
+<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>fastjson<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">            </span><span class="nt">&lt;version&gt;</span>1.2.62<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <h5>3.2编写controller</h5>
-<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.xuxx.controller</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">com.xuxx.controller</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
 
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
 
 <span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonController</span> <span class="p">{</span>
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/data&quot;</span><span class="p">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getData</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;xuxx &gt;&gt; &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">list</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">JsonController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/data&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;xuxx &gt;&gt; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">list</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <h6>3.3配置</h6>
@@ -328,11 +328,11 @@
 <span class="cm"> * spring mvc配置类</span>
 <span class="cm"> */</span>
 <span class="p">....</span>
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configureMessageConverters</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">converters</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">FastJsonHttpMessageConverter</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FastJsonHttpMessageConverter</span><span class="p">();</span>
-        <span class="n">converters</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">converter</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configureMessageConverters</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">HttpMessageConverter</span><span class="o">&lt;?&gt;&gt;</span><span class="w"> </span><span class="n">converters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FastJsonHttpMessageConverter</span><span class="w"> </span><span class="n">converter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FastJsonHttpMessageConverter</span><span class="p">();</span>
+<span class="w">        </span><span class="n">converters</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">converter</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <h6>3.4测试</h6>
 
@@ -379,7 +379,7 @@
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

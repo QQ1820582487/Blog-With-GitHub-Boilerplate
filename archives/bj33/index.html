@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -108,31 +108,31 @@
 <h3>二进制包安装</h3>
 <p>在 Linux 上的也安装十分简单，从 <a href="https://github.com/docker/compose/releases">官方 GitHub Release</a> 处直接下载编译好的二进制文件即可。</p>
 <p>例如，在 Linux 64 位系统上直接下载对应的二进制包。</p>
-<div class="highlight"><pre><span></span>$ sudo curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-<span class="sb">`</span>uname -s<span class="sb">`</span>-<span class="sb">`</span>uname -m<span class="sb">`</span> &gt; /usr/local/bin/docker-compose
+<div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>curl<span class="w"> </span>-L<span class="w"> </span>https://github.com/docker/compose/releases/download/1.25.5/docker-compose-<span class="sb">`</span>uname<span class="w"> </span>-s<span class="sb">`</span>-<span class="sb">`</span>uname<span class="w"> </span>-m<span class="sb">`</span><span class="w"> </span>&gt;<span class="w"> </span>/usr/local/bin/docker-compose
 
-$ sudo chmod +x /usr/local/bin/docker-compose
+$<span class="w"> </span>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/docker-compose
 </pre></div>
 <h3>PIP 安装</h3>
 <p><em>注：</em> <code>x86_64</code> 架构的 Linux 建议按照上边的方法下载二进制包进行安装，如果您计算机的架构是 <code>ARM</code> (例如，树莓派)，再使用 <code>pip</code> 安装。</p>
 <p>这种方式是将 Compose 当作一个 Python 应用来从 pip 源中安装。</p>
 <p>执行安装命令：</p>
-<div class="highlight"><pre><span></span>$ sudo pip install -U docker-compose
+<div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>docker-compose
 </pre></div>
 <p>可以看到类似如下输出，说明安装成功。</p>
-<div class="highlight"><pre><span></span>Collecting docker-compose
-  Downloading docker-compose-1.25.5.tar.gz <span class="o">(</span>149kB<span class="o">)</span>: 149kB downloaded
+<div class="highlight"><pre><span></span>Collecting<span class="w"> </span>docker-compose
+<span class="w">  </span>Downloading<span class="w"> </span>docker-compose-1.25.5.tar.gz<span class="w"> </span><span class="o">(</span>149kB<span class="o">)</span>:<span class="w"> </span>149kB<span class="w"> </span>downloaded
 ...
-Successfully installed docker-compose cached-property requests texttable websocket-client docker-py dockerpty six enum34 backports.ssl-match-hostname ipaddress
+Successfully<span class="w"> </span>installed<span class="w"> </span>docker-compose<span class="w"> </span>cached-property<span class="w"> </span>requests<span class="w"> </span>texttable<span class="w"> </span>websocket-client<span class="w"> </span>docker-py<span class="w"> </span>dockerpty<span class="w"> </span>six<span class="w"> </span>enum34<span class="w"> </span>backports.ssl-match-hostname<span class="w"> </span>ipaddress
 </pre></div>
 <h3>bash 补全命令</h3>
-<div class="highlight"><pre><span></span>$ curl -L https://raw.githubusercontent.com/docker/compose/1.25.5/contrib/completion/bash/docker-compose &gt; /etc/bash_completion.d/docker-compose
+<div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-L<span class="w"> </span>https://raw.githubusercontent.com/docker/compose/1.25.5/contrib/completion/bash/docker-compose<span class="w"> </span>&gt;<span class="w"> </span>/etc/bash_completion.d/docker-compose
 </pre></div>
 <h3>卸载</h3>
 <p>如果是二进制包方式安装的，删除二进制文件即可。</p>
-<div class="highlight"><pre><span></span>$ sudo rm /usr/local/bin/docker-compose
+<div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>rm<span class="w"> </span>/usr/local/bin/docker-compose
 </pre></div>
 <p>如果是通过 <code>pip</code> 安装的，则执行如下命令即可删除。</p>
-<div class="highlight"><pre><span></span>$ sudo pip uninstall docker-compose
+<div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>pip<span class="w"> </span>uninstall<span class="w"> </span>docker-compose
 </pre></div>
 <h2>使用</h2>
 <h3>术语</h3>
@@ -163,25 +163,25 @@ Successfully installed docker-compose cached-property requests texttable websock
 </pre></div>
 <h4>Dockerfile</h4>
 <p>编写 <code>Dockerfile</code> 文件，内容为</p>
-<div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">python:3.6-alpine</span>
-<span class="k">ADD</span> . /code
-<span class="k">WORKDIR</span><span class="s"> /code</span>
-<span class="k">RUN</span> pip install redis flask
-<span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.6-alpine</span>
+<span class="k">ADD</span><span class="w"> </span>.<span class="w"> </span>/code
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/code</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>redis<span class="w"> </span>flask
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
 </pre></div>
 <h4>docker-compose.yml</h4>
 <p>编写 <code>docker-compose.yml</code> 文件，这个是 Compose 使用的主模板文件。</p>
-<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3&#39;</span>
 <span class="nt">services</span><span class="p">:</span>
-  <span class="nt">web</span><span class="p">:</span>
-    <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
-    <span class="nt">ports</span><span class="p">:</span>
-     <span class="p p-Indicator">-</span> <span class="s">&quot;5000:5000&quot;</span>
-  <span class="nt">redis</span><span class="p">:</span>
-    <span class="nt">image</span><span class="p">:</span> <span class="s">&quot;redis:alpine&quot;</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5000:5000&quot;</span>
+<span class="w">  </span><span class="nt">redis</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;redis:alpine&quot;</span>
 </pre></div>
 <h4>运行 compose 项目</h4>
-<div class="highlight"><pre><span></span>$ docker-compose up
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker-compose<span class="w"> </span>up
 </pre></div>
 <p>此时访问本地 <code>5000</code> 端口，每次刷新页面，计数就会加 1。</p>
 <h2>命令说明</h2>
@@ -189,7 +189,7 @@ Successfully installed docker-compose cached-property requests texttable websock
 <p>对于 Compose 来说，大部分命令的对象既可以是项目本身，也可以指定为项目中的服务或者容器。如果没有特别的说明，命令对象将是项目，这意味着项目中所有的服务都会受到命令影响。</p>
 <p>执行 <code>docker-compose [COMMAND] --help</code> 或者 <code>docker-compose help [COMMAND]</code> 可以查看具体某个命令的使用格式。</p>
 <p><code>docker-compose</code> 命令的基本的使用格式是</p>
-<div class="highlight"><pre><span></span>docker-compose <span class="o">[</span>-f<span class="o">=</span>&lt;arg&gt;...<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>COMMAND<span class="o">]</span> <span class="o">[</span>ARGS...<span class="o">]</span>
+<div class="highlight"><pre><span></span>docker-compose<span class="w"> </span><span class="o">[</span>-f<span class="o">=</span>&lt;arg&gt;...<span class="o">]</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>COMMAND<span class="o">]</span><span class="w"> </span><span class="o">[</span>ARGS...<span class="o">]</span>
 </pre></div>
 <h3>命令选项</h3>
 <ul>
@@ -278,7 +278,7 @@ Successfully installed docker-compose cached-property requests texttable websock
 <p>格式为 <code>docker-compose run [options] [-p PORT...] [-e KEY=VAL...] SERVICE [COMMAND] [ARGS...]</code>。</p>
 <p>在指定服务上执行一个命令。</p>
 <p>例如：</p>
-<div class="highlight"><pre><span></span>$ docker-compose run ubuntu ping docker.com
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker-compose<span class="w"> </span>run<span class="w"> </span>ubuntu<span class="w"> </span>ping<span class="w"> </span>docker.com
 </pre></div>
 <p>将会启动一个 ubuntu 服务容器，并执行 <code>ping docker.com</code> 命令。</p>
 <p>默认情况下，如果存在关联，则所有关联的服务将会自动被启动，除非这些服务已经在运行中。</p>
@@ -289,7 +289,7 @@ Successfully installed docker-compose cached-property requests texttable websock
 <li>不会自动创建端口，以避免冲突。</li>
 </ul>
 <p>如果不希望自动启动关联的容器，可以使用 <code>--no-deps</code> 选项，例如</p>
-<div class="highlight"><pre><span></span>$ docker-compose run --no-deps web python manage.py shell
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker-compose<span class="w"> </span>run<span class="w"> </span>--no-deps<span class="w"> </span>web<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>shell
 </pre></div>
 <p>将不会启动 web 容器所关联的其它容器。</p>
 <p>选项：</p>
@@ -309,7 +309,7 @@ Successfully installed docker-compose cached-property requests texttable websock
 <p>格式为 <code>docker-compose scale [options] [SERVICE=NUM...]</code>。</p>
 <p>设置指定服务运行的容器个数。</p>
 <p>通过 <code>service=num</code> 的参数来设置数量。例如：</p>
-<div class="highlight"><pre><span></span>$ docker-compose scale <span class="nv">web</span><span class="o">=</span><span class="m">3</span> <span class="nv">db</span><span class="o">=</span><span class="m">2</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>docker-compose<span class="w"> </span>scale<span class="w"> </span><span class="nv">web</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">db</span><span class="o">=</span><span class="m">2</span>
 </pre></div>
 <p>将启动 3 个容器运行 web 服务，2 个容器运行 db 服务。</p>
 <p>一般的，当指定数目多于该服务当前实际运行容器，将新创建并启动容器；反之，将停止容器。</p>
@@ -714,89 +714,89 @@ db:
 <p>执行 <code>docker-compose up</code> 则会启动一个 <code>mongo:3.6</code> 镜像的容器。</p>
 <h2>Docker Compose部署应用程序</h2>
 <h3>部署Tomcat</h3>
-<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.1&#39;</span>
-<span class="nt">services</span><span class="p">:</span> 
-    <span class="nt">tomcat</span><span class="p">:</span>
-        <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
-        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tomcat</span>
-        <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tomcat</span>
-        <span class="nt">ports</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
-        <span class="nt">volumes</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./webapps:/usr/local/tomcat/webapps</span>
-        <span class="nt">environment</span><span class="p">:</span>
-          <span class="c1">#时区</span>
-          <span class="nt">TZ</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia/Shanghai</span>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.1&#39;</span>
+<span class="nt">services</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">tomcat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomcat</span>
+<span class="w">        </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomcat</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
+<span class="w">        </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./webapps:/usr/local/tomcat/webapps</span>
+<span class="w">        </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">          </span><span class="c1">#时区</span>
+<span class="w">          </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Asia/Shanghai</span>
 </pre></div>
 <h3>部署MySQL_1</h3>
-<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.1&#39;</span>
-<span class="nt">services</span><span class="p">:</span> 
-    <span class="nt">db</span><span class="p">:</span>
-        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
-        <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
-        <span class="nt">environment</span><span class="p">:</span>
-            <span class="nt">MYSQL_ROOT_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">123456</span>
-        <span class="nt">command</span><span class="p">:</span>
-            <span class="c1">#默认的身份验证插件</span>
-            <span class="l l-Scalar l-Scalar-Plain">--default-authentication-plugin=mysql_native_password</span>
-            <span class="l l-Scalar l-Scalar-Plain">#字符集</span>
-            <span class="l l-Scalar l-Scalar-Plain">--character-set-server=utf8mb4</span>
-            <span class="l l-Scalar l-Scalar-Plain">#字符集编码规则</span>
-            <span class="l l-Scalar l-Scalar-Plain">--collation-server=utf8mb4_general_ci</span>
-            <span class="l l-Scalar l-Scalar-Plain">#数据行更新时，timestamp类型字段不更新为当前时间</span>
-            <span class="l l-Scalar l-Scalar-Plain">--explicit_defaults_for_timestamp=true</span>
-            <span class="l l-Scalar l-Scalar-Plain">#表名小写,不区分大小写</span>
-            <span class="l l-Scalar l-Scalar-Plain">--lower_case_table_names=1</span>
-        <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tomcat</span>
-        <span class="nt">ports</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">3306:3306</span>
-        <span class="nt">volumes</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./data:/var/lib/mysql/data</span>
-    <span class="c1">#MySQL 的Web客户端</span>
-    <span class="nt">adminer</span><span class="p">:</span>
-        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">adminer</span>
-        <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
-        <span class="nt">ports</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.1&#39;</span>
+<span class="nt">services</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">        </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">        </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">MYSQL_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">123456</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">            </span><span class="c1">#默认的身份验证插件</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">--default-authentication-plugin=mysql_native_password</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#字符集</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">--character-set-server=utf8mb4</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#字符集编码规则</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">--collation-server=utf8mb4_general_ci</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#数据行更新时，timestamp类型字段不更新为当前时间</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">--explicit_defaults_for_timestamp=true</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#表名小写,不区分大小写</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">--lower_case_table_names=1</span>
+<span class="w">        </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomcat</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306:3306</span>
+<span class="w">        </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data:/var/lib/mysql/data</span>
+<span class="w">    </span><span class="c1">#MySQL 的Web客户端</span>
+<span class="w">    </span><span class="nt">adminer</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adminer</span>
+<span class="w">        </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
 </pre></div>
 <h3>部署MySQL_2</h3>
-<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3.1&quot;</span>
-<span class="nt">services</span><span class="p">:</span> 
- <span class="nt">db</span><span class="p">:</span>
-  <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
-  <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
-  <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
-  <span class="nt">command</span><span class="p">:</span> 
-   <span class="l l-Scalar l-Scalar-Plain">--lower_case_table_names=1</span>
-   <span class="l l-Scalar l-Scalar-Plain">--character-set-server=utf8mb4</span>
-   <span class="l l-Scalar l-Scalar-Plain">--collation-server=utf8mb4_unicode_ci</span>
-   <span class="l l-Scalar l-Scalar-Plain">--explicit_defaults_for_timestamp=true</span>
-  <span class="nt">environment</span><span class="p">:</span>
-   <span class="nt">TZ</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia/Shanghai</span>
-   <span class="nt">MYSQL_ROOT_PASSWORD</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root@123456</span>
-  <span class="nt">ports</span><span class="p">:</span>
-   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">3306:3306</span>
-  <span class="nt">volumes</span><span class="p">:</span>
-   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./mysql/data:/var/lib/mysql</span>
-   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./mysql/config:/etc/mysql/conf.d</span>
-   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./mysql/log:/var/log/mysql</span>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.1&quot;</span>
+<span class="nt">services</span><span class="p">:</span><span class="w"> </span>
+<span class="w"> </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">--lower_case_table_names=1</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">--character-set-server=utf8mb4</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">--collation-server=utf8mb4_unicode_ci</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">--explicit_defaults_for_timestamp=true</span>
+<span class="w">  </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">TZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Asia/Shanghai</span>
+<span class="w">   </span><span class="nt">MYSQL_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root@123456</span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306:3306</span>
+<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./mysql/data:/var/lib/mysql</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./mysql/config:/etc/mysql/conf.d</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./mysql/log:/var/log/mysql</span>
 </pre></div>
 <h3>部署RabbitMQ</h3>
-<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3&#39;</span>
 <span class="nt">services</span><span class="p">:</span>
-  <span class="nt">rabbitmq</span><span class="p">:</span>
-    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rabbitmq:3.8.3-management</span>
-    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rabbitmq</span>
-    <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
-    <span class="nt">hostname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myRabbitmq</span>
-    <span class="nt">ports</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">15672:15672</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">5672:5672</span>
-    <span class="nt">volumes</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./data:/var/lib/rabbitmq</span>
-    <span class="nt">environment</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RABBITMQ_DEFAULT_USER=root</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RABBITMQ_DEFAULT_PASS=root</span>
+<span class="w">  </span><span class="nt">rabbitmq</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rabbitmq:3.8.3-management</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rabbitmq</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myRabbitmq</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15672:15672</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5672:5672</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data:/var/lib/rabbitmq</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RABBITMQ_DEFAULT_USER=root</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RABBITMQ_DEFAULT_PASS=root</span>
 </pre></div>
 <p><code>RABBITMQ_DEFAULT_USER</code>  和  <code>RABBITMQ_DEFAULT_PASS</code> 用来设置超级管理员的账号和密码，如果不设置，默认都是 <code>guest</code> 。</p>
 
@@ -843,7 +843,7 @@ db:
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

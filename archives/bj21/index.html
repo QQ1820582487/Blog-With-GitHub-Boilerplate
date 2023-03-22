@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -109,66 +109,66 @@ SockJS 为 WebSocket 提供了 备选方案。但无论哪种场景，对于实�
 <ol>
 <li><p>依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
+<span class="cm">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 <ol>
 <li><p>配置类</p>
 <div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
 <span class="nd">@EnableWebSocketMessageBroker</span><span class="c1">//开启消息代理</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSocketConfig</span> <span class="kd">implements</span> <span class="n">WebSocketMessageBrokerConfigurer</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebSocketConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebSocketMessageBrokerConfigurer</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-       <span class="c1">//消息代理前缀（发送消息到外部 的前缀）</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">);</span>
-        <span class="c1">//接收外部消息 的前缀</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="c1">//消息代理前缀（发送消息到外部 的前缀）</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//接收外部消息 的前缀</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//建立连接点</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//建立连接点</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </li>
@@ -235,53 +235,53 @@ public class GreetingController {
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">connect</span><span class="p">();</span>
-        <span class="p">})</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">connect</span><span class="p">();</span>
+<span class="w">        </span><span class="p">})</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">stompClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">stompClient</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="w">        </span><span class="p">});</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/hello&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/hello&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">                </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span><span class="w"> </span><span class="s1">&#39;content&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
+<span class="w">        </span><span class="p">});</span>
 
-        <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">stompClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 
-        <span class="kd">function</span> <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span> <span class="p">{</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
-            <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/topic/greetings&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
-                <span class="p">})</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">connect</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="kd">var</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
+<span class="w">                </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/topic/greetings&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+<span class="w">                </span><span class="p">})</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flag</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">})</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">})</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -297,109 +297,109 @@ public class GreetingController {
 <ol>
 <li><p>依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-websocket<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>sockjs-client<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.1.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>stomp-websocket<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>2.3.3<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>jquery<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 
-<span class="c">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
-<span class="c">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
+<span class="cm">&lt;!--WebJars是将客户端（浏览器）资源（JS，Css等）打成jar包文件，以对资源进行统一依赖管理。--&gt;</span>
+<span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator-core --&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.webjars<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>webjars-locator-core<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </li>
 <li><p>配置类</p>
 <div class="highlight"><pre><span></span><span class="cm">/*Security配置类*/</span>
 <span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="n">WebSecurityConfigurerAdapter</span> <span class="p">{</span>
-    <span class="nd">@Bean</span>
-    <span class="n">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SecurityConfig</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">WebSecurityConfigurerAdapter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="n">PasswordEncoder</span><span class="w"> </span><span class="nf">passwordEncoder</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">NoOpPasswordEncoder</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span> <span class="n">auth</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xu&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="n">AuthenticationManagerBuilder</span><span class="w"> </span><span class="n">auth</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">auth</span><span class="p">.</span><span class="na">inMemoryAuthentication</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">and</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">withUser</span><span class="p">(</span><span class="s">&quot;xu&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">password</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">roles</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
-        <span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">authenticated</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">and</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">formLogin</span><span class="p">()</span>
-                <span class="p">.</span><span class="na">permitAll</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="n">HttpSecurity</span><span class="w"> </span><span class="n">http</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">http</span><span class="p">.</span><span class="na">authorizeRequests</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">anyRequest</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">authenticated</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">and</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">formLogin</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">permitAll</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="cm">/*WebSocket配置类*/</span>
 <span class="nd">@Configuration</span>
 <span class="nd">@EnableWebSocketMessageBroker</span><span class="c1">//开启消息代理</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebSocketConfig</span> <span class="kd">implements</span> <span class="n">WebSocketMessageBrokerConfigurer</span> <span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebSocketConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebSocketMessageBrokerConfigurer</span><span class="w"> </span><span class="p">{</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//发到/topic认为是群聊消息，发到/queue认为是单聊消息</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">,</span> <span class="s">&quot;/queue&quot;</span><span class="p">);</span><span class="c1">//发送消息到外部 的前缀</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span><span class="c1">//接收外部消息 的前缀</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">configureMessageBroker</span><span class="p">(</span><span class="n">MessageBrokerRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//发到/topic认为是群聊消息，发到/queue认为是单聊消息</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">enableSimpleBroker</span><span class="p">(</span><span class="s">&quot;/topic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/queue&quot;</span><span class="p">);</span><span class="c1">//发送消息到外部 的前缀</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">setApplicationDestinationPrefixes</span><span class="p">(</span><span class="s">&quot;/app&quot;</span><span class="p">);</span><span class="c1">//接收外部消息 的前缀</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerStompEndpoints</span><span class="p">(</span><span class="n">StompEndpointRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addEndpoint</span><span class="p">(</span><span class="s">&quot;/chat&quot;</span><span class="p">).</span><span class="na">withSockJS</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </li>
 <li><p>bean</p>
 <div class="highlight"><pre><span></span><span class="nd">@Data</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Chat</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">from</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">to</span><span class="p">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">content</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Chat</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">from</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">to</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </li>
@@ -438,50 +438,50 @@ public class GreetingController {
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;发送&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;send&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;conversation&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">connect</span><span class="p">();</span>
-        <span class="p">})</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">connect</span><span class="p">();</span>
+<span class="w">        </span><span class="p">})</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">stompClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">stompClient</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+<span class="w">        </span><span class="p">});</span>
 
-        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/chat&#39;</span><span class="p">,</span> <span class="p">{},</span>
-                <span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;to&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#to&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span> <span class="s1">&#39;content&#39;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#send&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;/app/chat&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">                </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;to&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#to&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span><span class="w"> </span><span class="s1">&#39;content&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#content&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()}))</span>
+<span class="w">        </span><span class="p">});</span>
 
-        <span class="kd">var</span> <span class="nx">stompClient</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">stompClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 
-        <span class="kd">function</span> <span class="nx">connect</span><span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
-            <span class="nx">stompClient</span> <span class="o">=</span> <span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
-            <span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
-                <span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/user/queue/chat&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span><span class="c1">//点对点需要加前缀</span>
-                    <span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
-                <span class="p">})</span>
-            <span class="p">});</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">connect</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">var</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">SockJS</span><span class="p">(</span><span class="s2">&quot;/chat&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Stomp</span><span class="p">.</span><span class="nx">over</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">({},</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="c1">//设置按钮状态</span>
+<span class="w">                </span><span class="nx">stompClient</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;/user/queue/chat&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="c1">//点对点需要加前缀</span>
+<span class="w">                    </span><span class="nx">showGreeting</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+<span class="w">                </span><span class="p">})</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">);</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">flag</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">setConnected</span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">flag</span><span class="p">);</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="nx">flag</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">flag</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#chat&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
 
-        <span class="kd">function</span> <span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="kr">from</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">content</span> <span class="o">+</span> <span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">})</span>
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">showGreeting</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#conversation&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="kr">from</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;&lt;/div&gt;&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">})</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
@@ -539,7 +539,7 @@ public class GreetingController {
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

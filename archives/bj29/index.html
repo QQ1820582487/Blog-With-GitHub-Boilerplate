@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -325,13 +325,13 @@
 </ul>
 <p><strong>实例</strong>：</p>
 <p>将文件全部打包成tar包：</p>
-<div class="highlight"><pre><span></span>tar -cvf log.tar log2012.log    仅打包，不压缩
-tar -czvf log.tar.gz log2012.log   打包后，以 gzip 压缩 
-tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
+<div class="highlight"><pre><span></span>tar<span class="w"> </span>-cvf<span class="w"> </span>log.tar<span class="w"> </span>log2012.log<span class="w">    </span>仅打包，不压缩
+tar<span class="w"> </span>-czvf<span class="w"> </span>log.tar.gz<span class="w"> </span>log2012.log<span class="w">   </span>打包后，以<span class="w"> </span>gzip<span class="w"> </span>压缩<span class="w"> </span>
+tar<span class="w"> </span>-cjvf<span class="w"> </span>log.tar.bz2<span class="w"> </span>log2012.log<span class="w">  </span>打包后，以<span class="w"> </span>bzip2<span class="w"> </span>压缩
 </pre></div>
 <p>在选项<code>f</code>之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 如果加<code>z</code>选项，则以.tar.gz或.tgz来代表gzip压缩过的tar包；如果加<code>j</code>选项，则以.tar.bz2来作为tar包名。</p>
 <p>将tar包解压缩：</p>
-<div class="highlight"><pre><span></span>tar -xzvf ./log.tar.gz
+<div class="highlight"><pre><span></span>tar<span class="w"> </span>-xzvf<span class="w"> </span>./log.tar.gz
 </pre></div>
 <h3>gzip</h3>
 <p><strong>gzip命令</strong>用来压缩文件。gzip是个使用广泛的压缩程序，文件经它压缩过后，其名称后面会多处“.gz”扩展名。</p>
@@ -350,23 +350,23 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 </ul>
 <p><strong>实例</strong>：</p>
 <p>把当前目录下的每个文件压缩成.gz文件</p>
-<div class="highlight"><pre><span></span>gzip *
+<div class="highlight"><pre><span></span>gzip<span class="w"> </span>*
 </pre></div>
 <p>把上例中每个压缩的文件解压，并列出详细的信息</p>
-<div class="highlight"><pre><span></span>gzip -dv *
+<div class="highlight"><pre><span></span>gzip<span class="w"> </span>-dv<span class="w"> </span>*
 </pre></div>
 <p>详细显示例1中每个压缩的文件的信息，并不解压</p>
 
 <pre><code>gzip -l *</code></pre>
 <p>压缩一个tar备份文件，此时压缩文件的扩展名为 .tar.gz</p>
-<div class="highlight"><pre><span></span>gzip -r log.tar
+<div class="highlight"><pre><span></span>gzip<span class="w"> </span>-r<span class="w"> </span>log.tar
 </pre></div>
 <p>递归的压缩test目录</p>
-<div class="highlight"><pre><span></span>gzip -rv <span class="nb">test</span>
+<div class="highlight"><pre><span></span>gzip<span class="w"> </span>-rv<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 <p><em>这样，所有test下面的文件都变成了 .gz，目录依然存在，只是目录里面的文件相应变成了 .gz，这就是压缩，和打包不同。因为是对目录操作，所以需要加上 -r 选项，这样也可以对子目录进行递归了。</em></p>
 <p>递归地解压目录</p>
-<div class="highlight"><pre><span></span>gzip -dr <span class="nb">test</span>
+<div class="highlight"><pre><span></span>gzip<span class="w"> </span>-dr<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 <h3>bzip2</h3>
 <p><strong>bzip2命令</strong>用于创建和管理（包括解压缩）“.bz2”格式的压缩包。</p>
@@ -596,7 +596,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
 <h2>chmod命令</h2>
 <p>chmod命令用来变更文件或目录的权限。用户可以使用 chmod 命令去变更文件与目录的权限，设置方式采用文字或数字代号皆可。符号连接的权限无法变更，如果用户对符号连接修改权限，其改变会作用在被连接的原始文件。</p>
 <h3>语法</h3>
-<div class="highlight"><pre><span></span>chmod <span class="o">[</span>选项<span class="o">]</span> <span class="o">[</span>操作对象<span class="o">]</span> <span class="o">[</span>操作符合<span class="o">]</span> <span class="o">[</span>mode<span class="o">]</span> 文件或目录
+<div class="highlight"><pre><span></span>chmod<span class="w"> </span><span class="o">[</span>选项<span class="o">]</span><span class="w"> </span><span class="o">[</span>操作对象<span class="o">]</span><span class="w"> </span><span class="o">[</span>操作符合<span class="o">]</span><span class="w"> </span><span class="o">[</span>mode<span class="o">]</span><span class="w"> </span>文件或目录
 </pre></div>
 <h3>参数说明</h3>
 <ul>
@@ -704,7 +704,7 @@ tar -cjvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

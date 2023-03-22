@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -137,7 +137,7 @@
 <h2>Docker 操作镜像</h2>
 <h3>获取镜像</h3>
 <p>从Docker镜像仓库获取镜像的命令是 <code>docker pull</code> 。其命令格式为:</p>
-<div class="highlight"><pre><span></span>docker pull <span class="o">[</span>选项<span class="o">]</span> <span class="o">[</span>Docker Registry 地址<span class="o">[</span>:端口号<span class="o">]</span>/仓库名<span class="o">[</span>:标签<span class="o">]</span>
+<div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span><span class="o">[</span>选项<span class="o">]</span><span class="w"> </span><span class="o">[</span>Docker<span class="w"> </span>Registry<span class="w"> </span>地址<span class="o">[</span>:端口号<span class="o">]</span>/仓库名<span class="o">[</span>:标签<span class="o">]</span>
 </pre></div>
 <p>具体的选项可以通过 <code>docker pull --help</code>命令看到，这里说一下镜像名称的格式。</p>
 <ul>
@@ -146,67 +146,67 @@
 </ul>
 <h3>列出镜像</h3>
 <p>想要列出已经下载的镜像，可以使用 <code>docker images</code>或者<code>docker image ls</code>命令。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker images</span>
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-mydemo1             latest              3b239960848d        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              54300df71941        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              e7e0ba36be39        <span class="m">2</span> months ago        647MB
-tomcat              latest              2eb5a120304e        <span class="m">3</span> months ago        647MB
-hello-world         latest              bf756fb1ae65        <span class="m">8</span> months ago        <span class="m">13</span>.3kB
-rabbitmq            <span class="m">3</span>.7.3-management    2f415b0e9a6e        <span class="m">2</span> years ago         151MB
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker images</span>
+REPOSITORY<span class="w">          </span>TAG<span class="w">                 </span>IMAGE<span class="w"> </span>ID<span class="w">            </span>CREATED<span class="w">             </span>SIZE
+mydemo1<span class="w">             </span>latest<span class="w">              </span>3b239960848d<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>54300df71941<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>e7e0ba36be39<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+tomcat<span class="w">              </span>latest<span class="w">              </span>2eb5a120304e<span class="w">        </span><span class="m">3</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+hello-world<span class="w">         </span>latest<span class="w">              </span>bf756fb1ae65<span class="w">        </span><span class="m">8</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span><span class="m">13</span>.3kB
+rabbitmq<span class="w">            </span><span class="m">3</span>.7.3-management<span class="w">    </span>2f415b0e9a6e<span class="w">        </span><span class="m">2</span><span class="w"> </span>years<span class="w"> </span>ago<span class="w">         </span>151MB
 </pre></div>
 <p>列表包含了仓库名、标签、镜像ID、创建时间以及所占用的空间。<strong>镜像ID则</strong>是镜像的唯一标识，一个镜像可以对应多个标签。</p>
 <h4>虚悬镜像</h4>
 <p>有时在镜像列表中，还可以看到一个特殊的镜像，这个镜像既没有仓库名，也没有标签，均为<code>&lt;none&gt;</code>。</p>
-<div class="highlight"><pre><span></span>&lt;none&gt;              &lt;none&gt;              54300df71941        <span class="m">2</span> months ago        647MB
+<div class="highlight"><pre><span></span>&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>54300df71941<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
 </pre></div>
 <p>这个镜像原本是有镜像名和标签的，原来为（例如）<code>mongo: 3.2</code>，随着官方镜像维护，发布了新版本后，重新<code>docker pull mongo:3.2</code>时，<code>mongo:3.2</code>这个镜像名被转移到了新下载的镜像身上，而旧的镜像上的这个名称则被取消，从而成为了<code>&lt;none&gt;</code>。除了<code>docker pull</code>可能导致这种情况，<code>docker build</code>也同样可以导致这种现象。由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为<code>&lt;none&gt;</code>的镜像。这类无标签镜像也被称为<strong>虚悬镜像(dangling image)</strong>，可以用下面的命令专门显示这类镜像:</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker images -f dangling=true</span>
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-&lt;none&gt;              &lt;none&gt;              54300df71941        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              e7e0ba36be39        <span class="m">2</span> months ago        647MB
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker images -f dangling=true</span>
+REPOSITORY<span class="w">          </span>TAG<span class="w">                 </span>IMAGE<span class="w"> </span>ID<span class="w">            </span>CREATED<span class="w">             </span>SIZE
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>54300df71941<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>e7e0ba36be39<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
 </pre></div>
 <p>一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，可以用下面的命令删除。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker image prune</span>
-WARNING! This will remove all dangling images.
-Are you sure you want to <span class="k">continue</span>? <span class="o">[</span>y/N<span class="o">]</span> <span class="o">(</span>输入<span class="o">)</span>y
-Deleted Images:
-deleted: sha256:e7e0ba36be3927af3f1d7a0b99263d4aa6e6af1d93b9d3455c0a045d4f4a477a
-deleted: sha256:05ff87569ed6bfdc38621112bea7aafffed7895538490748e85fdf00da19d3b6
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker image prune</span>
+WARNING!<span class="w"> </span>This<span class="w"> </span>will<span class="w"> </span>remove<span class="w"> </span>all<span class="w"> </span>dangling<span class="w"> </span>images.
+Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span>?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span><span class="w"> </span><span class="o">(</span>输入<span class="o">)</span>y
+Deleted<span class="w"> </span>Images:
+deleted:<span class="w"> </span>sha256:e7e0ba36be3927af3f1d7a0b99263d4aa6e6af1d93b9d3455c0a045d4f4a477a
+deleted:<span class="w"> </span>sha256:05ff87569ed6bfdc38621112bea7aafffed7895538490748e85fdf00da19d3b6
 
-Total reclaimed space: 12B
+Total<span class="w"> </span>reclaimed<span class="w"> </span>space:<span class="w"> </span>12B
 </pre></div>
 <h4>中间层镜像</h4>
 <p>为了加速镜像构建、重复利用资源,Docker会利用<strong>中间层镜像</strong>。所以在使用一段时间后，可能会看到一些依赖的中间层镜像。默认的<code>docker image ls</code>表中只会显示顶层镜像，如果希望显示包括中间层镜像在内的所有镜像的话，需要加<code>-a</code>参数。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker images -a</span>
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-&lt;none&gt;              &lt;none&gt;              9e5197c9a0e5        <span class="m">2</span> months ago        647MB
-mydemo1             latest              3b239960848d        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              660dfcd0a262        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              1b63db1e38f7        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              f1343ffd435c        <span class="m">2</span> months ago        647MB
-&lt;none&gt;              &lt;none&gt;              54300df71941        <span class="m">2</span> months ago        647MB
-tomcat              latest              2eb5a120304e        <span class="m">3</span> months ago        647MB
-hello-world         latest              bf756fb1ae65        <span class="m">8</span> months ago        <span class="m">13</span>.3kB
-rabbitmq            <span class="m">3</span>.7.3-management    2f415b0e9a6e        <span class="m">2</span> years ago         151MB
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker images -a</span>
+REPOSITORY<span class="w">          </span>TAG<span class="w">                 </span>IMAGE<span class="w"> </span>ID<span class="w">            </span>CREATED<span class="w">             </span>SIZE
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>9e5197c9a0e5<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+mydemo1<span class="w">             </span>latest<span class="w">              </span>3b239960848d<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>660dfcd0a262<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>1b63db1e38f7<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>f1343ffd435c<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+&lt;none&gt;<span class="w">              </span>&lt;none&gt;<span class="w">              </span>54300df71941<span class="w">        </span><span class="m">2</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+tomcat<span class="w">              </span>latest<span class="w">              </span>2eb5a120304e<span class="w">        </span><span class="m">3</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span>647MB
+hello-world<span class="w">         </span>latest<span class="w">              </span>bf756fb1ae65<span class="w">        </span><span class="m">8</span><span class="w"> </span>months<span class="w"> </span>ago<span class="w">        </span><span class="m">13</span>.3kB
+rabbitmq<span class="w">            </span><span class="m">3</span>.7.3-management<span class="w">    </span>2f415b0e9a6e<span class="w">        </span><span class="m">2</span><span class="w"> </span>years<span class="w"> </span>ago<span class="w">         </span>151MB
 </pre></div>
 <p>这样会看到很多无标签的镜像，与之前的虚悬镜像不同，这些无标签的镜像很多都是中间层镜像，是其它镜像所依赖的镜像。这些无标签镜像不应该删除，否则会导致上层镜像因为依赖丢失而出错。实际上，这些镜像也没必要删除，因为之前说过，相同的层只会存一遍，而这些镜像是别的镜像的依赖，因此并不会因为它们被列出来而多存了一份，无论如何你也会需要它们。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除。</p>
 <h3>镜像体积</h3>
 <p>如果仔细观察，会注意到，这里标识的所占用空间和在Docker Hub上看到的镜像大小不同。比如,<code>ubuntu:16.04</code>镜像大小，在这里是<strong>127 MB</strong>，但是在Docker Hub显示的却是<strong>50 MB</strong>。这是因为 Docker Hub 中显示的体积是<strong>压缩后的体积</strong>。在镜像下载和上传过程中镜像是保持着压缩状态的，因此 Docker Hub 所显示的大小是网络传输中更关心的流量大小。而 <code>docker images</code>显示的是镜像下载到本地后，<strong>展开的大小</strong>，准确说，是展开后的各层所占空间的总和，因为镜像到本地后，查看空间的时候，更关心的是本地磁盘空间占用的大小。</p>
 <p>另外一个需要注意的问题是，<code>docker images</code>列表中的镜像体积总和并非是所有镜像实际硬盘消耗。由于Docker镜像是多层存储结构，并且可以继承、复用，因此<strong>不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层</strong>。由于Docker使用<code>Union FS</code>，相同的层只需要保存一份即可，因此实际镜像硬盘占用空间很可能要比这个列表镜像大小的总和要小的多。</p>
 <p>可以通过以下命令来便捷的查看镜像、容器、数据卷所占用的空间。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker system df</span>
-TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
-Images              <span class="m">6</span>                   <span class="m">5</span>                   <span class="m">798</span>.4MB             <span class="m">647</span>.3MB <span class="o">(</span><span class="m">81</span>%<span class="o">)</span>
-Containers          <span class="m">6</span>                   <span class="m">0</span>                   <span class="m">4</span>.806MB             <span class="m">4</span>.806MB <span class="o">(</span><span class="m">100</span>%<span class="o">)</span>
-Local Volumes       <span class="m">7</span>                   <span class="m">1</span>                   <span class="m">30</span>.6MB              <span class="m">26</span>.49MB <span class="o">(</span><span class="m">86</span>%<span class="o">)</span>
-Build Cache         <span class="m">0</span>                   <span class="m">0</span>                   0B                  0B
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker system df</span>
+TYPE<span class="w">                </span>TOTAL<span class="w">               </span>ACTIVE<span class="w">              </span>SIZE<span class="w">                </span>RECLAIMABLE
+Images<span class="w">              </span><span class="m">6</span><span class="w">                   </span><span class="m">5</span><span class="w">                   </span><span class="m">798</span>.4MB<span class="w">             </span><span class="m">647</span>.3MB<span class="w"> </span><span class="o">(</span><span class="m">81</span>%<span class="o">)</span>
+Containers<span class="w">          </span><span class="m">6</span><span class="w">                   </span><span class="m">0</span><span class="w">                   </span><span class="m">4</span>.806MB<span class="w">             </span><span class="m">4</span>.806MB<span class="w"> </span><span class="o">(</span><span class="m">100</span>%<span class="o">)</span>
+Local<span class="w"> </span>Volumes<span class="w">       </span><span class="m">7</span><span class="w">                   </span><span class="m">1</span><span class="w">                   </span><span class="m">30</span>.6MB<span class="w">              </span><span class="m">26</span>.49MB<span class="w"> </span><span class="o">(</span><span class="m">86</span>%<span class="o">)</span>
+Build<span class="w"> </span>Cache<span class="w">         </span><span class="m">0</span><span class="w">                   </span><span class="m">0</span><span class="w">                   </span>0B<span class="w">                  </span>0B
 </pre></div>
 <h3>删除镜像</h3>
 <p>如果要删除本地的镜像，可以使用<code>docker image rm</code>或者<code>docker rmi</code>命令，其格式为:</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker image rm [选项]  &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker image rm [选项]  &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
 
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker rmi [选项]  &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker rmi [选项]  &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
 </pre></div>
 <p>其中，<code>&lt;镜像&gt;</code>可以是<code>镜像短ID</code> 、<code>镜像长ID</code>、<code>镜像名</code>或者<code>镜像摘要</code>。</p>
 <h2>Docker操作容器</h2>
@@ -262,9 +262,9 @@ root@b8573233d675:/#</code></pre>
 <p><strong>docker stop</strong> :停止一个运行中的容器</p>
 <p><strong>docker restart</strong> :重启容器</p>
 <p><strong>语法</strong></p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker start [选项] &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker stop [选项] &lt;镜像&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker restart [选项] &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker start [选项] &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker stop [选项] &lt;镜像&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker restart [选项] &lt;镜像1&gt; [&lt;镜像2&gt; &lt;镜像3&gt;...]</span>
 </pre></div>
 <p><strong>实例</strong></p>
 <p>启动已被停止的容器 myrunoob</p>
@@ -278,7 +278,7 @@ root@b8573233d675:/#</code></pre>
 <pre><code>docker restart myrunoob</code></pre>
 <h3>查看容器</h3>
 <p>使用<code>docker ps</code>命令可以查看正在运行的容器，格式为：</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker ps [选项]</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker ps [选项]</span>
 </pre></div>
 <p>选项：</p>
 <ul>
@@ -289,12 +289,12 @@ root@b8573233d675:/#</code></pre>
 <li><strong>--no-trunc :</strong>不截断输出(打印完整的容器 ID)。</li>
 <li><strong>-s :</strong>显示总的文件大小。</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker run -p 8080:8080 -d tomcat</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker run -p 8080:8080 -d tomcat</span>
 ed8b228b1e55845241c26e8ede042bae4132700d7334ae44438ce0e60282ff3c
 
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker ps</span>
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
-ed8b228b1e55        tomcat              <span class="s2">&quot;catalina.sh run&quot;</span>   <span class="m">8</span> seconds ago       Up <span class="m">3</span> seconds        <span class="m">0</span>.0.0.0:8080-&gt;8080/tcp   elastic_gauss
+<span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker ps</span>
+CONTAINER<span class="w"> </span>ID<span class="w">        </span>IMAGE<span class="w">               </span>COMMAND<span class="w">             </span>CREATED<span class="w">             </span>STATUS<span class="w">              </span>PORTS<span class="w">                    </span>NAMES
+ed8b228b1e55<span class="w">        </span>tomcat<span class="w">              </span><span class="s2">&quot;catalina.sh run&quot;</span><span class="w">   </span><span class="m">8</span><span class="w"> </span>seconds<span class="w"> </span>ago<span class="w">       </span>Up<span class="w"> </span><span class="m">3</span><span class="w"> </span>seconds<span class="w">        </span><span class="m">0</span>.0.0.0:8080-&gt;8080/tcp<span class="w">   </span>elastic_gauss
 </pre></div>
 <p>输出详情介绍：</p>
 <p><strong>CONTAINER ID:</strong> 容器 ID。</p>
@@ -317,7 +317,7 @@ ed8b228b1e55        tomcat              <span class="s2">&quot;catalina.sh run&q
 <h3>进入容器</h3>
 <p><strong>docker exec ：</strong>在运行的容器中执行命令</p>
 <p><strong>语法</strong></p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</span>
 </pre></div>
 <p>OPTIONS说明：</p>
 <ul>
@@ -327,12 +327,12 @@ ed8b228b1e55        tomcat              <span class="s2">&quot;catalina.sh run&q
 </ul>
 <p><strong>实例</strong></p>
 <p>在容器 tomcat 中开启一个交互模式的终端:</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker exec -it tomcat  /bin/bash</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker exec -it tomcat  /bin/bash</span>
 root@99da97385e5f:/usr/local/tomcat#
 </pre></div>
 <h3>删除容器</h3>
 <p>可以使用<code>docker container rm</code>来删除一个处于终止状态的容器。例如</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker container rm 99da97385e5f</span>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker container rm 99da97385e5f</span>
 </pre></div>
 <p>如果要删除一个运行中的容器，可以添加<code>-f</code>参数。Docker 会发送 <code>SIGKILL( 终止进程)</code>信号给容器。</p>
 <p><strong>删除所有容器</strong></p>
@@ -340,14 +340,14 @@ root@99da97385e5f:/usr/local/tomcat#
 <pre><code>docker rm $(docker ps -a -q)</code></pre>
 <h3>清理所有处于终止状态的容器</h3>
 <p>用<code>docker container ls -a</code>命令可以查看所有已经创建的包括终止状态的容器，如果数量太多要一个个删除可能会很麻烦，用下面的命令可以清理掉所有处于终止状态的容器。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># docker container prune</span>
-WARNING! This will remove all stopped containers.
-Are you sure you want to <span class="k">continue</span>? <span class="o">[</span>y/N<span class="o">]</span> <span class="o">(</span>输入<span class="o">)</span>y
-Deleted Containers:
+<div class="highlight"><pre><span></span><span class="o">[</span>root@localhost<span class="w"> </span>~<span class="o">]</span><span class="c1"># docker container prune</span>
+WARNING!<span class="w"> </span>This<span class="w"> </span>will<span class="w"> </span>remove<span class="w"> </span>all<span class="w"> </span>stopped<span class="w"> </span>containers.
+Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span>?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span><span class="w"> </span><span class="o">(</span>输入<span class="o">)</span>y
+Deleted<span class="w"> </span>Containers:
 82ab3ce8fee74e258d90ab6984ec5dc3e5cdf453e8a3c92a1b18ce054b6a5a56
 ed8b228b1e55845241c26e8ede042bae4132700d7334ae44438ce0e60282ff3c
 ...
-Total reclaimed space: <span class="m">4</span>.818MB
+Total<span class="w"> </span>reclaimed<span class="w"> </span>space:<span class="w"> </span><span class="m">4</span>.818MB
 </pre></div>
 
             </div>
@@ -389,7 +389,7 @@ Total reclaimed space: <span class="m">4</span>.818MB
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

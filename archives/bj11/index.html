@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/07a845f88882bd533a56ccd3c6b57a46.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/e395a42189469bb013d8261ce45e8e2f.json"
         }
     </script>
     
@@ -89,12 +89,12 @@
                 <h2>1. Spring Boot实现自定义错误页</h2>
 <p>演示</p>
 <div class="highlight"><pre><span></span><span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="p">{</span>
-    <span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">return</span> <span class="s">&quot;hello&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>访问结果</p>
@@ -135,14 +135,14 @@
 <ol>
 <li><p>导入thymeleaf依赖</p>
 <div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
- <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
- <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w"> </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </li>
 <li><p>在<code>src\main\resources\templates</code>目录下创建<code>error</code>目录,并创建自定义错误页</p>
 <p>创建如下3个页面</p>
-<div class="highlight"><pre><span></span><span class="c">&lt;!--4xx.HTML--&gt;</span>
+<div class="highlight"><pre><span></span><span class="cm">&lt;!--4xx.HTML--&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -155,7 +155,7 @@
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 
 -------------------------------------
-<span class="c">&lt;!--404.HTML--&gt;</span>
+<span class="cm">&lt;!--404.HTML--&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -168,7 +168,7 @@
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 
 -------------------------------------
-<span class="c">&lt;!--5xx.HTML--&gt;</span>
+<span class="cm">&lt;!--5xx.HTML--&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">&quot;http://www.thymeleaf.org&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -194,51 +194,51 @@
 <div class="highlight"><pre><span></span><span class="c1">//DefaultErrorViewResolver类</span>
 
 <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//status.value()返回的是int类型的状态码，model是异常数据</span>
-        <span class="n">ModelAndView</span> <span class="n">modelAndView</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">value</span><span class="p">()),</span> <span class="n">model</span><span class="p">);</span>
-        <span class="c1">//在静态资源路径下没有找到精确对应的错误页面时再判断是否存在模糊对应的错误页面</span>
-        <span class="c1">//SERIES_VIEWS中只有&quot;4xx&quot;和&quot;5xx&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">modelAndView</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()))</span> <span class="p">{</span>
-            <span class="c1">//存在模糊对应的错误页面时，再次使用模糊的状态码进行处理</span>
-            <span class="n">modelAndView</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()),</span> <span class="n">model</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="c1">//如果精确的和模糊的错误页都不存在，便使用自身默认的错误页面</span>
-        <span class="k">return</span> <span class="n">modelAndView</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpStatus</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//status.value()返回的是int类型的状态码，model是异常数据</span>
+<span class="w">        </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">modelAndView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resolve</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">value</span><span class="p">()),</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//在静态资源路径下没有找到精确对应的错误页面时再判断是否存在模糊对应的错误页面</span>
+<span class="w">        </span><span class="c1">//SERIES_VIEWS中只有&quot;4xx&quot;和&quot;5xx&quot;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">modelAndView</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//存在模糊对应的错误页面时，再次使用模糊的状态码进行处理</span>
+<span class="w">            </span><span class="n">modelAndView</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resolve</span><span class="p">(</span><span class="n">SERIES_VIEWS</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="na">series</span><span class="p">()),</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">//如果精确的和模糊的错误页都不存在，便使用自身默认的错误页面</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">modelAndView</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">...</span>
 
-<span class="kd">private</span> <span class="n">ModelAndView</span> <span class="nf">resolve</span><span class="p">(</span><span class="n">String</span> <span class="n">viewName</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">String</span> <span class="n">errorViewName</span> <span class="o">=</span> <span class="s">&quot;error/&quot;</span> <span class="o">+</span> <span class="n">viewName</span><span class="p">;</span>
-        <span class="c1">//判断是否存在动态页面</span>
-        <span class="n">TemplateAvailabilityProvider</span> <span class="n">provider</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="na">templateAvailabilityProviders</span><span class="p">.</span><span class="na">getProvider</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span>
-                <span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">);</span>
-        <span class="c1">//存在动态页面就优先使用动态页面</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">provider</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">resolveResource</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">viewName</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">errorViewName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;error/&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">viewName</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">//判断是否存在动态页面</span>
+<span class="w">        </span><span class="n">TemplateAvailabilityProvider</span><span class="w"> </span><span class="n">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">templateAvailabilityProviders</span><span class="p">.</span><span class="na">getProvider</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span>
+<span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//存在动态页面就优先使用动态页面</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">provider</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ModelAndView</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">resolveResource</span><span class="p">(</span><span class="n">errorViewName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
 
-        <span class="kd">private</span> <span class="n">ModelAndView</span> <span class="nf">resolveResource</span><span class="p">(</span><span class="n">String</span> <span class="n">viewName</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">location</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="na">resourceProperties</span><span class="p">.</span><span class="na">getStaticLocations</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="c1">//查找静态资源路径 4个 </span>
-                <span class="cm">/*{ &quot;classpath:/META-INF/resources/&quot;,</span>
+<span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">resolveResource</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">viewName</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">resourceProperties</span><span class="p">.</span><span class="na">getStaticLocations</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">//查找静态资源路径 4个 </span>
+<span class="w">                </span><span class="cm">/*{ &quot;classpath:/META-INF/resources/&quot;,</span>
 <span class="cm">                &quot;classpath:/resources/&quot;, &quot;classpath:/static/&quot;, &quot;classpath:/public/&quot; }*/</span>
-                <span class="n">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">.</span><span class="na">getResource</span><span class="p">(</span><span class="n">location</span><span class="p">);</span>
-                <span class="n">resource</span> <span class="o">=</span> <span class="n">resource</span><span class="p">.</span><span class="na">createRelative</span><span class="p">(</span><span class="n">viewName</span> <span class="o">+</span> <span class="s">&quot;.html&quot;</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">resource</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="k">return</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">(</span><span class="k">new</span> <span class="n">HtmlResourceView</span><span class="p">(</span><span class="n">resource</span><span class="p">),</span> <span class="n">model</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="c1">//在静态资源路径下没有找到对应的错误页面就返回null</span>
-        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">                </span><span class="n">Resource</span><span class="w"> </span><span class="n">resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">applicationContext</span><span class="p">.</span><span class="na">getResource</span><span class="p">(</span><span class="n">location</span><span class="p">);</span>
+<span class="w">                </span><span class="n">resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resource</span><span class="p">.</span><span class="na">createRelative</span><span class="p">(</span><span class="n">viewName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.html&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resource</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ModelAndView</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HtmlResourceView</span><span class="p">(</span><span class="n">resource</span><span class="p">),</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">//在静态资源路径下没有找到对应的错误页面就返回null</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 </pre></div>
 <h2>3. Spring Boot自定义异常数据</h2>
 <p>经过查看Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>可知<code>DefaultErrorAttributes</code>类中定义了默认的异常数据处理逻辑。</p>
@@ -302,14 +302,14 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 <span class="cm">    }</span>
 <span class="cm">*/</span>
 <span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyErrorAttribute</span> <span class="kd">extends</span> <span class="n">DefaultErrorAttributes</span> <span class="p">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">getErrorAttributes</span><span class="p">(</span><span class="n">WebRequest</span> <span class="n">webRequest</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">includeStackTrace</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//拿到DefaultErrorAttributes类中收集好的异常信息</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="kd">super</span><span class="p">.</span><span class="na">getErrorAttributes</span><span class="p">(</span><span class="n">webRequest</span><span class="p">,</span> <span class="n">includeStackTrace</span><span class="p">);</span>
-        <span class="c1">//添加自定义异常信息</span>
-        <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;myerror&quot;</span><span class="p">,</span> <span class="s">&quot;自定义异常信息&quot;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyErrorAttribute</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">DefaultErrorAttributes</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getErrorAttributes</span><span class="p">(</span><span class="n">WebRequest</span><span class="w"> </span><span class="n">webRequest</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">includeStackTrace</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//拿到DefaultErrorAttributes类中收集好的异常信息</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">getErrorAttributes</span><span class="p">(</span><span class="n">webRequest</span><span class="p">,</span><span class="w"> </span><span class="n">includeStackTrace</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//添加自定义异常信息</span>
+<span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;myerror&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;自定义异常信息&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <p>在<code>5xx.HTML</code>中添加一列</p>
@@ -327,19 +327,19 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
 <h2>4. Spring Boot自定义异常视图</h2>
 <p>与自定义异常数据类似，Spring Boot异常处理的自动配置类<code>org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration</code>中定义了<code>DefaultErrorViewResolver</code>类中用于异常视图处理。要自定义异常视图处理，继承<code>DefaultErrorViewResolver</code>类，然后新增或重写其方法就行了。</p>
 <div class="highlight"><pre><span></span><span class="nd">@Component</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyErrorViewResolver</span> <span class="kd">extends</span> <span class="n">DefaultErrorViewResolver</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="nf">MyErrorViewResolver</span><span class="p">(</span><span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="p">,</span> <span class="n">ResourceProperties</span> <span class="n">resourceProperties</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">super</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="n">resourceProperties</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyErrorViewResolver</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">DefaultErrorViewResolver</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">MyErrorViewResolver</span><span class="p">(</span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">,</span><span class="w"> </span><span class="n">ResourceProperties</span><span class="w"> </span><span class="n">resourceProperties</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span><span class="w"> </span><span class="n">resourceProperties</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpStatus</span> <span class="n">status</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//这里的model就是异常数据，但是它是一个不可修改的map，要在这修改可以new一个map，将model的数据复制进来再添加到mv返回</span>
-        <span class="n">ModelAndView</span> <span class="n">mv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="p">();</span>
-        <span class="n">mv</span><span class="p">.</span><span class="na">setViewName</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
-        <span class="n">mv</span><span class="p">.</span><span class="na">addAllObjects</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">mv</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">resolveErrorView</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpStatus</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//这里的model就是异常数据，但是它是一个不可修改的map，要在这修改可以new一个map，将model的数据复制进来再添加到mv返回</span>
+<span class="w">        </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">mv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ModelAndView</span><span class="p">();</span>
+<span class="w">        </span><span class="n">mv</span><span class="p">.</span><span class="na">setViewName</span><span class="p">(</span><span class="s">&quot;xuxx&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">mv</span><span class="p">.</span><span class="na">addAllObjects</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mv</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 <p>新建<code>xuxx.HTML</code>直接放在<code>src\main\resources\templates</code>目录下即可（因为自定义的MyErrorViewResolver中设置的ViewName不带路径了，又因为是用thymeleaf）</p>
@@ -426,7 +426,7 @@ path - The URL path when the exception was raised（引发异常时的URL路径�
                     </section>
                     <section>
                         <p class="copyright">
-                            <span>Copyright © 2021 Xuxx</span>
+                            <span>Copyright © 2023 Xuxx</span>
                             <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
                         </p>
                         <div class="copyright">

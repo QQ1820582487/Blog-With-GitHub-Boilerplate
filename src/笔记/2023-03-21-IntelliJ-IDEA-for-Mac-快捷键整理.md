@@ -2,7 +2,7 @@
 layout: post
 title: IntelliJ IDEA for Mac 快捷键整理
 slug: bj47
-date: 2023-03-21 14:25
+date: 2023-03-20 14:25
 status: publish
 author: Xuxx
 categories: 

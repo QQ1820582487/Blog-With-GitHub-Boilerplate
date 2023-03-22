@@ -186,3 +186,5 @@ excerpt: 笔记
 | 8    | Command+;             | 打开项目结构对话框           |
 | 9    | Command+Shift+A       | 查找动作                     |
 | 10   | Control+Tab           | 编辑窗口和工具窗口之间切换   |
+
+转：https://cloud.tencent.com/developer/article/1796448

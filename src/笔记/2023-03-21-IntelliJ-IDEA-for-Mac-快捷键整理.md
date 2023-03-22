@@ -187,4 +187,4 @@ excerpt: 笔记
 | 9    | Command+Shift+A       | 查找动作                     |
 | 10   | Control+Tab           | 编辑窗口和工具窗口之间切换   |
 
-转载：https://cloud.tencent.com/developer/article/1796448
+转载自：https://cloud.tencent.com/developer/article/1796448

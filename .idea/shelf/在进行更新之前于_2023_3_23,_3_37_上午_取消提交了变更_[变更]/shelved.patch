@@ -1,0 +1,310 @@
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1679509479810)
++++ b/.idea/modules.xml	(date 1679509479810)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/Xuxx_Blogs.iml" filepath="$PROJECT_DIR$/.idea/Xuxx_Blogs.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1679509479821)
++++ b/.idea/misc.xml	(date 1679509479821)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/笔记/2020-12-22-IDEA常用快捷键.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>---\nlayout: post\ntitle: idea常用快捷键\nslug: bj42\ndate: 2020-12-22 11:45\nstatus: publish\nauthor: Xuxx\ncategories: \n  - 笔记\ntags: \n  - Linux\nexcerpt: 笔记\n---\n\n## 自动代码\n\nCtrl+Alt+O 优化导入的类和包\nAlt+Insert 生成代码(如get,set方法,构造函数等) 或者右键（Generate）\nfori/sout/psvm + Tab\nCtrl+Alt+T 生成try catch 或者 Alt+enter\nCTRL+ALT+T 把选中的代码放在 TRY{} IF{} ELSE{} 里\nCtrl + O 重写方法\nCtrl + I 实现方法\nCtr+Shift+U 大小写转化\nALT+回车 导入包,自动修正\nALT+/ 代码提示\nCTRL+J 自动代码\nCtrl+Shift+J，整合两行为一行\nCTRL+空格 代码提示\nCTRL+SHIFT+SPACE 自动补全代码\nCTRL+ALT+L 格式化代码\nCTRL+ALT+I 自动缩进\nCTRL+ALT+O 优化导入的类和包\nALT+INSERT 生成代码(如GET,SET方法,构造函数等)\nCTRL+E 最近更改的代码\nCTRL+ALT+SPACE 类名或接口名提示\nCTRL+P 方法参数提示\nCTRL+Q，可以看到当前方法的声明\nShift+F6 重构-重命名 (包、类、方法、变量、甚至注释等)\nCtrl+Alt+V 提取变量\n\n## 查询的快捷键\n\nCtrl＋Shift＋Backspace \t可以跳转到上次编辑的地\nCTRL+ALT+ left/right\t前后导航编辑过的地方\nALT+7\t靠左窗口显示当前文件的结构\nCtrl+F12\t浮动显示当前文件的结构\nALT+F7\t找到你的函数或者变量或者类的所有引用到的地方（查看用法）\nCTRL+ALT+F7\t找到你的函数或者变量或者类的所有引用到的地方\nCtrl+Shift+Alt+N 查找类中的方法或变量\n双击SHIFT 在项目的所有目录查找文件\nCtrl+N 查找类\nCtrl+Shift+N 查找文件\nCTRL+G 定位行\nCTRL+F 在当前窗口查找文本\nCTRL+SHIFT+F 在指定窗口查找文本\nCTRL+R 在 当前窗口替换文本\nCTRL+SHIFT+R 在指定窗口替换文本\nALT+SHIFT+C 查找修改的文件\nCTRL+E 最近打开的文件\nF3 向下查找关键字出现位置\nSHIFT+F3 向上一个关键字出现位置\n选中文本，按Alt+F3 ，高亮相同文本，F3逐个往下查找相同文本\nF4 查找变量来源\n\nCTRL+SHIFT+O 弹出显示查找内容\n\nCtrl+W 选中代码，连续按会有其他效果\nF2 或Shift+F2 高亮错误或警告快速定位\nCtrl+Up/Down 光标跳转到第一行或最后一行下\n\nCtrl+B 快速打开光标处的类或方法\nCTRL+ALT+B 找所有的子类\nCTRL+SHIFT+B 找变量的类\n\nCtrl+Shift+上下键 上下移动代码\nCtrl+Alt+ left/right 返回至上次浏览的位置\nCtrl+X 删除行\nCtrl+D 复制行\nCtrl+/ 或 Ctrl+Shift+/ 注释（// 或者/*…*/ ）\n\nCtrl+H 显示类结构图\nCtrl+Q 显示注释文档\n\nAlt+F1 查找代码所在位置\nAlt+1 快速打开或隐藏工程面板\n\nAlt+ left/right 切换代码视图\nALT+ ↑/↓ 在方法间快速移动定位\nCTRL+ALT+ left/right 前后导航编辑过的地方\nCtrl＋Shift＋Backspace可以跳转到上次编辑的地\nAlt+6 查找TODO\n\n## 其他快捷键\n\nSHIFT+ENTER 另起一行\nCTRL+Z 倒退(撤销)\nCTRL+SHIFT+Z 向前(取消撤销)\nCTRL+ALT+F12 资源管理器打开文件夹\nSHIFT+ALT+INSERT 竖编辑模式\nCTRL+F4 关闭当前窗口\nCtrl+Alt+V，可以引入变量。例如：new String(); 自动导入变量定义\nCtrl+~，快速切换方案（界面外观、代码风格、快捷键映射等菜单）\nAlt+Shift+F 收藏\n\n\n\n## 调试快捷键\n\n其实常用的 就是F8 F7 F9 最值得一提的 就是Drop Frame 可以让运行过的代码从头再来\n\nAlt+F8 debug时选中查看值\nAlt+Shift+F9，选择 Debug\nAlt+Shift+F10，选择 Run\nCtrl+Shift+F9，编译\nCtrl+Shift+F8，查看断点\n\nF7，步入\nShift+F7，智能步入\nAlt+Shift+F7，强制步入\nF8，步过\nShift+F8，步出\nAlt+Shift+F8，强制步过\n\nAlt+F9，运行至光标处\nCtrl+Alt+F9，强制运行至光标处\nF9，恢复程序\nAlt+F10，定位到断点\n\n## 重构\n\nCtrl+Alt+Shift+T，弹出重构菜单\nShift+F6，重命名\nF6，移动\nF5，复制\nAlt+Delete，安全删除\n\nCtrl+Alt+N，内联\n\n## 十大Intellij IDEA快捷键\n\nIntellij IDEA中有很多快捷键让人爱不释手，stackoverflow上也有一些有趣的讨论。每个人都有自己的最爱，想排出个理想的榜单还真是困难。\n以前也整理过Intellij的快捷键，这次就按照我日常开发时的使用频率，简单分类列一下我最喜欢的十大快捷-神-键吧。\n\n### 智能提示:\n\nIntellij首当其冲的当然就是Intelligence智能！基本的代码提示用Ctrl+Space，还有更智能地按类型信息提示Ctrl+Shift+Space，但因为Intellij总是随着我们敲击而自动提示，所以很多时候都不会手动敲这两个快捷键(除非提示框消失了)。用F2/ Shift+F2移动到有错误的代码，Alt+Enter快速修复(即Eclipse中的Quick Fix功能)。当智能提示为我们自动补全方法名时，我们通常要自己补上行尾的反括号和分号，当括号嵌套很多层时会很麻烦，这时我们只需敲Ctrl+Shift+Enter就能自动补全末尾的字符。而且不只是括号，例如敲完if/for时也可以自动补上{}花括号。\n最后要说一点，Intellij能够智能感知Spring、Hibernate等主流框架的配置文件和类，以静制动，在看似“静态”的外表下，智能地扫描理解你的项目是如何构造和配置的。\n\n### 重构:\n\nIntellij重构是另一完爆Eclipse的功能，其智能程度令人瞠目结舌，比如提取变量时自动检查到所有匹配同时提取成一个变量等。尤其看过《重构-改善既有代码设计》之后，有了Intellij的配合简直是令人大呼过瘾！也正是强大的智能和重构功能，使Intellij下的TDD开发非常顺畅。\n\n切入正题，先说一个无敌的重构功能大汇总快捷键Ctrl+Shift+Alt+T，叫做Refactor This。按法有点复杂，但也符合Intellij的风格，很多快捷键都要双手完成，而不像Eclipse不少最有用的快捷键可以潇洒地单手完成(不知道算不算Eclipse的一大优点)，但各位用过Emacs的话就会觉得也没什么了(非Emacs黑)。此外，还有些最常用的重构技巧，因为太常用了，若每次都在Refactor This菜单里选的话效率有些低。比如Shift+F6直接就是改名，Ctrl+Alt+V则是提取变量。\n\n### 代码生成：\n\n这一点类似Eclipse，虽不是独到之处，但因为日常使用频率极高，所以还是罗列在榜单前面。常用的有fori/sout/psvm+Tab即可生成循环、System.out、main方法等boilerplate样板代码，用Ctrl+J可以查看所有模板。后面“辅助”一节中将会讲到Alt+Insert，在编辑窗口中点击可以生成构造函数、toString、getter/setter、重写父类方法等。这两个技巧实在太常用了，几乎每天都要生成一堆main、System.out和getter/setter。\n\n另外，Intellij IDEA 13中加入了后缀自动补全功能(Postfix Completion)，比模板生成更加灵活和强大。例如要输入for(User user : users)只需输入user.for+Tab。再比如，要输入Date birthday = user.getBirthday();只需输入user.getBirthday().var+Tab即可。\n\n### 编辑：\n\n编辑中不得不说的一大神键就是能够自动按语法选中代码的Ctrl+W以及反向的Ctrl+Shift+W了。此外，Ctrl+Left/Right移动光标到前/后单词，Ctrl+[/]移动到前/后代码块，这些类Vim风格的光标移动也是一大亮点。以上Ctrl+Left/Right/[]加上Shift的话就能选中跳跃范围内的代码。Alt+Forward/Backward移动到前/后方法。还有些非常普通的像Ctrl+Y删除行、Ctrl+D复制行\n\n### 查找打开：\n\n类似Eclipse，Intellij的Ctrl+N/Ctrl+Shift+N可以打开类或资源，但Intellij更加智能一些，我们输入的任何字符都将看作模糊匹配，省却了Eclipse中还有输入*的麻烦。最新版本的IDEA还加入了Search Everywhere功能，只需按Shift+Shift即可在一个弹出框中搜索任何东西，包括类、资源、配置项、方法等等。\n\n类的继承关系则可用Ctrl+H打开类层次窗口，在继承层次上跳转则用Ctrl+B/Ctrl+Alt+B分别对应父类或父方法定义和子类或子方法实现，查看当前类的所有方法用Ctrl+F12。\n\n要找类或方法的使用也很简单，Alt+F7。要查找文本的出现位置就用Ctrl+F/Ctrl+Shift+F在当前窗口或全工程中查找，再配合F3/Shift+F3前后移动到下一匹配处。\n\nIntellij更加智能的又一佐证是在任意菜单或显示窗口，都可以直接输入你要找的单词，Intellij就会自动为你过滤。\n\n### 其他辅助：\n\n以上这些神键配上一些辅助快捷键，即可让你的双手90%以上的时间摆脱鼠标，专注于键盘仿佛在进行钢琴表演。这些不起眼却是至关重要的最后一块拼图有：\n\n**命令：Ctrl+Shift+A 可以查找所有Intellij的命令，并且每个命令后面还有其快捷键。所以它不仅是一大神键，也是查找学习快捷键的工具。**\n\n新建：Alt+Insert可以新建类、方法等任何东西。\n\n格式化代码：格式化import列表Ctrl+Alt+O，格式化代码Ctrl+Alt+L。\n\n切换窗口：Alt+Num，常用的有1-项目结构，3-搜索结果，4/5-运行调试。Ctrl+Tab切换标签页，Ctrl+E/Ctrl+Shift+E打开最近打开过的或编辑过的文件。\n\n单元测试：Ctrl+Alt+T创建单元测试用例。\n\n运行：Alt+Shift+F10运行程序，Shift+F9启动调试，Ctrl+F2停止。\n\n调试：F7/F8/F9 分别对应Step into，Step over，Continue。\n\n此外还有些我自定义的，例如水平分屏Ctrl+|等，和一些神奇的小功能Ctrl+Shift+V粘贴很早以前拷贝过的，Alt+Shift+Insert进入到列模式进行按列选中。\n\nTop #10切来切去：Ctrl+Tab\n\nTop #9选你所想：Ctrl+W\n\nTop #8代码生成：Template/Postfix +Tab\n\nTop #7发号施令：Ctrl+Shift+A\n\nTop #6无处藏身：Shift+Shift\n\nTop #5自动完成：Ctrl+Shift+Enter\n\nTop #4创造万物：Alt+Insert\n\n太难割舍，前三名并列吧！\n\nTop #1智能补全：Ctrl+Shift+Space\n\nTop #1自我修复：Alt+Enter\n\nTop #1重构一切：Ctrl+Shift+Alt+T\n\nCTRL+ALT+ left/right 前后导航编辑过的地方\nCtrl＋Shift＋Backspace可以跳转到上次编辑的地
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/笔记/2020-12-22-IDEA常用快捷键.md b/src/笔记/2020-12-22-IDEA常用快捷键.md
+--- a/src/笔记/2020-12-22-IDEA常用快捷键.md	(revision 3be38a74498ca547483822dfb361d2cc433a4a79)
++++ b/src/笔记/2020-12-22-IDEA常用快捷键.md	(date 1679511272860)
+@@ -8,7 +8,7 @@
+ categories: 
+   - 笔记
+ tags: 
+-  - Linux
++  - Win
+ excerpt: 笔记
+ ---
+ 
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1679509479816)
++++ b/.idea/vcs.xml	(date 1679509479816)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1679509416245)
++++ b/.idea/.gitignore	(date 1679509416245)
+@@ -0,0 +1,8 @@
++# 默认忽略的文件
++/shelf/
++/workspace.xml
++# 基于编辑器的 HTTP 客户端请求
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1679509479796)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1679509479796)
+@@ -0,0 +1,8 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="SqlDialectInspection" enabled="false" level="WARNING" enabled_by_default="false" />
++    <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
++    <inspection_tool class="SqlStorageInspection" enabled="false" level="WARNING" enabled_by_default="false" />
++  </profile>
++</component>
+\ No newline at end of file
+Index: src/笔记/2023-03-21-IntelliJ-IDEA-for-Mac-快捷键整理.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/笔记/2023-03-21-IntelliJ-IDEA-for-Mac-快捷键整理.md b/src/笔记/2023-03-21-IntelliJ-IDEA-for-Mac-快捷键整理.md
+new file mode 100644
+--- /dev/null	(date 1679513472289)
++++ b/src/笔记/2023-03-21-IntelliJ-IDEA-for-Mac-快捷键整理.md	(date 1679513472289)
+@@ -0,0 +1,190 @@
++---
++layout: post
++title: IntelliJ IDEA for Mac 快捷键整理
++slug: bj47
++date: 2023-03-20 14:25
++status: publish
++author: Xuxx
++categories: 
++  - 笔记
++tags: 
++  - Java
++excerpt: 笔记
++---
++### 1. Editing (编辑)
++
++------
++
++| No.  | 快捷键              | 描述                                    |
++| :--- | :------------------ | :-------------------------------------- |
++| 1    | Command+Shift+Enter | 自动结束代码，行末自动添加分号          |
++| 2    | Command+P           | 显示方法的参数详情                      |
++| 3    | Control+J           | 快速查看文档                            |
++| 4    | Command+鼠标移上去  | 显示代码简要信息                        |
++| 5    | Command+F1          | 在错误或警告处显示具体描述信息          |
++| 6    | Command+N           | 声称代码                                |
++| 7    | Control+O           | 覆盖方法(重写父类方法)                  |
++| 8    | Control+I           | 实现方法(实现接口中的方法)              |
++| 9    | Command+Option+T    | 包围代码(使用if...else等包围选中的代码) |
++| 10   | Command+/           | 注释/取消注释与行注释                   |
++| 11   | Command+Option+/    | 注释/取消注释与块注释                   |
++| 12   | Option+向上箭头     | 连续选中代码块                          |
++| 13   | Option+向下箭头     | 减少当前选中的代码块                    |
++| 14   | Command+Option+L    | 格式化代码                              |
++| 15   | Control+Option+O    | 优化import                              |
++| 16   | Control+Option+I    | 自动缩进线                              |
++| 17   | Tab                 | 缩进代码                                |
++| 18   | Shift+Tab           | 反缩进代码                              |
++| 19   | Command+X           | 剪切当前行或选中的块到剪贴板            |
++| 20   | Command+C           | 复制当前行或选中的块到剪贴板            |
++| 21   | Command+V           | 从剪贴板粘贴                            |
++| 22   | Command+Shift+V     | 从最近的缓冲区粘贴                      |
++| 23   | Command+D           | 复制当前行或选中的块                    |
++| 24   | Command+Delete      | 删除当前行或选中的块的行                |
++| 25   | Control+Shift+J     | 智能地将代码拼接成一行                  |
++| 26   | Shift+Enter         | 开始新的一行                            |
++| 27   | Command+Shift+U     | 大小写切换                              |
++| 28   | Option+Fn+Delete    | 删除到单词末尾                          |
++| 29   | Option+Delete       | 删除到单词开始                          |
++| 30   | Command+‘+’/‘-’     | 展开/折叠代码块                         |
++| 31   | Command+Shift+‘+’   | 展开所有代码块                          |
++| 32   | Command+Shift+‘-’   | 折叠所有代码块                          |
++| 33   | Command+W           | 关闭活动的编辑器选项卡                  |
++
++### 2. Search/Replace (查询/替换)
++
++------
++
++| No.  | 快捷键          | 描述                 |
++| :--- | :-------------- | :------------------- |
++| 1    | Double Shift    | 查询任何东西         |
++| 2    | Command+F       | 文件内查找           |
++| 3    | Command+G       | 查找模式下，向下查找 |
++| 4    | Command+Shift+G | 查找模式下，向上查找 |
++| 5    | Command+R       | 文件内替换           |
++| 6    | Command+Shift+F | 全局查找(根据路径)   |
++| 7    | Command+Shift+R | 全局替换(根据路径)   |
++
++### 3. Usage Search (使用查询)
++
++------
++
++| No.  | 快捷键           | 描述                   |
++| :--- | :--------------- | :--------------------- |
++| 1    | Option+F7        | 在文件中查找用法       |
++| 2    | Command+F7       | 在类中查找用法         |
++| 3    | Command+Shift+F7 | 在文件中突出显示的用法 |
++
++### 4. Compile and Run (编译和运行)
++
++------
++
++| No.  | 快捷键           | 描述                       |
++| :--- | :--------------- | :------------------------- |
++| 1    | Command+F9       | 编译项目                   |
++| 2    | Command+Shift+F9 | 编译选中的文件、包或模块   |
++| 3    | Control+Option+R | 弹出Run的可选择菜单        |
++| 4    | Control+Option+D | 弹出Debug的可选择菜单      |
++| 5    | Control+R        | 运行                       |
++| 6    | Control+D        | 调试                       |
++| 7    | Control+Shift+R  | 从编辑器运行上下文环境配置 |
++| 8    | Control+Shift+D  | 从编辑器运行上下文环境配置 |
++
++### 5. Debugging (调试)
++
++------
++
++| No.  | 快捷键            | 描述                                                         |
++| :--- | :---------------- | :----------------------------------------------------------- |
++| 1    | F8                | 进入下一步，如果当前行断点是一个方法，则不进入当前方法体内   |
++| 2    | F7                | 进入下一步，如果当前行断点是一个方法，则进入当前方法体内，如果该方法体还有方法，则不会进入该内嵌的方法中 |
++| 3    | Shift+F7          | 智能步入，断点所在行上有多个方法调用，会弹出进入哪个方法     |
++| 4    | Shift+F8          | 跳出                                                         |
++| 5    | Control+F9        | 运行到光标处，如果光标前有其他断点会进入到该断点             |
++| 6    | Control+F8        | 计算表达式(可以更改变量值使其生效)                           |
++| 7    | Command+Control+R | 恢复程序运行，如果该断点下面代码还有断点则停在下一个断点上   |
++| 8    | Command+F8        | 切换断点(若光标当前行有断点则取消断点，没有则加上断点)       |
++| 9    | Command+Shift+F8  | 查看断点信息                                                 |
++
++### 6. Navigation (导航)
++
++------
++
++| No.  | 快捷键                           | 描述                                                       |
++| :--- | :------------------------------- | :--------------------------------------------------------- |
++| 1    | Command+O                        | 查找类文件                                                 |
++| 2    | Command+Shift+O                  | 查找所类型文件                                             |
++| 3    | Command+Shift+[/]                | 切换标签页                                                 |
++| 4    | Esc                              | 从工具窗口进入到代码窗口                                   |
++| 5    | Command+L                        | 在当前文件跳转到某一行的指定处                             |
++| 6    | Command+E                        | 显示最近打开的文件记录列表                                 |
++| 7    | Command+Option+向左箭头/向右箭头 | 退回/前进到上一个操作的位置                                |
++| 8    | Command+Shift+Delete             | 跳转到最后一个编辑的地方                                   |
++| 9    | Option+F1                        | 显示当前文件选择目标弹出层，弹出层中有很多目标可以进行选择 |
++| 10   | Command+B/鼠标点击               | 进入光标所在的方法/变量的接口或是定义处                    |
++| 11   | Command+Option+B/鼠标点击        | 跳转到实现处                                               |
++| 12   | Option+Space/Command+Y           | 快速打开光标所在方法、类的定义                             |
++| 13   | Control+Shift+B                  | 跳转到类型声明处                                           |
++| 14   | Command+U                        | 前往当前光标所在方法的父类的方法/接口定义                  |
++| 15   | Command+F12                      | 弹出当前文件结构层                                         |
++| 16   | Control+H                        | 显示当前类的层次结构                                       |
++| 17   | Control+Option+H                 | 显示调用层次结构                                           |
++| 18   | F2/Shift+F2                      | 跳转到上一个/下一个突出错误或者警告的位置                  |
++| 19   | F4                               | 编辑查看代码源                                             |
++| 20   | Option+F3                        | 选中文件/文件夹/代码行，使用助记符添加/取消书签            |
++| 21   | Command+F3                       | 显示所有标签                                               |
++
++### 7. Refactoring (重构)
++
++------
++
++| No.  | 快捷键           | 描述                               |
++| :--- | :--------------- | :--------------------------------- |
++| 1    | F5               | 复制文件到指定目录                 |
++| 2    | F6               | 移动文件到指定目录                 |
++| 3    | Command+Delete   | 在文件上为安全删除文件，弹出确认框 |
++| 4    | Shift+F6         | 重命名文件                         |
++| 5    | Command+F6       | 更改签名                           |
++| 6    | Command+Option+M | 将选中的代码提取为方法             |
++| 7    | Command+Option+V | 提取变量                           |
++| 8    | Command+Option+F | 提取字段                           |
++| 9    | Command+Option+C | 提取常量                           |
++| 10   | Command+Option+P | 提取参数                           |
++
++### 8. VCS/Local History (版本控制/本地历史记录)
++
++------
++
++| No.  | 快捷键         | 描述                 |
++| :--- | :------------- | :------------------- |
++| 1    | Command+K      | 提交代码到版本控制器 |
++| 2    | Command+T      | 从版本控制器更新代码 |
++| 3    | Option+Shift+C | 查看最近的变更记录   |
++
++### 9. Live Templates (动态模板)
++
++------
++
++| No.  | 快捷键           | 描述                                           |
++| :--- | :--------------- | :--------------------------------------------- |
++| 1    | Command+Option+J | 弹出模板选择窗口，将选定的代码使用动态模板包住 |
++| 2    | Command+J        | 插入自定义动态代码模板                         |
++
++### 10. General (通用)
++
++------
++
++| No.  | 快捷键                | 描述                         |
++| :--- | :-------------------- | :--------------------------- |
++| 1    | Command+1...Command+9 | 打开相应编号的工具窗口       |
++| 2    | Command+S             | 保存所有                     |
++| 3    | Command+Control+F     | 切换全屏模式                 |
++| 4    | Command+Shift+F12     | 切换最大化编辑器             |
++| 5    | Option+Shift+F        | 添加到收藏夹                 |
++| 6    | Option+Shift+I        | 检查当前文件与当前的配置文件 |
++| 7    | Command+,             | 打开IDEA系统设置             |
++| 8    | Command+;             | 打开项目结构对话框           |
++| 9    | Command+Shift+A       | 查找动作                     |
++| 10   | Control+Tab           | 编辑窗口和工具窗口之间切换   |
++
++转载自：https://cloud.tencent.com/developer/article/1796448
+\ No newline at end of file

@@ -9,6 +9,7 @@ categories:
   - 笔记
 tags: 
   - Java
+  - IDEA
 excerpt: 笔记
 ---
 ### 1. Editing (编辑)

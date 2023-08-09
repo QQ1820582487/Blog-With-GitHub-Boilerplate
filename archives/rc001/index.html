@@ -21,19 +21,20 @@
         }
     </script>
     
-<title></title>
+<title>删除Mac启动台中的无效图标 - Xuxx的个人博客。</title>
 <meta name="author" content="Xuxx" />
-<meta name="description" content="坚持有效行动，改变自然发生。" />
-<meta property="og:title" content="" />
-<meta property="og:description" content="坚持有效行动，改变自然发生。" />
+<meta name="description" content="日常" />
+<meta property="og:title" content="删除Mac启动台中的无效图标 - Xuxx的个人博客。" />
+<meta property="og:description" content="日常" />
 <meta property="og:site_name" content="Xuxx的个人博客。" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="" />
-<meta property="og:image" content="Xuxx的个人博客。" />
-<meta name="twitter:title" content="" />
-<meta name="twitter:description" content="坚持有效行动，改变自然发生。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/rc001/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2023-04-09T22:18:00-00.00" />
+<meta name="twitter:title" content="删除Mac启动台中的无效图标 - Xuxx的个人博客。" />
+<meta name="twitter:description" content="日常" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" />
+<meta name="twitter:image" content="" />
 
 
     
@@ -69,27 +70,64 @@
             <div class="wrapper">
                 
 <main>    
-    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">删除Mac启动台中的无效图标</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2023-04-09
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/日常/">
+                    日常
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h3>1.第一种方式</h3>
+<p><strong>重建启动台内的图标：</strong></p>
+<p>打开终端：</p>
+<div class="highlight"><pre><span></span>defaults<span class="w"> </span>write<span class="w"> </span>com.apple.dock<span class="w"> </span>ResetLaunchPad<span class="w"> </span>-bool<span class="w"> </span><span class="nb">true</span>
+killall<span class="w"> </span>Dock
+</pre></div>
+<h3>2.第二种方式</h3>
+<p><strong>直接删除指定名称的图标</strong></p>
+<p>打开终端，输入以下代码</p>
+<div class="highlight"><pre><span></span>sqlite3<span class="w"> </span><span class="k">$(</span>find<span class="w"> </span>/private/var/folders<span class="w"> </span><span class="se">\(</span><span class="w"> </span>-name<span class="w"> </span>com.apple.dock.launchpad<span class="w"> </span>-a<span class="w"> </span>-user<span class="w"> </span><span class="nv">$USER</span><span class="w"> </span><span class="se">\)</span><span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null<span class="k">)</span>/db/db<span class="w"> </span><span class="s2">&quot;DELETE FROM apps WHERE title=&#39;xxx&#39;;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>killall<span class="w"> </span>Dock
+</pre></div>
+<p>软件名替换title后面的xxx，回车</p>
 
-<section id="ga-archive_list" class="ga-section" data-title="#JPA">
-    <ul>
-        
-        <li>
-            <h1><a target="_self" class="ga-highlight" href="/Xuxx_Blogs/archives/bj19/">Spring Boot整合Spring Data JPA</a></h1>
-            <time class="ga-mono" datetime="2020-05-13T01:20:00-00.00">
-                2020-05-13
-            </time>
-        </li>
-        
-    </ul>
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Mac/">#Mac</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj47/">IntelliJ IDEA for Mac 快捷键整理</a>
+        <p class="yue">笔记</p>
+    </div>
+
 </section>
 
-<section class="ga-section ga-mono" id="ga-pager">
-    
-    <span>Page 1 of 1</span>
-    
-</section>
 
+    
 
 </main>
 

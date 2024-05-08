@@ -8,8 +8,8 @@ author: Xuxx
 categories: 
   - 笔记
 tags: 
-  - Java
-  - IDEA
+  - Docker
+  - Elasticsearch
 excerpt: 笔记
 ---
 
@@ -36,6 +36,7 @@ chmod 777 -R elasticsearch/data/
 # 创建Docker网络
 
 ```shell
+# 创建一个名为 es-net 的网络
 docker network create es-net  
 ```
 
@@ -87,7 +88,7 @@ kibana:7.16.3
 
 es中自带的分词器对中文支持得不好，一般使用 ik 分词器(https://github.com/infinilabs/analysis-ik)
 
-可以从这里下载打包的插件：https://release.infinilabs.com，下载后解压，将解压后的文件夹，拷贝到 /Users/xxxu/Docker/elasticsearch/plugins 目录(本文使用了映射)下 （别忘记给 777 权限），然后重启es镜像
+可以从这里下载打包的插件：https://release.infinilabs.com，下载后解压，将解压后的文件夹，拷贝到 ~/docker/elasticsearch/plugins 目录(本文使用了映射)下 （别忘记给 777 权限），然后重启es镜像
 
 > 如果es镜像重启时报错请删除 plugins 目录下的 .DS_Store 隐藏文件（ls -a 查询隐藏文件)
 

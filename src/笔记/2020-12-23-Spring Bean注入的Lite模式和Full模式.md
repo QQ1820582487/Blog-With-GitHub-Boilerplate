@@ -12,6 +12,7 @@ tags:
 excerpt: 笔记
 ---
 
+
 ## Lite模式
 
 当`@Bean`方法在没有使用`@Configuration`注释的类中声明时，它们被称为**在Lite模式下处理**。它包括：在`@Component`中声明的`@Bean`方法，甚至只是在一个非常普通的类中声明的Bean方法，都被认为是Lite版的配置类。`@Bean`方法是一种通用的工厂方法（`factory-method`）机制。

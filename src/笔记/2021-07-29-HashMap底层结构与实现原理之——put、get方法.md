@@ -17,6 +17,8 @@ excerpt: 笔记
 
 本文内容基于JDK8。
 
+![2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_01](../static/笔记图片/2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_01.jpg)
+
 ![](../static/笔记图片/2021-07-29-HashMap底层结构与实现原理之——put、get方法_01.jpg)
 
 HashMap在java.util包下，它实现了Map接口，实现了Map接口的全部方法。其中最常使用的两个方法为put和get方法。

@@ -13,9 +13,11 @@ excerpt: 笔记
 ---
 ## 简介
 
+来源：知乎-极光少年
+
 本文内容基于JDK8。
 
-![img](https://pic2.zhimg.com/80/v2-b4e452ab1a45e58bc4295b3521095d8d_720w.jpg)
+![img](../static/笔记图片/2021-07-29-HashMap底层结构与实现原理之——put、get方法_01.jpg)
 
 HashMap在java.util包下，它实现了Map接口，实现了Map接口的全部方法。其中最常使用的两个方法为put和get方法。
 
@@ -238,7 +240,7 @@ final Node<K,V> getNode(int hash, Object key) {
 
 我们同样将源码的重要部分做上了标记，通过一张流程图来帮助我们更好的了解get方法的流程：
 
-![HashMap的get方法执行过程](..\static\笔记图片\2021-07-29-HashMap底层结构与实现原理之——put、get方法_01.png)
+![HashMap的get方法执行过程](..\static\笔记图片\2021-07-29-HashMap底层结构与实现原理之——put、get方法_05.png)
 
 get流程解读：
 

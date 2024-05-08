@@ -39,7 +39,7 @@ stream 顾名思义，就是“流”，这个名字突出了集合对象流式�
 
 其中，数据转换操作是以数据源为输入，进行一些操作后返回一个新的流进行接下来操作，数据转换操作可以多次进行，从而让整个流变成一个流管道：
 
-[![](..\static\笔记图片\2021-03-30-Java8 Stream梳理_01.png)](https://techlog.cn/article/list/images/a9efdb2578feee17ee5b6d6842c5e3d6.png)
+![](..\static\笔记图片\2021-03-30-Java8 Stream梳理_01.png)
 
 最终，一个流只能有一个 terminal 执行操作，作为流的终结，他生成一个结果或一个 side effect
 

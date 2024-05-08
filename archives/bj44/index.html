@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/c41f3c5f7260f52f22dcb4f9ebb5717e.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/804f32f62acf860823864e8c5d137bd8.json"
         }
     </script>
     
@@ -122,14 +122,13 @@
 <p><em>注：<a href="https://juejin.cn/post/6844903463537623048">guava介绍</a></em></p>
 <h3>2.2 添加浏览器驱动</h3>
 <p>当Selenium升级到3.0之后，对不同的浏览器驱动进行了规范。如果想使用Selenium驱动不同的浏览器，必须单独下载并设置不同的浏览器驱动。</p>
-<p><em>注：IE11，需要在IE浏览器中把保护模式取消掉，Internet、本地Internet、受信任的站点、受限制的站点中的启动保护模式勾选全部取消并保存设置（其余浏览器的设置请自行百度）。</em></p>
 <ul>
-<li>Firefox浏览器驱动：<a href="https://github.com/mozilla/geckodriver/releases">geckodriver</a></li>
-<li>Chrome浏览器驱动：<a href="https://npm.taobao.org/mirrors/chromedriver">chromedriver</a></li>
-<li>IE浏览器驱动：<a href="http://Selenium-release.storage.googleapis.com/index.html">IEDriverServer</a></li>
-<li>Edge浏览器驱动：<a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver">MicrosoftWebDriver</a></li>
-<li>Opera浏览器驱动：<a href="https://github.com/operasoftware/operachromiumdriver/releases">operadriver</a></li>
-<li>PhantomJS浏览器驱动：<a href="http://phantomjs.org/">phantomjs</a></li>
+<li><del>Firefox浏览器驱动：<a href="https://github.com/mozilla/geckodriver/releases">geckodriver</a></del></li>
+<li>Chrome浏览器驱动：<a href="https://chromedriver.chromium.org/downloads/version-selection">chromedriver</a></li>
+<li><del>IE浏览器驱动：<a href="http://Selenium-release.storage.googleapis.com/index.html">IEDriverServer</a></del></li>
+<li><del>Edge浏览器驱动：<a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver">MicrosoftWebDriver</a></del></li>
+<li><del>Opera浏览器驱动：<a href="https://github.com/operasoftware/operachromiumdriver/releases">operadriver</a></del></li>
+<li><del>PhantomJS浏览器驱动：<a href="http://phantomjs.org/">phantomjs</a></del></li>
 </ul>
 <p>在java中使用不同浏览器：
 首先配置驱动属性，指定驱动文件路径</p>
@@ -144,7 +143,7 @@ WebDriver driver = new InternetExplorerDriver();  // Internet Explorer浏览器
 WebDriver driver = new OperaDriver();     //Opera浏览器
 WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <p><em>注：可以在linux中使用无窗口模式，后续会讲到</em></p>
-<p>简单样例</p>
+<p>Demo</p>
 <div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Itest</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">InterruptedException</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;webdriver.chrome.driver&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;E:\\chromedriver.exe&quot;</span><span class="p">);</span>
@@ -165,7 +164,7 @@ WebDriver driver = new PhantomJSDriver();   //PhantomJS</code></pre>
 <li>driver.findElement(By.tagName("元素tagName"))</li>
 <li>driver.findElement(By.linkText("文本"))</li>
 <li>driver.findElement(By.cssSelector("css选择器")) （注意空格）</li>
-<li>driver.findElement(By.xpath("xpath表达式"))</li>
+<li>driver.findElement(By.xpath("xpath表达式")) --个人推荐这个</li>
 <li>...</li>
 </ul>
 <h4>2.2.2 获取元素列表</h4>

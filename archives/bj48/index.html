@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="个人博客。 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="个人博客。 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/c1e5e9f917a50597490dba75f3a18c98.json"
+        }
+    </script>
+    
+<title>Mac通过Docker安装Elasticsearch和Kibana - 个人博客。</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="Mac通过Docker安装Elasticsearch和Kibana - 个人博客。" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj48/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2024-05-08T15:04:00-00.00" />
+<meta name="twitter:title" content="Mac通过Docker安装Elasticsearch和Kibana - 个人博客。" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="个人博客。">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">个人博客。</a></h1>
+                        <p>坚持有效行动，改变自然发生。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">Mac通过Docker安装Elasticsearch和Kibana</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2024-05-08
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h1>准备工作</h1>
+<p>本人使用的的 MacBook ，流程如下，不过其他电脑也大同小异，无非就是目录不同。</p>
+<ul>
+<li>新建 es 所需的目录</li>
+</ul>
+<div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/docker/elasticsearch/
+<span class="nb">cd</span><span class="w"> </span>docker/elasticsearch/
+mkdir<span class="w"> </span>data
+mkdir<span class="w"> </span>config
+mkdir<span class="w"> </span>plugins
+
+<span class="nb">cd</span><span class="w"> </span>config<span class="w">   </span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;http.host: 0.0.0.0&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>elasticsearch.yml
+
+<span class="c1">##给权限</span>
+chmod<span class="w"> </span><span class="m">777</span><span class="w"> </span>-R<span class="w"> </span>elasticsearch/data/
+</pre></div>
+<h1>创建Docker网络</h1>
+<div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>es-net
+</pre></div>
+<h1>安装 Elasticsearch</h1>
+<ul>
+<li><p>安装 ES 完整命令如下</p>
+<blockquote><ul>
+<li><p>这里要根据自己电脑的性能来设置内存的大小，也就是 ES_JAVA_OPTS 的配置。</p>
+</li>
+<li><p>映射的目录要跟你创建的本地目录一致，不然会有各种各样的问题。</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-itd<span class="w"> </span>-p<span class="w"> </span><span class="m">9200</span>:9200<span class="w"> </span>-p<span class="w"> </span><span class="m">9300</span>:9300<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;discovery.type=single-node&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">ES_JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512m -Xmx512m&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>~/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>~/docker/elasticsearch/data:/usr/share/elasticsearch/data<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>~/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="w"> </span>es-net<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>es<span class="w"> </span><span class="se">\</span>
+elasticsearch:7.16.3
+</pre></div>
+<ul>
+<li>测试：浏览器访问：<a href="http://127.0.0.1:9200">http://127.0.0.1:9200</a></li>
+</ul>
+<p><figure class="pswp-item" style="flex: 60.42031523642732" data-width="1380" data-height="1142"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/88604fdce054273f346857025a05d0f1.jpg" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_01" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_01</figcaption></figure></p>
+<h1>安装 Kibana</h1>
+<ul>
+<li>安装 Kibana 完整命令如下</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="c1"># 注意这里的 HOSTS 写法是因为已经将ES和Kibana放在同一个网络下</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>kibana<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="w"> </span>es-net<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">ELASTICSEARCH_HOSTS</span><span class="o">=</span><span class="s2">&quot;http://es:9200&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">5601</span>:5601<span class="w"> </span><span class="se">\</span>
+kibana:7.16.3
+</pre></div>
+<p>测试：浏览器访问：<a href="http://127.0.0.1:5601">http://127.0.0.1:5601</a></p>
+<p><figure class="pswp-item" style="flex: 96.71814671814671" data-width="3006" data-height="1554"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/a9b94adc30858aa4db69051314c860dd.png" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_02" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_02</figcaption></figure></p>
+<h1>安装 ik 分词器</h1>
+<p>es中自带的分词器对中文支持得不好，一般使用 ik 分词器(<a href="https://github.com/infinilabs/analysis-ik">https://github.com/infinilabs/analysis-ik</a>)</p>
+<p>可以从这里下载打包的插件：<a href="https://release.infinilabs.com，下载后解压，将解压后的文件夹，拷贝到">https://release.infinilabs.com，下载后解压，将解压后的文件夹，拷贝到</a> /Users/xxxu/Docker/elasticsearch/plugins 目录(本文使用了映射)下 （别忘记给 777 权限），然后重启es镜像</p>
+<blockquote><p>如果es镜像重启时报错请删除 plugins 目录下的 .DS_Store 隐藏文件（ls -a 查询隐藏文件)</p>
+</blockquote>
+<p>测试: 浏览器访问 <a href="http://127.0.0.1:5601/app/dev_tools#/console">http://127.0.0.1:5601/app/dev_tools#/console</a></p>
+<p><figure class="pswp-item" style="flex: 97.28331177231566" data-width="3008" data-height="1546"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/df7271afc1dc2cd527e0c69d41ab0ab6.png" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_03" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_03</figcaption></figure></p>
+<p><figure class="pswp-item" style="flex: 97.3582474226804" data-width="3022" data-height="1552"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/15da97022735371bdf8a446ce5072f7c.png" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_04" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_04</figcaption></figure></p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/Java/">#Java</a>
+    </span>
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/IDEA/">#IDEA</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/rc001/">删除Mac启动台中的无效图标</a>
+        <p class="yue">日常</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">个人博客。</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2024 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

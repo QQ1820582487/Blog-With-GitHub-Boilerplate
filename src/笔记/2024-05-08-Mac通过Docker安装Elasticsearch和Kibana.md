@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mac通过Docker安装Elasticsearch和Kibana
+title: Mac通过Docker安装ElasticSearch和Kibana
 slug: bj48
 date: 2024-05-08 15:04
 status: publish
@@ -9,7 +9,7 @@ categories:
   - 笔记
 tags: 
   - Docker
-  - Elasticsearch
+  - ElasticSearch
 excerpt: 笔记
 ---
 
@@ -42,7 +42,7 @@ docker network create es-net
 
 
 
-# 安装 Elasticsearch
+# 安装 ElasticSearch
 
 - 安装 ES 完整命令如下
 

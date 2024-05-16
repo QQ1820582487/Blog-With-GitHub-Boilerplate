@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx - 个人博客 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx - 个人博客 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ce40bc5a99b07bb2b737ac5faca268d2.json"
+        }
+    </script>
+    
+<title>腾讯技术工程分享-如何实现分布式锁以及其安全性问题 - Xuxx - 个人博客</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="腾讯技术工程分享-如何实现分布式锁以及其安全性问题 - Xuxx - 个人博客" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx - 个人博客" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj52/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2024-05-13T20:13:00-00.00" />
+<meta name="twitter:title" content="腾讯技术工程分享-如何实现分布式锁以及其安全性问题 - Xuxx - 个人博客" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx - 个人博客">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx - 个人博客</a></h1>
+                        <p>坚持有效行动，改变自然发生。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">腾讯技术工程分享-如何实现分布式锁以及其安全性问题</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2024-05-13
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <blockquote><p>问题：
+基于 Redis 如何实现一个分布式锁?它足够安全吗 ?
+一个严谨的分布式锁模型如何实现，应该考虑什么?
+我们经常听到的 Redlock(红锁)有什么问题?
+业界争论 Redlock，到底在争论什么?哪种观点是对的 ?
+分布式锁到底用 Redis 还是 Zookeeper、Etcd ?</p>
+</blockquote>
+<h1>1.为什么需要分布式锁？</h1>
+<ul>
+<li>单机锁:同一台机器上的不同线程/进程修改同一个资源操作系统提供互斥能力(线程锁、文件锁、信号量)</li>
+<li>分布式锁:不同机器上的线程/进程修改同一个资源需借助外部系统(MySQL、Redis、Zookeeper)</li>
+</ul>
+<p><figure class="pswp-item" style="flex: 110.24930747922437" data-width="1592" data-height="722"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fa98ec271cde3f12377b67695736d810.png" alt="" /></figure></p>
+<h1>2.基于Redis分布式锁怎么实现?</h1>
+<p><figure class="pswp-item" style="flex: 111.1731843575419" data-width="1592" data-height="716"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c9b9709b0ce4c629e766f29c8099db00.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 113.15028901734104" data-width="1566" data-height="692"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/366d9fc7403dd1422c115ef6ca4acb91.png" alt="" /></figure></p>
+<h1>3.Redis分布锁存在的问题</h1>
+<p><figure class="pswp-item" style="flex: 111.34453781512605" data-width="1590" data-height="714"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b86748ffc0d5e2a2fffb7f0d57beb6a2.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 117.41741741741741" data-width="1564" data-height="666"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cc2ef6b51a8aa0163139e6dbcb4a8d0b.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 115.97014925373135" data-width="1554" data-height="670"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/67785271fc253531d206c886f9ce412b.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 106.4343163538874" data-width="1588" data-height="746"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ba35ccbcb14fa1a9e5ed5fb2a7e228ca.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 116.27565982404693" data-width="1586" data-height="682"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/270e675cd5cf457bab5662f1a790abee.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 109.41828254847645" data-width="1580" data-height="722"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2a2d0432bcc9263970a07266e14fc292.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 93.17647058823529" data-width="1584" data-height="850"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ce9ce7ad9b77ce1af34501aa7e83cdfd.png" alt="" /></figure></p>
+<blockquote><p>这只是单机Redis状态下的使用，还未考虑集群环境</p>
+</blockquote>
+<p><figure class="pswp-item" style="flex: 119.87951807228916" data-width="1592" data-height="664"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/a9e63f4b972ab59c80c3976815c123e6.png" alt="" /></figure></p>
+<h1>4.红锁(Redlock)</h1>
+<p><figure class="pswp-item" style="flex: 111.23595505617978" data-width="1584" data-height="712"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/fa8675e7ae35c4372f8768dc399d03e4.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 89.21348314606742" data-width="1588" data-height="890"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/850e347c001ca5cb0782d14805616d5a.png" alt="" /></figure></p>
+<p>分布式领域专家 VS Redis作者</p>
+<p><figure class="pswp-item" style="flex: 92.87410926365796" data-width="1564" data-height="842"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/281105d607f3dbb142742f50759e907b.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 101.03626943005182" data-width="1560" data-height="772"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/80f17719f2c9cab2e31101e4d894bf2b.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 98.05699481865285" data-width="1514" data-height="772"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f6697379030c12e317c234f91a837820.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 91.97674418604652" data-width="1582" data-height="860"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/e4914b30ee5e9bcb2eddb268cc55daf3.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 94.00479616306954" data-width="1568" data-height="834"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4de4a398a3365cda9ee3f676394519da.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 107.43243243243244" data-width="1590" data-height="740"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/58454231a9404a2128c00b21a1824a49.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 109.14127423822714" data-width="1576" data-height="722"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6f8f636e291bb579e1e925457bbe5e06.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 123.28125" data-width="1578" data-height="640"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/95023ffa59eec55241b47e6fee062471.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 92.09302325581395" data-width="1584" data-height="860"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d89ac666291977b01eb1ad211df76e75.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 93.41176470588235" data-width="1588" data-height="850"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ff84a515fdde0a283c9e67c93559f6bd.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 112.39067055393586" data-width="1542" data-height="686"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/94a38134302af08745ff057e56d931b2.png" alt="" /></figure></p>
+<h1>5.基于Zookeeper和Etcd的分布锁</h1>
+<p><figure class="pswp-item" style="flex: 92.62295081967213" data-width="1582" data-height="854"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b43f328ef9094b8b22905ff50cdd33da.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 109.39226519337016" data-width="1584" data-height="724"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f039bfd0f0da4404d794d7896bc70899.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 109.69529085872576" data-width="1584" data-height="722"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/8b03627f1ae9461895734cc72ab05ef0.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 102.85714285714286" data-width="1584" data-height="770"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/69bc428d280a79b02049f8eb68893058.png" alt="" /></figure></p>
+<p><figure class="pswp-item"  data-width="-1" data-height="-1" size-undefined><img src="../static/笔记图片/image-20240513213500365.png" alt="" /></figure></p>
+<h1>6.总结</h1>
+<p><figure class="pswp-item" style="flex: 109.11602209944752" data-width="1580" data-height="724"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/00e5a5364338c1021f381a2663dd2bc8.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 98.2587064676617" data-width="1580" data-height="804"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2505c22d462f61d94e27eab8576361de.png" alt="" /></figure></p>
+<p>NPC问题：进程暂停、网络超时、时钟漂移、GC的STW等等</p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/分布式锁/">#分布式锁</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj50/">ElasticSearch笔记_02</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx - 个人博客</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2024 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

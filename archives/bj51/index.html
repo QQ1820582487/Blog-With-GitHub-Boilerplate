@@ -1,0 +1,1239 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Xuxx,Galileo,blog" />
+    <meta name="generator" content="Maverick 1.0" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="Xuxx - 个人博客 &raquo; RSS 2.0" href="/Xuxx_Blogs/feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Xuxx - 个人博客 &raquo; ATOM 1.0" href="/Xuxx_Blogs/feed/atom/index.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-ec40839efa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-182e5a8868.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/7b37dd729e55ed5232c863193cc3039c.json"
+        }
+    </script>
+    
+<title>ElasticSearch笔记_03 - Xuxx - 个人博客</title>
+<meta name="author" content="Xuxx" />
+<meta name="description" content="笔记" />
+<meta property="og:title" content="ElasticSearch笔记_03 - Xuxx - 个人博客" />
+<meta property="og:description" content="笔记" />
+<meta property="og:site_name" content="Xuxx - 个人博客" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/Xuxx_Blogs/archives/bj51/" />
+<meta property="og:image" content="" />
+<meta property="article:published_time" content="2024-05-13T21:35:00-00.00" />
+<meta name="twitter:title" content="ElasticSearch笔记_03 - Xuxx - 个人博客" />
+<meta name="twitter:description" content="笔记" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="" />
+
+
+    
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    </head>
+    
+    <body>
+        
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-logo">
+                        <a href="/Xuxx_Blogs/" target="_self">
+                            <img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/logo.png" alt="Xuxx - 个人博客">
+                        </a>
+                    </aside>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="/Xuxx_Blogs/">Xuxx - 个人博客</a></h1>
+                        <p>坚持有效行动，改变自然发生。</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        <ul><li><a class="ga-highlight" href="/Xuxx_Blogs/" target="_self">首页</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/archives/" target="_self">归档</a></li><span class="separator">·</span><li><a class="ga-highlight" href="/Xuxx_Blogs/about/" target="_self">关于</a></li><span class="separator">·</span><li><a href="#" target="_self" class="search-form-input ga-highlight">搜索</a></li></ul>
+                    </nav>
+                    <nav class="social-links">
+                        <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                
+<main>    
+    <section class="ga-section ga-content">
+        <article class="yue">
+            <h1 class="ga-post_title">ElasticSearch笔记_03</h1>
+            <span class="ga-post_meta ga-mono">
+                <span>Xuxx</span>
+                <time>
+                    2024-05-13
+                </time>
+                
+                in <a no-style class="category" href="/Xuxx_Blogs/category/笔记/">
+                    笔记
+                </a>
+                
+                
+            </span>
+            <div class="ga-content_body">
+                <h1>1.数据聚合</h1>
+<p><strong><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html">聚合（</a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html">aggregations</a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html">）</a></strong>可以让我们极其方便的实现对数据的统计、分析、运算。例如：</p>
+<ul>
+<li>什么品牌的手机最受欢迎？</li>
+<li>这些手机的平均价格、最高价格、最低价格？</li>
+<li>这些手机每月的销售情况如何？</li>
+</ul>
+<p>实现这些统计功能的比数据库的sql要方便的多，而且查询速度非常快，可以实现近实时搜索效果。</p>
+<h2>1.1.聚合的种类</h2>
+<p>聚合常见的有三类：</p>
+<ul>
+<li><p><strong>桶（Bucket）</strong>聚合：用来对文档做分组</p>
+<ul>
+<li>TermAggregation：按照文档字段值分组，例如按照品牌值分组、按照国家分组</li>
+<li>Date Histogram：按照日期阶梯分组，例如一周为一组，或者一月为一组</li>
+</ul>
+</li>
+<li><p><strong>度量（Metric）</strong>聚合：用以计算一些值，比如：最大值、最小值、平均值等</p>
+<ul>
+<li>Avg：求平均值</li>
+<li>Max：求最大值</li>
+<li>Min：求最小值</li>
+<li>Stats：同时求max、min、avg、sum等</li>
+</ul>
+</li>
+<li><strong>管道（pipeline）</strong>聚合：其它聚合的结果为基础做聚合</li>
+</ul>
+<blockquote><p><strong>注意：</strong>参加聚合的字段必须是keyword、日期、数值、布尔类型</p>
+</blockquote>
+<h2>1.2.DSL实现聚合</h2>
+<p>现在，我们要统计所有数据中的酒店品牌有几种，其实就是按照品牌对数据分组。此时可以根据酒店品牌的名称做聚合，也就是Bucket聚合。</p>
+<h3>1.2.1.Bucket聚合语法</h3>
+<p>语法如下：</p>
+<div class="highlight"><pre><span></span><span class="err">GET /ho</span><span class="kc">tel</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">0</span><span class="p">,</span><span class="err">  </span><span class="c1">// 设置size为0，结果中不包含文档，只包含聚合结果</span>
+<span class="err">  </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 定义聚合</span>
+<span class="err">    </span><span class="nt">&quot;brandAgg&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">//给聚合起个名字</span>
+<span class="err">      </span><span class="nt">&quot;terms&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 聚合的类型，按照品牌值聚合，所以选择term</span>
+<span class="err">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;brand&quot;</span><span class="p">,</span><span class="err"> </span><span class="c1">// 参与聚合的字段</span>
+<span class="err">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">20</span><span class="err"> </span><span class="c1">// 希望获取的聚合结果数量</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>结果如图：</p>
+<p><figure class="pswp-item" style="flex: 54.7008547008547" data-width="640" data-height="585"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ec6ae3234dbba02183ad2fcb9f5fa79a.png" alt="" /></figure></p>
+<h3>1.2.2.聚合结果排序</h3>
+<p>默认情况下，Bucket聚合会统计Bucket内的文档数量，记为_count，并且按照_count降序排序。</p>
+<p>我们可以指定order属性，自定义聚合的排序方式：</p>
+<div class="highlight"><pre><span></span><span class="err">GET /ho</span><span class="kc">tel</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">0</span><span class="p">,</span><span class="err"> </span>
+<span class="err">  </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;brandAgg&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;terms&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;brand&quot;</span><span class="p">,</span>
+<span class="err">        </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">          </span><span class="nt">&quot;_count&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;asc&quot;</span><span class="w"> </span><span class="c1">// 按照_count升序排列</span>
+<span class="err">        </span><span class="p">},</span>
+<span class="err">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">20</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>1.2.3.限定聚合范围</h3>
+<p>默认情况下，Bucket聚合是对索引库的所有文档做聚合，但真实场景下，用户会输入搜索条件，因此聚合必须是对搜索结果聚合。那么聚合必须添加限定条件。</p>
+<p>我们可以限定要聚合的文档范围，只要添加query条件即可：</p>
+<div class="highlight"><pre><span></span><span class="err">GET /ho</span><span class="kc">tel</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;range&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;lte&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">200</span><span class="w"> </span><span class="c1">// 只对200元以下的文档聚合</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">},</span><span class="err"> </span>
+<span class="err">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">0</span><span class="p">,</span><span class="err"> </span>
+<span class="err">  </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;brandAgg&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;terms&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;brand&quot;</span><span class="p">,</span>
+<span class="err">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">20</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>这次，聚合得到的品牌明显变少了：</p>
+<p><figure class="pswp-item" style="flex: 138.52631578947367" data-width="1316" data-height="475"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/37fe74417eb38e40440c3f3488501bb0.png" alt="" /></figure></p>
+<h3>1.2.4.Metric聚合语法</h3>
+<p>上节课，我们对酒店按照品牌分组，形成了一个个桶。现在我们需要对桶内的酒店做运算，获取每个品牌的用户评分的min、max、avg等值。</p>
+<p>这就要用到Metric聚合了，例如stat聚合：就可以获取min、max、avg等结果。</p>
+<p>语法如下：</p>
+<div class="highlight"><pre><span></span><span class="err">GET /ho</span><span class="kc">tel</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">0</span><span class="p">,</span><span class="err"> </span>
+<span class="err">  </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;brandAgg&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span>
+<span class="err">      </span><span class="nt">&quot;terms&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span>
+<span class="err">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;brand&quot;</span><span class="p">,</span><span class="err"> </span>
+<span class="err">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">20</span>
+<span class="err">      </span><span class="p">},</span>
+<span class="err">      </span><span class="nt">&quot;aggs&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 是brands聚合的子聚合，也就是分组后对每组分别计算</span>
+<span class="err">        </span><span class="nt">&quot;score_stats&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 聚合名称</span>
+<span class="err">          </span><span class="nt">&quot;stats&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 聚合类型，这里stats可以计算min、max、avg等</span>
+<span class="err">            </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;score&quot;</span><span class="err"> </span><span class="c1">// 聚合字段，这里是score</span>
+<span class="err">          </span><span class="p">}</span>
+<span class="err">        </span><span class="p">}</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>这次的score_stats聚合是在brandAgg的聚合内部嵌套的子聚合。因为我们需要在每个桶分别计算。</p>
+<p>另外，我们还可以给聚合结果做个排序，例如按照每个桶的酒店平均分做排序：</p>
+<p><figure class="pswp-item" style="flex: 107.65391014975042" data-width="1294" data-height="601"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/89fdda61de6fda7bf53adb38008d3e7d.png" alt="" /></figure></p>
+<h3>1.2.5.小结</h3>
+<p>aggs代表聚合，与query同级，此时query的作用是？</p>
+<ul>
+<li>限定聚合的的文档范围</li>
+</ul>
+<p>聚合必须的三要素：</p>
+<ul>
+<li>聚合名称</li>
+<li>聚合类型</li>
+<li>聚合字段</li>
+</ul>
+<p>聚合可配置属性有：</p>
+<ul>
+<li>size：指定聚合结果数量</li>
+<li>order：指定聚合结果排序方式</li>
+<li>field：指定聚合字段</li>
+</ul>
+<h2>1.3.RestAPI实现聚合</h2>
+<h3>1.3.1.API语法</h3>
+<p>聚合条件与query条件同级别，因此需要使用request.source()来指定聚合条件。</p>
+<p>聚合条件的语法：</p>
+<p><figure class="pswp-item" style="flex: 113.80789022298457" data-width="1327" data-height="583"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/39777a8c7bc0aff47c41fb1389c21b69.png" alt="" /></figure></p>
+<p>聚合的结果也与查询结果不同，API也比较特殊。不过同样是JSON逐层解析：</p>
+<p><figure class="pswp-item" style="flex: 100.48882681564245" data-width="1439" data-height="716"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/83376751577bd164bef3165439c2ba9f.png" alt="" /></figure></p>
+<h3>1.3.2.业务需求</h3>
+<p>需求：搜索页面的品牌、城市等信息不应该是在页面写死，而是通过聚合索引库中的酒店数据得来的：</p>
+<p><figure class="pswp-item" style="flex: 177.1604938271605" data-width="861" data-height="243"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/a2d9d77a1f24bcf886a10bb77c7feb39.png" alt="" /></figure></p>
+<p>分析：</p>
+<p>目前，页面的城市列表、星级列表、品牌列表都是写死的，并不会随着搜索结果的变化而变化。但是用户搜索条件改变时，搜索结果会跟着变化。</p>
+<p>例如：用户搜索“东方明珠”，那搜索的酒店肯定是在上海东方明珠附近，因此，城市只能是上海，此时城市列表中就不应该显示北京、深圳、杭州这些信息了。</p>
+<p>也就是说，搜索结果中包含哪些城市，页面就应该列出哪些城市；搜索结果中包含哪些品牌，页面就应该列出哪些品牌。</p>
+<p>如何得知搜索结果中包含哪些品牌？如何得知搜索结果中包含哪些城市？</p>
+<p>使用聚合功能，利用Bucket聚合，对搜索结果中的文档基于品牌分组、基于城市分组，就能得知包含哪些品牌、哪些城市了。</p>
+<p>因为是对搜索结果聚合，因此聚合是<strong>限定范围的聚合</strong>，也就是说聚合的限定条件跟搜索文档的条件一致。</p>
+<p>查看浏览器可以发现，前端其实已经发出了这样的一个请求：</p>
+<p><figure class="pswp-item" style="flex: 85.73573573573573" data-width="571" data-height="333"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/498dfa2c6aedc5142c60610161578428.png" alt="" /></figure></p>
+<p>请求<strong>参数与搜索文档的参数完全一致</strong>。</p>
+<p>返回值类型就是页面要展示的最终结果：</p>
+<p><figure class="pswp-item" style="flex: 183.9655172413793" data-width="1067" data-height="290"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5406f85f5525dfb4e39eb569aeacbbbd.png" alt="" /></figure></p>
+<p>结果是一个Map结构：</p>
+<ul>
+<li>key是字符串，城市、星级、品牌、价格</li>
+<li>value是集合，例如多个城市的名称</li>
+</ul>
+<h3>1.3.3.业务实现</h3>
+<p>在<code>cn.itcast.hotel.web</code>包的<code>HotelController</code>中添加一个方法，遵循下面的要求：</p>
+<ul>
+<li>请求方式：<code>POST</code></li>
+<li>请求路径：<code>/hotel/filters</code></li>
+<li>请求参数：<code>RequestParams</code>，与搜索文档的参数一致</li>
+<li>返回值类型：<code>Map&lt;String, List&lt;String&gt;&gt;</code></li>
+</ul>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="nd">@PostMapping</span><span class="p">(</span><span class="s">&quot;filters&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nf">getFilters</span><span class="p">(</span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">RequestParams</span><span class="w"> </span><span class="n">params</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">hotelService</span><span class="p">.</span><span class="na">filters</span><span class="p">(</span><span class="n">params</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+<p>这里调用了IHotelService中的getFilters方法，尚未实现。</p>
+<p>在<code>cn.itcast.hotel.service.IHotelService</code>中定义新方法：</p>
+<div class="highlight"><pre><span></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="n">RequestParams</span><span class="w"> </span><span class="n">params</span><span class="p">);</span>
+</pre></div>
+<p>在<code>cn.itcast.hotel.service.impl.HotelService</code>中实现该方法：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="n">RequestParams</span><span class="w"> </span><span class="n">params</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 1.准备Request</span>
+<span class="w">        </span><span class="n">SearchRequest</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SearchRequest</span><span class="p">(</span><span class="s">&quot;hotel&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 2.准备DSL</span>
+<span class="w">        </span><span class="c1">// 2.1.query</span>
+<span class="w">        </span><span class="n">buildBasicQuery</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 2.2.设置size</span>
+<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">().</span><span class="na">size</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 2.3.聚合</span>
+<span class="w">        </span><span class="n">buildAggregation</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 3.发出请求</span>
+<span class="w">        </span><span class="n">SearchResponse</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">RequestOptions</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 4.解析结果</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Aggregations</span><span class="w"> </span><span class="n">aggregations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">getAggregations</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// 4.1.根据品牌名称，获取品牌结果</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">brandList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAggByName</span><span class="p">(</span><span class="n">aggregations</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;brandAgg&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;品牌&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">brandList</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 4.2.根据品牌名称，获取品牌结果</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cityList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAggByName</span><span class="p">(</span><span class="n">aggregations</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cityAgg&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;城市&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cityList</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 4.3.根据品牌名称，获取品牌结果</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">starList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAggByName</span><span class="p">(</span><span class="n">aggregations</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;starAgg&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;星级&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">starList</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">buildAggregation</span><span class="p">(</span><span class="n">SearchRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">().</span><span class="na">aggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">terms</span><span class="p">(</span><span class="s">&quot;brandAgg&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;brand&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">size</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">                                </span><span class="p">);</span>
+<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">().</span><span class="na">aggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">terms</span><span class="p">(</span><span class="s">&quot;cityAgg&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;city&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">size</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">                                </span><span class="p">);</span>
+<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">().</span><span class="na">aggregation</span><span class="p">(</span><span class="n">AggregationBuilders</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">terms</span><span class="p">(</span><span class="s">&quot;starAgg&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">field</span><span class="p">(</span><span class="s">&quot;starName&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">.</span><span class="na">size</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">                                </span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getAggByName</span><span class="p">(</span><span class="n">Aggregations</span><span class="w"> </span><span class="n">aggregations</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">aggName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 4.1.根据聚合名称获取聚合结果</span>
+<span class="w">    </span><span class="n">Terms</span><span class="w"> </span><span class="n">brandTerms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aggregations</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">aggName</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 4.2.获取buckets</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Terms</span><span class="p">.</span><span class="na">Bucket</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buckets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brandTerms</span><span class="p">.</span><span class="na">getBuckets</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// 4.3.遍历</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">brandList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Terms</span><span class="p">.</span><span class="na">Bucket</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">buckets</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 4.4.获取key</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bucket</span><span class="p">.</span><span class="na">getKeyAsString</span><span class="p">();</span>
+<span class="w">        </span><span class="n">brandList</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">brandList</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<h1>2.自动补全</h1>
+<p>当用户在搜索框输入字符时，我们应该提示出与该字符有关的搜索项，如图：</p>
+<p><figure class="pswp-item" style="flex: 206.41509433962264" data-width="1094" data-height="265"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/25a4b580070864e4a02d5be7b8bc4601.png" alt="" /></figure></p>
+<p>这种根据用户输入的字母，提示完整词条的功能，就是自动补全了。</p>
+<p>因为需要根据拼音字母来推断，因此要用到拼音分词功能。</p>
+<h2>2.1.拼音分词器</h2>
+<p>要实现根据字母做补全，就必须对文档按照拼音分词。在GitHub上恰好有elasticsearch的拼音分词插件。地址：<a href="https://github.com/medcl/elasticsearch-analysis-pinyin">https://github.com/medcl/elasticsearch-analysis-pinyin</a></p>
+<p><figure class="pswp-item" style="flex: 107.68348623853211" data-width="939" data-height="436"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/37e22c09227033de12c90082e7d46652.png" alt="" /></figure></p>
+<p>安装方式与IK分词器一样，详细安装步骤可以参考IK分词器的安装过程。</p>
+<p>测试用法如下：</p>
+<div class="highlight"><pre><span></span><span class="err">POST /_a</span><span class="kc">nal</span><span class="err">yze</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;如家酒店还不错&quot;</span><span class="p">,</span>
+<span class="err">  </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;pinyin&quot;</span>
+<span class="p">}</span>
+</pre></div>
+<p>结果：
+<figure class="pswp-item" style="flex: 38.888888888888886" data-width="448" data-height="576"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f6f340dff807019588e1837157eb11f0.png" alt="" /></figure></p>
+<h2>2.2.自定义分词器</h2>
+<p>默认的拼音分词器会将每个汉字单独分为拼音，而我们希望的是每个词条形成一组拼音，需要对拼音分词器做个性化定制，形成自定义分词器。</p>
+<p>elasticsearch中分词器（analyzer）的组成包含三部分：</p>
+<ul>
+<li>character filters：在tokenizer之前对文本进行处理。例如删除字符、替换字符</li>
+<li>tokenizer：将文本按照一定的规则切割成词条（term）。例如keyword，就是不分词；还有ik_smart</li>
+<li>tokenizer filter：将tokenizer输出的词条做进一步处理。例如大小写转换、同义词处理、拼音处理等</li>
+</ul>
+<p>文档分词时会依次由这三部分来处理文档：</p>
+<p><figure class="pswp-item" style="flex: 248.7138263665595" data-width="1547" data-height="311"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/56073b16c23d70e85ae5eae7658b19df.png" alt="" /></figure></p>
+<p>声明自定义分词器的语法如下：</p>
+<div class="highlight"><pre><span></span><span class="err">PUT /</span><span class="kc">test</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;analysis&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 自定义分词器</span>
+<span class="err">        </span><span class="nt">&quot;my_analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err">  </span><span class="c1">// 分词器名称</span>
+<span class="err">          </span><span class="nt">&quot;tokenizer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;ik_max_word&quot;</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;py&quot;</span>
+<span class="err">        </span><span class="p">}</span>
+<span class="err">      </span><span class="p">},</span>
+<span class="err">      </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 自定义tokenizer filter</span>
+<span class="w">        </span><span class="c1">//拼音分词器的选项 在github有</span>
+<span class="err">        </span><span class="nt">&quot;py&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="err"> </span><span class="c1">// 过滤器名称</span>
+<span class="err">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;pinyin&quot;</span><span class="p">,</span><span class="err"> </span><span class="c1">// 过滤器类型，这里是pinyin</span>
+<span class="w">                </span><span class="nt">&quot;keep_full_pinyin&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;keep_joined_full_pinyin&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;keep_original&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;limit_first_letter_length&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;remove_duplicated_term&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="err">          </span><span class="nt">&quot;none_chinese_pinyin_tokenize&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">false</span>
+<span class="err">        </span><span class="p">}</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">},</span>
+<span class="err">  </span><span class="nt">&quot;mappings&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="err">        </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;my_analyzer&quot;</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>测试：</p>
+<div class="highlight"><pre><span></span><span class="err">GET</span><span class="w"> </span><span class="err">/</span><span class="kc">test</span><span class="err">/_a</span><span class="kc">nal</span><span class="err">yze</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;如家酒店&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_analyzer&quot;</span>
+<span class="p">}</span>
+</pre></div>
+<p><figure class="pswp-item" style="flex: 88.49765258215963" data-width="1131" data-height="639"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3e570b1ae9a332f5bc9fc5f633b0c9ee.png" alt="" /></figure></p>
+<p>总结：</p>
+<p>如何使用拼音分词器？</p>
+<ul>
+<li><p>①下载pinyin分词器</p>
+</li>
+<li><p>②解压并放到elasticsearch的plugin目录</p>
+</li>
+<li><p>③重启即可</p>
+</li>
+</ul>
+<p>如何自定义分词器？</p>
+<ul>
+<li><p>①创建索引库时，在settings中配置，可以包含三部分</p>
+</li>
+<li><p>②character filter</p>
+</li>
+<li><p>③tokenizer</p>
+</li>
+<li><p>④filter</p>
+</li>
+</ul>
+<p>拼音分词器注意事项？</p>
+<ul>
+<li>为了避免搜索到同音字，搜索时不要使用拼音分词器</li>
+</ul>
+<p><figure class="pswp-item" style="flex: 126.29757785467127" data-width="2920" data-height="1156"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/497aa6413861c9915a6cbbb1a8f42f62.png" alt="" /></figure></p>
+<p>处理方法：字段在创建倒排索引时应该用自定义的my_analyzer分词器；字段在搜索时应该使用ik_smart分词器;</p>
+<p>如下：</p>
+<div class="highlight"><pre><span></span><span class="err">PUT /</span><span class="kc">test</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;analysis&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;my_analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">          </span><span class="nt">&quot;tokenizer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;ik_max_word&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;py&quot;</span>
+<span class="err">        </span><span class="p">}</span>
+<span class="err">      </span><span class="p">},</span>
+<span class="err">      </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;py&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">},</span>
+<span class="err">  </span><span class="nt">&quot;mappings&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">//在创建索引时使用自定义的my_analyzer分词器</span>
+<span class="err">        </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;my_analyzer&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">//在搜索时使用ik_smart分词器</span>
+<span class="err">        </span><span class="nt">&quot;search_analyzer&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;ik_smart&quot;</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>2.3.自动补全查询</h2>
+<p>elasticsearch提供了<a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.6/search-suggesters.html">Completion Suggester</a>查询来实现自动补全功能。这个查询会匹配以用户输入内容开头的词条并返回。为了提高补全查询的效率，对于文档中字段的类型有一些约束：</p>
+<ul>
+<li><p>参与补全查询的字段必须是completion类型。</p>
+</li>
+<li><p>字段的内容一般是用来补全的多个词条形成的数组。</p>
+</li>
+</ul>
+<p>比如，一个这样的索引库：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 创建索引库</span>
+<span class="err">PUT /</span><span class="kc">test</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;mappings&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;title&quot;</span><span class="p">:{</span>
+<span class="err">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;completion&quot;</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>然后插入下面的数据：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 示例数据</span>
+<span class="err">POST</span><span class="w"> </span><span class="err">/</span><span class="kc">test</span><span class="mi">2</span><span class="err">/_doc</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;Sony&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;WH-1000XM3&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+<span class="err">POST</span><span class="w"> </span><span class="err">/</span><span class="kc">test</span><span class="mi">2</span><span class="err">/_doc</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;SK-II&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;PITERA&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+<span class="err">POST</span><span class="w"> </span><span class="err">/</span><span class="kc">test</span><span class="mi">2</span><span class="err">/_doc</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;Nintendo&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;switch&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>查询的DSL语句如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 自动补全查询</span>
+<span class="err">GET /</span><span class="kc">test</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="err">  </span><span class="nt">&quot;suggest&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">    </span><span class="nt">&quot;title_suggest&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span><span class="err"> </span><span class="c1">// 关键字</span>
+<span class="err">      </span><span class="nt">&quot;completion&quot;</span><span class="p">:</span><span class="err"> </span><span class="p">{</span>
+<span class="err">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="err"> </span><span class="s2">&quot;title&quot;</span><span class="p">,</span><span class="err"> </span><span class="c1">// 补全查询的字段</span>
+<span class="err">        </span><span class="nt">&quot;skip_duplicates&quot;</span><span class="p">:</span><span class="err"> </span><span class="kc">true</span><span class="p">,</span><span class="err"> </span><span class="c1">// 跳过重复的</span>
+<span class="err">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="err"> </span><span class="mi">10</span><span class="err"> </span><span class="c1">// 获取前10条结果</span>
+<span class="err">      </span><span class="p">}</span>
+<span class="err">    </span><span class="p">}</span>
+<span class="err">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2>2.4.实现酒店搜索框自动补全</h2>
+<p>现在，我们的hotel索引库还没有设置拼音分词器，需要修改索引库中的配置。但是我们知道索引库是无法修改的，只能删除然后重新创建。</p>
+<p>另外，我们需要添加一个字段，用来做自动补全，将brand、suggestion、city等都放进去，作为自动补全的提示。</p>
+<p>因此，总结一下，我们需要做的事情包括：</p>
+<ol>
+<li><p>修改hotel索引库结构，设置自定义拼音分词器</p>
+</li>
+<li><p>修改索引库的name、all字段，使用自定义分词器</p>
+</li>
+<li><p>索引库添加一个新字段suggestion，类型为completion类型，使用自定义的分词器</p>
+</li>
+<li><p>给HotelDoc类添加suggestion字段，内容包含brand、business</p>
+</li>
+<li><p>重新导入数据到hotel库</p>
+</li>
+</ol>
+<h3>2.4.1.修改酒店映射结构</h3>
+<p>代码如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 酒店数据索引库</span>
+<span class="err">PUT</span><span class="w"> </span><span class="err">/ho</span><span class="kc">tel</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;analysis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;text_anlyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;tokenizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ik_max_word&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;py&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;completion_analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;tokenizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;py&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;py&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pinyin&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;keep_full_pinyin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;keep_joined_full_pinyin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;keep_original&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;limit_first_letter_length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;remove_duplicated_term&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;none_chinese_pinyin_tokenize&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;mappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text_anlyzer&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;search_analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ik_smart&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;copy_to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;address&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;price&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;score&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;brand&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;copy_to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;city&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;starName&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;business&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;copy_to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;location&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;geo_point&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;pic&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keyword&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;all&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text_anlyzer&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;search_analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ik_smart&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;suggestion&quot;</span><span class="p">:{</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;completion&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;analyzer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;completion_analyzer&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>2.4.2.修改HotelDoc实体</h3>
+<p>HotelDoc中要添加一个字段，用来做自动补全，内容可以是酒店品牌、城市、商圈等信息。按照自动补全字段的要求，最好是这些字段的数组。</p>
+<p>因此我们在HotelDoc中添加一个suggestion字段，类型为<code>List&lt;String&gt;</code>，然后将brand、city、business等信息放到里面。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">cn.itcast.hotel.pojo</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Data</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lombok.NoArgsConstructor</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Collections</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="nd">@Data</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HotelDoc</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">price</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">score</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">brand</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">city</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">starName</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">business</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">location</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">pic</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">distance</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Boolean</span><span class="w"> </span><span class="n">isAD</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">suggestion</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">HotelDoc</span><span class="p">(</span><span class="n">Hotel</span><span class="w"> </span><span class="n">hotel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getId</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getAddress</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">price</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getPrice</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getScore</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">brand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getBrand</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">city</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getCity</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">starName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getStarName</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">business</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getBusiness</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getLatitude</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getLongitude</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">pic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hotel</span><span class="p">.</span><span class="na">getPic</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// 组装suggestion</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">business</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)){</span>
+<span class="w">            </span><span class="c1">// business有多个值，需要切割</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">business</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="c1">// 添加元素</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">suggestion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">suggestion</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">brand</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Collections</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">suggestion</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">suggestion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">brand</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">business</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>2.4.3.重新导入</h3>
+<p>重新执行之前编写的导入数据功能，可以看到新的酒店数据中包含了suggestion：</p>
+<p><figure class="pswp-item" style="flex: 89.4088669950739" data-width="726" data-height="406"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/c92daaff613b378e0ebb41508eb12b17.png" alt="" /></figure></p>
+<h3>2.4.4.自动补全查询的JavaAPI</h3>
+<div class="highlight"><pre><span></span><span class="err">GET</span><span class="w"> </span><span class="err">/ho</span><span class="kc">tel</span><span class="err">/_search</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;suggest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;suggestions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sh&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;completion&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;suggestion&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;skip_duplicates&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>之前我们学习了自动补全查询的DSL，而没有学习对应的JavaAPI，这里给出一个示例：</p>
+<p><figure class="pswp-item" style="flex: 122.90322580645162" data-width="1524" data-height="620"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1a909a12dc330fce7ea3086222569d71.png" alt="" /></figure></p>
+<p>而自动补全的结果也比较特殊，解析的代码如下：</p>
+<p><figure class="pswp-item" style="flex: 103.81471389645776" data-width="1524" data-height="734"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d6900b14fdbecd8e9fb6f9c4688b6dd3.png" alt="" /></figure></p>
+<h3>2.4.5.实现搜索框自动补全</h3>
+<p>查看前端页面，可以发现当我们在输入框键入时，前端会发起ajax请求：</p>
+<p><figure class="pswp-item" style="flex: 97.79179810725552" data-width="620" data-height="317"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/040936014a112eb6ab9cfe3582c4b405.png" alt="" /></figure></p>
+<p>返回值是补全词条的集合，类型为<code>List&lt;String&gt;</code></p>
+<p>1）在<code>cn.itcast.hotel.web</code>包下的<code>HotelController</code>中添加新接口，接收新的请求：</p>
+<div class="highlight"><pre><span></span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;suggestion&quot;</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSuggestions</span><span class="p">(</span><span class="nd">@RequestParam</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">prefix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">hotelService</span><span class="p">.</span><span class="na">getSuggestions</span><span class="p">(</span><span class="n">prefix</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>2）在<code>cn.itcast.hotel.service</code>包下的<code>IhotelService</code>中添加方法：</p>
+<div class="highlight"><pre><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSuggestions</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">prefix</span><span class="p">);</span>
+</pre></div>
+<p>3）在<code>cn.itcast.hotel.service.impl.HotelService</code>中实现该方法：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getSuggestions</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">prefix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 1.准备Request</span>
+<span class="w">        </span><span class="n">SearchRequest</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SearchRequest</span><span class="p">(</span><span class="s">&quot;hotel&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 2.准备DSL</span>
+<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">().</span><span class="na">suggest</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SuggestBuilder</span><span class="p">().</span><span class="na">addSuggestion</span><span class="p">(</span>
+<span class="w">            </span><span class="s">&quot;suggestions&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">SuggestBuilders</span><span class="p">.</span><span class="na">completionSuggestion</span><span class="p">(</span><span class="s">&quot;suggestion&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">skipDuplicates</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">size</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="w">        </span><span class="p">));</span>
+<span class="w">        </span><span class="c1">// 3.发起请求</span>
+<span class="w">        </span><span class="n">SearchResponse</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">RequestOptions</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 4.解析结果</span>
+<span class="w">        </span><span class="n">Suggest</span><span class="w"> </span><span class="n">suggest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">getSuggest</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// 4.1.根据补全查询名称，获取补全结果</span>
+<span class="w">        </span><span class="n">CompletionSuggestion</span><span class="w"> </span><span class="n">suggestions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">suggest</span><span class="p">.</span><span class="na">getSuggestion</span><span class="p">(</span><span class="s">&quot;suggestions&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 4.2.获取options</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">CompletionSuggestion</span><span class="p">.</span><span class="na">Entry</span><span class="p">.</span><span class="na">Option</span><span class="o">&gt;</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">suggestions</span><span class="p">.</span><span class="na">getOptions</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// 4.3.遍历</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">CompletionSuggestion</span><span class="p">.</span><span class="na">Entry</span><span class="p">.</span><span class="na">Option</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">option</span><span class="p">.</span><span class="na">getText</span><span class="p">().</span><span class="na">toString</span><span class="p">();</span>
+<span class="w">            </span><span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">list</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h1>3.数据同步</h1>
+<p>elasticsearch中的酒店数据来自于mysql数据库，因此mysql数据发生改变时，elasticsearch也必须跟着改变，这个就是elasticsearch与mysql之间的<strong>数据同步</strong>。</p>
+<p><figure class="pswp-item" style="flex: 164.3250688705234" data-width="1193" data-height="363"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/1d1dec7e74d6f652d8822155caeb578e.png" alt="" /></figure></p>
+<h2>3.1.思路分析</h2>
+<p>常见的数据同步方案有三种：</p>
+<ul>
+<li>同步调用</li>
+<li>异步通知</li>
+<li>监听binlog</li>
+</ul>
+<h3>3.1.1.同步调用</h3>
+<p>方案一：同步调用</p>
+<p><figure class="pswp-item" style="flex: 140.97744360902254" data-width="1500" data-height="532"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/f9c5fb5163ac2703de8484b8462fac3c.png" alt="" /></figure></p>
+<p>基本步骤如下：</p>
+<ul>
+<li>hotel-demo对外提供接口，用来修改elasticsearch中的数据</li>
+<li>酒店管理服务在完成数据库操作后，直接调用hotel-demo提供的接口，</li>
+</ul>
+<h3>3.1.2.异步通知</h3>
+<p>方案二：异步通知</p>
+<p><figure class="pswp-item" style="flex: 112.33183856502242" data-width="1503" data-height="669"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/973731c27441676b4840d29383841088.png" alt="" /></figure></p>
+<p>流程如下：</p>
+<ul>
+<li>hotel-admin对mysql数据库数据完成增、删、改后，发送MQ消息</li>
+<li>hotel-demo监听MQ，接收到消息后完成elasticsearch数据修改</li>
+</ul>
+<h3>3.1.3.监听binlog</h3>
+<p>方案三：监听binlog</p>
+<p><figure class="pswp-item" style="flex: 133.57271095152603" data-width="1488" data-height="557"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0377ec1fdcefa9714b3581bc6ffa936b.png" alt="" /></figure></p>
+<p>流程如下：</p>
+<ul>
+<li>给mysql开启binlog功能</li>
+<li>mysql完成增、删、改操作都会记录在binlog中</li>
+<li>hotel-demo基于canal监听binlog变化，实时更新elasticsearch中的内容</li>
+</ul>
+<h3>3.1.4.选择</h3>
+<p>方式一：同步调用</p>
+<ul>
+<li>优点：实现简单，粗暴</li>
+<li>缺点：业务耦合度高</li>
+</ul>
+<p>方式二：异步通知</p>
+<ul>
+<li>优点：低耦合，实现难度一般</li>
+<li>缺点：依赖mq的可靠性</li>
+</ul>
+<p>方式三：监听binlog</p>
+<ul>
+<li>优点：完全解除服务间耦合</li>
+<li>缺点：开启binlog增加数据库负担、实现复杂度高</li>
+</ul>
+<h2>3.2.实现数据同步</h2>
+<h3>3.2.1.思路</h3>
+<p>利用课前资料提供的hotel-admin项目作为酒店管理的微服务。当酒店数据发生增、删、改时，要求对elasticsearch中数据也要完成相同操作。</p>
+<p>步骤：</p>
+<ul>
+<li><p>导入课前资料提供的hotel-admin项目，启动并测试酒店数据的CRUD</p>
+</li>
+<li><p>声明exchange、queue、RoutingKey</p>
+</li>
+<li><p>在hotel-admin中的增、删、改业务中完成消息发送</p>
+</li>
+<li><p>在hotel-demo中完成消息监听，并更新elasticsearch中数据</p>
+</li>
+<li><p>启动并测试数据同步功能</p>
+</li>
+</ul>
+<h3>3.2.2.导入demo</h3>
+<p>导入课前资料提供的hotel-admin项目：</p>
+<p><figure class="pswp-item" style="flex: 123.19148936170212" data-width="579" data-height="235"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5beff542cc035aeee195968875d78eb5.png" alt="" /></figure></p>
+<p>运行后，访问 <a href="http://localhost:8099">http://localhost:8099</a></p>
+<p><figure class="pswp-item" style="flex: 112.28070175438596" data-width="1408" data-height="627"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4677cfb671029ce0ef2ad3b9214191df.png" alt="" /></figure></p>
+<p>其中包含了酒店的CRUD功能：</p>
+<p><figure class="pswp-item" style="flex: 73.91629297458894" data-width="989" data-height="669"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/0769c0b09bdae5bf28cbb92fc08d630f.png" alt="" /></figure></p>
+<h3>3.2.3.声明交换机、队列</h3>
+<p>MQ结构如图：</p>
+<p><figure class="pswp-item" style="flex: 205.98159509202455" data-width="1343" data-height="326"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/3994eb37cff3880aa3b1b869f7f8fd36.png" alt="" /></figure></p>
+<h4>1）引入依赖</h4>
+<p>在hotel-admin、hotel-demo中引入rabbitmq的依赖：</p>
+<div class="highlight"><pre><span></span><span class="cm">&lt;!--amqp--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-amqp<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<h4>2）声明队列交换机名称</h4>
+<p>在hotel-admin和hotel-demo中的<code>cn.itcast.hotel.constatnts</code>包下新建一个类<code>MqConstants</code>：</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">cn.itcast.hotel.constatnts</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MqConstants</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 交换机</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">HOTEL_EXCHANGE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hotel.topic&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 监听新增和修改的队列</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">HOTEL_INSERT_QUEUE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hotel.insert.queue&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 监听删除的队列</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">HOTEL_DELETE_QUEUE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hotel.delete.queue&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 新增或修改的RoutingKey</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">HOTEL_INSERT_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hotel.insert&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 删除的RoutingKey</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">HOTEL_DELETE_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hotel.delete&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<h4>3）声明队列交换机</h4>
+<p>在hotel-demo中，定义配置类，声明队列、交换机：</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">cn.itcast.hotel.config</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cn.itcast.hotel.constants.MqConstants</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.amqp.core.Binding</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.amqp.core.BindingBuilder</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.amqp.core.Queue</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.amqp.core.TopicExchange</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MqConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">TopicExchange</span><span class="w"> </span><span class="nf">topicExchange</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TopicExchange</span><span class="p">(</span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_EXCHANGE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Queue</span><span class="w"> </span><span class="nf">insertQueue</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Queue</span><span class="p">(</span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_INSERT_QUEUE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Queue</span><span class="w"> </span><span class="nf">deleteQueue</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Queue</span><span class="p">(</span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_DELETE_QUEUE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Binding</span><span class="w"> </span><span class="nf">insertQueueBinding</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">BindingBuilder</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">insertQueue</span><span class="p">()).</span><span class="na">to</span><span class="p">(</span><span class="n">topicExchange</span><span class="p">()).</span><span class="na">with</span><span class="p">(</span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_INSERT_KEY</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Bean</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Binding</span><span class="w"> </span><span class="nf">deleteQueueBinding</span><span class="p">(){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">BindingBuilder</span><span class="p">.</span><span class="na">bind</span><span class="p">(</span><span class="n">deleteQueue</span><span class="p">()).</span><span class="na">to</span><span class="p">(</span><span class="n">topicExchange</span><span class="p">()).</span><span class="na">with</span><span class="p">(</span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_DELETE_KEY</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>3.2.4.发送MQ消息</h3>
+<p>在hotel-admin中的增、删、改业务中分别发送MQ消息：</p>
+<p><figure class="pswp-item" style="flex: 92.4914675767918" data-width="1626" data-height="879"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d4e9ee4ddc66ce85a59b157a5107b189.png" alt="" /></figure></p>
+<h3>3.2.5.接收MQ消息</h3>
+<p>hotel-demo接收到MQ消息要做的事情包括：</p>
+<ul>
+<li>新增消息：根据传递的hotel的id查询hotel信息，然后新增一条数据到索引库</li>
+<li>删除消息：根据传递的hotel的id删除索引库中的一条数据</li>
+</ul>
+<p>1）首先在hotel-demo的<code>cn.itcast.hotel.service</code>包下的<code>IHotelService</code>中新增新增、删除业务</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">insertById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+</pre></div>
+<p>2）给hotel-demo中的<code>cn.itcast.hotel.service.impl</code>包下的HotelService中实现业务：</p>
+<div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 1.准备Request</span>
+<span class="w">        </span><span class="n">DeleteRequest</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DeleteRequest</span><span class="p">(</span><span class="s">&quot;hotel&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="w">        </span><span class="c1">// 2.发送请求</span>
+<span class="w">        </span><span class="n">client</span><span class="p">.</span><span class="na">delete</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">RequestOptions</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertById</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 0.根据id查询酒店数据</span>
+<span class="w">        </span><span class="n">Hotel</span><span class="w"> </span><span class="n">hotel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 转换为文档类型</span>
+<span class="w">        </span><span class="n">HotelDoc</span><span class="w"> </span><span class="n">hotelDoc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HotelDoc</span><span class="p">(</span><span class="n">hotel</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// 1.准备Request对象</span>
+<span class="w">        </span><span class="n">IndexRequest</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IndexRequest</span><span class="p">(</span><span class="s">&quot;hotel&quot;</span><span class="p">).</span><span class="na">id</span><span class="p">(</span><span class="n">hotel</span><span class="p">.</span><span class="na">getId</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span>
+<span class="w">        </span><span class="c1">// 2.准备Json文档</span>
+<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">source</span><span class="p">(</span><span class="n">JSON</span><span class="p">.</span><span class="na">toJSONString</span><span class="p">(</span><span class="n">hotelDoc</span><span class="p">),</span><span class="w"> </span><span class="n">XContentType</span><span class="p">.</span><span class="na">JSON</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// 3.发送请求</span>
+<span class="w">        </span><span class="n">client</span><span class="p">.</span><span class="na">index</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">RequestOptions</span><span class="p">.</span><span class="na">DEFAULT</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>3）编写监听器</p>
+<p>在hotel-demo中的<code>cn.itcast.hotel.mq</code>包新增一个类：</p>
+<div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">cn.itcast.hotel.mq</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cn.itcast.hotel.constants.MqConstants</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cn.itcast.hotel.service.IHotelService</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.amqp.rabbit.annotation.RabbitListener</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HotelListener</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">IHotelService</span><span class="w"> </span><span class="n">hotelService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 监听酒店新增或修改的业务</span>
+<span class="cm">     * @param id 酒店id</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_INSERT_QUEUE</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">listenHotelInsertOrUpdate</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">){</span>
+<span class="w">        </span><span class="n">hotelService</span><span class="p">.</span><span class="na">insertById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * 监听酒店删除的业务</span>
+<span class="cm">     * @param id 酒店id</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="nd">@RabbitListener</span><span class="p">(</span><span class="n">queues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MqConstants</span><span class="p">.</span><span class="na">HOTEL_DELETE_QUEUE</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">listenHotelDelete</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">id</span><span class="p">){</span>
+<span class="w">        </span><span class="n">hotelService</span><span class="p">.</span><span class="na">deleteById</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h1>4.集群</h1>
+<p>单机的elasticsearch做数据存储，必然面临两个问题：海量数据存储问题、单点故障问题。</p>
+<ul>
+<li>海量数据存储问题：将索引库从逻辑上拆分为N个分片（shard），存储到多个节点</li>
+<li>单点故障问题：将分片数据在不同节点备份（replica ）</li>
+</ul>
+<p><strong>ES集群相关概念</strong>:</p>
+<ul>
+<li><p>集群（cluster）：一组拥有共同的 cluster name 的 节点。</p>
+</li>
+<li><p><font color="red">节点（node)</font>   ：集群中的一个 Elasticearch 实例</p>
+</li>
+<li><p><font color="red">分片（shard）</font>：索引可以被拆分为不同的部分进行存储，称为分片。在集群环境下，一个索引的不同分片可以拆分到不同的节点中</p>
+<p>解决问题：数据量太大，单点存储量有限的问题。</p>
+<p><figure class="pswp-item" style="flex: 96.72774869109948" data-width="739" data-height="382"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/412f60c58acb013e60ccb27e251a4b87.png" alt="" /></figure></p>
+<blockquote><p>此处，我们把数据分成3片：shard0、shard1、shard2</p>
+</blockquote>
+</li>
+<li><p>主分片（Primary shard）：相对于副本分片的定义。</p>
+</li>
+<li><p>副本分片（Replica shard）每个主分片可以有一个或者多个副本，数据和主分片一样。</p>
+<p>​</p>
+</li>
+</ul>
+<p>数据备份可以保证高可用，但是每个分片备份一份，所需要的节点数量就会翻一倍，成本实在是太高了！</p>
+<p>为了在高可用和成本间寻求平衡，我们可以这样做：</p>
+<ul>
+<li>首先对数据分片，存储到不同节点</li>
+<li>然后对每个分片进行备份，放到对方节点，完成互相备份</li>
+</ul>
+<p>这样可以大大减少所需要的服务节点数量，如图，我们以3分片，每个分片备份一份为例：</p>
+<p><figure class="pswp-item" style="flex: 54.58115183246073" data-width="834" data-height="764"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7812c3515e535b6f0527d9e60d69c4fb.png" alt="" /></figure></p>
+<p>现在，每个分片都有1个备份，存储在3个节点：</p>
+<ul>
+<li>node0：保存了分片0和1</li>
+<li>node1：保存了分片0和2</li>
+<li>node2：保存了分片1和2</li>
+</ul>
+<h2>4.1.搭建ES集群</h2>
+<p>参考笔记 <a href="https://qq1820582487.github.io/Xuxx_Blogs/archives/bj48/">Mac通过Docker安装ElasticSearch和Kibana</a></p>
+<h2>4.2.集群脑裂问题</h2>
+<h3>4.2.1.集群职责划分</h3>
+<p>elasticsearch中集群节点有不同的职责划分：</p>
+<p><figure class="pswp-item" style="flex: 136.57657657657657" data-width="1516" data-height="555"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/51cfa6072a028721e3d96768f327b2f1.png" alt="" /></figure></p>
+<p>默认情况下，集群中的任何一个节点都同时具备上述四种角色。</p>
+<p>但是真实的集群一定要将集群职责分离：</p>
+<ul>
+<li>master节点：对CPU要求高，但是内存要求第</li>
+<li>data节点：对CPU和内存要求都高</li>
+<li>coordinating节点：对网络带宽、CPU要求高</li>
+</ul>
+<p>职责分离可以让我们根据不同节点的需求分配不同的硬件去部署。而且避免业务之间的互相干扰。</p>
+<p>一个典型的es集群职责划分如图：</p>
+<p><figure class="pswp-item" style="flex: 117.37481031866464" data-width="1547" data-height="659"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cffe3a420ce77acf04266aa47543e639.png" alt="" /></figure></p>
+<h3>4.2.2.脑裂问题</h3>
+<p>脑裂是因为集群中的节点失联导致的。</p>
+<p>例如一个集群中，主节点与其它节点失联：</p>
+<p><figure class="pswp-item" style="flex: 143.72384937238493" data-width="1374" data-height="478"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cea1c4edb75ca81afbe57edd91b56727.png" alt="" /></figure></p>
+<p>此时，node2和node3认为node1宕机，就会重新选主：</p>
+<p><figure class="pswp-item" style="flex: 140.6378600823045" data-width="1367" data-height="486"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5a8cf981d395216e021a0e8a48153e3f.png" alt="" /></figure></p>
+<p>当node3当选后，集群继续对外提供服务，node2和node3自成集群，node1自成集群，两个集群数据不同步，出现数据差异。</p>
+<p>当网络恢复后，因为集群中有两个master节点，集群状态的不一致，出现脑裂的情况：</p>
+<p><figure class="pswp-item" style="flex: 191.07648725212465" data-width="1349" data-height="353"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/05daa8d8e5952023c415cdbcb4a97d28.png" alt="" /></figure></p>
+<p>解决脑裂的方案是，要求选票超过 ( eligible节点数量 + 1 ）/ 2 才能当选为主，因此eligible节点数量最好是奇数。对应配置项是discovery.zen.minimum_master_nodes，在es7.0以后，已经成为默认配置，因此一般不会发生脑裂问题</p>
+<p>例如：3个节点形成的集群，选票必须超过 （3 + 1） / 2 ，也就是2票。node3得到node2和node3的选票，当选为主。node1只有自己1票，没有当选。集群中依然只有1个主节点，没有出现脑裂。</p>
+<h3>4.2.3.小结</h3>
+<p>master eligible节点的作用是什么？</p>
+<ul>
+<li>参与集群选主</li>
+<li>主节点可以管理集群状态、管理分片信息、处理创建和删除索引库的请求</li>
+</ul>
+<p>data节点的作用是什么？</p>
+<ul>
+<li>数据的CRUD</li>
+</ul>
+<p>coordinator节点的作用是什么？</p>
+<ul>
+<li><p>路由请求到其它节点</p>
+</li>
+<li><p>合并查询到的结果，返回给用户</p>
+</li>
+</ul>
+<h2>4.3.集群分布式存储</h2>
+<p>当新增文档时，应该保存到不同分片，保证数据均衡，那么coordinating node如何确定数据该存储到哪个分片呢？</p>
+<h3>4.3.1.分片存储测试</h3>
+<p>插入三条数据：</p>
+<p><figure class="pswp-item" style="flex: 137.8012048192771" data-width="915" data-height="332"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ee66480a4db2808fdb7c468cbb7fc13f.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 135.17350157728706" data-width="857" data-height="317"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4d5d72fd3a9949ecc7a436cfd9bcde01.png" alt="" /></figure></p>
+<p><figure class="pswp-item" style="flex: 161.56351791530943" data-width="992" data-height="307"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/a19cd0f974fc58425591ad86693f6dc7.png" alt="" /></figure></p>
+<p>测试可以看到，三条数据分别在不同分片：</p>
+<p><figure class="pswp-item" style="flex: 111.23188405797102" data-width="921" data-height="414"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/31ff57e1dd1af65d8943ce325d69e10d.png" alt="" /></figure></p>
+<p>结果：</p>
+<p><figure class="pswp-item" style="flex: 44.96350364963504" data-width="616" data-height="685"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/ceb790bb6fcfa267b482b2e84e26397e.png" alt="" /></figure></p>
+<h3>4.3.2.分片存储原理</h3>
+<p>elasticsearch会通过hash算法来计算文档应该存储到哪个分片：</p>
+<p><figure class="pswp-item" style="flex: 398.780487804878" data-width="654" data-height="82"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5e2eaa0ba317d4d2f196278d714a620b.png" alt="" /></figure></p>
+<p>说明：</p>
+<ul>
+<li>_routing默认是文档的id</li>
+<li>算法与分片数量有关，因此索引库一旦创建，分片数量不能修改！</li>
+</ul>
+<p>新增文档的流程如下：</p>
+<p><figure class="pswp-item" style="flex: 113.78340365682138" data-width="1618" data-height="711"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2808bedd1a953c6cd136fae023fe9b35.png" alt="" /></figure></p>
+<p>解读：</p>
+<ul>
+<li>1）新增一个id=1的文档</li>
+<li>2）对id做hash运算，假如得到的是2，则应该存储到shard-2</li>
+<li>3）shard-2的主分片在node3节点，将数据路由到node3</li>
+<li>4）保存文档</li>
+<li>5）同步给shard-2的副本replica-2，在node2节点</li>
+<li>6）返回结果给coordinating-node节点</li>
+</ul>
+<h2>4.4.集群分布式查询</h2>
+<p>elasticsearch的查询分成两个阶段：</p>
+<ul>
+<li><p>scatter phase：分散阶段，coordinating node会把请求分发到每一个分片</p>
+</li>
+<li><p>gather phase：聚集阶段，coordinating node汇总data node的搜索结果，并处理为最终结果集返回给用户</p>
+</li>
+</ul>
+<p><figure class="pswp-item" style="flex: 91.12734864300626" data-width="873" data-height="479"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/942e31cb185fbd57d30111e5dfc68517.png" alt="" /></figure></p>
+<h2>4.5.集群故障转移</h2>
+<p>集群的master节点会监控集群中的节点状态，如果发现有节点宕机，会立即将宕机节点的分片数据迁移到其它节点，确保数据安全，这个叫做故障转移。</p>
+<p>1）例如一个集群结构如图：</p>
+<p><figure class="pswp-item" style="flex: 183.80462724935734" data-width="1430" data-height="389"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/01b7a8b708cd59840457f7bf5be3590b.png" alt="" /></figure></p>
+<p>现在，node1是主节点，其它两个节点是从节点。</p>
+<p>2）突然，node1发生了故障：</p>
+<p><figure class="pswp-item" style="flex: 185.45706371191136" data-width="1339" data-height="361"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/cdc4197718f3fcb856f994b32af7e683.png" alt="" /></figure></p>
+<p>宕机后的第一件事，需要重新选主，例如选中了node2：</p>
+<p><figure class="pswp-item" style="flex: 191.32947976878611" data-width="1324" data-height="346"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/6bb98e6f25edf01a9aca4142eb739356.png" alt="" /></figure></p>
+<p>node2成为主节点后，会检测集群监控状态，发现：shard-1、shard-0没有副本节点。因此需要将node1上的数据迁移到node2、node3：</p>
+<p><figure class="pswp-item" style="flex: 177.60416666666666" data-width="1364" data-height="384"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/4b5decfa943097c5df0cb588e07a94a6.png" alt="" /></figure></p>
+
+            </div>
+        </article>
+        <div id="ga-tags">
+    
+    <span class="ga-tag">
+        <a class="ga-highlight" href="/Xuxx_Blogs/tag/ElasticSearch/">#ElasticSearch</a>
+    </span>
+    
+</div>
+    </section>
+
+    
+<section id="ga-content_pager">
+
+    <div class="next">
+        <h3>没有了</h3>
+        <p class="yue">这是最新的文章</p>
+    </div>
+
+
+    <div class="prev">
+        <a class="ga-highlight" href="/Xuxx_Blogs/archives/bj52/">腾讯技术工程分享-如何实现分布式锁以及其安全性问题</a>
+        <p class="yue">笔记</p>
+    </div>
+
+</section>
+
+
+    
+
+</main>
+
+                <footer class="ga-mono" id="ga-footer">
+                    <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">Xuxx - 个人博客</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © 2024 Xuxx</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright">
+                            <span class="footer-addon">
+                                
+                            </span>
+                            <nav class="social-links">
+                                <ul><li><a class="no-style" title="Twitter" href="https://twitter.com/xuxx3309" target="_blank"><i class="gi gi-twitter"></i>Twitter</a></li><span class="separator">·</span><li><a class="no-style" title="GitHub" href="https://github.com/QQ1820582487" target="_blank"><i class="gi gi-github"></i>GitHub</a></li></ul>
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "2019-12-26T02:30+08:00"
+                    </script>
+                    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/galileo-d8a0a06eff.js"></script>
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+        
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    
+    <!--katex-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    
+    </body>
+</html>

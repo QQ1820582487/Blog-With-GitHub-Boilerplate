@@ -17,7 +17,7 @@
     <script>
         var ExSearchConfig = {
             root: "",
-            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/ce40bc5a99b07bb2b737ac5faca268d2.json"
+            api: "https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/7b37dd729e55ed5232c863193cc3039c.json"
         }
     </script>
     
@@ -155,6 +155,125 @@ kibana:7.16.3
 <p>测试: 浏览器访问 <a href="http://127.0.0.1:5601/app/dev_tools#/console">http://127.0.0.1:5601/app/dev_tools#/console</a></p>
 <p><figure class="pswp-item" style="flex: 97.28331177231566" data-width="3008" data-height="1546"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/df7271afc1dc2cd527e0c69d41ab0ab6.png" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_03" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_03</figcaption></figure></p>
 <p><figure class="pswp-item" style="flex: 97.3582474226804" data-width="3022" data-height="1552"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/15da97022735371bdf8a446ce5072f7c.png" alt="2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_04" /><figcaption>2024-05-08-Mac通过Docker安装Elasticsearch和Kibana_04</figcaption></figure></p>
+<h1>部署es集群</h1>
+<p>我们会在单机上利用docker容器运行多个es实例来模拟es集群。不过生产环境推荐大家每一台服务节点仅部署一个es的实例。</p>
+<p>部署es集群可以直接使用docker-compose来完成，但这要求你的Linux虚拟机至少有<strong>4G</strong>的内存空间</p>
+<h2>1.创建es集群</h2>
+<p>首先编写一个docker-compose文件，内容如下：</p>
+<div class="highlight"><pre><span></span>version:<span class="w"> </span><span class="s1">&#39;2.2&#39;</span>
+services:
+<span class="w">  </span>es01:
+<span class="w">    </span>image:<span class="w"> </span>elasticsearch:7.16.3
+<span class="w">    </span>container_name:<span class="w"> </span>es01
+<span class="w">    </span>environment:
+<span class="w">      </span>-<span class="w"> </span>node.name<span class="o">=</span>es01
+<span class="w">      </span>-<span class="w"> </span>cluster.name<span class="o">=</span>es-docker-cluster
+<span class="w">      </span>-<span class="w"> </span>discovery.seed_hosts<span class="o">=</span>es02,es03
+<span class="w">      </span>-<span class="w"> </span>cluster.initial_master_nodes<span class="o">=</span>es01,es02,es03
+<span class="w">      </span>-<span class="w"> </span><span class="s2">&quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span>
+<span class="w">    </span>volumes:
+<span class="w">      </span>-<span class="w"> </span>data01:/usr/share/elasticsearch/data
+<span class="w">    </span>ports:
+<span class="w">      </span>-<span class="w"> </span><span class="m">9200</span>:9200
+<span class="w">    </span>networks:
+<span class="w">      </span>-<span class="w"> </span>elastic
+<span class="w">  </span>es02:
+<span class="w">    </span>image:<span class="w"> </span>elasticsearch:7.16.3
+<span class="w">    </span>container_name:<span class="w"> </span>es02
+<span class="w">    </span>environment:
+<span class="w">      </span>-<span class="w"> </span>node.name<span class="o">=</span>es02
+<span class="w">      </span>-<span class="w"> </span>cluster.name<span class="o">=</span>es-docker-cluster
+<span class="w">      </span>-<span class="w"> </span>discovery.seed_hosts<span class="o">=</span>es01,es03
+<span class="w">      </span>-<span class="w"> </span>cluster.initial_master_nodes<span class="o">=</span>es01,es02,es03
+<span class="w">      </span>-<span class="w"> </span><span class="s2">&quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span>
+<span class="w">    </span>volumes:
+<span class="w">      </span>-<span class="w"> </span>data02:/usr/share/elasticsearch/data
+<span class="w">    </span>ports:
+<span class="w">      </span>-<span class="w"> </span><span class="m">9201</span>:9200
+<span class="w">    </span>networks:
+<span class="w">      </span>-<span class="w"> </span>elastic
+<span class="w">  </span>es03:
+<span class="w">    </span>image:<span class="w"> </span>elasticsearch:7.16.3
+<span class="w">    </span>container_name:<span class="w"> </span>es03
+<span class="w">    </span>environment:
+<span class="w">      </span>-<span class="w"> </span>node.name<span class="o">=</span>es03
+<span class="w">      </span>-<span class="w"> </span>cluster.name<span class="o">=</span>es-docker-cluster
+<span class="w">      </span>-<span class="w"> </span>discovery.seed_hosts<span class="o">=</span>es01,es02
+<span class="w">      </span>-<span class="w"> </span>cluster.initial_master_nodes<span class="o">=</span>es01,es02,es03
+<span class="w">      </span>-<span class="w"> </span><span class="s2">&quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span>
+<span class="w">    </span>volumes:
+<span class="w">      </span>-<span class="w"> </span>data03:/usr/share/elasticsearch/data
+<span class="w">    </span>networks:
+<span class="w">      </span>-<span class="w"> </span>elastic
+<span class="w">    </span>ports:
+<span class="w">      </span>-<span class="w"> </span><span class="m">9202</span>:9200
+volumes:
+<span class="w">  </span>data01:
+<span class="w">    </span>driver:<span class="w"> </span><span class="nb">local</span>
+<span class="w">  </span>data02:
+<span class="w">    </span>driver:<span class="w"> </span><span class="nb">local</span>
+<span class="w">  </span>data03:
+<span class="w">    </span>driver:<span class="w"> </span><span class="nb">local</span>
+
+networks:
+<span class="w">  </span>elastic:
+<span class="w">    </span>driver:<span class="w"> </span>bridge
+</pre></div>
+<p>es运行需要修改一些linux系统权限，修改<code>/etc/sysctl.conf</code>文件</p>
+<div class="highlight"><pre><span></span>vi<span class="w"> </span>/etc/sysctl.conf
+</pre></div>
+<p>添加下面的内容：</p>
+<div class="highlight"><pre><span></span><span class="c1"># 用于指定进程可以拥有的最大虚拟内存区域数，默认值通常为65530</span>
+vm.max_map_count<span class="o">=</span><span class="m">262144</span>
+</pre></div>
+<p>然后执行命令，让配置生效：</p>
+<div class="highlight"><pre><span></span>sysctl<span class="w"> </span>-p
+</pre></div>
+<p>通过docker-compose启动集群：</p>
+<div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+<h2>2.集群状态监控</h2>
+<p>kibana可以监控es集群，不过新版本需要依赖es的x-pack 功能，配置比较复杂。</p>
+<p>这里推荐使用cerebro来监控es集群状态，官方网址：<a href="https://github.com/lmenezes/cerebro">https://github.com/lmenezes/cerebro</a></p>
+<p>我使用的docker安装</p>
+<div class="highlight"><pre><span></span><span class="c1"># 适用与苹果芯片</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">9000</span>:9000<span class="w"> </span>--name<span class="w"> </span>cerebro<span class="w"> </span>chanmufeng/cerebro:0.9.4
+</pre></div>
+<p>访问<a href="http://localhost:9000">http://localhost:9000</a> 即可进入管理界面：</p>
+<p><figure class="pswp-item" style="flex: 88.50502512562814" data-width="2818" data-height="1592"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/7e03067459a67b4516e239bb51ab398f.png" alt="" /></figure></p>
+<p>输入你的elasticsearch的任意节点的地址和端口，点击connect即可：</p>
+<blockquote><p>需要注意的是由于cerebro运行在容器中，直接输入localhost:9200 即使通过浏览器能够访问也可能无法连接，需要保证的是在cerebro的容器中能够访问到的URL，比如这里使用的本机的IP: 192.168.124.25</p>
+</blockquote>
+<p><figure class="pswp-item" style="flex: 99.60474308300395" data-width="3024" data-height="1518"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d1d68e65edc106e1e9be25f82e277435.png" alt="" /></figure></p>
+<p>绿色的条，代表集群处于绿色（健康状态）。</p>
+<blockquote><p>es名称左边的★是主节点 ☆是候选节点</p>
+</blockquote>
+<h2>3.创建索引库</h2>
+<h3>1）利用kibana的DevTools创建索引库</h3>
+<p>在DevTools中输入指令：</p>
+<div class="highlight"><pre><span></span><span class="err">PUT</span><span class="w"> </span><span class="err">/i</span><span class="kc">t</span><span class="err">cas</span><span class="kc">t</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;number_of_shards&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="c1">// 分片数量</span>
+<span class="w">    </span><span class="nt">&quot;number_of_replicas&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">// 副本数量</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;mappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// mapping映射定义 ...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h3>2）利用cerebro创建索引库</h3>
+<p>利用cerebro还可以创建索引库：</p>
+<p><figure class="pswp-item" style="flex: 157.14285714285714" data-width="594" data-height="189"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/43fc13781add9fd948265c618ffa6c9e.png" alt="" /></figure></p>
+<p>填写索引库信息：</p>
+<p><figure class="pswp-item" style="flex: 71.23655913978494" data-width="530" data-height="372"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/d4414fbceecefc349aacf87502c06278.png" alt="" /></figure></p>
+<p>点击右下角的create按钮：</p>
+<p><figure class="pswp-item" style="flex: 121.15384615384616" data-width="630" data-height="260"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/5f0444a34df71a999876e1609d79f603.png" alt="" /></figure></p>
+<h2>4.查看分片效果</h2>
+<p>回到首页，即可查看索引库分片效果：</p>
+<p><figure class="pswp-item" style="flex: 67.48251748251748" data-width="965" data-height="715"><img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/93a9524fc999519afd433f64bfb4e556.png" alt="" /></figure></p>
 
             </div>
         </article>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx - 个人博客</title><updated>2024-05-17T13:49:50.993284+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生。</subtitle><entry><id>/Xuxx_Blogs/archives/bj44/</id><title>Java使用Selenium实现简单爬虫</title><updated>2024-05-17T13:49:50.993519+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;序言&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>/Xuxx_Blogs/</id><title>Xuxx - 个人博客</title><updated>2024-09-17T11:47:54.072905+08:06</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email></author><link href="/Xuxx_Blogs/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><logo>${static_prefix}logo.png</logo><subtitle>坚持有效行动，改变自然发生。</subtitle><entry><id>/Xuxx_Blogs/archives/bj44/</id><title>Java使用Selenium实现简单爬虫</title><updated>2024-09-17T11:47:54.073113+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;序言&lt;/h2&gt;
 &lt;p&gt;最近工作时接到一个处理数据的任务，给我的数据只有13项，但是项目中需要的数据有18项，所以缺少的数据需要手工去查询（别问我为什么？我也不知道，反正工作就是这样要求了，横竖都得干）。我需要处理接近5000条,一条一条查确实有点太枯燥了（自己手动查了200多条~），于是心一横，整个程序来帮我干活吧。但是我毕竟没有接触过爬虫，于是在一顿Google后，我选择了&lt;code&gt;Selenium&lt;/code&gt;，别问，问就是简单好上手。&lt;/p&gt;
 &lt;h2&gt;1.Selenium&lt;/h2&gt;
 &lt;p&gt;因为对自动化测试卓越体验的追求，众多自动化测试工具应运而生，Selenium就是其中最出色的一款。&lt;/p&gt;
@@ -211,7 +211,7 @@ yum&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&g
 &lt;p&gt;参考：&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.ytooo.top/e8a89aa3.html"&gt;Java使用Selenium实现自动化测试以及全功能爬虫&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.cnblogs.com/yogouo/category/1601782.html"&gt;Selenium教程&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj44/"/><published>2020-12-29T21:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj45/</id><title>Java8 Stream梳理</title><updated>2024-05-17T13:49:50.993503+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Streams API 面面观&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj44/"/><published>2020-12-29T21:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj45/</id><title>Java8 Stream梳理</title><updated>2024-09-17T11:47:54.073099+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;1. Streams API 面面观&lt;/h2&gt;
 &lt;h3&gt;1.1 Streams API 能做什么&lt;/h3&gt;
 &lt;p&gt;Streams API 是对 java 中集合对象功能的增强，他可以让集合的操作变得更加便利、高效&lt;/p&gt;
 &lt;p&gt;他会自动通过并发执行的方式优化大批量数据集合的聚合操作，同时，结合另一个 java8 的新特性 -- Lambda 表达式，可以极大地提升编程效率，增加代码可读性&lt;/p&gt;
@@ -636,7 +636,7 @@ yum&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&g
 &lt;li&gt;findAny&lt;/li&gt;
 &lt;li&gt;limit&lt;/li&gt;
 &lt;/ul&gt;
-</content><link href="/Xuxx_Blogs/archives/bj45/"/><published>2021-03-30T11:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj46/</id><title>HashMap底层结构与实现原理之——put、get方法</title><updated>2024-05-17T13:49:50.993488+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
+</content><link href="/Xuxx_Blogs/archives/bj45/"/><published>2021-03-30T11:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj46/</id><title>HashMap底层结构与实现原理之——put、get方法</title><updated>2024-09-17T11:47:54.073081+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;来源：知乎-极光少年&lt;/p&gt;
 &lt;p&gt;本文内容基于JDK8。&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 110.68376068376068" data-width="1036" data-height="468"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/b8e20cbac9528440ffabb940ed16ea24.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -791,7 +791,7 @@ yum&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&g
 &lt;p&gt;⑥若存在则需判断节点类型属于链表节点还是红黑树节点；&lt;/p&gt;
 &lt;p&gt;⑦如果是红黑树节点则调用红黑树查找方法；&lt;/p&gt;
 &lt;p&gt;⑧如果是链表节点，则整条遍历链表，找到key和hash值相同的节点则返回Value，没有找到则返回null。&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj46/"/><published>2021-07-29T17:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj47/</id><title>IntelliJ IDEA for Mac 快捷键整理</title><updated>2024-05-17T13:49:50.993472+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. Editing (编辑)&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj46/"/><published>2021-07-29T17:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj47/</id><title>IntelliJ IDEA for Mac 快捷键整理</title><updated>2024-09-17T11:47:54.073065+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1. Editing (编辑)&lt;/h3&gt;
 &lt;hr&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
@@ -1442,7 +1442,7 @@ yum&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&g
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;转载自：&lt;a href="https://cloud.tencent.com/developer/article/1796448"&gt;https://cloud.tencent.com/developer/article/1796448&lt;/a&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj47/"/><published>2023-03-20T14:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/rc001/</id><title>删除Mac启动台中的无效图标</title><updated>2024-05-17T13:49:50.993455+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.第一种方式&lt;/h3&gt;
+</content><link href="/Xuxx_Blogs/archives/bj47/"/><published>2023-03-20T14:25:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/rc001/</id><title>删除Mac启动台中的无效图标</title><updated>2024-09-17T11:47:54.073050+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h3&gt;1.第一种方式&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;重建启动台内的图标：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;打开终端：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;defaults&lt;span class="w"&gt; &lt;/span&gt;write&lt;span class="w"&gt; &lt;/span&gt;com.apple.dock&lt;span class="w"&gt; &lt;/span&gt;ResetLaunchPad&lt;span class="w"&gt; &lt;/span&gt;-bool&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
@@ -1454,7 +1454,7 @@ killall&lt;span class="w"&gt; &lt;/span&gt;Dock
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sqlite3&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;find&lt;span class="w"&gt; &lt;/span&gt;/private/var/folders&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\(&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-name&lt;span class="w"&gt; &lt;/span&gt;com.apple.dock.launchpad&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;-user&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$USER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/dev/null&lt;span class="k"&gt;)&lt;/span&gt;/db/db&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;DELETE FROM apps WHERE title=&amp;#39;xxx&amp;#39;;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;killall&lt;span class="w"&gt; &lt;/span&gt;Dock
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;软件名替换title后面的xxx，回车&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/rc001/"/><published>2023-04-09T22:18:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj48/</id><title>Mac通过Docker安装ElasticSearch和Kibana</title><updated>2024-05-17T13:49:50.993436+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;准备工作&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/rc001/"/><published>2023-04-09T22:18:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj48/</id><title>Mac通过Docker安装ElasticSearch和Kibana</title><updated>2024-09-17T11:47:54.073035+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;准备工作&lt;/h1&gt;
 &lt;p&gt;本人使用的的 MacBook ，流程如下，不过其他电脑也大同小异，无非就是目录不同。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;新建 es 所需的目录&lt;/li&gt;
@@ -1642,7 +1642,7 @@ docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt
 &lt;h2&gt;4.查看分片效果&lt;/h2&gt;
 &lt;p&gt;回到首页，即可查看索引库分片效果：&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 67.48251748251748" data-width="965" data-height="715"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/93a9524fc999519afd433f64bfb4e556.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj48/"/><published>2024-05-08T15:04:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj49/</id><title>ElasticSearch笔记_01</title><updated>2024-05-17T13:49:50.993420+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.初识elasticsearch&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj48/"/><published>2024-05-08T15:04:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj49/</id><title>ElasticSearch笔记_01</title><updated>2024-09-17T11:47:54.073020+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.初识elasticsearch&lt;/h1&gt;
 &lt;h2&gt;1.1.了解ES&lt;/h2&gt;
 &lt;h3&gt;1.1.1.elasticsearch的作用&lt;/h3&gt;
 &lt;p&gt;elasticsearch是一款非常强大的开源搜索引擎，具备非常多强大功能，可以帮助我们从海量数据中快速找到需要的内容&lt;/p&gt;
@@ -2737,7 +2737,7 @@ docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt
 &lt;p&gt;在Elasticsearch7.15版本之后，Elasticsearch官方将它的高级客户端&lt;strong&gt;RestHighLevelClient&lt;/strong&gt;标记为弃用状态。同时推出了全新的Java API客户端&lt;strong&gt;Elasticsearch Java API Client&lt;/strong&gt;，该客户端也将在Elasticsearch8.0及以后版本中成为官方推荐使用的客户端。&lt;/p&gt;
 &lt;blockquote&gt;&lt;p&gt;官方：&lt;a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html"&gt;https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-</content><link href="/Xuxx_Blogs/archives/bj49/"/><published>2024-05-09T19:04:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj50/</id><title>ElasticSearch笔记_02</title><updated>2024-05-17T13:49:50.993402+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.DSL查询文档&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj49/"/><published>2024-05-09T19:04:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj50/</id><title>ElasticSearch笔记_02</title><updated>2024-09-17T11:47:54.073004+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.DSL查询文档&lt;/h1&gt;
 &lt;p&gt;elasticsearch的查询是基于JSON风格的DSL来实现的。&lt;/p&gt;
 &lt;h2&gt;1.1.DSL查询分类&lt;/h2&gt;
 &lt;p&gt;Elasticsearch提供了基于JSON的DSL（&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html"&gt;Domain Specific Language&lt;/a&gt;）来定义查询。常见的查询类型包括：&lt;/p&gt;
@@ -4109,7 +4109,7 @@ docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="na"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;functionScoreQuery&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</content><link href="/Xuxx_Blogs/archives/bj50/"/><published>2024-05-11T20:45:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj52/</id><title>腾讯技术工程分享-如何实现分布式锁以及其安全性问题</title><updated>2024-05-17T13:49:50.993381+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;问题：
+</content><link href="/Xuxx_Blogs/archives/bj50/"/><published>2024-05-11T20:45:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj52/</id><title>腾讯技术工程分享-如何实现分布式锁以及其安全性问题</title><updated>2024-09-17T11:47:54.072985+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;blockquote&gt;&lt;p&gt;问题：
 基于 Redis 如何实现一个分布式锁?它足够安全吗 ?
 一个严谨的分布式锁模型如何实现，应该考虑什么?
 我们经常听到的 Redlock(红锁)有什么问题?
@@ -4161,7 +4161,7 @@ docker&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 109.11602209944752" data-width="1580" data-height="724"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/00e5a5364338c1021f381a2663dd2bc8.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;figure class="pswp-item" style="flex: 98.2587064676617" data-width="1580" data-height="804"&gt;&lt;img src="https://cdn.jsdelivr.net/gh/qq1820582487/Xuxx_Blogs@gh-pages/archives/assets/2505c22d462f61d94e27eab8576361de.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;NPC问题：进程暂停、网络超时、时钟漂移、GC的STW等等&lt;/p&gt;
-</content><link href="/Xuxx_Blogs/archives/bj52/"/><published>2024-05-13T20:13:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj51/</id><title>ElasticSearch笔记_03</title><updated>2024-05-17T13:49:50.993336+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.数据聚合&lt;/h1&gt;
+</content><link href="/Xuxx_Blogs/archives/bj52/"/><published>2024-05-13T20:13:00+08:06</published></entry><entry><id>/Xuxx_Blogs/archives/bj51/</id><title>ElasticSearch笔记_03</title><updated>2024-09-17T11:47:54.072947+00:00</updated><author><name>Xuxx</name><email>xuxx3319@gmail.com</email><uri>暂无</uri></author><content>&lt;h1&gt;1.数据聚合&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html"&gt;聚合（&lt;/a&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html"&gt;aggregations&lt;/a&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html"&gt;）&lt;/a&gt;&lt;/strong&gt;可以让我们极其方便的实现对数据的统计、分析、运算。例如：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;什么品牌的手机最受欢迎？&lt;/li&gt;
